@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section style="padding: 60px 0;">
+    <div class="container">
+
+        <h1 style="font-size: 36px; font-weight: 300; margin-bottom: 8px;">Panel sprzedawcy</h1>
+        <p style="color: #888; margin-bottom: 40px;">Witaj, {{ seller.user.username }}</p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 24px; margin-bottom: 60px;">
+            <div style="background: white; padding: 24px; border-left: 4px solid var(--accent);">
+                <div style="font-size: 13px; color: #888; margin-bottom: 8px;">Łączna sprzedaż</div>
+                <div style="font-size: 28px; font-weight: 600; color: var(--accent);">{{ total_sales }} zł</div>
+            </div>
+            <div style="background: white; padding: 24px; border-left: 4px solid var(--gold);">
+                <div style="font-size: 13px; color: #888; margin-bottom: 8px;">Łączne prowizje</div>
+                <div style="font-size: 28px; font-weight: 600; color: var(--accent);">{{ total_commissions }} zł</div>
+            </div>
+            <div style="background: white; padding: 24px; border-left: 4px solid var(--terracotta);">
+                <div style="font-size: 13px; color: #888; margin-bottom: 8px;">Moja prowizja</div>
+                <div style="font-size: 28px; font-weight: 600; color: var(--accent);">{{ seller.commission_rate }}%</div>
+            </div>
+            <div style="background: white; padding: 24px; border-left: 4px solid #888;">
+                <div style="font-size: 13px; color: #888; margin-bottom: 8px;">Poleceni sprzedawcy</div>
+                <div style="font-size: 28px; font-weight: 600; color: var(--accent);">{{ referrals.count }}</div>
+            </div>
+        </div>
+
+        <h2 style="font-size: 22px; font-weight: 400; margin-bottom: 20px;">Moje sprzedaże</h2>
+        {% if sales %}
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 60px;">
+            <thead>
+                <tr style="border-bottom: 2px solid var(--gold);">
+                    <th style="text-align: left; padding: 10px 0;">Produkt</th>
+                    <th style="text-align: center; padding: 10px 0;">Ilość</th>
+                    <th style="text-align: right; padding: 10px 0;">Kwota</th>
+                    <th style="text-align: right; padding: 10px 0;">Data</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for sale in sales %}
+                <tr style="border-bottom: 1px solid #eee;">
+                    <td style="padding: 12px 0;">{{ sale.product.name }}</td>
+                    <td style="text-align: center;">{{ sale.quantity }}</td>
+                    <td style="text-align: right; color: var(--accent); font-weight: 600;">{{ sale.total_amount }} zł</td>
+                    <td style="text-align: right; color: #888; font-size: 13px;">{{ sale.sale_date|date:"d.m.Y" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p style="color: #888; margin-bottom: 60px;">Brak sprzedaży.</p>
+        {% endif %}
+
+        <h2 style="font-size: 22px; font-weight: 400; margin-bottom: 20px;">Moje prowizje</h2>
+        {% if commissions %}
+        <table style="width: 100%; border-collapse: collapse;">
+            <thead>
+                <tr style="border-bottom: 2px solid var(--gold);">
+                    <th style="text-align: left; padding: 10px 0;">Od sprzedaży</th>
+                    <th style="text-align: center; padding: 10px 0;">Poziom</th>
+                    <th style="text-align: right; padding: 10px 0;">Kwota</th>
+                    <th style="text-align: right; padding: 10px 0;">Data</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for commission in commissions %}
+                <tr style="border-bottom: 1px solid #eee;">
+                    <td style="padding: 12px 0;">{{ commission.sale.product.name }}</td>
+                    <td style="text-align: center;">{{ commission.level }}</td>
+                    <td style="text-align: right; color: var(--accent); font-weight: 600;">{{ commission.amount }} zł</td>
+                    <td style="text-align: right; color: #888; font-size: 13px;">{{ commission.created_at|date:"d.m.Y" }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p style="color: #888;">Brak prowizji.</p>
+        {% endif %}
+
+    </div>
+</section>
+{% endblock %}
