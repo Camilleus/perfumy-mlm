@@ -34,7 +34,7 @@
 
                 {% if product.stock_quantity > 0 %}
                 <p style="color: green; font-size: 13px; margin-bottom: 20px;">✓ Dostępny ({{ product.stock_quantity }} szt.)</p>
-                <button class="btn" style="width: 100%; padding: 15px; font-size: 16px;">Dodaj do koszyka</button>
+                <a href="{% url 'cart_add' product.pk %}" class="btn" style="width: 100%; padding: 15px; font-size: 16px; text-align: center; display: block;">Dodaj do koszyka</a>
                 {% else %}
                 <p style="color: var(--terracotta); font-size: 13px;">✗ Brak w magazynie</p>
                 {% endif %}
