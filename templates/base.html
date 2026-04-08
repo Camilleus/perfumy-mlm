@@ -93,6 +93,7 @@
                 <li><a href="/?gender=M" class="{% if request.GET.gender == 'M' %}active{% endif %}">Męskie</a></li>
                 <li><a href="/?gender=K" class="{% if request.GET.gender == 'K' %}active{% endif %}">Damskie</a></li>
                 <li><a href="/?gender=U" class="{% if request.GET.gender == 'U' %}active{% endif %}">Unisex</a></li>
+                <li><a href="{% url 'quiz' %}">Quiz zapachowy</a></li>
             </ul>
             <a href="{% url 'cart_detail' %}" style="justify-self: end; color: white; font-size: 22px;">🛒</a>
         </nav>

@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section style="padding: 80px 0;">
+    <div class="container" style="max-width: 600px;">
+        <h1 style="font-size: 36px; font-weight: 300; text-align: center; margin-bottom: 40px;">Znajdź swój zapach</h1>
+
+        <div id="quiz-box" style="background: white; padding: 40px;">
+
+            <div class="step" id="step-1">
+                <h3 style="margin-bottom: 20px;">Jaką intensywność preferujesz?</h3>
+                <button class="quiz-btn" onclick="nextStep(2)">Delikatna i świeża</button>
+                <button class="quiz-btn" onclick="nextStep(2)">Mocna i wieczorowa</button>
+            </div>
+
+            <div class="step hidden" id="step-2">
+                <h3 style="margin-bottom: 20px;">Główne nuty zapachowe?</h3>
+                <button class="quiz-btn" onclick="nextStep(3)">Kwiatowe / Owocowe</button>
+                <button class="quiz-btn" onclick="nextStep(3)">Drzewne / Korzenne</button>
+            </div>
+
+            <div class="step hidden" id="step-3">
+                <h3 style="margin-bottom: 20px;">Na jaką okazję?</h3>
+                <button class="quiz-btn" onclick="showResult('damskie')">Na co dzień</button>
+                <button class="quiz-btn" onclick="showResult('meskie')">Specjalne wyjścia</button>
+            </div>
+
+            <div class="hidden" id="quiz-result" style="text-align: center;">
+                <h3 style="margin-bottom: 20px;">Twój idealny wybór:</h3>
+                <p style="margin-bottom: 30px;">Polecamy nasze <strong id="result-text"></strong></p>
+                <a id="result-link" href="/" class="btn" style="margin-right: 10px;">Zobacz produkty</a>
+                <button class="btn" onclick="resetQuiz()" style="background: #888;">Zacznij od nowa</button>
+            </div>
+
+        </div>
+
+        <div style="display: flex; justify-content: center; gap: 8px; margin-top: 24px;" id="dots">
+            <span class="dot active" id="dot-1"></span>
+            <span class="dot" id="dot-2"></span>
+            <span class="dot" id="dot-3"></span>
+        </div>
+
+    </div>
+</section>
+
+<style>
+    .quiz-btn {
+        display: block;
+        width: 100%;
+        padding: 14px;
+        margin: 10px 0;
+        border: 1px solid var(--accent);
+        background: transparent;
+        cursor: pointer;
+        font-family: 'Inter', sans-serif;
+        font-size: 15px;
+        transition: background 0.2s, color 0.2s;
+    }
+    .quiz-btn:hover { background: var(--accent); color: white; }
+    .hidden { display: none; }
+    .dot {
+        width: 10px; height: 10px;
+        border-radius: 50%;
+        background: #ddd;
+        display: inline-block;
+        transition: background 0.3s;
+    }
+    .dot.active { background: var(--accent); }
+</style>
+
+<script>
+    function nextStep(step) {
+        document.querySelectorAll('.step').forEach(s => s.classList.add('hidden'));
+        document.getElementById('step-' + step).classList.remove('hidden');
+        document.querySelectorAll('.dot').forEach(d => d.classList.remove('active'));
+        document.getElementById('dot-' + step).classList.add('active');
+    }
+
+    function showResult(category) {
+        document.querySelectorAll('.step').forEach(s => s.classList.add('hidden'));
+        document.querySelectorAll('.dot').forEach(d => d.classList.remove('active'));
+        const labels = { 'damskie': 'perfumy damskie', 'meskie': 'perfumy męskie' };
+        document.getElementById('result-text').innerText = labels[category];
+        document.getElementById('result-link').href = '/?gender=' + (category === 'damskie' ? 'K' : 'M');
+        document.getElementById('quiz-result').classList.remove('hidden');
+    }
+
+    function resetQuiz() {
+        document.getElementById('quiz-result').classList.add('hidden');
+        nextStep(1);
+        document.getElementById('dot-1').classList.add('active');
+    }
+</script>
+{% endblock %}
