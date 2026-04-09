@@ -7,6 +7,7 @@ class Seller(models.Model):
     commission_rate = models.DecimalField(max_digits=5, decimal_places=2, default=10.00)
     sponsor = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='referrals')
     created_at = models.DateTimeField(auto_now_add=True)
+    is_approved = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username

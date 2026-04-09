@@ -14,6 +14,9 @@ def seller_panel(request):
     except ObjectDoesNotExist:
         return render(request, 'sellers/no_access.html')
 
+    if not seller.is_approved:
+        return render(request, 'sellers/pending.html')
+
     sales = seller.sales.all().order_by('-sale_date')
     commissions = seller.commissions.all().order_by('-created_at')
     total_sales = sum(s.total_amount for s in sales)
@@ -28,7 +31,7 @@ def seller_panel(request):
         'total_commissions': total_commissions,
         'referrals': referrals,
     })
-
+    
 
 class SellerRegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True)
