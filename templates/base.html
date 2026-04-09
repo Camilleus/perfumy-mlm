@@ -94,8 +94,15 @@
                 <li><a href="/?gender=K" class="{% if request.GET.gender == 'K' %}active{% endif %}">Damskie</a></li>
                 <li><a href="/?gender=U" class="{% if request.GET.gender == 'U' %}active{% endif %}">Unisex</a></li>
                 <li><a href="{% url 'quiz' %}">Quiz zapachowy</a></li>
-                {% if request.user.is_authenticated %}
+                {% if not request.user.is_authenticated %}
+                <li><a href="{% url 'register' %}">Dołącz</a></li>
+                <li><a href="{% url 'login' %}">Logowanie</a></li>
+                {% else %}
                 <li><a href="{% url 'seller_panel' %}">Mój panel</a></li>
+                <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" style="background: none; border: none; cursor: pointer; color: rgba(255,255,255,0.82); font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Wyloguj</button>
+                </form>
                 {% endif %}
             </ul>
             <a href="{% url 'cart_detail' %}" style="justify-self: end; color: white; font-size: 22px;">🛒</a>

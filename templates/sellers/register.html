@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section style="padding: 80px 0;">
+    <div class="container" style="max-width: 500px;">
+        <h1 style="font-size: 36px; font-weight: 300; text-align: center; margin-bottom: 40px;">Dołącz jako sprzedawca</h1>
+        <div style="background: white; padding: 40px;">
+            <form method="post">
+                {% csrf_token %}
+                {% for field in form %}
+                <div style="margin-bottom: 20px;">
+                    <label style="display: block; font-size: 13px; margin-bottom: 6px; color: #888;">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                    <p style="color: var(--terracotta); font-size: 12px; margin-top: 4px;">{{ field.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                <button type="submit" class="btn" style="width: 100%; padding: 14px;">Zarejestruj się</button>
+            </form>
+            <p style="text-align: center; margin-top: 20px; font-size: 13px; color: #888;">
+                Masz już konto? <a href="{% url 'login' %}" style="color: var(--accent);">Zaloguj się</a>
+            </p>
+        </div>
+    </div>
+</section>
+{% endblock %}

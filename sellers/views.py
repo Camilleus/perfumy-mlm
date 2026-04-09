@@ -1,6 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth import login
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django import forms
+from sellers.models import Seller
 
 @login_required
 def seller_panel(request):
@@ -23,3 +28,33 @@ def seller_panel(request):
         'total_commissions': total_commissions,
         'referrals': referrals,
     })
+
+
+class SellerRegistrationForm(UserCreationForm):
+    email = forms.EmailField(required=True)
+    phone = forms.CharField(max_length=20, required=False)
+    sponsor_code = forms.CharField(max_length=150, required=False, label='Kod polecającego (opcjonalnie)')
+
+def register(request):
+    if request.method == 'POST':
+        form = SellerRegistrationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            sponsor = None
+            sponsor_code = form.cleaned_data.get('sponsor_code')
+            if sponsor_code:
+                try:
+                    sponsor_user = User.objects.get(username=sponsor_code)
+                    sponsor = sponsor_user.seller
+                except (User.DoesNotExist, ObjectDoesNotExist):
+                    pass
+            Seller.objects.create(
+                user=user,
+                phone=form.cleaned_data.get('phone', ''),
+                sponsor=sponsor,
+            )
+            login(request, user)
+            return redirect('seller_panel')
+    else:
+        form = SellerRegistrationForm()
+    return render(request, 'sellers/register.html', {'form': form})
