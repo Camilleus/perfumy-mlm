@@ -23,7 +23,7 @@
         a { text-decoration: none; color: inherit; }
 
         header {
-            padding: 15px 0;
+            padding: 15px 0 0 0; /* 15px góra, 0 boki, 0 dół */
             position: sticky;
             top: 0;
             background: var(--nav-gradient);
@@ -151,9 +151,9 @@
             <a href="{% url 'cart_detail' %}" class="cart-icon">🛒</a>
         </nav>
     </div>
-</header>
+    <div class="trust-bar">Darmowa dostawa od 200 zł &bull; Prosimy o Przemyślany Zakup &bull; Perfumy na Każdą Kieszeń</div>
 
-<div class="trust-bar">Darmowa dostawa od 200 zł &bull; 30 dni na zwrot &bull; 100% Oryginały</div>
+</header>
 
 {% block content %}{% endblock %}
 
