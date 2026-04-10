@@ -8,12 +8,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
+            /* 60% - Twoje Ecru */
             --bg-main: #FFFAE2;
-            --accent: #2C3A6E;
+            /* 30% - Night in Paris (Deep Forest Green) */
+            --accent: #1B3022; 
+            /* 10% - Akcenty */
             --gold: #D4AF37;
             --text-dark: #1A1A1A;
-            --terracotta: #C87A53;
+            --terracotta: #C87A53; /* Na promocje/outlet */
         }
+        
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: var(--bg-main); color: var(--text-dark); line-height: 1.6; }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
@@ -25,22 +29,26 @@
             top: 0;
             background: var(--accent);
             z-index: 1000;
-            box-shadow: 0 2px 16px rgba(44,58,110,0.3);
+            /* Subtelniejszy cień dopasowany do ciemnej zieleni */
+            box-shadow: 0 2px 16px rgba(27, 48, 34, 0.4); 
         }
+        
         nav {
             display: grid;
             grid-template-columns: 1fr auto 1fr;
             align-items: center;
         }
+        
         .logo { justify-self: start; }
-        .logo img { height: 46px; width: auto; display: block; border-radius: 8px; }
+        /* Logo na ciemnym tle nagłówka nie potrzebuje promienia 8px, jeśli ma przezroczyste tło */
+        .logo img { height: 46px; width: auto; display: block; }
 
         .nav-links { display: flex; gap: 30px; justify-content: center; }
         .nav-links a {
             font-size: 13px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: rgba(255,255,255,0.82);
+            color: rgba(255,255,255,0.85); /* Lekko wzmocniona biel dla czytelności na zieleni */
             transition: color 0.2s;
             white-space: nowrap;
         }
@@ -50,11 +58,12 @@
         .trust-bar {
             background: var(--gold);
             padding: 10px 0;
-            font-size: 12px;
+            font-size: 11px; /* Minimalnie mniejszy dla większej elegancji */
             text-transform: uppercase;
             text-align: center;
             letter-spacing: 2px;
-            color: var(--text-dark);
+            color: var(--accent); /* Zmiana na ciemną zieleń dla lepszego kontrastu ze złotem */
+            font-weight: 600;
         }
 
         .btn {
@@ -65,16 +74,20 @@
             font-weight: 600;
             border: none;
             cursor: pointer;
-            transition: opacity 0.2s;
+            transition: transform 0.2s, opacity 0.2s;
             font-family: 'Inter', sans-serif;
             font-size: 14px;
         }
-        .btn:hover { opacity: 0.88; }
+        .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+
+        /* Styl dla cen promocyjnych/outletu - do użycia w block content */
+        .price-outlet { color: var(--terracotta); font-weight: 600; }
 
         footer {
-            padding: 50px 0;
+            padding: 60px 0;
             font-size: 14px;
-            border-top: 2px solid var(--gold);
+            border-top: 1px solid rgba(27, 48, 34, 0.1); /* Delikatna linia zamiast grubego złota */
+            background: rgba(27, 48, 34, 0.03); /* Bardzo subtelne odcięcie stopki */
             margin-top: 80px;
         }
         .footer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
@@ -99,13 +112,15 @@
                 <li><a href="{% url 'login' %}">Logowanie</a></li>
                 {% else %}
                 <li><a href="{% url 'seller_panel' %}">Mój panel</a></li>
-                <form method="post" action="{% url 'logout' %}" style="display: inline;">
-                    {% csrf_token %}
-                    <button type="submit" style="background: none; border: none; cursor: pointer; color: rgba(255,255,255,0.82); font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Wyloguj</button>
-                </form>
+                <li>
+                    <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" style="background: none; border: none; cursor: pointer; color: rgba(255,255,255,0.85); font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Wyloguj</button>
+                    </form>
+                </li>
                 {% endif %}
             </ul>
-            <a href="{% url 'cart_detail' %}" style="justify-self: end; color: white; font-size: 22px;">🛒</a>
+            <a href="{% url 'cart_detail' %}" style="justify-self: end; color: var(--gold); font-size: 22px;">🛒</a>
         </nav>
     </div>
 </header>
@@ -116,15 +131,15 @@
 
 <footer>
     <div class="container footer-grid">
-        <div><strong>Twoja Perfumka</strong><br>twojaperfumka.pl</div>
+        <div><strong style="color: var(--accent)">Twoja Perfumka</strong><br>Luksus zamknięty w butelce.</div>
         <div>
-            <ul style="list-style:none">
-                <li>Regulamin</li>
-                <li>Polityka prywatności</li>
-                <li>Kontakt</li>
+            <ul style="list-style:none; line-height: 2">
+                <li><a href="#">Regulamin</a></li>
+                <li><a href="#">Polityka prywatności</a></li>
+                <li><a href="#">Kontakt</a></li>
             </ul>
         </div>
-        <div style="text-align:right">&copy; 2026 Twoja Perfumka</div>
+        <div style="text-align:right; opacity: 0.7">&copy; 2026 twojaperfumka.pl</div>
     </div>
 </footer>
 
