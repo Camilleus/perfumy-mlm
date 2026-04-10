@@ -18,44 +18,70 @@
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg-main); color: var(--text-dark); line-height: 1.6; }
-        .container { max-width: 1300px; margin: 0 auto; padding: 0 20px; }
+        
+        body { 
+            font-family: 'Inter', sans-serif; 
+            background: var(--bg-main); 
+            color: var(--text-dark); 
+            line-height: 1.6; 
+        }
+
+        .container { 
+            max-width: 1300px; 
+            margin: 0 auto; 
+            padding: 0 20px; 
+        }
+
         a { text-decoration: none; color: inherit; }
 
+        /* HEADER & NAVIGATION */
         header {
-            padding: 15px 0 0 0; /* 15px góra, 0 boki, 0 dół */
             position: sticky;
             top: 0;
             background: var(--nav-gradient);
             z-index: 1000;
             box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            padding: 0; /* Zerujemy padding, by trust-bar przylegał idealnie */
         }
         
+        header .container {
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+
         nav {
-            display: grid;
-            grid-template-columns: auto 1fr auto;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            gap: 30px;
+            min-height: 65px; /* Wysokość dopasowana do logo */
         }
         
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
         .logo img { 
-            height: 65px; /* Zwiększone z 55px dla lepszej widoczności */
+            height: 65px; 
             width: auto; 
             display: block;
-            border-radius: 12px; /* Zaokrąglenie rogów dla kwadratowego logo */
-            transition: transform 0.2s; /* Delikatny efekt na hover */
+            border-radius: 12px;
+            transition: transform 0.2s;
+            margin: 0;
         }
 
         .logo img:hover {
-            transform: scale(1.03); /* Subtelne powiększenie po najechaniu */
+            transform: scale(1.03);
         }
 
         .nav-links { 
             display: flex; 
-            gap: 8px; /* Zmniejszony odstęp z 15px na 8px, aby pomieścić dodatkowy przycisk */
+            gap: 10px; 
             justify-content: center; 
             list-style: none; 
-            align-items: center; /* Centrowanie w pionie wszystkich elementów */
+            align-items: center;
+            margin: 0; /* Kluczowe dla wyśrodkowania w pionie */
+            padding: 0;
         }
 
         .nav-links li {
@@ -65,25 +91,28 @@
 
         .nav-links a, 
         .nav-links button {
-            font-size: 13px; /* Delikatna korekta z 14px na 13px przy Boldzie uratuje miejsce */
+            font-size: 13px;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.5px;
             color: var(--gold);
-            padding: 8px 14px; /* Nieco węższe paddingi */
+            padding: 8px 16px;
             border-radius: 25px;
             border: 2px solid transparent;
             transition: all 0.3s ease;
             white-space: nowrap;
             background: transparent;
             cursor: pointer;
-            line-height: 1; /* Kluczowe dla wyrównania przycisku do linków */
+            line-height: 1.2;
+            display: flex;
+            align-items: center;
         }
 
-        /* Reset stylów dla formularza wylogowania */
+        /* Formularz wylogowania - reset */
         .nav-links form {
             display: flex;
-            margin: 0;
+            align-items: center;
+            margin: 0 !important;
             padding: 0;
         }
 
@@ -92,11 +121,14 @@
         .nav-links button:hover {
             border-color: var(--gold);
             background: var(--forest-green);
+            color: var(--gold);
         }
 
+        /* TRUST BAR */
         .trust-bar {
+            margin-top: 0; 
             background: var(--gold-gradient);
-            padding: 12px 0;
+            padding: 10px 0;
             font-size: 11px;
             text-transform: uppercase;
             text-align: center;
@@ -106,9 +138,18 @@
             box-shadow: inset 0 -1px 4px rgba(0,0,0,0.2);
         }
 
-        .cart-icon { justify-self: end; color: var(--gold); font-size: 26px; transition: transform 0.2s; }
+        .cart-icon { 
+            display: flex;
+            align-items: center;
+            color: var(--gold); 
+            font-size: 26px; 
+            transition: transform 0.2s; 
+            line-height: 1;
+        }
+        
         .cart-icon:hover { transform: scale(1.15); }
 
+        /* FOOTER */
         footer {
             padding: 60px 0;
             font-size: 14px;
@@ -116,8 +157,17 @@
             background: #fffdf2;
             margin-top: 80px;
         }
-        .footer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+        
+        .footer-grid { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 20px; 
+        }
 
+        @media (max-width: 1024px) {
+            .nav-links { gap: 5px; }
+            .nav-links a { padding: 6px 10px; font-size: 11px; }
+        }
     </style>
 </head>
 <body>
@@ -128,6 +178,7 @@
             <div class="logo">
                 <a href="/"><img src="{% static 'images/przystanek_psik-psikV2.png' %}" alt="Przystanek PsikPsik"></a>
             </div>
+            
             <ul class="nav-links">
                 <li><a href="/?gender=" class="{% if not request.GET.gender %}active{% endif %}">Wszystkie</a></li>
                 <li><a href="/?gender=M" class="{% if request.GET.gender == 'M' %}active{% endif %}">Dla Niego</a></li>
@@ -141,18 +192,19 @@
                 {% else %}
                     <li><a href="{% url 'seller_panel' %}">Mój panel</a></li>
                     <li>
-                        <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                        <form method="post" action="{% url 'logout' %}">
                             {% csrf_token %}
                             <button type="submit">Wyloguj</button>
                         </form>
                     </li>
                 {% endif %}
             </ul>
+            
             <a href="{% url 'cart_detail' %}" class="cart-icon">🛒</a>
         </nav>
     </div>
+    
     <div class="trust-bar">Darmowa dostawa od 200 zł &bull; Prosimy o Przemyślany Zakup &bull; Perfumy na Każdą Kieszeń</div>
-
 </header>
 
 {% block content %}{% endblock %}
