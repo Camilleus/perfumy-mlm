@@ -8,14 +8,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* 60% - Twoje Ecru */
             --bg-main: #FFFAE2;
-            /* 30% - Night in Paris (Deep Forest Green) */
-            --accent: #1B3022; 
-            /* 10% - Akcenty */
+            /* Poprawka 3: Ciemniejsza zieleń z nutą niebieskiego */
+            --accent-dark: #012b2a; 
+            /* Poprawka 4: Forest Green do przycisków/zakładek */
+            --forest-green: #024442; 
             --gold: #D4AF37;
+            /* Poprawka 5: Złoty gradient do paska */
+            --gold-gradient: linear-gradient(90deg, #b8860b 0%, #D4AF37 50%, #f7e08a 100%);
+            /* Poprawka 6: Gradient dla Navbaru */
+            --nav-gradient: linear-gradient(180deg, #012b2a 0%, #023836 100%);
             --text-dark: #1A1A1A;
-            --terracotta: #C87A53; /* Na promocje/outlet */
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -24,70 +27,67 @@
         a { text-decoration: none; color: inherit; }
 
         header {
-            padding: 12px 0;
+            padding: 15px 0;
             position: sticky;
             top: 0;
-            background: var(--accent);
+            background: var(--nav-gradient); /* Poprawka 6 */
             z-index: 1000;
-            /* Subtelniejszy cień dopasowany do ciemnej zieleni */
-            box-shadow: 0 2px 16px rgba(27, 48, 34, 0.4); 
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
         
         nav {
             display: grid;
-            grid-template-columns: 1fr auto 1fr;
+            grid-template-columns: auto 1fr auto; /* Poprawka 2: Miejsce na nowe logo */
             align-items: center;
+            gap: 40px;
         }
         
-        .logo { justify-self: start; }
-        /* Logo na ciemnym tle nagłówka nie potrzebuje promienia 8px, jeśli ma przezroczyste tło */
-        .logo img { height: 46px; width: auto; display: block; }
+        .logo img { height: 50px; width: auto; display: block; }
 
-        .nav-links { display: flex; gap: 30px; justify-content: center; }
-        .nav-links a {
-            font-size: 13px;
+        .nav-links { display: flex; gap: 15px; justify-content: center; list-style: none; }
+        
+        /* Poprawka 4: Nowy styl zakładek */
+        .nav-links a, .nav-links button {
+            font-size: 12px;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: rgba(255,255,255,0.85); /* Lekko wzmocniona biel dla czytelności na zieleni */
-            transition: color 0.2s;
+            color: var(--gold); /* Zmiana z białego na złoty */
+            padding: 8px 16px;
+            border-radius: 20px; /* Zaokrąglone rogi */
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
             white-space: nowrap;
+            background: transparent;
         }
-        .nav-links a:hover { color: var(--gold); }
-        .nav-links a.active { color: var(--gold); font-weight: 600; }
 
+        /* Efekt obramówki/przycisku na hover i active */
+        .nav-links a:hover, .nav-links a.active, .nav-links button:hover {
+            border-color: var(--gold); /* Złota obramówka */
+            background: var(--forest-green); /* Tło Forest Green */
+            color: var(--gold);
+        }
+
+        /* Poprawka 5: Złoty pasek z gradientem */
         .trust-bar {
-            background: var(--gold);
-            padding: 10px 0;
-            font-size: 11px; /* Minimalnie mniejszy dla większej elegancji */
+            background: var(--gold-gradient);
+            padding: 12px 0;
+            font-size: 11px;
             text-transform: uppercase;
             text-align: center;
             letter-spacing: 2px;
-            color: var(--accent); /* Zmiana na ciemną zieleń dla lepszego kontrastu ze złotem */
-            font-weight: 600;
+            color: #000; /* Dla czytelności na błyszczącym złocie */
+            font-weight: 700;
+            box-shadow: inset 0 -1px 4px rgba(0,0,0,0.2);
         }
 
-        .btn {
-            background: var(--accent);
-            color: white;
-            padding: 13px 36px;
-            display: inline-block;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            transition: transform 0.2s, opacity 0.2s;
-            font-family: 'Inter', sans-serif;
-            font-size: 14px;
-        }
-        .btn:hover { opacity: 0.9; transform: translateY(-1px); }
-
-        /* Styl dla cen promocyjnych/outletu - do użycia w block content */
-        .price-outlet { color: var(--terracotta); font-weight: 600; }
+        .cart-icon { justify-self: end; color: var(--gold); font-size: 22px; transition: transform 0.2s; }
+        .cart-icon:hover { transform: scale(1.1); }
 
         footer {
             padding: 60px 0;
             font-size: 14px;
-            border-top: 1px solid rgba(27, 48, 34, 0.1); /* Delikatna linia zamiast grubego złota */
-            background: rgba(27, 48, 34, 0.03); /* Bardzo subtelne odcięcie stopki */
+            border-top: 1px solid rgba(2, 68, 66, 0.2);
+            background: #fffdf2;
             margin-top: 80px;
         }
         .footer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
@@ -106,21 +106,22 @@
                 <li><a href="/?gender=M" class="{% if request.GET.gender == 'M' %}active{% endif %}">Męskie</a></li>
                 <li><a href="/?gender=K" class="{% if request.GET.gender == 'K' %}active{% endif %}">Damskie</a></li>
                 <li><a href="/?gender=U" class="{% if request.GET.gender == 'U' %}active{% endif %}">Unisex</a></li>
-                <li><a href="{% url 'quiz' %}">Quiz zapachowy</a></li>
+                <li><a href="{% url 'quiz' %}">Znajdź swój zapach</a></li>
+                
                 {% if not request.user.is_authenticated %}
-                <li><a href="{% url 'register' %}">Dołącz</a></li>
-                <li><a href="{% url 'login' %}">Logowanie</a></li>
+                    <li><a href="{% url 'register' %}">Dołącz</a></li>
+                    <li><a href="{% url 'login' %}">Logowanie</a></li>
                 {% else %}
-                <li><a href="{% url 'seller_panel' %}">Mój panel</a></li>
-                <li>
-                    <form method="post" action="{% url 'logout' %}" style="display: inline;">
-                        {% csrf_token %}
-                        <button type="submit" style="background: none; border: none; cursor: pointer; color: rgba(255,255,255,0.85); font-size: 13px; text-transform: uppercase; letter-spacing: 1px;">Wyloguj</button>
-                    </form>
-                </li>
+                    <li><a href="{% url 'seller_panel' %}">Mój panel</a></li>
+                    <li>
+                        <form method="post" action="{% url 'logout' %}" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit">Wyloguj</button>
+                        </form>
+                    </li>
                 {% endif %}
             </ul>
-            <a href="{% url 'cart_detail' %}" style="justify-self: end; color: var(--gold); font-size: 22px;">🛒</a>
+            <a href="{% url 'cart_detail' %}" class="cart-icon">🛒</a>
         </nav>
     </div>
 </header>
@@ -131,7 +132,7 @@
 
 <footer>
     <div class="container footer-grid">
-        <div><strong style="color: var(--accent)">Twoja Perfumka</strong><br>Luksus zamknięty w butelce.</div>
+        <div><strong style="color: var(--forest-green)">Twoja Perfumka</strong><br>Ekskluzywna Perfumeria Online</div>
         <div>
             <ul style="list-style:none; line-height: 2">
                 <li><a href="#">Regulamin</a></li>
