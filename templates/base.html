@@ -4,70 +4,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Twoja Perfumka</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Przystanek PsikPsik | Twój świat zapachów</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-main: #FFFAE2;
-            /* Poprawka 3: Ciemniejsza zieleń z nutą niebieskiego */
             --accent-dark: #012b2a; 
-            /* Poprawka 4: Forest Green do przycisków/zakładek */
             --forest-green: #024442; 
             --gold: #D4AF37;
-            /* Poprawka 5: Złoty gradient do paska */
             --gold-gradient: linear-gradient(90deg, #b8860b 0%, #D4AF37 50%, #f7e08a 100%);
-            /* Poprawka 6: Gradient dla Navbaru */
             --nav-gradient: linear-gradient(180deg, #012b2a 0%, #023836 100%);
             --text-dark: #1A1A1A;
         }
         
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Inter', sans-serif; background: var(--bg-main); color: var(--text-dark); line-height: 1.6; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        .container { max-width: 1300px; margin: 0 auto; padding: 0 20px; }
         a { text-decoration: none; color: inherit; }
 
         header {
             padding: 15px 0;
             position: sticky;
             top: 0;
-            background: var(--nav-gradient); /* Poprawka 6 */
+            background: var(--nav-gradient);
             z-index: 1000;
             box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
         
         nav {
             display: grid;
-            grid-template-columns: auto 1fr auto; /* Poprawka 2: Miejsce na nowe logo */
+            grid-template-columns: auto 1fr auto;
             align-items: center;
-            gap: 40px;
+            gap: 30px;
         }
         
-        .logo img { height: 50px; width: auto; display: block; }
+        .logo img { 
+            height: 65px; /* Zwiększone z 55px dla lepszej widoczności */
+            width: auto; 
+            display: block;
+            border-radius: 12px; /* Zaokrąglenie rogów dla kwadratowego logo */
+            transition: transform 0.2s; /* Delikatny efekt na hover */
+        }
 
-        .nav-links { display: flex; gap: 15px; justify-content: center; list-style: none; }
-        
-        /* Poprawka 4: Nowy styl zakładek */
-        .nav-links a, .nav-links button {
-            font-size: 12px;
+        .logo img:hover {
+            transform: scale(1.03); /* Subtelne powiększenie po najechaniu */
+        }
+
+        .nav-links { 
+            display: flex; 
+            gap: 8px; /* Zmniejszony odstęp z 15px na 8px, aby pomieścić dodatkowy przycisk */
+            justify-content: center; 
+            list-style: none; 
+            align-items: center; /* Centrowanie w pionie wszystkich elementów */
+        }
+
+        .nav-links li {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links a, 
+        .nav-links button {
+            font-size: 13px; /* Delikatna korekta z 14px na 13px przy Boldzie uratuje miejsce */
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--gold); /* Zmiana z białego na złoty */
-            padding: 8px 16px;
-            border-radius: 20px; /* Zaokrąglone rogi */
-            border: 1px solid transparent;
+            letter-spacing: 0.5px;
+            color: var(--gold);
+            padding: 8px 14px; /* Nieco węższe paddingi */
+            border-radius: 25px;
+            border: 2px solid transparent;
             transition: all 0.3s ease;
             white-space: nowrap;
             background: transparent;
+            cursor: pointer;
+            line-height: 1; /* Kluczowe dla wyrównania przycisku do linków */
         }
 
-        /* Efekt obramówki/przycisku na hover i active */
-        .nav-links a:hover, .nav-links a.active, .nav-links button:hover {
-            border-color: var(--gold); /* Złota obramówka */
-            background: var(--forest-green); /* Tło Forest Green */
-            color: var(--gold);
+        /* Reset stylów dla formularza wylogowania */
+        .nav-links form {
+            display: flex;
+            margin: 0;
+            padding: 0;
         }
 
-        /* Poprawka 5: Złoty pasek z gradientem */
+        .nav-links a:hover, 
+        .nav-links a.active, 
+        .nav-links button:hover {
+            border-color: var(--gold);
+            background: var(--forest-green);
+        }
+
         .trust-bar {
             background: var(--gold-gradient);
             padding: 12px 0;
@@ -75,22 +101,23 @@
             text-transform: uppercase;
             text-align: center;
             letter-spacing: 2px;
-            color: #000; /* Dla czytelności na błyszczącym złocie */
+            color: #000;
             font-weight: 700;
             box-shadow: inset 0 -1px 4px rgba(0,0,0,0.2);
         }
 
-        .cart-icon { justify-self: end; color: var(--gold); font-size: 22px; transition: transform 0.2s; }
-        .cart-icon:hover { transform: scale(1.1); }
+        .cart-icon { justify-self: end; color: var(--gold); font-size: 26px; transition: transform 0.2s; }
+        .cart-icon:hover { transform: scale(1.15); }
 
         footer {
             padding: 60px 0;
             font-size: 14px;
-            border-top: 1px solid rgba(2, 68, 66, 0.2);
+            border-top: 2px solid var(--forest-green);
             background: #fffdf2;
             margin-top: 80px;
         }
         .footer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
     </style>
 </head>
 <body>
@@ -99,13 +126,13 @@
     <div class="container">
         <nav>
             <div class="logo">
-                <a href="/"><img src="{% static 'images/logo.png' %}" alt="Twoja Perfumka"></a>
+                <a href="/"><img src="{% static 'images/przystanek_psik-psikV2.png' %}" alt="Przystanek PsikPsik"></a>
             </div>
             <ul class="nav-links">
                 <li><a href="/?gender=" class="{% if not request.GET.gender %}active{% endif %}">Wszystkie</a></li>
-                <li><a href="/?gender=M" class="{% if request.GET.gender == 'M' %}active{% endif %}">Męskie</a></li>
-                <li><a href="/?gender=K" class="{% if request.GET.gender == 'K' %}active{% endif %}">Damskie</a></li>
-                <li><a href="/?gender=U" class="{% if request.GET.gender == 'U' %}active{% endif %}">Unisex</a></li>
+                <li><a href="/?gender=M" class="{% if request.GET.gender == 'M' %}active{% endif %}">Dla Niego</a></li>
+                <li><a href="/?gender=K" class="{% if request.GET.gender == 'K' %}active{% endif %}">Dla Niej</a></li>
+                <li><a href="/?gender=U" class="{% if request.GET.gender == 'U' %}active{% endif %}">Dla Każdego</a></li>
                 <li><a href="{% url 'quiz' %}">Znajdź swój zapach</a></li>
                 
                 {% if not request.user.is_authenticated %}
@@ -126,21 +153,24 @@
     </div>
 </header>
 
-<div class="trust-bar">Darmowa dostawa od 200 zł &bull; 30 dni na zwrot &bull; Autentyczne zapachy</div>
+<div class="trust-bar">Darmowa dostawa od 200 zł &bull; 30 dni na zwrot &bull; 100% Oryginały</div>
 
 {% block content %}{% endblock %}
 
 <footer>
     <div class="container footer-grid">
-        <div><strong style="color: var(--forest-green)">Twoja Perfumka</strong><br>Ekskluzywna Perfumeria Online</div>
+        <div><strong style="color: var(--forest-green); font-size: 1.2em;">Przystanek PsikPsik</strong><br>Najlepszy przystanek na Twojej drodze do idealnego zapachu.</div>
         <div>
-            <ul style="list-style:none; line-height: 2">
+            <ul style="list-style:none; line-height: 2.5">
                 <li><a href="#">Regulamin</a></li>
                 <li><a href="#">Polityka prywatności</a></li>
                 <li><a href="#">Kontakt</a></li>
             </ul>
         </div>
-        <div style="text-align:right; opacity: 0.7">&copy; 2026 twojaperfumka.pl</div>
+        <div style="text-align:right; opacity: 0.7">
+            &copy; 2026 przystanekpsikpsik.pl<br>
+            Wszystkie prawa zastrzeżone.
+        </div>
     </div>
 </footer>
 
