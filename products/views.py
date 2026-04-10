@@ -21,9 +21,21 @@ def product_list(request):
     })
 
 
-def product_detail(request, pk):
-    product = get_object_or_404(Product, pk=pk)
+def product_detail(request, slug):
+    product = get_object_or_404(Product, slug=slug)
     return render(request, 'products/detail.html', {'product': product})
 
 def quiz(request):
-    return render(request, 'products/quiz.html')
+    results = None
+    if request.method == 'POST':
+        intensity = request.POST.get('intensity')
+        category = request.POST.get('category')
+        occasion = request.POST.get('occasion')
+        results = Product.objects.filter(
+            is_available=True,
+            intensity=intensity,
+            occasion=occasion,
+        )
+        if category:
+            results = results.filter(category=category)
+    return render(request, 'products/quiz.html', {'results': results})

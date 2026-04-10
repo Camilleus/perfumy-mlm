@@ -5,90 +5,70 @@
     <div class="container" style="max-width: 600px;">
         <h1 style="font-size: 36px; font-weight: 300; text-align: center; margin-bottom: 40px;">Znajdź swój zapach</h1>
 
-        <div id="quiz-box" style="background: white; padding: 40px;">
-
-            <div class="step" id="step-1">
-                <h3 style="margin-bottom: 20px;">Jaką intensywność preferujesz?</h3>
-                <button class="quiz-btn" onclick="nextStep(2)">Delikatna i świeża</button>
-                <button class="quiz-btn" onclick="nextStep(2)">Mocna i wieczorowa</button>
-            </div>
-
-            <div class="step hidden" id="step-2">
-                <h3 style="margin-bottom: 20px;">Główne nuty zapachowe?</h3>
-                <button class="quiz-btn" onclick="nextStep(3)">Kwiatowe / Owocowe</button>
-                <button class="quiz-btn" onclick="nextStep(3)">Drzewne / Korzenne</button>
-            </div>
-
-            <div class="step hidden" id="step-3">
-                <h3 style="margin-bottom: 20px;">Na jaką okazję?</h3>
-                <button class="quiz-btn" onclick="showResult('damskie')">Na co dzień</button>
-                <button class="quiz-btn" onclick="showResult('meskie')">Specjalne wyjścia</button>
-            </div>
-
-            <div class="hidden" id="quiz-result" style="text-align: center;">
-                <h3 style="margin-bottom: 20px;">Twój idealny wybór:</h3>
-                <p style="margin-bottom: 30px;">Polecamy nasze <strong id="result-text"></strong></p>
-                <a id="result-link" href="/" class="btn" style="margin-right: 10px;">Zobacz produkty</a>
-                <button class="btn" onclick="resetQuiz()" style="background: #888;">Zacznij od nowa</button>
-            </div>
-
+        {% if results is None %}
+        <div style="background: white; padding: 40px;">
+            <form method="post">
+                {% csrf_token %}
+                <div style="margin-bottom: 30px;">
+                    <h3 style="margin-bottom: 16px;">Jaką intensywność preferujesz?</h3>
+                    <label style="display: block; margin-bottom: 10px;">
+                        <input type="radio" name="intensity" value="light" required> Delikatna i świeża
+                    </label>
+                    <label style="display: block;">
+                        <input type="radio" name="intensity" value="strong"> Mocna i wieczorowa
+                    </label>
+                </div>
+                <div style="margin-bottom: 30px;">
+                    <h3 style="margin-bottom: 16px;">Główne nuty zapachowe?</h3>
+                    <label style="display: block; margin-bottom: 10px;">
+                        <input type="radio" name="category" value="floral" required> Kwiatowe / Owocowe
+                    </label>
+                    <label style="display: block;">
+                        <input type="radio" name="category" value="woody"> Drzewne / Korzenne
+                    </label>
+                </div>
+                <div style="margin-bottom: 30px;">
+                    <h3 style="margin-bottom: 16px;">Na jaką okazję?</h3>
+                    <label style="display: block; margin-bottom: 10px;">
+                        <input type="radio" name="occasion" value="daily" required> Na co dzień
+                    </label>
+                    <label style="display: block;">
+                        <input type="radio" name="occasion" value="special"> Specjalne wyjścia
+                    </label>
+                </div>
+                <button type="submit" class="btn" style="width: 100%; padding: 14px;">Znajdź perfumy</button>
+            </form>
         </div>
 
-        <div style="display: flex; justify-content: center; gap: 8px; margin-top: 24px;" id="dots">
-            <span class="dot active" id="dot-1"></span>
-            <span class="dot" id="dot-2"></span>
-            <span class="dot" id="dot-3"></span>
+        {% else %}
+        <a href="{% url 'quiz' %}" style="color: var(--accent); font-size: 14px;">← Zacznij od nowa</a>
+        <div style="margin-top: 30px;">
+            {% if results %}
+            <h2 style="font-size: 24px; font-weight: 300; margin-bottom: 30px;">Twoje dopasowania:</h2>
+            <div style="display: grid; gap: 20px;">
+                {% for product in results %}
+                <a href="{% url 'product_detail' product.slug %}" style="text-decoration: none; color: inherit;">
+                <div style="background: white; padding: 20px; display: flex; gap: 20px; align-items: center;">
+                    {% if product.image %}
+                    <img src="{{ product.image.url }}" style="width: 80px; height: 80px; object-fit: cover;">
+                    {% else %}
+                    <div style="width: 80px; height: 80px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 32px;">🧴</div>
+                    {% endif %}
+                    <div>
+                        <div style="font-weight: 600;">{{ product.name }}</div>
+                        <div style="color: #888; font-size: 13px;">{{ product.brand }}</div>
+                        <div style="color: var(--accent); font-weight: 600; margin-top: 6px;">{{ product.price }} zł</div>
+                    </div>
+                </div>
+                </a>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p style="color: #888; text-align: center;">Brak produktów dla tych kryteriów. Spróbuj inne opcje.</p>
+            {% endif %}
         </div>
+        {% endif %}
 
     </div>
 </section>
-
-<style>
-    .quiz-btn {
-        display: block;
-        width: 100%;
-        padding: 14px;
-        margin: 10px 0;
-        border: 1px solid var(--accent);
-        background: transparent;
-        cursor: pointer;
-        font-family: 'Inter', sans-serif;
-        font-size: 15px;
-        transition: background 0.2s, color 0.2s;
-    }
-    .quiz-btn:hover { background: var(--accent); color: white; }
-    .hidden { display: none; }
-    .dot {
-        width: 10px; height: 10px;
-        border-radius: 50%;
-        background: #ddd;
-        display: inline-block;
-        transition: background 0.3s;
-    }
-    .dot.active { background: var(--accent); }
-</style>
-
-<script>
-    function nextStep(step) {
-        document.querySelectorAll('.step').forEach(s => s.classList.add('hidden'));
-        document.getElementById('step-' + step).classList.remove('hidden');
-        document.querySelectorAll('.dot').forEach(d => d.classList.remove('active'));
-        document.getElementById('dot-' + step).classList.add('active');
-    }
-
-    function showResult(category) {
-        document.querySelectorAll('.step').forEach(s => s.classList.add('hidden'));
-        document.querySelectorAll('.dot').forEach(d => d.classList.remove('active'));
-        const labels = { 'damskie': 'perfumy damskie', 'meskie': 'perfumy męskie' };
-        document.getElementById('result-text').innerText = labels[category];
-        document.getElementById('result-link').href = '/?gender=' + (category === 'damskie' ? 'K' : 'M');
-        document.getElementById('quiz-result').classList.remove('hidden');
-    }
-
-    function resetQuiz() {
-        document.getElementById('quiz-result').classList.add('hidden');
-        nextStep(1);
-        document.getElementById('dot-1').classList.add('active');
-    }
-</script>
 {% endblock %}
