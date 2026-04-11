@@ -25,25 +25,30 @@ RAW_DIR = Path('media/products/raw')
 CSV_OUT = Path('scripts/ai_import.csv')
 PROGRESS_FILE = Path('scripts/ai_progress.txt')
 
-PROMPT = """Analizujesz zdjęcie perfum. Odpowiedz TYLKO w formacie JSON, bez żadnego tekstu przed ani po.
+PROMPT = """Analizujesz zdjęcie perfum. Odpowiedz TYLKO w formacie JSON, bez żadnego tekstu przed ani po. Bez tagów <cite>, bez przypisów, bez cudzysłowów zagnieżdżonych.
 
+PRZYKŁAD POPRAWNEJ ODPOWIEDZI:
 {
-  "name": "pełna nazwa perfum bez marki",
-  "brand": "marka",
-  "gender": "K lub M lub U (K=damskie, M=męskie, U=unisex)",
-  "category": "jedno z: floral, woody, fresh, oriental, citrus",
-  "concentration": "jedno z: edt, edp, parfum",
-  "intensity": "jedno z: light, strong",
-  "occasion": "jedno z: daily, special",
-  "scent_notes": "nuty zapachowe po polsku: Top: ...; Heart: ...; Base: ...",
-  "description": "szczegółowy opis po polsku, 3-4 zdania: historia, charakter, do kogo skierowane, na jaką okazję",
+  "name": "Sauvage Elixir",
+  "brand": "Dior",
+  "gender": "M",
+  "gender_slug": "m",
+  "category": "TYLKO jedno z tych słów: floral, woody, fresh, oriental, citrus",
+  "concentration": "parfum",
+  "intensity": "TYLKO jedno z tych słów: light, strong",
+  "occasion": "TYLKO jedno z tych słów: daily, special",
+  "scent_notes": "Top: grejpfrut, kanelowiec; Heart: lawenda, geranium; Base: cedr, piżmo, ambra",
+  "description": "Sauvage Elixir to ultraskoncentrowana wersja kultowego Diora, stworzona dla mężczyzn poszukujących intensywnego i wyrazistego zapachu. Otwiera się świeżą nutą grejpfruta i aromatycznym cynamonem, przechodząc w serce z lawendą i geranium. Głęboka baza cedru i ambry nadaje kompozycji trwałość i zmysłowy charakter. Idealny na wieczory i wyjątkowe okazje.",
   "price": 200
 }
 
-Użyj swojej wiedzy o perfumach – nie tylko tego co widzisz na zdjęciu.
-Jeśli rozpoznajesz produkt, podaj pełne i dokładne informacje.
-Jeśli nie rozpoznajesz, wpisz "NIEZNANE" dla name i brand.
-Cena zawsze 200.
+ZASADY:
+- Wszystkie opisy i nuty po polsku
+- scent_notes ZAWSZE w formacie: Top: ...; Heart: ...; Base: ...
+- Bez tagów HTML, bez przypisów, bez <cite>
+- Płeć na podstawie konkretnej wersji widocznej na zdjęciu
+- Cena zawsze 200 (chyba że marka to Xerjoff, Phillip Plein lub Amouage - wtedy 250)
+- Opis: 3-4 zdania, tylko po polsku, bez zapożyczeń z innych języków
 """
 
 def analyze_image(image_path):
@@ -80,7 +85,12 @@ def analyze_image(image_path):
     match = re.search(r'\{.*\}', full_text, re.DOTALL)
     if not match:
         raise ValueError(f"Brak JSON w odpowiedzi: {full_text[:200]}")
-    return json.loads(match.group())
+    import re as re2
+    result = json.loads(match.group())
+    for key in ['scent_notes', 'description', 'name', 'brand']:
+        if key in result:
+            result[key] = re2.sub(r'<cite[^>]*>|</cite>', '', str(result[key])).strip()
+    return result
 
 def load_progress():
     if PROGRESS_FILE.exists():
@@ -121,7 +131,8 @@ def main():
             try:
                 data = analyze_image(img)
                 from django.utils.text import slugify
-                slug = slugify(f"{data.get('brand', '')}-{data.get('name', '')}")
+                gender_slug = data.get('gender_slug', 'u')
+                slug = slugify(f"{data.get('brand', '')}-{data.get('name', '')}-{gender_slug}")
 
                 writer.writerow({
                     'name': data.get('name', 'NIEZNANE'),
@@ -142,11 +153,16 @@ def main():
                 f.flush()
                 save_progress(img.name)
                 print(f"✓ {data.get('brand')} - {data.get('name')}")
-                time.sleep(0.5)
+                time.sleep(2)
 
             except Exception as e:
-                print(f"✗ błąd: {e}")
-                time.sleep(1)
+                err = str(e)
+                if '529' in err or 'overloaded' in err.lower():
+                    print(f"⏳ przeciążony, czekam 30s...")
+                    time.sleep(30)
+                else:
+                    print(f"✗ błąd: {e}")
+                    time.sleep(2)
 
     print(f"\nGotowe! Wynik: {CSV_OUT}")
 
