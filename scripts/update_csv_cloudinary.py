@@ -30,7 +30,7 @@ CLOUDINARY_FOLDER = 'home/perfumy'
 
 def get_cloudinary_url(filename):
     public_id = f"{CLOUDINARY_FOLDER}/{Path(filename).stem}"
-    url = cloudinary.utils.cloudinary_url(public_id)[0]
+    url = cloudinary.utils.cloudinary_url(public_id + '.jpg')[0]
     return url
 
 def main():
