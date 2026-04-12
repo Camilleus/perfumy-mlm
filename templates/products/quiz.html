@@ -50,7 +50,7 @@
                 <a href="{% url 'product_detail' product.slug %}" style="text-decoration: none; color: inherit;">
                 <div style="background: white; padding: 20px; display: flex; gap: 20px; align-items: center;">
                     {% if product.image %}
-                    <img src="{{ product.image.url }}" style="width: 80px; height: 80px; object-fit: cover;">
+                    <img src="{{ product.image }}" style="width: 80px; height: 80px; object-fit: cover;">
                     {% else %}
                     <div style="width: 80px; height: 80px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 32px;">🧴</div>
                     {% endif %}
