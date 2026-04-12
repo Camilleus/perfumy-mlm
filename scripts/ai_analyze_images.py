@@ -51,7 +51,7 @@ ZASADY:
 - Opis: 3-4 zdania, tylko po polsku, bez zapożyczeń z innych języków
 """
 
-def analyze_image(image_path):
+def analyze_image(image_path): # funkcja wysyłająca zdjęcie do Claude AI i zwracająca analizę w formie słownika
     with open(image_path, 'rb') as f:
         image_data = base64.standard_b64encode(f.read()).decode('utf-8')
 
@@ -92,16 +92,16 @@ def analyze_image(image_path):
             result[key] = re2.sub(r'<cite[^>]*>|</cite>', '', str(result[key])).strip()
     return result
 
-def load_progress():
+def load_progress(): # wczytuje listę już przetworzonych plików, aby uniknąć duplikacji przy ponownym uruchomieniu
     if PROGRESS_FILE.exists():
         return set(PROGRESS_FILE.read_text().strip().split('\n'))
     return set()
 
-def save_progress(filename):
+def save_progress(filename): # zapisuje nazwę przetworzonego pliku do progress.txt, aby przy ponownym uruchomieniu skryptu nie analizować go ponownie
     with open(PROGRESS_FILE, 'a') as f:
         f.write(filename + '\n')
 
-def main():
+def main(): # główna funkcja analizująca zdjęcia i zapisująca wyniki do CSV
     images = sorted(
         list(RAW_DIR.glob('*.jpg')) +
         list(RAW_DIR.glob('*.jpeg')) +
@@ -134,7 +134,7 @@ def main():
                 gender_slug = data.get('gender_slug', 'u')
                 slug = slugify(f"{data.get('brand', '')}-{data.get('name', '')}-{gender_slug}")
 
-                writer.writerow({
+                writer.writerow({ 
                     'name': data.get('name', 'NIEZNANE'),
                     'brand': data.get('brand', 'NIEZNANE'),
                     'slug': slug,
@@ -153,16 +153,19 @@ def main():
                 f.flush()
                 save_progress(img.name)
                 print(f"✓ {data.get('brand')} - {data.get('name')}")
-                time.sleep(2)
+                time.sleep(10) # opóźnienie między zapytaniami
 
-            except Exception as e:
+            except Exception as e: # obsługa błędów, w tym limitów
                 err = str(e)
-                if '529' in err or 'overloaded' in err.lower():
+                if '429' in err or 'rate_limit' in err.lower():
+                    print(f"⏳ rate limit, czekam 60s...")
+                    time.sleep(60) # dłuższa przerwa przy limitach
+                elif '529' in err or 'overloaded' in err.lower():
                     print(f"⏳ przeciążony, czekam 30s...")
-                    time.sleep(30)
+                    time.sleep(30) # krótka przerwa przed ponowną próbą
                 else:
                     print(f"✗ błąd: {e}")
-                    time.sleep(2)
+                    time.sleep(2) # krótka przerwa przed kolejnym zapytaniem
 
     print(f"\nGotowe! Wynik: {CSV_OUT}")
 
