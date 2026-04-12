@@ -31,6 +31,7 @@ def quiz(request):
         intensity = request.POST.get('intensity')
         category = request.POST.get('category')
         occasion = request.POST.get('occasion')
+        gender = request.POST.get('gender')
         results = Product.objects.filter(
             is_available=True,
             intensity=intensity,
@@ -38,4 +39,6 @@ def quiz(request):
         )
         if category:
             results = results.filter(category=category)
+        if gender:
+            results = results.filter(gender=gender)
     return render(request, 'products/quiz.html', {'results': results})
