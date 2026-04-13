@@ -5,7 +5,8 @@ from django.contrib.auth import login
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django import forms
-from sellers.models import Seller
+from sellers.models import Seller, Referral
+
 
 @login_required
 def seller_panel(request):
@@ -14,50 +15,62 @@ def seller_panel(request):
     except ObjectDoesNotExist:
         return render(request, 'sellers/no_access.html')
 
-    if not seller.is_approved:
-        return render(request, 'sellers/pending.html')
-
-    sales = seller.sales.all().order_by('-sale_date')
-    commissions = seller.commissions.all().order_by('-created_at')
-    total_sales = sum(s.total_amount for s in sales)
-    total_commissions = sum(c.amount for c in commissions)
-    referrals = seller.referrals.all()
+    referrals = seller.referrals.all().order_by('-created_at')
+    referral_count = referrals.count()
+    successful_referrals = referrals.filter(credit_awarded=True).count()
 
     return render(request, 'sellers/panel.html', {
         'seller': seller,
-        'sales': sales,
-        'commissions': commissions,
-        'total_sales': total_sales,
-        'total_commissions': total_commissions,
         'referrals': referrals,
+        'referral_count': referral_count,
+        'successful_referrals': successful_referrals,
     })
-    
+
 
 class SellerRegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True)
-    phone = forms.CharField(max_length=20, required=False)
-    sponsor_code = forms.CharField(max_length=150, required=False, label='Kod polecającego (opcjonalnie)')
+    phone = forms.CharField(max_length=20, required=False, label='Telefon (opcjonalnie)')
+
+    class Meta(UserCreationForm.Meta):
+        fields = ['username', 'email', 'phone', 'password1', 'password2']
+
 
 def register(request):
+    referral_code = request.GET.get('ref', '')
+
     if request.method == 'POST':
         form = SellerRegistrationForm(request.POST)
+        referral_code = request.POST.get('referral_code', '')
+
         if form.is_valid():
-            user = form.save()
-            sponsor = None
-            sponsor_code = form.cleaned_data.get('sponsor_code')
-            if sponsor_code:
-                try:
-                    sponsor_user = User.objects.get(username=sponsor_code)
-                    sponsor = sponsor_user.seller
-                except (User.DoesNotExist, ObjectDoesNotExist):
-                    pass
-            Seller.objects.create(
+            user = form.save(commit=False)
+            user.email = form.cleaned_data['email']
+            user.save()
+
+            seller = Seller.objects.create(
                 user=user,
                 phone=form.cleaned_data.get('phone', ''),
-                sponsor=sponsor,
             )
+
+            # Zapisz że ktoś użył kodu polecenia
+            if referral_code:
+                try:
+                    referrer = Seller.objects.get(referral_code=referral_code.upper())
+                    Referral.objects.create(
+                        referrer=referrer,
+                        referred_email=user.email,
+                    )
+                    # Zapisz kod w sesji – zniżka przy pierwszym zamówieniu
+                    request.session['referral_code'] = referral_code.upper()
+                except Seller.DoesNotExist:
+                    pass
+
             login(request, user)
             return redirect('seller_panel')
     else:
         form = SellerRegistrationForm()
-    return render(request, 'sellers/register.html', {'form': form})
+
+    return render(request, 'sellers/register.html', {
+        'form': form,
+        'referral_code': referral_code,
+    })
