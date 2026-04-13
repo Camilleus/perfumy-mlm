@@ -23,6 +23,7 @@ class Order(models.Model):
     total_amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Łączna kwota')
     note = models.TextField(blank=True, verbose_name='Uwagi do zamówienia')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Data zamówienia')
+    discount = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name='Zniżka')
 
     def __str__(self):
         return f"Zamówienie #{self.pk} – {self.first_name} {self.last_name}"

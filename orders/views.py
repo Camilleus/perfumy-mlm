@@ -1,7 +1,7 @@
-from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.core.mail import send_mail
 from django.conf import settings
+from decimal import Decimal
 from products.models import Product
 from .cart import Cart
 from .models import Order, OrderItem
@@ -12,6 +12,19 @@ def cart_add(request, pk):
     product = Product.objects.get(pk=pk)
     cart.add(product)
     return redirect(request.META.get('HTTP_REFERER', '/'))
+
+
+def cart_increase(request, pk):
+    cart = Cart(request)
+    product = Product.objects.get(pk=pk)
+    cart.add(product, quantity=1)
+    return redirect('cart_detail')
+
+
+def cart_decrease(request, pk):
+    cart = Cart(request)
+    cart.decrease(pk)
+    return redirect('cart_detail')
 
 
 def cart_remove(request, pk):
@@ -31,18 +44,34 @@ def checkout(request):
     if cart.count() == 0:
         return redirect('cart_detail')
 
+    discount = Decimal('0')
+    referral_error = None
+
     if request.method == 'POST':
-        # Pobierz dane z formularza
-        first_name = request.POST.get('first_name')
-        last_name = request.POST.get('last_name')
-        email = request.POST.get('email')
+        first_name = request.POST.get('first_name', '')
+        last_name = request.POST.get('last_name', '')
+        email = request.POST.get('email', '')
         phone = request.POST.get('phone')
         address = request.POST.get('address')
         city = request.POST.get('city')
         postal_code = request.POST.get('postal_code')
         note = request.POST.get('note', '')
+        referral_code = request.POST.get('referral_code', '').strip().upper()
 
-        # Utwórz zamówienie
+        # Sprawdź kod polecenia
+        referral_obj = None
+        if referral_code:
+            try:
+                from sellers.models import Seller, Referral
+                referrer = Seller.objects.get(referral_code=referral_code)
+                discount = Decimal('20')
+                referral_obj = referrer
+            except Exception:
+                referral_error = 'Nieprawidłowy kod polecenia.'
+                discount = Decimal('0')
+
+        total = max(Decimal(str(cart.get_total())) - discount, Decimal('0'))
+
         order = Order.objects.create(
             first_name=first_name,
             last_name=last_name,
@@ -52,10 +81,10 @@ def checkout(request):
             city=city,
             postal_code=postal_code,
             note=note,
-            total_amount=cart.get_total(),
+            total_amount=total,
+            discount=discount,
         )
 
-        # Dodaj pozycje zamówienia
         for item in cart.get_items():
             product = Product.objects.get(pk=item['pk'])
             OrderItem.objects.create(
@@ -65,16 +94,30 @@ def checkout(request):
                 price=item['price'],
             )
 
-        # Wyślij email potwierdzający
-        try:
-            send_mail(
-                subject=f'Potwierdzenie zamówienia #{order.pk} – Twoja Perfumka',
-                message=f'''Cześć {first_name}!
+        # Przyznaj kredyt polecającemu
+        if referral_obj:
+            from sellers.models import Referral
+            Referral.objects.create(
+                referrer=referral_obj,
+                referred_email=email,
+                discount_used=True,
+                credit_awarded=True,
+            )
+            referral_obj.credit += Decimal('20')
+            referral_obj.save()
 
-Dziękujemy za zamówienie w Twoja Perfumka.
+        # Email potwierdzający
+        if email:
+            try:
+                send_mail(
+                    subject=f'Potwierdzenie zamówienia #{order.pk} – Przystanek PsikPsik',
+                    message=f'''Cześć {first_name or ""}!
+
+Dziękujemy za zamówienie na Przystanku PsikPsik :D
 
 Numer zamówienia: #{order.pk}
 Łączna kwota: {order.total_amount} zł
+{f"Zastosowana zniżka: -{discount} zł" if discount else ""}
 Płatność: za pobraniem
 
 Adres dostawy:
@@ -86,34 +129,25 @@ Tel: {phone}
 Skontaktujemy się z Tobą wkrótce.
 
 Pozdrawiamy,
-Twoja Perfumka
+Przystanek PsikPsik
 ''',
-                from_email=settings.DEFAULT_FROM_EMAIL,
-                recipient_list=[email],
-                fail_silently=True,
-            )
-        except Exception:
-            pass
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[email],
+                    fail_silently=True,
+                )
+            except Exception:
+                pass
 
-        # Wyczyść koszyk
         cart.clear()
-
         return redirect('order_confirmation', pk=order.pk)
 
-    return render(request, 'orders/checkout.html', {'cart': cart})
+    return render(request, 'orders/checkout.html', {
+        'cart': cart,
+        'discount': discount,
+        'referral_error': referral_error,
+    })
 
 
 def order_confirmation(request, pk):
     order = Order.objects.get(pk=pk)
     return render(request, 'orders/confirmation.html', {'order': order})
-
-def cart_increase(request, pk):
-    cart = Cart(request)
-    product = Product.objects.get(pk=pk)
-    cart.add(product, quantity=1)
-    return redirect('cart_detail')
-
-def cart_decrease(request, pk):
-    cart = Cart(request)
-    cart.decrease(pk)
-    return redirect('cart_detail')
