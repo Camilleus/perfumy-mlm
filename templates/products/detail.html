@@ -1,5 +1,16 @@
 {% extends "base.html" %}
 
+{% block title %}{{ product.brand }} {{ product.name }} {{ product.get_concentration_display }} – Przystanek Perfumy{% endblock %}
+
+{% block meta %}
+<meta name="description" content="{{ product.brand }} {{ product.name }} – {{ product.description|truncatechars:150 }}">
+<meta property="og:title" content="{{ product.brand }} {{ product.name }} – Przystanek Perfumy">
+<meta property="og:description" content="{{ product.description|truncatechars:150 }}">
+<meta property="og:image" content="{{ product.image }}">
+<meta property="og:type" content="product">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+{% endblock %}
+
 {% block content %}
 <section style="padding: 60px 0;">
     <div class="container">
