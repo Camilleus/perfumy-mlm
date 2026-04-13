@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section style="padding: 80px 0;">
+    <div class="container" style="max-width: 600px; text-align: center;">
+
+        <div style="font-size: 64px; margin-bottom: 24px;">✅</div>
+
+        <h1 style="font-size: 36px; font-weight: 300; margin-bottom: 16px;">Dziękujemy za zamówienie!</h1>
+        <p style="color: #888; font-size: 16px; margin-bottom: 40px;">
+            Numer zamówienia: <strong>#{{ order.pk }}</strong>
+        </p>
+
+        <div style="background: #f9f9f9; padding: 30px; text-align: left; margin-bottom: 40px;">
+            <h3 style="font-weight: 400; margin-bottom: 20px;">Szczegóły zamówienia</h3>
+
+            {% for item in order.items.all %}
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px;">
+                <span>{{ item.product.name }} × {{ item.quantity }}</span>
+                <span style="font-weight: 600;">{{ item.price }} zł</span>
+            </div>
+            {% endfor %}
+
+            <div style="border-top: 1px solid #ddd; padding-top: 12px; margin-top: 12px; display: flex; justify-content: space-between; font-size: 18px; font-weight: 600;">
+                <span>Razem</span>
+                <span style="color: var(--accent);">{{ order.total_amount }} zł</span>
+            </div>
+        </div>
+
+        <div style="background: white; border: 1px solid #eee; padding: 24px; text-align: left; margin-bottom: 40px;">
+            <h3 style="font-weight: 400; margin-bottom: 16px;">Adres dostawy</h3>
+            <p style="margin: 0; line-height: 1.8; color: #444;">
+                {{ order.first_name }} {{ order.last_name }}<br>
+                {{ order.address }}<br>
+                {{ order.postal_code }} {{ order.city }}<br>
+                Tel: {{ order.phone }}
+            </p>
+        </div>
+
+        <p style="color: #888; font-size: 14px; margin-bottom: 30px;">
+            Potwierdzenie zamówienia zostało wysłane na <strong>{{ order.email }}</strong>
+        </p>
+
+        <a href="/" class="btn" style="padding: 14px 40px;">Wróć do sklepu</a>
+
+    </div>
+</section>
+{% endblock %}

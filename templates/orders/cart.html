@@ -25,7 +25,7 @@
                         {% if item.image %}
                         <img src="{{ item.image }}" style="width: 60px; height: 60px; object-fit: cover;">
                         {% else %}
-                        <div style="width: 60px; height: 60px; background: #f0f0f0; display: flex; align-items: center; justify-content: center;">🧴</div>
+                        <div style="width: 60px; height: 60px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 24px;">🧴</div>
                         {% endif %}
                         <div>
                             <div style="font-weight: 600;">{{ item.name }}</div>
@@ -48,7 +48,7 @@
             <div style="font-size: 24px; font-weight: 600; margin-bottom: 20px;">
                 Razem: {{ cart.get_total }} zł
             </div>
-            <button class="btn" style="padding: 15px 40px; font-size: 16px;">Zamów</button>
+            <a href="{% url 'checkout' %}" class="btn" style="padding: 15px 40px; font-size: 16px;">Przejdź do zamówienia →</a>
         </div>
 
         {% endif %}

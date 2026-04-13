@@ -15,7 +15,7 @@ class Cart:
                 'brand': product.brand,
                 'price': str(product.price),
                 'quantity': 0,
-                'image': product.image.url if product.image else None,
+                'image': str(product.image) if product.image else None,
             }
         self.cart[pid]['quantity'] += quantity
         self.save()
@@ -37,3 +37,7 @@ class Cart:
 
     def count(self):
         return sum(item['quantity'] for item in self.cart.values())
+    
+    def clear(self):
+        del self.session['cart']
+        self.save()

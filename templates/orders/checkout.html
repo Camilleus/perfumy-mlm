@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section style="padding: 60px 0;">
+    <div class="container" style="max-width: 700px;">
+        <h1 style="font-size: 36px; font-weight: 300; margin-bottom: 40px;">Dane do zamówienia</h1>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+
+            <!-- Formularz -->
+            <div style="grid-column: 1 / -1;">
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                        <div>
+                            <label style="display: block; font-size: 13px; color: #888; margin-bottom: 6px;">Imię *</label>
+                            <input type="text" name="first_name" required
+                                style="width: 100%; padding: 12px; border: 1px solid #ddd; font-size: 15px; box-sizing: border-box;">
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 13px; color: #888; margin-bottom: 6px;">Nazwisko *</label>
+                            <input type="text" name="last_name" required
+                                style="width: 100%; padding: 12px; border: 1px solid #ddd; font-size: 15px; box-sizing: border-box;">
+                        </div>
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                        <div>
+                            <label style="display: block; font-size: 13px; color: #888; margin-bottom: 6px;">Email *</label>
+                            <input type="email" name="email" required
+                                style="width: 100%; padding: 12px; border: 1px solid #ddd; font-size: 15px; box-sizing: border-box;">
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 13px; color: #888; margin-bottom: 6px;">Telefon *</label>
+                            <input type="tel" name="phone" required
+                                style="width: 100%; padding: 12px; border: 1px solid #ddd; font-size: 15px; box-sizing: border-box;">
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 20px;">
+                        <label style="display: block; font-size: 13px; color: #888; margin-bottom: 6px;">Ulica i numer *</label>
+                        <input type="text" name="address" required
+                            style="width: 100%; padding: 12px; border: 1px solid #ddd; font-size: 15px; box-sizing: border-box;">
+                    </div>
+
+                    <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 20px; margin-bottom: 20px;">
+                        <div>
+                            <label style="display: block; font-size: 13px; color: #888; margin-bottom: 6px;">Kod pocztowy *</label>
+                            <input type="text" name="postal_code" placeholder="00-000" required
+                                style="width: 100%; padding: 12px; border: 1px solid #ddd; font-size: 15px; box-sizing: border-box;">
+                        </div>
+                        <div>
+                            <label style="display: block; font-size: 13px; color: #888; margin-bottom: 6px;">Miasto *</label>
+                            <input type="text" name="city" required
+                                style="width: 100%; padding: 12px; border: 1px solid #ddd; font-size: 15px; box-sizing: border-box;">
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 30px;">
+                        <label style="display: block; font-size: 13px; color: #888; margin-bottom: 6px;">Uwagi do zamówienia</label>
+                        <textarea name="note" rows="3"
+                            style="width: 100%; padding: 12px; border: 1px solid #ddd; font-size: 15px; box-sizing: border-box; resize: vertical;"></textarea>
+                    </div>
+
+                    <!-- Podsumowanie koszyka -->
+                    <div style="background: #f9f9f9; padding: 24px; margin-bottom: 24px;">
+                        <h3 style="font-weight: 400; margin-bottom: 16px;">Twoje zamówienie</h3>
+                        {% for item in cart.get_items %}
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px;">
+                            <span>{{ item.name }} × {{ item.quantity }}</span>
+                            <span style="font-weight: 600;">{{ item.price }} zł</span>
+                        </div>
+                        {% endfor %}
+                        <div style="border-top: 1px solid #ddd; padding-top: 12px; margin-top: 12px; display: flex; justify-content: space-between; font-size: 18px; font-weight: 600;">
+                            <span>Razem</span>
+                            <span style="color: var(--accent);">{{ cart.get_total }} zł</span>
+                        </div>
+                        <div style="margin-top: 12px; font-size: 13px; color: #888;">
+                            💳 Płatność: za pobraniem
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn" style="width: 100%; padding: 16px; font-size: 16px;">
+                        Złóż zamówienie →
+                    </button>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</section>
+{% endblock %}
