@@ -115,3 +115,5 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 CSRF_TRUSTED_ORIGINS = [
     'https://web-production-0c35c.up.railway.app',
 ]
+
+SITE_URL = 'http://127.0.0.1:8000'  # lub http://127.0.0.1:8000 lokalnie #https://web-production-0c35c.up.railway.app/
