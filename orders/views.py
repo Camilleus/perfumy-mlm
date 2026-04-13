@@ -5,7 +5,7 @@ from decimal import Decimal
 from products.models import Product
 from .cart import Cart
 from .models import Order, OrderItem
-
+from django.http import JsonResponse
 
 def cart_add(request, pk):
     cart = Cart(request)
@@ -150,4 +150,14 @@ Przystanek PsikPsik
 
 def order_confirmation(request, pk):
     order = Order.objects.get(pk=pk)
-    return render(request, 'orders/confirmation.html', {'order': order})
+    return render(request, 'orders/confirmation.html', {'order': order})    
+
+
+def check_referral(request):
+    code = request.GET.get('code', '').strip().upper()
+    try:
+        from sellers.models import Seller
+        Seller.objects.get(referral_code=code)
+        return JsonResponse({'valid': True})
+    except Seller.DoesNotExist:
+        return JsonResponse({'valid': False})
