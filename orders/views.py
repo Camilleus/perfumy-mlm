@@ -106,3 +106,14 @@ Twoja Perfumka
 def order_confirmation(request, pk):
     order = Order.objects.get(pk=pk)
     return render(request, 'orders/confirmation.html', {'order': order})
+
+def cart_increase(request, pk):
+    cart = Cart(request)
+    product = Product.objects.get(pk=pk)
+    cart.add(product, quantity=1)
+    return redirect('cart_detail')
+
+def cart_decrease(request, pk):
+    cart = Cart(request)
+    cart.decrease(pk)
+    return redirect('cart_detail')

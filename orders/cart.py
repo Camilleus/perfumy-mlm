@@ -13,6 +13,7 @@ class Cart:
                 'pk': pid,
                 'name': product.name,
                 'brand': product.brand,
+                'slug': product.slug,
                 'price': str(product.price),
                 'quantity': 0,
                 'image': str(product.image) if product.image else None,
@@ -33,7 +34,8 @@ class Cart:
         return self.cart.values()
 
     def get_total(self):
-        return sum(float(item['price']) * item['quantity'] for item in self.cart.values())
+        from decimal import Decimal
+        return round(sum(Decimal(item["price"]) * item["quantity"] for item in self.cart.values()), 2)
 
     def count(self):
         return sum(item['quantity'] for item in self.cart.values())
@@ -41,3 +43,12 @@ class Cart:
     def clear(self):
         del self.session['cart']
         self.save()
+
+    def decrease(self, product_id):
+        pid = str(product_id)
+        if pid in self.cart:
+            if self.cart[pid]['quantity'] > 1:
+                self.cart[pid]['quantity'] -= 1
+            else:
+                del self.cart[pid]
+            self.save()
