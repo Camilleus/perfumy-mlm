@@ -161,3 +161,21 @@ def check_referral(request):
         return JsonResponse({'valid': True})
     except Seller.DoesNotExist:
         return JsonResponse({'valid': False})
+    
+def my_orders(request):
+    orders = None
+    email_searched = None
+
+    if request.user.is_authenticated:
+        # Zalogowany – szuka po emailu z konta
+        orders = Order.objects.filter(email=request.user.email).order_by('-created_at')
+    elif request.method == 'POST':
+        # Gość – wpisuje email
+        email_searched = request.POST.get('email', '').strip()
+        if email_searched:
+            orders = Order.objects.filter(email=email_searched).order_by('-created_at')
+
+    return render(request, 'orders/my_orders.html', {
+        'orders': orders,
+        'email_searched': email_searched,
+    })

@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+
+{% block title %}Moje zamówienia – Przystanek PsikPsik{% endblock %}
+
+{% block content %}
+<section style="padding: 60px 0;">
+    <div class="container" style="max-width: 800px;">
+        <h1 style="font-size: 36px; font-weight: 300; margin-bottom: 40px;">Moje zamówienia</h1>
+
+        {% if not request.user.is_authenticated and orders is None %}
+        <!-- Formularz dla gościa -->
+        <div style="background: white; padding: 40px; border: 1px solid #eee; max-width: 500px;">
+            <p style="color: #888; margin-bottom: 24px; font-size: 15px;">
+                Wpisz email użyty przy zamówieniu – pokażemy Ci historię zakupów.
+            </p>
+            <form method="post">
+                {% csrf_token %}
+                <label style="display: block; font-size: 13px; color: #888; margin-bottom: 6px;">Twój email *</label>
+                <input type="email" name="email" required placeholder="np. jan@kowalski.pl"
+                    style="width: 100%; padding: 12px; border: 1px solid #ddd; font-size: 15px; box-sizing: border-box; margin-bottom: 16px;">
+                <button type="submit" class="btn" style="width: 100%; padding: 14px;">Sprawdź zamówienia</button>
+            </form>
+        </div>
+
+        {% elif orders is not None and orders.count == 0 %}
+        <!-- Brak zamówień -->
+        <div style="background: white; padding: 40px; border: 1px solid #eee; text-align: center;">
+            <div style="font-size: 48px; margin-bottom: 16px;">📭</div>
+            <p style="color: #888; font-size: 15px; margin-bottom: 24px;">
+                {% if email_searched %}
+                    Nie znaleźliśmy zamówień dla <strong>{{ email_searched }}</strong>.
+                {% else %}
+                    Nie masz jeszcze żadnych zamówień.
+                {% endif %}
+            </p>
+            <a href="/" class="btn" style="padding: 12px 30px;">Przejdź do sklepu</a>
+            {% if email_searched %}
+            <div style="margin-top: 16px;">
+                <a href="{% url 'my_orders' %}" style="color: var(--gold); font-size: 13px;">← Spróbuj inny email</a>
+            </div>
+            {% endif %}
+        </div>
+
+        {% elif orders %}
+        <!-- Lista zamówień -->
+        {% if email_searched %}
+        <p style="color: #888; font-size: 14px; margin-bottom: 24px;">
+            Zamówienia dla: <strong>{{ email_searched }}</strong>
+            <a href="{% url 'my_orders' %}" style="color: var(--gold); margin-left: 12px; font-size: 13px;">← Szukaj innego</a>
+        </p>
+        {% endif %}
+
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+            {% for order in orders %}
+            <div style="background: white; border: 1px solid #eee; padding: 24px;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
+                    <div>
+                        <div style="font-size: 18px; font-weight: 600;">Zamówienie #{{ order.pk }}</div>
+                        <div style="color: #888; font-size: 13px; margin-top: 4px;">{{ order.created_at|date:"d.m.Y, H:i" }}</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 20px; font-weight: 700; color: var(--forest-green);">{{ order.total_amount }} zł</div>
+                        {% if order.discount %}
+                        <div style="font-size: 12px; color: green;">Zniżka: -{{ order.discount }} zł</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Status -->
+                <div style="margin-bottom: 16px;">
+                    {% if order.status == 'new' %}
+                    <span style="background: #fff3cd; color: #856404; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">🕐 Nowe</span>
+                    {% elif order.status == 'confirmed' %}
+                    <span style="background: #d1ecf1; color: #0c5460; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">✅ Potwierdzone</span>
+                    {% elif order.status == 'shipped' %}
+                    <span style="background: #d4edda; color: #155724; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">📦 Wysłane</span>
+                    {% elif order.status == 'delivered' %}
+                    <span style="background: #d4edda; color: #155724; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">🎉 Dostarczone</span>
+                    {% elif order.status == 'cancelled' %}
+                    <span style="background: #f8d7da; color: #721c24; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600;">❌ Anulowane</span>
+                    {% endif %}
+                </div>
+
+                <!-- Produkty -->
+                <div style="border-top: 1px solid #f0f0f0; padding-top: 16px;">
+                    {% for item in order.items.all %}
+                    <div style="display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 8px; color: #444;">
+                        <span>{{ item.product.name }} <span style="color: #aaa;">× {{ item.quantity }}</span></span>
+                        <span style="font-weight: 600;">{{ item.price }} zł</span>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                <!-- Adres -->
+                <div style="border-top: 1px solid #f0f0f0; padding-top: 16px; margin-top: 8px; font-size: 13px; color: #888;">
+                    📍 {{ order.address }}, {{ order.postal_code }} {{ order.city }}
+                    {% if order.note %}
+                    <div style="margin-top: 6px;">💬 {{ order.note }}</div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+    </div>
+</section>
+{% endblock %}
