@@ -216,3 +216,10 @@ __marimo__/
 .streamlit/secrets.toml
 .env
 .venv/
+
+# Pictures
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
