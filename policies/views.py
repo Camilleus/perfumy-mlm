@@ -4,6 +4,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
 from django.shortcuts import redirect
+from django.urls import reverse
 
 
 class RegulaminView(TemplateView):
@@ -55,44 +56,79 @@ Wiadomość:
 
 def withdrawal_submit(request):
     if request.method == 'POST':
-        name = request.POST.get('name')
-        address = request.POST.get('address')
-        email = request.POST.get('email')
-        order_number = request.POST.get('order_number')
-        delivery_date = request.POST.get('delivery_date')
-        products = request.POST.get('products')
-        signature = request.POST.get('signature')
-        date = request.POST.get('date')
-
-        if not name or not email or not order_number:
-            messages.error(request, 'Proszę wypełnić wymagane pola (imię, e-mail, numer zamówienia).')
+        # Sprawdź checkbox
+        if not request.POST.get('accept_rules'):
+            messages.error(request, 'Musisz zaakceptować warunki dotyczące zwrotu perfum.')
             return redirect('withdrawal_form')
 
-        # Przygotuj treść e-maila
-        subject = f'Odstąpienie od umowy - zamówienie {order_number}'
-        body = f"""
+        name = request.POST.get('name', '').strip()
+        address = request.POST.get('address', '').strip()
+        email = request.POST.get('email', '').strip()
+        order_number = request.POST.get('order_number', '').strip()
+        delivery_date = request.POST.get('delivery_date', '').strip()
+        products = request.POST.get('products', '').strip()
+        signature = request.POST.get('signature', '').strip()
+        date = request.POST.get('date', '').strip()
+
+        if not all([name, address, email, order_number, products, signature, date]):
+            messages.error(request, 'Proszę wypełnić wszystkie wymagane pola.')
+            return redirect('withdrawal_form')
+
+        # Treść wiadomości dla sklepu
+        subject_shop = f'Odstąpienie od umowy – zamówienie {order_number}'
+        body_shop = f"""
 Imię i nazwisko: {name}
 Adres: {address}
 E-mail: {email}
 Numer zamówienia: {order_number}
 Data otrzymania towaru: {delivery_date if delivery_date else 'nie podano'}
-Produkty: {products}
+Produkty, od których odstępuję: {products}
 Podpis: {signature}
-Data wypełnienia: {date}
+Data wypełnienia formularza: {date}
 
 Uwaga: Klient odstępuje od umowy zgodnie z art. 27 ustawy o prawach konsumenta.
         """
+
+        # Treść potwierdzenia dla klienta
+        subject_customer = f'Potwierdzenie otrzymania odstąpienia od umowy – zamówienie {order_number}'
+        body_customer = f"""
+Szanowny/a {name},
+
+Dziękujemy za przesłanie formularza odstąpienia od umowy dla zamówienia nr {order_number}.
+
+Przypominamy, że zgodnie z art. 38 ustawy o prawach konsumenta, odstąpienie od umowy nie przysługuje w przypadku perfum, jeśli oryginalne opakowanie zostało otwarte. Jeżeli produkt nie był testowany i opakowanie jest nienaruszone, prosimy o odesłanie go na adres:
+
+Marcel Krzeja
+ul. Kwiatowa 5
+00-001 Warszawa
+
+Zwrot środków nastąpi niezwłocznie, nie później niż w ciągu 14 dni od otrzymania towaru (lub dowodu jego odesłania).
+
+W razie pytań jesteśmy do dyspozycji: sklep@przystanekperfumy.pl
+
+Zespół Przystanek Perfumy
+        """
+
         try:
+            # Wysyłka do sklepu
             send_mail(
-                subject,
-                body,
+                subject_shop,
+                body_shop,
                 settings.DEFAULT_FROM_EMAIL,
-                [settings.CONTACT_EMAIL],  # lub osobny adres do reklamacji
+                [settings.CONTACT_EMAIL],  # reklamacje@...
                 fail_silently=False,
             )
-            messages.success(request, 'Formularz odstąpienia został wysłany. Otrzymasz potwierdzenie wkrótce.')
-        except Exception:
-            messages.error(request, 'Wystąpił błąd podczas wysyłania formularza. Skontaktuj się bezpośrednio przez e-mail.')
+            # Wysyłka potwierdzenia do klienta
+            send_mail(
+                subject_customer,
+                body_customer,
+                settings.DEFAULT_FROM_EMAIL,
+                [email],
+                fail_silently=False,
+            )
+            messages.success(request, 'Formularz odstąpienia został wysłany. Na Twój adres e-mail wysłaliśmy potwierdzenie.')
+        except Exception as e:
+            messages.error(request, 'Wystąpił błąd podczas wysyłania. Skontaktuj się bezpośrednio: sklep@przystanekperfumy.pl')
         return redirect('withdrawal_form')
     else:
         return redirect('withdrawal_form')

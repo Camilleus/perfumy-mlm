@@ -105,6 +105,7 @@ EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = config('EMAIL_HOST_USER')
 ADMIN_EMAIL = config('ADMIN_EMAIL')
+CONTACT_EMAIL = 'sidkrasongdziejestmaniek@gmail.com'  # lub sklep@przystanekperfumy.pl
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': config('CLOUDINARY_CLOUD_NAME'),

@@ -39,12 +39,12 @@
 
                 <div class="form-group">
                     <label class="form-label">Nazwa produktu / produktów, od których odstępuję</label>
-                    <textarea name="products" rows="3" class="form-input" required></textarea>
+                    <textarea name="products" rows="3" class="form-input" required placeholder="np. 1x Dior Sauvage 100ml, 2x Chanel No.5 50ml"></textarea>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">Podpis (lub imię i nazwisko w przypadku wysyłki elektronicznej)</label>
-                    <input type="text" name="signature" class="form-input" placeholder="np. Jan Kowalski">
+                    <input type="text" name="signature" class="form-input" required>
                 </div>
 
                 <div class="form-group">
@@ -52,9 +52,12 @@
                     <input type="date" name="date" class="form-input" value="{% now 'Y-m-d' %}" required>
                 </div>
 
-                <div style="background: #f9f9f9; padding: 16px; margin: 24px 0; border-left: 4px solid var(--gold);">
-                    <p style="font-size: 14px; margin: 0;"><strong>Instrukcja:</strong> Formularz należy wypełnić i odesłać na adres e-mail: <a href="mailto:reklamacje@przystanekperfumy.pl">reklamacje@przystanekperfumy.pl</a> lub listownie na adres Sprzedawcy (Marcel Krzeja, ul. Kwiatowa 5, 00-001 Warszawa).</p>
-                    <p style="font-size: 14px; margin-top: 12px;"><strong>Uwaga:</strong> Prawo odstąpienia od umowy nie przysługuje w przypadku perfum, po otwarciu oryginalnego opakowania (art. 38 ustawy o prawach konsumenta).</p>
+                <!-- DODANY CHECKBOX AKCEPTACJI -->
+                <div class="form-group" style="margin-top: 20px;">
+                    <label style="display: flex; align-items: flex-start; gap: 10px; font-size: 13px; cursor: pointer;">
+                        <input type="checkbox" name="accept_rules" required style="margin-top: 2px;">
+                        <span>Klikając „Wyślij”, przyjmuję do wiadomości, że zwrot perfum z otwartym opakowaniem nie jest możliwy zgodnie z art. 38 ustawy o prawach konsumenta.</span>
+                    </label>
                 </div>
 
                 <div class="text-center">
@@ -64,7 +67,6 @@
             </form>
 
             <hr style="margin: 32px 0;">
-
             <p class="text-center" style="font-size: 12px; color: #aaa;">Możesz również skorzystać z poniższego tekstu i wysłać go bez formularza – wystarczy, że wyraźnie poinformujesz Sprzedawcę o odstąpieniu od umowy.</p>
             <div style="background: #f5f5f5; padding: 16px; font-family: monospace; font-size: 13px; white-space: pre-wrap;">
 Ja, ……………………………………, niniejszym informuję o odstąpieniu od umowy sprzedaży następujących produktów:
@@ -81,7 +83,6 @@ Data: …………………
 </section>
 
 <script>
-    // Automatyczna data dzisiejsza w polu date, jeśli puste
     const dateField = document.querySelector('input[name="date"]');
     if (dateField && !dateField.value) {
         dateField.value = new Date().toISOString().split('T')[0];
