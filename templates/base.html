@@ -44,7 +44,7 @@
             background: var(--nav-gradient);
             z-index: 1000;
             box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            padding: 0; /* Zerujemy padding, by trust-bar przylegał idealnie */
+            padding: 0;
         }
         
         header .container {
@@ -56,7 +56,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            min-height: 65px; /* Wysokość dopasowana do logo */
+            min-height: 65px;
         }
         
         .logo {
@@ -83,13 +83,14 @@
             justify-content: center; 
             list-style: none; 
             align-items: center;
-            margin: 0; /* Kluczowe dla wyśrodkowania w pionie */
+            margin: 0;
             padding: 0;
         }
 
         .nav-links li {
             display: flex;
             align-items: center;
+            position: relative;
         }
 
         .nav-links a, 
@@ -111,7 +112,6 @@
             align-items: center;
         }
 
-        /* Formularz wylogowania - reset */
         .nav-links form {
             display: flex;
             align-items: center;
@@ -125,6 +125,51 @@
             border-color: var(--gold);
             background: var(--forest-green);
             color: var(--gold);
+        }
+
+        /* DROPDOWN */
+        .dropdown { position: relative; }
+
+        .dropdown-toggle::after {
+            content: ' ▾';
+            font-size: 10px;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            padding-top: 8px;
+            left: 0;
+            background: var(--accent-dark);
+            border: 1px solid var(--gold);
+            border-radius: 8px;
+            min-width: 160px;
+            overflow: hidden;
+            z-index: 999;
+        }
+
+        .dropdown-menu a {
+            display: block;
+            padding: 10px 18px;
+            color: var(--gold);
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-radius: 0;
+            border: none;
+            transition: background 0.2s;
+        }
+
+        .dropdown-menu a:hover,
+        .dropdown-menu a.active {
+            background: var(--forest-green);
+            border: none;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
         }
 
         /* TRUST BAR */
@@ -171,7 +216,8 @@
             .nav-links { gap: 5px; }
             .nav-links a { padding: 6px 10px; font-size: 11px; }
         }
-            /* PRZYCISKI */
+
+        /* PRZYCISKI */
         .btn {
             display: inline-block;
             background: var(--gold-gradient);
@@ -192,7 +238,7 @@
             transform: translateY(-1px);
             opacity: 0.92;
         }
-</style>
+    </style>
 </head>
 <body>
 
@@ -200,21 +246,30 @@
     <div class="container">
         <nav>
             <div class="logo">
-                <a href="/"><img src="{% static 'images/przystanek_psik-psikv2.png' %}" alt="Przystanek PsikPsik"></a>
+                <a href="/"><img src="{% static 'images/Projektbeznazwy.png' %}" alt="Przystanek PsikPsik"></a>
             </div>
             
             <ul class="nav-links">
-                <li><a href="/?gender=" class="{% if not request.GET.gender %}active{% endif %}">Wszystkie</a></li>
-                <li><a href="/?gender=M" class="{% if request.GET.gender == 'M' %}active{% endif %}">Dla Niego</a></li>
-                <li><a href="/?gender=K" class="{% if request.GET.gender == 'K' %}active{% endif %}">Dla Niej</a></li>
-                <li><a href="/?gender=U" class="{% if request.GET.gender == 'U' %}active{% endif %}">Dla Każdego</a></li>
-                <li><a href="{% url 'quiz' %}">Znajdź swój zapach</a></li>
-                
+
+                <!-- DROPDOWN: Kolekcja -->
+                <li class="dropdown">
+                    <a href="/" class="dropdown-toggle {% if request.path == '/' %}active{% endif %}">Kolekcja</a>
+                    <div class="dropdown-menu">
+                        <a href="/?gender=" class="{% if not request.GET.gender %}active{% endif %}">Wszystkie</a>
+                        <a href="/?gender=M" class="{% if request.GET.gender == 'M' %}active{% endif %}">Dla Niego</a>
+                        <a href="/?gender=K" class="{% if request.GET.gender == 'K' %}active{% endif %}">Dla Niej</a>
+                        <a href="/?gender=U" class="{% if request.GET.gender == 'U' %}active{% endif %}">Dla Każdego</a>
+                    </div>
+                </li>
+
+                <li><a href="{% url 'quiz' %}">Znajdź swój Psik</a></li>
+                <li><a href="{% url 'my_orders' %}">Moje zamówienia</a></li>
+
                 {% if not request.user.is_authenticated %}
                     <li><a href="{% url 'register' %}">Dołącz</a></li>
-                    <li><a href="{% url 'login' %}">Logowanie</a></li>
+                    <li><a href="{% url 'login' %}">Zaloguj</a></li>
                 {% else %}
-                    <li><a href="{% url 'seller_panel' %}">Mój panel</a></li>
+                    <li><a href="{% url 'seller_panel' %}">Moje Konto</a></li>
                     <li>
                         <form method="post" action="{% url 'logout' %}">
                             {% csrf_token %}
