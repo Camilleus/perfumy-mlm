@@ -30,17 +30,19 @@ def seller_panel(request):
 class SellerRegistrationForm(UserCreationForm):
     email = forms.EmailField(required=True)
     phone = forms.CharField(max_length=20, required=False, label='Telefon (opcjonalnie)')
+    referral_code = forms.CharField(max_length=20, required=False, label='Kod polecającego (opcjonalnie)')
 
     class Meta(UserCreationForm.Meta):
         fields = ['username', 'email', 'phone', 'password1', 'password2']
 
 
-def register(request):
-    referral_code = request.GET.get('ref', '')
-
+def register(request, referral_code=None):
+    # 1. Obsługa kodu z URL (np. /rejestracja/CAMIL-CD3O/)
+    initial_code = referral_code or request.GET.get('ref', '')
+    
     if request.method == 'POST':
         form = SellerRegistrationForm(request.POST)
-        referral_code = request.POST.get('referral_code', '')
+        submitted_code = request.POST.get('referral_code', '')
 
         if form.is_valid():
             user = form.save(commit=False)
@@ -52,25 +54,28 @@ def register(request):
                 phone=form.cleaned_data.get('phone', ''),
             )
 
-            # Zapisz że ktoś użył kodu polecenia
-            if referral_code:
+            # Kod do wykorzystania: najpierw z formularza, potem z URL
+            used_code = submitted_code or initial_code
+            if used_code:
                 try:
-                    referrer = Seller.objects.get(referral_code=referral_code.upper())
+                    referrer = Seller.objects.get(referral_code=used_code.upper())
                     Referral.objects.create(
                         referrer=referrer,
                         referred_email=user.email,
                     )
                     # Zapisz kod w sesji – zniżka przy pierwszym zamówieniu
-                    request.session['referral_code'] = referral_code.upper()
+                    request.session['referral_code'] = used_code.upper()
                 except Seller.DoesNotExist:
                     pass
 
             login(request, user)
             return redirect('seller_panel')
     else:
-        form = SellerRegistrationForm()
+        # Wypełnij pole referral_code wartością z URL (jeśli istnieje)
+        initial = {'referral_code': initial_code} if initial_code else {}
+        form = SellerRegistrationForm(initial=initial)
 
     return render(request, 'sellers/register.html', {
         'form': form,
-        'referral_code': referral_code,
+        'referral_code': initial_code,
     })

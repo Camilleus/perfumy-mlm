@@ -64,10 +64,7 @@
         <!-- LINK POLECAJĄCY -->
         <div style="background:#fffdf0; border:1px solid var(--gold); padding:24px; margin-bottom:24px;">
             <h3 style="font-weight:600; margin-bottom:8px; font-size:16px;">🔗 Twój link polecający</h3>
-            <p style="font-size:13px; color:#888; margin-bottom:14px;">
-                Wyślij link znajomemu. On dostaje <strong>-20 zł</strong>. Ty dostajesz <strong>20 zł kredytu</strong>!
-            </p>
-            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
                 <input type="text" id="referral-link"
                     value="{{ request.scheme }}://{{ request.get_host }}/rejestracja/{{ seller.referral_code }}/"
                     readonly
@@ -79,6 +76,17 @@
                 Twój kod: <strong style="font-size:15px; letter-spacing:2px;">{{ seller.referral_code }}</strong>
             </div>
         </div>
+
+        <script>
+        function copyLink() {
+            const input = document.getElementById('referral-link');
+            input.select();
+            document.execCommand('copy');
+            const msg = document.getElementById('copy-msg');
+            msg.style.display = 'block';
+            setTimeout(() => { msg.style.display = 'none'; }, 2000);
+        }
+        </script>
 
         <!-- PROGI -->
         <div class="card-border" style="margin-bottom:24px; overflow-x:auto;">

@@ -50,7 +50,7 @@ Brakuje Ci tylko {remaining} {'polecenia' if remaining == 1 else 'poleceń'} do 
 
 Udostępnij swój link: {settings.SITE_URL}/rejestracja/{referrer.referral_code}/
 
-Przystanek PsikPsik
+Przystanek Perfumy
 ''',
                         from_email=settings.DEFAULT_FROM_EMAIL,
                         recipient_list=[referrer.user.email],
@@ -73,7 +73,7 @@ Gratulacje! Awansowałeś na poziom {referrer.get_level_display()}!
 Zaloguj się i sprawdź swój panel:
 {settings.SITE_URL}/panel/
 
-Przystanek PsikPsik
+Przystanek Perfumy
 ''',
                     from_email=settings.DEFAULT_FROM_EMAIL,
                     recipient_list=[referrer.user.email],
