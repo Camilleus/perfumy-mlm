@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'products',
     'sellers',
     'orders',
+    'policies',
     'import_export',
     'cloudinary_storage',
     'cloudinary',

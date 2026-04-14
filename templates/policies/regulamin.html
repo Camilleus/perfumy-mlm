@@ -1,229 +1,155 @@
+{% extends "base.html" %}
+{% load static %}
 
-<div class="prose">
-  <h1 class="page-title text-center">Regulamin serwisu</h1>
+{% block title %}Regulamin Sklepu – Przystanek Perfumy{% endblock %}
 
-  <h2>I. Pojęcia ogólne</h2>
-  <ul>
-      <li><strong>Regulamin</strong> – niniejszy dokument normujący zasady korzystania z Serwisu.</li>
-      <li><strong>Serwis</strong> – platforma internetowa "Przystanek Perfumy", dostępna pod adresem https://przystanekperfumy.pl/.</li>
-      <li><strong>Usługodawca</strong> – osoba fizyczna "Marcel Krzeja".</li>
-      <li><strong>Usługobiorca</strong> – każda osoba fizyczna, która uzyskuje dostęp do Serwisu i korzysta z udostępnianych usług.</li>
-      <li><strong>Komunikacja Drogą Elektroniczną</strong> – wszelka wymiana informacji za pośrednictwem poczty elektronicznej (e-mail) i formularzy online dostępnych w Serwisie.</li>
-  </ul>
+{% block content %}
+<section class="section-pad">
+    <div class="container" style="max-width: 1000px;">
+        <div class="prose" style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.05);">
+            <h1 class="text-center" style="font-size: 28px; font-weight: 300; margin-bottom: 32px;">Regulamin Sklepu internetowego „Przystanek Perfumy”</h1>
 
-  <h2>II. Postanowienia ogólne</h2>
-  <ul>
-      <li>Regulamin określa zasady działania i użytkowania Serwisu oraz obowiązki i prawa Usługobiorców i Usługodawcy wynikające z korzystania z Serwisu.</li>
-      <li>Przedmiotem usług Usługodawcy jest udostępnianie nieodpłatnych funkcjonalności Serwisu, pozwalających Usługobiorcom na dostęp do treści, materiałów audiowizualnych, aplikacji internetowych czy formularzy elektronicznych.</li>
-      <li>Wszelkie informacje publikowane w Serwisie (artykuły, wskazówki, materiały poradnikowe) mają charakter ogólny i nie są skierowane do konkretnych Usługobiorców. Usługodawca nie ponosi odpowiedzialności za sposób ich wykorzystania.</li>
-      <li>Usługobiorca ponosi pełną odpowiedzialność za stosowanie materiałów dostępnych w Serwisie i korzystanie z nich zgodnie z właściwymi przepisami prawa.</li>
-      <li>Usługodawca nie gwarantuje przydatności zamieszczonych w Serwisie materiałów do konkretnych celów.</li>
-      <li>Usługodawca nie odpowiada za ewentualne straty czy szkody związane z użytkowaniem Serwisu. Wszelkie działania podejmowane przez Usługobiorcę w Serwisie odbywają się na jego wyłączne ryzyko.</li>
-  </ul>
+            <!-- I. DEFINICJE -->
+            <h2>I. Definicje</h2>
+            <ul>
+                <li><strong>Regulamin</strong> – niniejszy dokument.</li>
+                <li><strong>Sklep</strong> – serwis internetowy dostępny pod adresem <a href="https://przystanekperfumy.pl">https://przystanekperfumy.pl</a>, prowadzony przez Sprzedawcę.</li>
+                <li><strong>Sprzedawca</strong> – Marcel Krzeja, prowadzący działalność gospodarczą pod firmą „Przystanek Perfumy”, NIP: 123-456-78-90, REGON: 123456789, adres siedziby: ul. Kwiatowa 5, 00-001 Warszawa (dane przykładowe – <strong>uzupełnij własnymi</strong>).</li>
+                <li><strong>Klient</strong> – osoba fizyczna (konsument) lub przedsiębiorca dokonujący zakupów w Sklepie.</li>
+                <li><strong>Kodeks cywilny</strong> – Ustawa z dnia 23 kwietnia 1964 r.</li>
+                <li><strong>Ustawa o prawach konsumenta</strong> – Ustawa z dnia 30 maja 2014 r.</li>
+                <li><strong>RODO</strong> – Rozporządzenie Parlamentu Europejskiego i Rady (UE) 2016/679.</li>
+            </ul>
 
-  <h2>III. Warunki używania Serwisu</h2>
-  <ul>
-      <li>Korzystanie z Serwisu jest dobrowolne i nie wiąże się z opłatami.</li>
-      <li>Usługobiorcy zobligowani są do zapoznania się z Regulaminem i innymi dokumentami powiązanymi oraz pełnej ich akceptacji, jeśli chcą kontynuować korzystanie z Serwisu.</li>
-      <li>Zakazane jest wykorzystywanie danych osobowych pozyskanych za pośrednictwem Serwisu w celach marketingowych bez zgody.</li>
-      <li>
-        <strong>Wymagania techniczne korzystania z Serwisu:</strong>
-        <ul>
-          <li>urządzenie wyposażone w wyświetlacz umożliwiający obsługę stron WWW,</li>
-          <li>dostęp do Internetu,</li>
-          <li>przeglądarka internetowa zgodna ze standardami Konsorcjum W3C i obsługująca HTML5,</li>
-          <li>włączona obsługa skryptów JavaScript,</li>
-          <li>włączona obsługa plików Cookie.</li>
-        </ul>
-      </li>
-      <li>Aby zapewnić bezpieczeństwo wszystkim Usługobiorcom oraz Usługodawcy, zaleca się stosowanie <a href="https://twojapka.pl/">powszechnych zasad bezpieczeństwa w Internecie</a>.</li>
-      <li>
-        Zabrania się podejmowania działań, ręcznie lub przy użyciu oprogramowania, które prowadzą do:
-        <ul>
-          <li>dokonania dekompilacji i analizy kodu źródłowego bez pisemnej zgody,</li>
-          <li>generowania nadmiernego obciążenia serwera Serwisu bez pisemnej zgody,</li>
-          <li>wykrywania luk w zabezpieczeniach i konfiguracji serwera bez pisemnej zgody,</li>
-          <li>wgrywania i injekcji jakiegokolwiek szkodliwego kodu, skryptów lub programów,</li>
-          <li>prób śledzenia lub kradzieży danych Usługobiorców bądź Usługodawcy,</li>
-          <li>ingerowania w działanie Serwisu w sposób uniemożliwiający lub utrudniający korzystanie z niego.</li>
-        </ul>
-      </li>
-      <li>W przypadku wykrycia incydentu Cyberbezpieczeństwa lub naruszenia RODO, należy niezwłocznie poinformować Usługodawcę, aby umożliwić szybką reakcję i zabezpieczenie interesów wszystkich Usługobiorców.</li>
-  </ul>
+            <!-- II. DANE SPRZEDAWCY -->
+            <h2>II. Dane Sprzedawcy i kontakt</h2>
+            <ul>
+                <li>Marcel Krzeja</li>
+                <li>NIP: 123-456-78-90</li>
+                <li>REGON: 123456789</li>
+                <li>Adres: ul. Kwiatowa 5, 00-001 Warszawa</li>
+                <li>E-mail: <a href="mailto:sklep@przystanekperfumy.pl">sklep@przystanekperfumy.pl</a></li>
+                <li>Telefon: +48 453 305 509 (czynny pon.–pt. 10:00–16:00)</li>
+            </ul>
 
-  <h2>IV. Warunki oraz zasady rejestracji</h2>
-  <ul>
-      <li>Podstawowe korzystanie z Serwisu nie wymaga rejestracji.</li>
-      <li>Pełen dostęp do dodatkowych funkcjonalności Serwisu wymaga posiadania konta i logowania.</li>
-      <li>Rejestracja w Serwisie jest dobrowolna i bezpłatna.</li>
-      <li>Każdy Usługobiorca może mieć tylko jedno konto w Serwisie.</li>
-      <li>
-        <strong>Wymagania techniczne do rejestracji konta:</strong>
-        <ul>
-          <li>posiadanie aktywnego adresu e-mail.</li>
-        </ul>
-      </li>
-      <li>Rejestracja oznacza zgodę Usługobiorcy na przetwarzanie jego danych osobowych w zakresie wprowadzonym do Serwisu podczas procesu rejestracji oraz w trakcie późniejszych zmian lub usuwania danych.</li>
-      <li>Usługodawca zastrzega sobie prawo do zawieszania lub usuwania kont Usługobiorców, jeśli naruszają oni Regulamin, dopuszczają się działań niezgodnych z prawem lub zasadami współżycia społecznego.</li>
-      <li>Usługodawca może w dowolnym momencie modyfikować zakres dostępnych usług w Serwisie, wprowadzać nowe, czasowo je zawieszać lub ograniczać dostęp, według własnego uznania i bez konieczności akceptacji ze strony Usługobiorców.</li>
-      <li>
-        <strong>Dodatkowe zasady bezpieczeństwa konta:</strong>
-        <ul>
-          <li>Zabronione jest udostępnianie loginu i hasła do konta osobom trzecim.</li>
-          <li>Usługodawca nigdy nie prosi Usługobiorcy o hasło do konta.</li>
-        </ul>
-      </li>
-      <li>
-        <strong>Usuwanie konta:</strong>
-        <ul>
-          <li>Usługobiorca może w dowolnym momencie usunąć swoje konto w Serwisie.</li>
-          <li>Usunięcie konta jest możliwe po zalogowaniu się w panelu użytkownika.</li>
-          <li>Usunięcie konta prowadzi do usunięcia danych identyfikacyjnych Usługobiorcy oraz anonimizacji nazwy użytkownika i adresu e-mail.</li>
-        </ul>
-      </li>
-  </ul>
+            <!-- III. ZAWARCIE UMOWY -->
+            <h2>III. Zawarcie umowy sprzedaży</h2>
+            <ul>
+                <li>Umowa sprzedaży zostaje zawarta w momencie kliknięcia przez Klienta przycisku „Zamawiam i płacę” (lub „Złóż zamówienie”) po uprzednim dodaniu produktów do koszyka i podaniu danych niezbędnych do realizacji.</li>
+                <li>Po złożeniu zamówienia Klient otrzymuje na podany adres e-mail potwierdzenie przyjęcia zamówienia do realizacji.</li>
+                <li>Warunkiem realizacji zamówienia jest akceptacja Regulaminu i Polityki Prywatności.</li>
+            </ul>
 
-  <h2>V. Warunki świadczenia usługi Newsletter</h2>
-  <ul>
-      <li>Usługobiorca nie musi zapisywać się do Newslettera, aby korzystać z podstawowych funkcji Serwisu.</li>
-      <li>Subskrypcja Newslettera jest całkowicie dobrowolna i bezpłatna.</li>
-      <li>
-        <strong>Wymagania techniczne dla usługi Newsletter:</strong>
-        <ul>
-          <li>posiadanie aktywnego adresu e-mail.</li>
-        </ul>
-      </li>
-      <li>
-        <strong>Warunki świadczenia usługi Newsletter:</strong>
-        <ul>
-          <li>podanie prawidłowego adresu e-mail w elektronicznym formularzu,</li>
-          <li>potwierdzenie subskrypcji poprzez kliknięcie w link aktywacyjny,</li>
-          <li>wyrażenie zgody na otrzymywanie wiadomości e-mail.</li>
-        </ul>
-      </li>
-      <li>
-        <strong>Zakres usługi Newsletter obejmuje:</strong>
-        <ul>
-          <li>informacje o nowych treściach, wydarzeniach, promocjach w ramach Serwisu,</li>
-          <li>informacje o ofertach promocyjnych partnerów Serwisu (wiadomości marketingowe).</li>
-        </ul>
-      </li>
-      <li>
-        <strong>Wypisanie się z Newslettera:</strong>
-        <ul>
-          <li>Usługobiorca może w dowolnym momencie zrezygnować z subskrypcji Newslettera.</li>
-          <li>W każdym newsletterze zamieszczony jest link rezygnacji.</li>
-          <li>Po rezygnacji adres e-mail Usługobiorcy zostaje usunięty z bazy Usługodawcy.</li>
-        </ul>
-      </li>
-  </ul>
+            <!-- IV. CENY I PŁATNOŚCI (OMNIBUS) -->
+            <h2>IV. Ceny i płatności</h2>
+            <ul>
+                <li>Wszystkie ceny podane w Sklepie są cenami brutto (zawierają podatek VAT).</li>
+                <li>Sklep informuje o najniższej cenie produktu z ostatnich 30 dni przed obniżką (zgodnie z dyrektywą Omnibus) – dotyczy wszystkich produktów objętych promocją cenową.</li>
+                <li>Dostępne metody płatności: <strong>za pobraniem</strong> (gotówka przy odbiorze przesyłki).</li>
+                <li>Koszt dostawy jest podany przy wyborze metody wysyłki i doliczany do wartości zamówienia.</li>
+            </ul>
 
-  <h2>VI. Warunki komunikacji i świadczenia pozostałych usług w Serwisie</h2>
-  <p>Serwis udostępnia dodatkowe funkcje i narzędzia interakcji z Serwisem, takie jak:</p>
-  <ul>
-      <li>Formularz kontaktowy</li><li>Komentowania wpisów i artykułów</li><li>Publikowania własnych treści w postaci wpisów i artykułów</li><li>Publikowanie własnych treści w postaci materiałów graficznych i multimedialnych</li><li>System umożliwia rejestrację użytkowników i zakładanie kont</li><li>System umożliwia zapisanie się do newslettera</li>
-  </ul>
-  <p>Serwis udostępnia również następujące dane kontaktowe:</p>
-  <ul>
-      <li>Formularz kontaktowy</li><li>Telefon kontaktowy</li>
-  </ul>
-  <p>Wszelkie dane osobowe przekazywane w ramach kontaktu z Usługodawcą są przetwarzane zgodnie z <a href="https://przystanekperfumy.pl/polityka-prywatnosci-i-pliki-cookie">Polityką Prywatności</a>, stanowiącą integralną część Regulaminu.</p>
-  <p><strong>Warunki publikowania treści przez Usługobiorców w Serwisie:</strong></p>
-  <ul>
-      <li>Zabrania się zamieszczania treści, które obrażają Usługodawcę, innych Usługobiorców czy osoby trzecie.</li>
-      <li>Nie można publikować treści tekstowych, graficznych czy audiowizualnych, do których nie posiada się licencji czy zgody autora praw majątkowych.</li>
-      <li>Niedozwolone jest dodawanie treści wulgarnych, pornograficznych lub niezgodnych z prawem, a także odnośników do stron zawierających takie materiały.</li>
-      <li>Zabrania się publikowania skryptów, programów czy innych plików nadmiernie obciążających serwer lub stwarzających zagrożenie dla bezpieczeństwa, oraz linków do takich zasobów.</li>
-      <li>Zakazane jest publikowanie treści marketingowych i reklamujących serwisy, produkty czy usługi komercyjne bez zgody Usługodawcy.</li>
-  </ul>
+            <!-- V. DOSTAWA -->
+            <h2>V. Dostawa</h2>
+            <ul>
+                <li>Realizacja zamówień odbywa się za pośrednictwem kuriera (InPost, GLS – obecnie tylko InPost).</li>
+                <li>Termin dostawy: do 1 dnia roboczego od nadania przesyłki.</li>
+                <li>Koszty dostawy:
+                    <ul>
+                        <li>InPost Kurier: 30 zł (przy zamówieniu 3 lub więcej sztuk – dostawa gratis).</li>
+                        <li>GLS – obecnie niedostępny.</li>
+                    </ul>
+                </li>
+                <li>Dostawa wyłącznie na terenie Polski.</li>
+            </ul>
 
-  <h2>VII. Gromadzenie danych o Usługobiorcach</h2>
-  <p>Ze względów prawnych i bezpieczeństwa oraz w celu świadczenia usług zgodnie z prawem, Serwis gromadzi i przetwarza wybrane informacje o Usługobiorcach.</p>
-  <p>Dla optymalnego działania Serwisu korzystamy z plików cookies, w których mogą być zapisywane anonimowe dane o aktywności Usługobiorcy.</p>
-  <p>Szczegółowe informacje dotyczące zakresu i sposobu przetwarzania danych dostępne są w „<a href="https://przystanekperfumy.pl/rodo">Obowiązku informacyjnym RODO</a>” oraz „<a href="OPTIONS_8">Polityce Prywatności</a>”, stanowiących część Regulaminu.</p>
-  <ul>
-    <li>
-      <em>Dane zbierane automatycznie:</em><br>
-      Serwis gromadzi w sposób automatyczny dane techniczne i statystyczne, takie jak:
-      <ul>
-        <li>Adres IP,</li>
-        <li>Typ przeglądarki,</li>
-        <li>Rozdzielczość ekranu,</li>
-        <li>Przybliżona lokalizacja,</li>
-        <li>Otwierane podstrony,</li>
-        <li>Czas spędzony na konkretnych podstronach,</li>
-        <li>Rodzaj systemu operacyjnego,</li>
-        <li>Adres poprzedniej podstrony,</li>
-        <li>Strona odsyłająca,</li>
-        <li>Język przeglądarki,</li>
-        <li>Prędkość łącza internetowego,</li>
-        <li>Dostawca usług internetowych.</li>
-      </ul>
-      
-      <li>
-        <strong>Anonimowe dane demograficzne na podstawie Google Analytics:</strong>
-        <ul>
-          <li>Analiza ruchu i statystyk odwiedzin</li>
-          <li>Płeć, Wiek, Zainteresowania</li>
-        </ul>
-      </li>
-    
-      <li>
-        <strong>Anonimowe dane niezbędne do serwowania reklam:</strong>
-        <ul>
-          <li>Dane związane z remarketingiem</li>
-        </ul>
-      </li>
-    
-      <li>
-        Dane związane z raportowaniem o wyświetlanych reklamach
-      </li>
-    
-    </li>
-    <li>
-      <em>Dane zbierane podczas rejestracji:</em><br>
-      Nazwa użytkownika, imię i nazwisko, adres e-mail
-      <p>U zalogowanych Usługobiorców (posiadających konto w Serwisie) w plikach cookies mogą być zapisywane informacje powiązane z identyfikatorem konta.</p>
-    </li>
-    <li>
-      <em>Dane zbierane podczas zapisywania do newslettera:</em><br>
-      adres e-mail
-    </li>
-  </ul>
+            <!-- VI. REKLAMACJE (RĘKOJMIA) -->
+            <h2>VI. Reklamacje (rękojmia)</h2>
+            <ul>
+                <li>Sklep odpowiada za wady fizyczne i prawne towaru na zasadach określonych w Kodeksie cywilnym (rękojmia).</li>
+                <li>Reklamację należy zgłosić pisemnie na adres e-mail <a href="mailto:reklamacje@przystanekperfumy.pl">reklamacje@przystanekperfumy.pl</a> lub listownie na adres siedziby.</li>
+                <li>W zgłoszeniu należy podać: numer zamówienia, opis wady oraz żądanie (wymiana, naprawa, obniżenie ceny lub odstąpienie od umowy).</li>
+                <li>Sklep ustosunkuje się do reklamacji w ciągu 14 dni od jej otrzymania.</li>
+            </ul>
 
-  <h2>VIII. Prawa autorskie</h2>
-  <ul>
-      <li>Właścicielem Serwisu oraz praw autorskich do jego zawartości jest Usługodawca.</li>
-      <li>Wybrane treści zamieszczone w Serwisie chronione są prawami autorskimi innych podmiotów i wykorzystywane na podstawie udzielonych licencji lub licencji darmowych.</li>
-      <li>Na podstawie Ustawy z dnia 4 lutego 1994 r. o prawie autorskim zabronione jest kopiowanie, powielanie lub przechowywanie treści i materiałów (teksty, pliki graficzne, wideo, audio) dostępnych w Serwisie bez uzyskania pisemnej zgody właściciela praw.</li>
-      <li>Zgodnie z Ustawą z dnia 4 lutego 1994 r. o prawie autorskim, ochronie nie podlegają proste informacje prasowe. Możliwe jest wykorzystywanie zawartych w nich informacji, o ile nie stanowi to kopiowania znaczącej części tekstów bez pozwolenia.</li>
-  </ul>
+            <!-- VII. ODSTĄPIENIE OD UMOWY (ZWROTY) -->
+            <h2>VII. Odstąpienie od umowy (zwroty)</h2>
+            <ul>
+                <li>Konsument ma prawo odstąpić od umowy zawartej na odległość w terminie 14 dni bez podawania przyczyny (zgodnie z ustawą o prawach konsumenta).</li>
+                <li><strong>Ważne:</strong> Prawo odstąpienia nie przysługuje w przypadku perfum, po otwarciu oryginalnego opakowania, ze względów higienicznych i zdrowotnych (art. 38 ustawy o prawach konsumenta). Zwrot jest możliwy wyłącznie, jeśli opakowanie jest nienaruszone i produkt nie był używany.</li>
+                <li>Wzór formularza odstąpienia od umowy dostępny jest <a href="{% url 'withdrawal_form' %}">tutaj</a> (do pobrania jako PDF).</li>
+            </ul>
 
-  <h2>IX. Zmiany Regulaminu</h2>
-  <ul>
-      <li>Postanowienia Regulaminu mogą ulec modyfikacji przez Usługodawcę w dowolnym momencie.</li>
-      <li>Informacja o zmianie Regulaminu zostanie rozesłana zarejestrowanym Usługobiorcom drogą elektroniczną.</li>
-      <li>W przypadku Usługobiorców niezarejestrowanych, zmiany wchodzą w życie natychmiast po ich publikacji w Serwisie.</li>
-      <li>W przypadku Usługobiorców zarejestrowanych przed zmianą Regulaminu, nowe postanowienia zaczynają obowiązywać po upływie 7 dni od publikacji.</li>
-      <li>Korzystanie z Serwisu po wprowadzeniu zmian w Regulaminie jest równoznaczne z ich pełną akceptacją.</li>
-  </ul>
+            <!-- VIII. POZASĄDOWE ROZWIĄZYWANIE SPORÓW (ODR) -->
+            <h2>VIII. Pozasądowe rozwiązywanie sporów (ODR)</h2>
+            <ul>
+                <li>Konsument ma możliwość skorzystania z unijnej platformy internetowej ODR pod adresem: <a href="https://ec.europa.eu/consumers/odr/" target="_blank">https://ec.europa.eu/consumers/odr/</a>.</li>
+                <li>Platforma służy do rozstrzygania sporów pomiędzy konsumentami a sprzedawcami w drodze mediacji.</li>
+            </ul>
 
-  <h2>X. Postanowienia końcowe</h2>
-  <ul>
-      <li>Usługodawca nie odpowiada w zakresie dozwolonym przez prawo za treści publikowane przez Usługobiorców, w tym za ich rzetelność i legalność.</li>
-      <li>Usługodawca dokłada starań, by Serwis działał nieprzerwanie, jednak nie ponosi odpowiedzialności za przerwy wynikłe z przyczyn niezależnych, w tym działania siły wyższej czy zewnętrznego oprogramowania.</li>
-      <li>Usługodawca zastrzega sobie prawo do modyfikacji zawartości Serwisu, włączając w to funkcje i treści, w dowolnym czasie bez powiadamiania Usługobiorców.</li>
-      <li>Usługodawca może czasowo wyłączyć Serwis w celu przeprowadzenia prac konserwacyjnych, ulepszeń lub w innym uzasadnionym celu.</li>
-      <li>Usługodawca zastrzega sobie prawo do trwałego wyłączenia Serwisu bez wcześniejszej notyfikacji.</li>
-      <li>Usługodawca może przenieść w części lub w całości prawa i obowiązki związane z Serwisem na inne podmioty, bez konieczności uzyskania zgody Usługobiorców.</li>
-      <li>Aktualne i archiwalne wersje Regulaminu dostępne są w Serwisie na tej samej podstronie.</li>
-      <li>W sprawach związanych z działalnością Serwisu zaleca się kontaktować z Usługodawcą za pośrednictwem:
-        <ul>
-          <li>formularza kontaktowego w Serwisie,</li>
-          <li>wiadomości e-mail: sidkrasongdziejestmaniek@gmail.com,</li>
-          <li>połączenia telefonicznego pod numer: +48453305509.</li>
-        </ul>
-        Kontakt dedykowany jest wyłącznie kwestiom związanym z funkcjonowaniem Serwisu.
-      </li>
-  </ul>
-</div>
+            <!-- IX. OPINIE O PRODUKTACH (OMNIBUS) -->
+            <h2>IX. Opinie o produktach (Omnibus)</h2>
+            <ul>
+                <li>Wszystkie opinie zamieszczone na stronie pochodzą od Klientów, którzy dokonali zakupu danego produktu w Sklepie. Każda opinia jest weryfikowana pod kątem autentyczności.</li>
+                <li>Sklep nie zamieszcza opinii sponsorowanych ani nieprawdziwych.</li>
+            </ul>
+
+            <!-- X. DANE OSOBOWE I PLIKI COOKIES (RODO) – ROZSZERZONE -->
+            <h2>X. Dane osobowe i pliki cookies (RODO)</h2>
+            <p>Administratorem danych osobowych jest Sprzedawca (Marcel Krzeja). Dane są przetwarzane w celu:</p>
+            <ul>
+                <li>realizacji zamówień (podstawa prawna: art. 6 ust. 1 lit. b RODO),</li>
+                <li>marketingu własnego i newslettera (na podstawie zgody – art. 6 ust. 1 lit. a RODO),</li>
+                <li>analityki i statystyk (art. 6 ust. 1 lit. f RODO – prawnie uzasadniony interes).</li>
+            </ul>
+            <p>Sklep zbiera i przechowuje następujące dane Klientów:</p>
+            <ul>
+                <li>dane podane podczas rejestracji (nazwa użytkownika, imię, nazwisko, adres e-mail, numer telefonu, adres dostawy),</li>
+                <li>dane automatycznie gromadzone: adres IP, typ przeglądarki, rozdzielczość ekranu, przybliżona lokalizacja, czas spędzony na stronach, źródło wejścia, system operacyjny, język przeglądarki, dostawca usług internetowych, a także anonimowe dane demograficzne (płeć, wiek, zainteresowania) za pośrednictwem Google Analytics,</li>
+                <li>dane dotyczące zachowań zakupowych (historia zamówień, ulubione produkty, użyte kody rabatowe).</li>
+            </ul>
+            <p>Pliki cookies („ciasteczka”) są wykorzystywane do:</p>
+            <ul>
+                <li>utrzymania sesji i koszyka zakupowego,</li>
+                <li>zapamiętywania preferencji (np. wybór metody dostawy),</li>
+                <li>celów analitycznych (Google Analytics),</li>
+                <li>remarketingu (wyświetlanie spersonalizowanych reklam).</li>
+            </ul>
+            <p>Klient ma prawo w każdej chwili:</p>
+            <ul>
+                <li>żądać dostępu do swoich danych, ich sprostowania, usunięcia („prawo do bycia zapomnianym”) lub ograniczenia przetwarzania,</li>
+                <li>wnieść sprzeciw wobec przetwarzania,</li>
+                <li>przenieść dane,</li>
+                <li>cofnąć zgodę na przetwarzanie w celach marketingowych (wypisać się z newslettera).</li>
+            </ul>
+            <p>Szczegółowa polityka prywatności dostępna jest pod adresem: <a href="{% url 'polityka_prywatnosci' %}">Polityka prywatności i plików cookies</a>.</p>
+
+            <!-- XI. PRAWA AUTORSKIE -->
+            <h2>XI. Prawa autorskie</h2>
+            <ul>
+                <li>Właścicielem Sklepu oraz praw autorskich do jego zawartości (opisy produktów, zdjęcia, logotypy, układ graficzny) jest Sprzedawca.</li>
+                <li>Kopiowanie, powielanie lub rozpowszechnianie treści bez pisemnej zgody Sprzedawcy jest zabronione.</li>
+            </ul>
+
+            <!-- XII. ZMIANY REGULAMINU -->
+            <h2>XII. Zmiany Regulaminu</h2>
+            <ul>
+                <li>Sklep zastrzega sobie prawo do zmiany Regulaminu. Zmiany wchodzą w życie po upływie 7 dni od ich opublikowania na stronie.</li>
+                <li>Klienci posiadający konto w Sklepie zostaną poinformowani o zmianach drogą e-mail.</li>
+                <li>Zamówienia złożone przed zmianą Regulaminu realizowane są na podstawie jego poprzedniej wersji.</li>
+            </ul>
+
+            <!-- XIII. POSTANOWIENIA KOŃCOWE -->
+            <h2>XIII. Postanowienia końcowe</h2>
+            <ul>
+                <li>W sprawach nieuregulowanych Regulaminem stosuje się przepisy prawa polskiego, w szczególności Kodeksu cywilnego oraz ustawy o prawach konsumenta.</li>
+                <li>Wszelkie spory między Sprzedawcą a Klientem będą rozstrzygane przez właściwy sąd powszechny według przepisów Kodeksu postępowania cywilnego.</li>
+                <li>Regulamin wchodzi w życie z dniem 14 kwietnia 2026 r.</li>
+                <li>Treść Regulaminu jest dostępna bezpłatnie na stronie Sklepu w formie umożliwiającej jej pobranie i wydrukowanie.</li>
+            </ul>
+
+            <p class="text-center mt-32" style="font-size: 12px; color: #888;">Regulamin dostępny jest także w formacie PDF do pobrania.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

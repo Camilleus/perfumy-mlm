@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Kontakt – Przystanek Perfumy{% endblock %}
+
+{% block content %}
+<section class="section-pad">
+    <div class="container" style="max-width: 900px;">
+        <h1 class="text-center" style="font-size: 32px; font-weight: 300; margin-bottom: 32px;">Kontakt</h1>
+
+        <div style="display: grid; gap: 32px;">
+            <!-- DANE KONTAKTOWE -->
+            <div class="card-border">
+                <h2 style="font-size: 20px; margin-bottom: 16px;">📞 Skontaktuj się z nami</h2>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 12px;">📧 <strong>E-mail:</strong> <a href="mailto:sklep@przystanekperfumy.pl">sklep@przystanekperfumy.pl</a> (odpowiadamy w ciągu 24h)</li>
+                    <li style="margin-bottom: 12px;">📞 <strong>Telefon:</strong> <a href="tel:+48453305509">+48 453 305 509</a> (pon.–pt. 10:00–16:00)</li>
+                    <li style="margin-bottom: 12px;">📍 <strong>Adres do zwrotów i reklamacji:</strong><br>
+                        Marcel Krzeja<br>
+                        ul. Kwiatowa 5<br>
+                        00-001 Warszawa
+                    </li>
+                </ul>
+            </div>
+
+            <!-- FORMULARZ KONTAKTOWY (opcjonalny) -->
+            <div class="card-border">
+                <h2 style="font-size: 20px; margin-bottom: 16px;">✉️ Napisz do nas</h2>
+                <form method="post" action="{% url 'contact_submit' %}">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label class="form-label">Imię i nazwisko</label>
+                        <input type="text" name="name" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Adres e-mail</label>
+                        <input type="email" name="email" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Numer zamówienia (opcjonalnie)</label>
+                        <input type="text" name="order_number" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Wiadomość</label>
+                        <textarea name="message" rows="5" class="form-input" required></textarea>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn">Wyślij wiadomość</button>
+                    </div>
+                </form>
+                <p class="text-center mt-16" style="font-size: 12px; color: #888;">Odpowiemy najszybciej jak to możliwe, zwykle w ciągu 1 dnia roboczego.</p>
+            </div>
+
+            <!-- INFORMACJE DODATKOWE -->
+            <div class="text-center" style="font-size: 14px; color: #555;">
+                <p>💡 Masz pytanie o status zamówienia? Sprawdź <a href="{% url 'my_orders' %}">Moje zamówienia</a>.</p>
+                <p>💡 Potrzebujesz wzoru odstąpienia od umowy? <a href="{% url 'withdrawal_form' %}">Kliknij tutaj</a>.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

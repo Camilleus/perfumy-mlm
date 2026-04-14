@@ -691,10 +691,51 @@
             color: #888;
             line-height: 1.4;
         }
+        /* Ukrywanie elementów przy drukowaniu */
+        @media print {
+            header,
+            footer,
+            .trust-bar,
+            .hamburger,
+            .mobile-menu,
+            .cart-icon,
+            .btn-ghost,
+            .btn:not(.no-print) {
+                display: none !important;
+            }
+            body {
+                background: white;
+                margin: 0;
+                padding: 0;
+            }
+            .container {
+                max-width: 100%;
+                padding: 0;
+                margin: 0;
+            }
+            .card-border,
+            .prose {
+                box-shadow: none;
+                border: none;
+                padding: 0;
+            }
+            a {
+                text-decoration: none;
+                color: black;
+            }
+        }
     </style>
 </head>
 <body>
-
+{% if messages %}
+    <div class="container" style="margin-top: 20px;">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" style="padding: 12px; background: #f0f7f0; border-left: 4px solid green; margin-bottom: 12px;">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
 <header>
     <div class="container">
         <nav>
@@ -768,6 +809,7 @@
     {% endif %}
 </div>
 
+
 {% block content %}{% endblock %}
 
 <footer>
@@ -778,9 +820,12 @@
         </div>
         <div>
             <ul style="list-style:none; line-height: 2.2;">
-                <li><a href="#">Regulamin</a></li>
-                <li><a href="#">Polityka prywatności</a></li>
-                <li><a href="#">Kontakt</a></li>
+                <li><a href="{% url 'regulamin' %}">Regulamin</a></li>
+                <li><a href="{% url 'polityka_prywatnosci' %}">Polityka prywatności</a></li>
+                <li><a href="{% url 'returns_policy' %}">Zwroty i reklamacje</a></li>
+                <li><a href="{% url 'odr' %}">Pozasądowe rozwiązywanie sporów (ODR)</a></li>
+                <li><a href="{% url 'omnibus' %}">Dyrektywa Omnibus</a></li>
+                <li><a href="{% url 'contact' %}">Kontakt</a></li>
             </ul>
         </div>
         <div style="opacity: 0.7; font-size:13px;">
