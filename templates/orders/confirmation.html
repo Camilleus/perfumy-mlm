@@ -21,6 +21,14 @@
             </div>
             {% endfor %}
 
+            <!-- DOSTAWA -->
+            <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px; border-top: 1px solid #ddd; padding-top: 10px; margin-top: 10px;">
+                <span>Dostawa ({{ order.shipping_method_name }})</span>
+                <span style="font-weight: 600;">
+                    {% if order.shipping_cost == 0 %}GRATIS{% else %}{{ order.shipping_cost }} zł{% endif %}
+                </span>
+            </div>
+
             <div style="border-top: 1px solid #ddd; padding-top: 12px; margin-top: 12px; display: flex; justify-content: space-between; font-size: 18px; font-weight: 600;">
                 <span>Razem</span>
                 <span style="color: var(--accent);">{{ order.total_amount }} zł</span>
@@ -33,7 +41,9 @@
                 {{ order.first_name }} {{ order.last_name }}<br>
                 {{ order.address }}<br>
                 {{ order.postal_code }} {{ order.city }}<br>
-                Tel: {{ order.phone }}
+                Tel: {{ order.phone }}<br>
+                <strong>Dostawa:</strong> {{ order.shipping_method_name }}
+                {% if order.shipping_cost == 0 %} (darmowa){% endif %}
             </p>
         </div>
 

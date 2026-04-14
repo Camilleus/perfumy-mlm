@@ -57,12 +57,13 @@ def checkout(request):
         postal_code = request.POST.get('postal_code')
         note = request.POST.get('note', '')
         referral_code = request.POST.get('referral_code', '').strip().upper()
+        shipping_method = request.POST.get('shipping_method', 'inpost')  # domyślnie InPost
 
         # Sprawdź kod polecenia
         referral_obj = None
         if referral_code:
             try:
-                from sellers.models import Seller, Referral
+                from sellers.models import Seller
                 referrer = Seller.objects.get(referral_code=referral_code)
                 discount = Decimal('20')
                 referral_obj = referrer
@@ -70,8 +71,24 @@ def checkout(request):
                 referral_error = 'Nieprawidłowy kod polecenia.'
                 discount = Decimal('0')
 
-        total = max(Decimal(str(cart.get_total())) - discount, Decimal('0'))
+        # Oblicz koszt wysyłki na podstawie liczby sztuk
+        total_quantity = cart.get_total_quantity()
+        if shipping_method == 'inpost':
+            if total_quantity >= 3:
+                shipping_cost = Decimal('0')
+                shipping_method_name = 'InPost Kurier (darmowa)'
+            else:
+                shipping_cost = Decimal('30')
+                shipping_method_name = 'InPost Kurier'
+        else:  # GLS lub inna – na razie niedostępna, ale dla bezpieczeństwa
+            shipping_cost = Decimal('40')
+            shipping_method_name = 'GLS ekspres (niedostępny)'
 
+        # Całkowita kwota: produkty - rabat + koszt wysyłki
+        total_products = Decimal(str(cart.get_total()))
+        total = max(total_products - discount, Decimal('0')) + shipping_cost
+
+        # Tworzymy zamówienie z nowymi polami
         order = Order.objects.create(
             first_name=first_name,
             last_name=last_name,
@@ -83,8 +100,12 @@ def checkout(request):
             note=note,
             total_amount=total,
             discount=discount,
+            shipping_method=shipping_method,
+            shipping_cost=shipping_cost,
+            shipping_method_name=shipping_method_name,
         )
 
+        # Dodajemy produkty do OrderItem
         for item in cart.get_items():
             product = Product.objects.get(pk=item['pk'])
             OrderItem.objects.create(
@@ -113,11 +134,12 @@ def checkout(request):
                     subject=f'Potwierdzenie zamówienia #{order.pk} – Przystanek PsikPsik',
                     message=f'''Cześć {first_name or ""}!
 
-Dziękujemy za zamówienie na Przystanku PsikPsik :D
+Dziękujemy za zamówienie na Przystanku Perfumy :D
 
 Numer zamówienia: #{order.pk}
 Łączna kwota: {order.total_amount} zł
 {f"Zastosowana zniżka: -{discount} zł" if discount else ""}
+Dostawa: {shipping_method_name} – {shipping_cost} zł
 Płatność: za pobraniem
 
 Adres dostawy:
@@ -129,7 +151,7 @@ Tel: {phone}
 Skontaktujemy się z Tobą wkrótce.
 
 Pozdrawiamy,
-Przystanek PsikPsik
+Przystanek Perfumy
 ''',
                     from_email=settings.DEFAULT_FROM_EMAIL,
                     recipient_list=[email],
@@ -146,7 +168,6 @@ Przystanek PsikPsik
         'discount': discount,
         'referral_error': referral_error,
     })
-
 
 def order_confirmation(request, pk):
     order = Order.objects.get(pk=pk)
