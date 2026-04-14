@@ -32,8 +32,10 @@ class SellerRegistrationForm(UserCreationForm):
     phone = forms.CharField(max_length=20, required=False, label='Telefon (opcjonalnie)')
     referral_code = forms.CharField(max_length=20, required=False, label='Kod polecającego (opcjonalnie)')
 
-    class Meta(UserCreationForm.Meta):
-        fields = ['username', 'email', 'phone', 'password1', 'password2']
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Usuń domyślny help_text dla hasła
+        self.fields['password1'].help_text = None
 
 
 def register(request, referral_code=None):
