@@ -12,47 +12,62 @@
 {% endblock %}
 
 {% block content %}
-<section style="padding: 60px 0;">
+<section class="section-pad">
     <div class="container">
-        <a href="/" style="color: var(--gold); font-size: 14px;">← Wróć do listy</a>
+        <a href="/" style="color:var(--gold); font-size:14px;">← Wróć do listy</a>
 
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 60px; margin-top: 40px;">
-
-            <div>
+        <div class="detail-grid">
+            <!-- ZDJĘCIE -->
+            <div class="detail-image">
                 {% if product.image %}
-                <img src="{{ product.image }}" style="width: 100%; object-fit: cover;">
+                <img src="{{ product.image }}" alt="{{ product.name }}" style="width:100%; object-fit:cover; display:block;">
                 {% else %}
-                <div style="width: 100%; height: 400px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 80px;">🧴</div>
+                <div style="width:100%; height:300px; background:#f0f0f0; display:flex; align-items:center; justify-content:center; font-size:80px;">🧴</div>
                 {% endif %}
             </div>
 
-            <div>
-                <p style="color: #aaa; font-size: 13px; text-transform: uppercase; letter-spacing: 2px;">{{ product.brand }}</p>
-                <h1 style="font-size: 36px; font-weight: 300; margin: 10px 0;">{{ product.name }}</h1>
-                <p style="color: #888; font-size: 14px; margin-bottom: 20px;">{{ product.get_gender_display }}</p>
+            <!-- INFO -->
+            <div class="detail-info">
+                <p style="color:#aaa; font-size:12px; text-transform:uppercase; letter-spacing:2px;">{{ product.brand }}</p>
+                <h1 style="font-size:clamp(24px, 5vw, 34px); font-weight:300; margin:10px 0 8px;">{{ product.name }}</h1>
+                <p style="color:#888; font-size:14px; margin-bottom:16px;">{{ product.get_gender_display }}</p>
 
                 {% if product.scent_notes %}
-                <p style="font-size: 13px; color: #666; margin-bottom: 20px;">
+                <p style="font-size:13px; color:#666; margin-bottom:16px;">
                     <strong>Nuty zapachowe:</strong> {{ product.scent_notes }}
                 </p>
                 {% endif %}
 
                 {% if product.description %}
-                <p style="font-size: 15px; color: #444; margin-bottom: 30px; line-height: 1.8;">{{ product.description }}</p>
+                <p style="font-size:15px; color:#444; margin-bottom:24px; line-height:1.8;">{{ product.description }}</p>
                 {% endif %}
 
-                <div style="font-size: 32px; font-weight: 600; color: var(--forest-green); margin-bottom: 30px;">{{ product.price }} zł</div>
+                <div style="font-size:30px; font-weight:600; color:var(--forest-green); margin-bottom:24px;">{{ product.price }} zł</div>
 
                 {% if product.stock_quantity > 0 %}
-                <p style="color: green; font-size: 13px; margin-bottom: 20px;">✓ Dostępny ({{ product.stock_quantity }} szt.)</p>
-                <a href="{% url 'cart_add' product.pk %}" class="btn" style="width: 100%; padding: 15px; font-size: 16px; text-align: center; display: block; box-sizing: border-box; margin-bottom: 12px;">Dodaj do koszyka</a>
-                <a href="{% url 'cart_detail' %}" class="btn" style="width: 100%; padding: 15px; font-size: 16px; text-align: center; display: block; box-sizing: border-box;">Przejdź do koszyka</a>
+                <p style="color:green; font-size:13px; margin-bottom:16px;">✓ Dostępny ({{ product.stock_quantity }} szt.)</p>
+                <a href="{% url 'cart_add' product.pk %}" class="btn" style="width:100%; padding:14px; font-size:15px; text-align:center; display:block; box-sizing:border-box; margin-bottom:10px;">Dodaj do koszyka</a>
+                <a href="{% url 'cart_detail' %}" class="btn" style="width:100%; padding:14px; font-size:15px; text-align:center; display:block; box-sizing:border-box;">Przejdź do koszyka</a>
                 {% else %}
-                <p style="color: #c0392b; font-size: 13px;">✗ Brak w magazynie</p>
+                <p style="color:#c0392b; font-size:13px;">✗ Brak w magazynie</p>
                 {% endif %}
             </div>
-
         </div>
     </div>
 </section>
+
+<style>
+.detail-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+    margin-top: 24px;
+}
+@media (min-width: 768px) {
+    .detail-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+    }
+}
+</style>
 {% endblock %}

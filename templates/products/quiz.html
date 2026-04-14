@@ -1,88 +1,91 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section style="padding: 80px 0;">
-    <div class="container" style="max-width: 700px;">
-        <h1 style="font-size: 36px; font-weight: 300; text-align: center; margin-bottom: 40px;">Znajdź swój zapach</h1>
+<section class="section-pad">
+    <div class="container" style="max-width:700px;">
+        <h1 style="font-size:26px; font-weight:300; text-align:center; margin-bottom:32px;">Znajdź swój zapach</h1>
 
         {% if results is None %}
-        <div style="background: white; padding: 40px;">
+        <div class="card-white">
             <form method="post">
                 {% csrf_token %}
-                <div style="margin-bottom: 30px;">
-                    <h3 style="margin-bottom: 16px;">Jaką intensywność preferujesz?</h3>
-                    <label style="display: block; margin-bottom: 10px;">
+
+                <div style="margin-bottom:24px;">
+                    <h3 style="margin-bottom:14px; font-size:16px;">Jaką intensywność preferujesz?</h3>
+                    <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; font-size:15px; cursor:pointer;">
                         <input type="radio" name="intensity" value="light" required> Delikatna i świeża
                     </label>
-                    <label style="display: block;">
+                    <label style="display:flex; align-items:center; gap:10px; font-size:15px; cursor:pointer;">
                         <input type="radio" name="intensity" value="strong"> Mocna i wieczorowa
                     </label>
                 </div>
-                <div style="margin-bottom: 30px;">
-                    <h3 style="margin-bottom: 16px;">Główne nuty zapachowe?</h3>
-                    <label style="display: block; margin-bottom: 10px;">
+
+                <div style="margin-bottom:24px;">
+                    <h3 style="margin-bottom:14px; font-size:16px;">Główne nuty zapachowe?</h3>
+                    <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; font-size:15px; cursor:pointer;">
                         <input type="radio" name="category" value="floral" required> Kwiatowe / Owocowe
                     </label>
-                    <label style="display: block;">
+                    <label style="display:flex; align-items:center; gap:10px; font-size:15px; cursor:pointer;">
                         <input type="radio" name="category" value="woody"> Drzewne / Korzenne
                     </label>
                 </div>
-                <div style="margin-bottom: 30px;">
-                    <h3 style="margin-bottom: 16px;">Na jaką okazję?</h3>
-                    <label style="display: block; margin-bottom: 10px;">
+
+                <div style="margin-bottom:24px;">
+                    <h3 style="margin-bottom:14px; font-size:16px;">Na jaką okazję?</h3>
+                    <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; font-size:15px; cursor:pointer;">
                         <input type="radio" name="occasion" value="daily" required> Na co dzień
                     </label>
-                    <label style="display: block;">
+                    <label style="display:flex; align-items:center; gap:10px; font-size:15px; cursor:pointer;">
                         <input type="radio" name="occasion" value="special"> Specjalne wyjścia
                     </label>
                 </div>
-                <div style="margin-bottom: 30px;">
-                    <h3 style="margin-bottom: 16px;">Dla kogo?</h3>
-                    <label style="display: block; margin-bottom: 10px;">
+
+                <div style="margin-bottom:28px;">
+                    <h3 style="margin-bottom:14px; font-size:16px;">Dla kogo?</h3>
+                    <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; font-size:15px; cursor:pointer;">
                         <input type="radio" name="gender" value="K"> Dla niej
                     </label>
-                    <label style="display: block; margin-bottom: 10px;">
+                    <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; font-size:15px; cursor:pointer;">
                         <input type="radio" name="gender" value="M"> Dla niego
                     </label>
-                    <label style="display: block;">
+                    <label style="display:flex; align-items:center; gap:10px; font-size:15px; cursor:pointer;">
                         <input type="radio" name="gender" value=""> Wszystkie
                     </label>
                 </div>
-                <button type="submit" class="btn" style="width: 100%; padding: 14px;">Znajdź perfumy</button>
+
+                <button type="submit" class="btn" style="width:100%; padding:14px; font-size:15px;">Znajdź perfumy</button>
             </form>
         </div>
 
         {% else %}
-        </div>
+        </div><!-- zamknięcie container max-width:700px -->
         <div class="container">
-        <a href="{% url 'quiz' %}" style="color: var(--gold); font-size: 14px;">← Zacznij od nowa</a>
-        <div style="margin-top: 30px;">
-            {% if results %}
-            <h2 style="font-size: 24px; font-weight: 300; margin-bottom: 30px;">Twoje dopasowania: {{ results.count }}</h2>
-            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 40px;">
-                {% for product in results %}
-                <a href="{% url 'product_detail' product.slug %}" style="text-decoration: none; color: inherit;">
-                <div style="background: white; padding: 20px; transition: transform 0.3s;"
-                    onmouseover="this.style.transform='translateY(-5px)'"
-                    onmouseout="this.style.transform='translateY(0)'">
-                    {% if product.image %}
-                    <img src="{{ product.image }}" style="width: 100%; height: 250px; object-fit: cover; margin-bottom: 15px;">
-                    {% else %}
-                    <div style="width: 100%; height: 250px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 48px; margin-bottom: 15px;">🧴</div>
-                    {% endif %}
-                    <div style="font-weight: 600; margin-bottom: 5px;">{{ product.name }}</div>
-                    <div style="color: #888; font-size: 13px; margin-bottom: 4px;">{{ product.brand }}</div>
-                    <div style="font-size: 12px; color: #aaa; margin-bottom: 10px;">{{ product.get_gender_display }}</div>
-                    <div style="color: var(--forest-green); font-weight: 600; margin-bottom: 15px;">{{ product.price }} zł</div>
-                    <button class="btn" style="width: 100%; padding: 10px;">Zobacz więcej</button>
+            <a href="{% url 'quiz' %}" style="color:var(--gold); font-size:14px;">← Zacznij od nowa</a>
+            <div style="margin-top:24px;">
+                {% if results %}
+                <h2 style="font-size:22px; font-weight:300; margin-bottom:24px;">Twoje dopasowania: {{ results.count }}</h2>
+                <div class="product-grid">
+                    {% for product in results %}
+                    <a href="{% url 'product_detail' product.slug %}" style="text-decoration:none; color:inherit;">
+                        <div class="product-card">
+                            {% if product.image %}
+                            <img src="{{ product.image }}" alt="{{ product.name }}">
+                            {% else %}
+                            <div class="product-placeholder">🧴</div>
+                            {% endif %}
+                            <div class="product-name">{{ product.name }}</div>
+                            <div class="product-brand">{{ product.brand }}</div>
+                            <div class="product-gender">{{ product.get_gender_display }}</div>
+                            <div class="product-price">{{ product.price }} zł</div>
+                            <button class="btn" style="width:100%; padding:9px;">Zobacz więcej</button>
+                        </div>
+                    </a>
+                    {% endfor %}
                 </div>
-                </a>
-                {% endfor %}
+                {% else %}
+                <p style="color:#888; text-align:center;">Brak produktów dla tych kryteriów. Spróbuj inne opcje.</p>
+                {% endif %}
             </div>
-            {% else %}
-            <p style="color: #888; text-align: center;">Brak produktów dla tych kryteriów. Spróbuj inne opcje.</p>
-            {% endif %}
-        </div>
         {% endif %}
 
     </div>

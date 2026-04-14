@@ -4,52 +4,52 @@
 {% block content %}
 
 <section class="hero-section">
-  <canvas id="hero-particles"></canvas>
-  <div class="container hero-inner">
-    <p class="hero-eyebrow">Przystanek Perfumy</p>
-    <h1 class="hero-title">Znajdź swój<br><em>unikalny Psik.</em></h1>
-    <p class="hero-sub">{{ products.count }} Zapachów Bez Przepłacania.</p>
-    <div class="hero-actions">
-      <a href="#produkty" class="btn">Odkryj kolekcję</a>
-      <a href="{% url 'quiz' %}" class="btn-ghost">Znajdź swój psik →</a>
+    <canvas id="hero-particles"></canvas>
+    <div class="container hero-inner">
+        <p class="hero-eyebrow">Przystanek Perfumy</p>
+        <h1 class="hero-title">Znajdź swój<br><em>unikalny Psik.</em></h1>
+        <p class="hero-sub">{{ products.count }} Zapachów Bez Przepłacania.</p>
+        <div class="hero-actions">
+            <a href="#produkty" class="btn">Odkryj kolekcję</a>
+            <a href="{% url 'quiz' %}" class="btn-ghost">Znajdź swój psik →</a>
+        </div>
+        <div class="hero-stats">
+            <div class="stat-item">
+                <div class="stat-num">468</div>
+                <div class="stat-label">Zapachów</div>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <div class="stat-num">199<span style="font-size:14px">zł</span></div>
+                <div class="stat-label">od</div>
+            </div>
+            <div class="stat-divider"></div>
+            <div class="stat-item">
+                <div class="stat-num">24h</div>
+                <div class="stat-label">Wysyłka</div>
+            </div>
+        </div>
     </div>
-    <div class="hero-stats">
-      <div class="stat-item">
-        <div class="stat-num">468</div>
-        <div class="stat-label">Zapachów</div>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item">
-        <div class="stat-num">199<span style="font-size:16px">zł</span></div>
-        <div class="stat-label">od</div>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item">
-        <div class="stat-num">24h</div>
-        <div class="stat-label">Wysyłka</div>
-      </div>
-    </div>
-  </div>
 </section>
 
-<section style="padding: 60px 0;" id="produkty">
+<section class="products-section" id="produkty">
     <div class="container">
 
-        <form method="get" style="margin-bottom: 40px;">
+        <form method="get" style="margin-bottom: 32px;">
             <input type="hidden" name="gender" value="{{ request.GET.gender }}">
-            
-            <p style="text-align:center; font-size:11px; letter-spacing:4px; text-transform:uppercase; color:#024442; opacity:0.6; margin-bottom:18px;">Szukaj w kolekcji</p>
-            
+
+            <p style="text-align:center; font-size:10px; letter-spacing:3px; text-transform:uppercase; color:#024442; opacity:0.6; margin-bottom:14px;">Szukaj w kolekcji</p>
+
             <div class="search-bar">
                 <span class="search-icon">
-                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.4"/>
-                    <path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-                </svg>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                        <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.4"/>
+                        <path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                    </svg>
                 </span>
                 <input class="search-input" type="text" name="brand"
-                placeholder="Szukaj marki, np. Dior, Chanel..."
-                value="{{ request.GET.brand }}">
+                    placeholder="Szukaj marki, np. Dior..."
+                    value="{{ request.GET.brand }}">
                 <button type="submit" class="search-btn">Szukaj</button>
             </div>
 
@@ -65,24 +65,24 @@
             </div>
         </form>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 40px;">
+        <div class="product-grid">
             {% for product in products %}
-            <a href="{% url 'product_detail' product.slug %}" style="text-decoration: none; color: inherit;">
-            <div style="background: white; padding: 20px; transition: transform 0.3s;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
-                {% if product.image %}
-                <img src="{{ product.image }}" style="width: 100%; height: 250px; object-fit: cover; margin-bottom: 15px;">
-                {% else %}
-                <div style="width: 100%; height: 250px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; font-size: 48px; margin-bottom: 15px;">🧴</div>
-                {% endif %}
-                <div style="font-weight: 600; margin-bottom: 5px;">{{ product.name }}</div>
-                <div style="color: #888; font-size: 13px; margin-bottom: 4px;">{{ product.brand }}</div>
-                <div style="font-size: 12px; color: #aaa; margin-bottom: 10px;">{{ product.get_gender_display }}</div>
-                <div style="color: var(--accent); font-weight: 600; margin-bottom: 15px;">{{ product.price }} zł</div>
-                <button class="btn" style="width: 100%; padding: 10px;">Zobacz więcej</button>
-            </div>
+            <a href="{% url 'product_detail' product.slug %}" style="text-decoration:none; color:inherit;">
+                <div class="product-card">
+                    {% if product.image %}
+                    <img src="{{ product.image }}" alt="{{ product.name }}">
+                    {% else %}
+                    <div class="product-placeholder">🧴</div>
+                    {% endif %}
+                    <div class="product-name">{{ product.name }}</div>
+                    <div class="product-brand">{{ product.brand }}</div>
+                    <div class="product-gender">{{ product.get_gender_display }}</div>
+                    <div class="product-price">{{ product.price }} zł</div>
+                    <button class="btn" style="width:100%; padding:9px;">Zobacz więcej</button>
+                </div>
             </a>
             {% empty %}
-            <p style="color: #888;">Brak produktów spełniających kryteria.</p>
+            <p style="color:#888; grid-column: 1/-1;">Brak produktów spełniających kryteria.</p>
             {% endfor %}
         </div>
 

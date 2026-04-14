@@ -1,21 +1,27 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section style="padding: 80px 0;">
+<section class="section-pad">
     <div class="container" style="max-width: 400px;">
-        <h1 style="font-size: 36px; font-weight: 300; margin-bottom: 40px; text-align: center;">Zaloguj się</h1>
-        <div style="background: white; padding: 40px;">
+        <h1 style="font-size: 32px; font-weight: 300; margin-bottom: 32px; text-align: center;">Zaloguj się</h1>
+        <div class="card-border">
             <form method="post">
                 {% csrf_token %}
                 {% for field in form %}
-                <div style="margin-bottom: 20px;">
-                    <label style="display: block; font-size: 13px; margin-bottom: 6px; color: #888;">{{ field.label }}</label>
+                <div class="form-group">
+                    <label class="form-label">{{ field.label }}</label>
                     {{ field }}
+                    {% if field.errors %}
+                        <p style="color: #c0392b; font-size: 12px; margin-top: 4px;">{{ field.errors.0 }}</p>
+                    {% endif %}
                 </div>
                 {% endfor %}
-                <button type="submit" class="btn" style="width: 100%; padding: 14px;">Zaloguj</button>
+                <button type="submit" class="btn" style="width: 100%; padding: 12px;">Zaloguj</button>
             </form>
         </div>
+        <p class="text-center mt-16" style="font-size: 13px;">
+            Nie masz konta? <a href="{% url 'register' %}" style="color: var(--forest-green); font-weight: 600;">Dołącz teraz</a>
+        </p>
     </div>
 </section>
 {% endblock %}

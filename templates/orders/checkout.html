@@ -1,134 +1,124 @@
 {% extends "base.html" %}
 
 {% block content %}
-<section style="padding: 60px 0;">
-    <div class="container" style="max-width: 700px;">
-        <h1 style="font-size: 36px; font-weight: 300; margin-bottom: 40px;">Dane do zamówienia</h1>
+<section class="section-pad">
+    <div class="container" style="max-width:700px;">
+        <h1 style="font-size:26px; font-weight:300; margin-bottom:28px;">Dane do zamówienia</h1>
 
         <form method="post" id="checkout-form">
             {% csrf_token %}
             <input type="hidden" name="referral_code" id="referral_code_hidden" value="">
             <input type="hidden" name="shipping_method" id="shipping_method_hidden" value="inpost">
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
-                <div>
-                    <label style="display: block; font-size: 13px; color: #888; margin-bottom: 6px;">Imię</label>
-                    <input type="text" name="first_name" required
-                        style="width: 100%; padding: 12px; border: 1px solid #ddd; font-size: 15px; box-sizing: border-box;">
+            <div class="form-grid-2">
+                <div class="form-group">
+                    <label class="form-label">Imię</label>
+                    <input type="text" name="first_name" required class="form-input">
                 </div>
-                <div>
-                    <label style="display: block; font-size: 13px; color: #888; margin-bottom: 6px;">Nazwisko</label>
-                    <input type="text" name="last_name" required
-                        style="width: 100%; padding: 12px; border: 1px solid #ddd; font-size: 15px; box-sizing: border-box;">
+                <div class="form-group">
+                    <label class="form-label">Nazwisko</label>
+                    <input type="text" name="last_name" required class="form-input">
                 </div>
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
-                <div>
-                    <label style="display: block; font-size: 13px; color: #888; margin-bottom: 6px;">Email</label>
-                    <input type="email" name="email" required
-                        style="width: 100%; padding: 12px; border: 1px solid #ddd; font-size: 15px; box-sizing: border-box;">
+            <div class="form-grid-2">
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" required class="form-input">
                 </div>
-                <div>
-                    <label style="display: block; font-size: 13px; color: #888; margin-bottom: 6px;">Telefon *</label>
-                    <input type="tel" name="phone" required
-                        style="width: 100%; padding: 12px; border: 1px solid #ddd; font-size: 15px; box-sizing: border-box;">
+                <div class="form-group">
+                    <label class="form-label">Telefon *</label>
+                    <input type="tel" name="phone" required class="form-input">
                 </div>
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label style="display: block; font-size: 13px; color: #888; margin-bottom: 6px;">Ulica i numer *</label>
-                <input type="text" name="address" required
-                    style="width: 100%; padding: 12px; border: 1px solid #ddd; font-size: 15px; box-sizing: border-box;">
+            <div class="form-group">
+                <label class="form-label">Ulica i numer *</label>
+                <input type="text" name="address" required class="form-input">
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 20px; margin-bottom: 20px;">
-                <div>
-                    <label style="display: block; font-size: 13px; color: #888; margin-bottom: 6px;">Kod pocztowy *</label>
-                    <input type="text" name="postal_code" placeholder="00-000" required
-                        style="width: 100%; padding: 12px; border: 1px solid #ddd; font-size: 15px; box-sizing: border-box;">
+            <div class="form-grid-2">
+                <div class="form-group">
+                    <label class="form-label">Kod pocztowy *</label>
+                    <input type="text" name="postal_code" placeholder="00-000" required class="form-input">
                 </div>
-                <div>
-                    <label style="display: block; font-size: 13px; color: #888; margin-bottom: 6px;">Miasto *</label>
-                    <input type="text" name="city" required
-                        style="width: 100%; padding: 12px; border: 1px solid #ddd; font-size: 15px; box-sizing: border-box;">
+                <div class="form-group">
+                    <label class="form-label">Miasto *</label>
+                    <input type="text" name="city" required class="form-input">
                 </div>
             </div>
 
-            <div style="margin-bottom: 20px;">
-                <label style="display: block; font-size: 13px; color: #888; margin-bottom: 6px;">Uwagi do zamówienia</label>
-                <textarea name="note" rows="3"
-                    style="width: 100%; padding: 12px; border: 1px solid #ddd; font-size: 15px; box-sizing: border-box; resize: vertical;"></textarea>
+            <div class="form-group">
+                <label class="form-label">Uwagi do zamówienia</label>
+                <textarea name="note" rows="3" class="form-input"></textarea>
             </div>
 
             <!-- KOD POLECENIA -->
-            <div style="background: #fffdf0; border: 1px solid var(--gold); padding: 20px; margin-bottom: 30px;">
-                <label style="display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px;">🎁 Masz kod polecenia?</label>
-                <p style="font-size: 13px; color: #888; margin-bottom: 12px;">Wpisz kod znajomego i otrzymaj <strong>-20 zł</strong> na to zamówienie!</p>
-                <div style="display: flex; gap: 10px;">
+            <div style="background:#fffdf0; border:1px solid var(--gold); padding:20px; margin-bottom:24px;">
+                <label style="display:block; font-size:14px; font-weight:600; margin-bottom:6px;">🎁 Masz kod polecenia?</label>
+                <p style="font-size:13px; color:#888; margin-bottom:12px;">Wpisz kod znajomego i otrzymaj <strong>-20 zł</strong> na to zamówienie!</p>
+                <div style="display:flex; gap:10px; flex-wrap:wrap;">
                     <input type="text" id="referral_code_input" placeholder="np. KAMIL-X7K2"
-                        style="flex: 1; padding: 12px; border: 1px solid #ddd; font-size: 15px; box-sizing: border-box; text-transform: uppercase;">
-                    <button type="button" onclick="checkReferral()" class="btn" style="padding: 12px 20px; white-space: nowrap;">
+                        style="flex:1; min-width:160px; padding:12px; border:1px solid #ddd; font-size:15px; box-sizing:border-box; text-transform:uppercase;">
+                    <button type="button" onclick="checkReferral()" class="btn" style="padding:12px 20px; white-space:nowrap;">
                         Sprawdź
                     </button>
                 </div>
-                <div id="referral_result" style="margin-top: 10px; font-size: 14px;"></div>
+                <div id="referral_result" style="margin-top:10px; font-size:14px;"></div>
             </div>
 
-            <p style="font-size: 12px; color: #aaa; margin-bottom: 24px;">* pola obowiązkowe</p>
+            <p style="font-size:12px; color:#aaa; margin-bottom:20px;">* pola obowiązkowe</p>
 
-            <!-- PODSUMOWANIE Z DOSTAWĄ -->
-            <div style="background: #f9f9f9; padding: 24px; margin-bottom: 24px;">
-                <h3 style="font-weight: 400; margin-bottom: 16px;">Twoje zamówienie</h3>
+            <!-- PODSUMOWANIE -->
+            <div style="background:#f9f9f9; padding:20px; margin-bottom:20px;">
+                <h3 style="font-weight:400; margin-bottom:14px; font-size:16px;">Twoje zamówienie</h3>
                 {% for item in cart.get_items %}
-                <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:14px;">
                     <span>{{ item.name }} × {{ item.quantity }}</span>
-                    <span style="font-weight: 600;">{{ item.price }} zł</span>
+                    <span style="font-weight:600; flex-shrink:0; margin-left:16px;">{{ item.price }} zł</span>
                 </div>
                 {% endfor %}
 
                 <!-- WYBÓR DOSTAWY -->
-                <div style="margin: 20px 0; padding: 16px 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee;">
-                    <h4 style="font-weight: 400; margin-bottom: 12px;">✈️ Wybierz dostawę (za pobraniem)</h4>
-                    
+                <div style="margin:16px 0; padding:14px 0; border-top:1px solid #eee; border-bottom:1px solid #eee;">
+                    <h4 style="font-weight:400; margin-bottom:10px; font-size:14px;">✈️ Wybierz dostawę (za pobraniem)</h4>
+
                     {% with total_qty=cart.get_total_quantity %}
-                    <p style="font-size: 14px; margin-bottom: 12px; color: #555;">
-                        📦 Łącznie w koszyku: <strong>{{ total_qty }} szt.</strong>
-                        {% if total_qty >= 3 %} – <span style="color: green;">🎉 Darmowa dostawa InPost!</span>{% endif %}
+                    <p style="font-size:13px; margin-bottom:10px; color:#555;">
+                        📦 W koszyku: <strong>{{ total_qty }} szt.</strong>
+                        {% if total_qty >= 3 %} – <span style="color:green;">🎉 Darmowa dostawa!</span>{% endif %}
                     </p>
-                    
-                    <div style="display: flex; gap: 24px; flex-wrap: wrap;">
-                        <!-- GLS – wyłączony -->
-                        <label style="display: flex; align-items: center; gap: 8px; opacity: 0.6;">
-                            <input type="radio" name="shipping_method_radio" value="gls" disabled> 
-                            GLS ekspres (następny dzień roboczy) – <strong>40 zł</strong>
-                            <span style="font-size: 12px; color: #999;">(na razie niedostępne)</span>
+
+                    <div style="display:flex; flex-direction:column; gap:10px;">
+                        <label style="display:flex; align-items:flex-start; gap:8px; opacity:0.6; font-size:13px;">
+                            <input type="radio" name="shipping_method_radio" value="gls" disabled style="margin-top:3px;">
+                            <span>GLS ekspres (następny dzień) – <strong>40 zł</strong> <span style="color:#999;">(niedostępne)</span></span>
                         </label>
-                        
-                        <!-- InPost – aktywny, koszt zależny od ilości -->
-                        <label style="display: flex; align-items: center; gap: 8px;">
-                            <input type="radio" name="shipping_method_radio" value="inpost" 
-                                   data-cost="{% if total_qty >= 3 %}0{% else %}30{% endif %}"
-                                   checked> 
-                            InPost Kurier (następny dzień roboczy) – 
-                            <strong id="inpost-cost-label">
-                                {% if total_qty >= 3 %}0 zł (darmowa!){% else %}30 zł{% endif %}
-                            </strong>
+
+                        <label style="display:flex; align-items:flex-start; gap:8px; font-size:13px;">
+                            <input type="radio" name="shipping_method_radio" value="inpost"
+                                data-cost="{% if total_qty >= 3 %}0{% else %}30{% endif %}"
+                                checked style="margin-top:3px;">
+                            <span>InPost Kurier (następny dzień) –
+                                <strong id="inpost-cost-label">
+                                    {% if total_qty >= 3 %}0 zł (darmowa!){% else %}30 zł{% endif %}
+                                </strong>
+                            </span>
                         </label>
                     </div>
                     {% endwith %}
                 </div>
 
-                <div style="border-top: 1px solid #ddd; padding-top: 12px; margin-top: 12px;">
-                    <div style="display: flex; justify-content: space-between; font-size: 16px; margin-bottom: 6px;">
+                <div style="border-top:1px solid #ddd; padding-top:12px; margin-top:12px;">
+                    <div style="display:flex; justify-content:space-between; font-size:15px; margin-bottom:6px;">
                         <span>Suma produktów</span>
                         <span id="total-base">{{ cart.get_total }} zł</span>
                     </div>
-                    <div id="discount-row" style="display: none; justify-content: space-between; font-size: 15px; color: green; margin-bottom: 6px;">
+                    <div id="discount-row" style="display:none; justify-content:space-between; font-size:14px; color:green; margin-bottom:6px;">
                         <span>Zniżka (kod polecenia)</span>
                         <span>-20 zł</span>
                     </div>
-                    <div id="shipping-row" style="display: flex; justify-content: space-between; font-size: 15px; margin-bottom: 6px;">
+                    <div id="shipping-row" style="display:flex; justify-content:space-between; font-size:14px; margin-bottom:6px;">
                         <span>Dostawa</span>
                         <span id="shipping-cost">
                             {% with total_qty=cart.get_total_quantity %}
@@ -136,26 +126,21 @@
                             {% endwith %}
                         </span>
                     </div>
-                    <div style="display: flex; justify-content: space-between; font-size: 20px; font-weight: 700; margin-top: 10px;">
+                    <div style="display:flex; justify-content:space-between; font-size:19px; font-weight:700; margin-top:10px;">
                         <span>Razem</span>
-                        <span id="total-final" style="color: var(--forest-green);">
+                        <span id="total-final" style="color:var(--forest-green);">
                             {% with total_qty=cart.get_total_quantity %}
-                                {% if total_qty >= 3 %}
-                                    {{ cart.get_total }} zł
-                                {% else %}
-                                    {{ cart.get_total|add:"30" }} zł
-                                {% endif %}
+                                {% if total_qty >= 3 %}{{ cart.get_total }} zł
+                                {% else %}{{ cart.get_total|add:"30" }} zł{% endif %}
                             {% endwith %}
                         </span>
                     </div>
                 </div>
 
-                <div style="margin-top: 12px; font-size: 13px; color: #888;">
-                    💳 Płatność: za pobraniem
-                </div>
+                <div style="margin-top:12px; font-size:13px; color:#888;">💳 Płatność: za pobraniem</div>
             </div>
 
-            <button type="submit" class="btn" style="width: 100%; padding: 16px; font-size: 16px;">
+            <button type="submit" class="btn" style="width:100%; padding:16px; font-size:15px;">
                 Złóż zamówienie →
             </button>
         </form>
@@ -163,7 +148,6 @@
 </section>
 
 <script>
-// Pobranie wartości z szablonu
 const baseTotal = parseFloat("{{ cart.get_total }}".replace(',', '.'));
 let discountApplied = false;
 let currentShipping = {% with total_qty=cart.get_total_quantity %}{% if total_qty >= 3 %}0{% else %}30{% endif %}{% endwith %};
@@ -177,7 +161,6 @@ function updateTotal() {
     document.getElementById('shipping-cost').textContent = currentShipping + ' zł';
 }
 
-// Obsługa zmiany metody dostawy (tylko InPost, ale radio może być zmieniane)
 const inpostRadio = document.querySelector('input[name="shipping_method_radio"][value="inpost"]');
 if (inpostRadio) {
     inpostRadio.addEventListener('change', function() {
@@ -189,16 +172,13 @@ if (inpostRadio) {
     });
 }
 
-// Funkcja sprawdzania kodu polecenia
 function checkReferral() {
     const code = document.getElementById('referral_code_input').value.trim().toUpperCase();
     const resultDiv = document.getElementById('referral_result');
-
     if (!code) {
-        resultDiv.innerHTML = '<span style="color: #c0392b;">⚠ Wpisz kod polecenia.</span>';
+        resultDiv.innerHTML = '<span style="color:#c0392b;">⚠ Wpisz kod polecenia.</span>';
         return;
     }
-
     fetch(`/check-referral/?code=${encodeURIComponent(code)}`)
         .then(r => r.json())
         .then(data => {
@@ -206,19 +186,17 @@ function checkReferral() {
                 discountApplied = true;
                 document.getElementById('referral_code_hidden').value = code;
                 document.getElementById('discount-row').style.display = 'flex';
-                resultDiv.innerHTML = '<span style="color: green;">✅ Kod zastosowany! Oszczędzasz 20 zł.</span>';
+                resultDiv.innerHTML = '<span style="color:green;">✅ Kod zastosowany! Oszczędzasz 20 zł.</span>';
             } else {
                 discountApplied = false;
                 document.getElementById('referral_code_hidden').value = '';
                 document.getElementById('discount-row').style.display = 'none';
-                resultDiv.innerHTML = '<span style="color: #c0392b;">⚠ Nieprawidłowy kod polecenia.</span>';
+                resultDiv.innerHTML = '<span style="color:#c0392b;">⚠ Nieprawidłowy kod polecenia.</span>';
             }
             updateTotal();
         });
 }
 
-// Inicjalne ustawienie (na wypadek gdyby radio nie wywołało zmiany)
 updateTotal();
 </script>
-
 {% endblock %}
