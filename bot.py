@@ -44,7 +44,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-TOKEN = os.environ.get("TELEGRAM_TOKEN", "8777576462:AAFuFhqntm53y_OifXVGBXLH9Chfffifdt4")
+TOKEN = os.environ.get("TELEGRAM_TOKEN")
 
 # ── Stany ConversationHandler ─────────────────────────────────────────────────
 (
