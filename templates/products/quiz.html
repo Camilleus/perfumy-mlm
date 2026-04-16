@@ -80,6 +80,7 @@
                                 <div class="product-brand">{{ product.brand }}</div>
                                 <div class="product-gender">{{ product.get_gender_display }}</div>
                                 <div class="product-price">{{ product.price }} zł</div>
+                                <div class="product-volume">📦 100 ml</div>
                                 <button class="btn" style="width:100%; padding:9px;">Zobacz więcej</button>
                             </div>
                         </a>
@@ -88,24 +89,26 @@
                     {% endfor %}
                 </div>
 
-                <!-- Paginacja -->
+                <!-- Paginacja z numerami stron -->
                 {% if page_obj.has_other_pages %}
                 <div class="pagination" style="margin-top: 40px; text-align: center;">
-                    <span class="step-links">
-                        {% if page_obj.has_previous %}
-                            <a href="?page=1" class="btn-ghost">&laquo; pierwsza</a>
-                            <a href="?page={{ page_obj.previous_page_number }}" class="btn-ghost">poprzednia</a>
-                        {% endif %}
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1" class="btn-ghost">&laquo; pierwsza</a>
+                        <a href="?page={{ page_obj.previous_page_number }}" class="btn-ghost">poprzednia</a>
+                    {% endif %}
 
-                        <span class="current" style="margin: 0 12px;">
-                            Strona {{ page_obj.number }} z {{ page_obj.paginator.num_pages }}
-                        </span>
-
-                        {% if page_obj.has_next %}
-                            <a href="?page={{ page_obj.next_page_number }}" class="btn-ghost">następna</a>
-                            <a href="?page={{ page_obj.paginator.num_pages }}" class="btn-ghost">ostatnia &raquo;</a>
+                    {% for num in page_obj.paginator.page_range %}
+                        {% if page_obj.number == num %}
+                            <span class="current">{{ num }}</span>
+                        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                            <a href="?page={{ num }}" class="btn-ghost">{{ num }}</a>
                         {% endif %}
-                    </span>
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}" class="btn-ghost">następna</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}" class="btn-ghost">ostatnia &raquo;</a>
+                    {% endif %}
                 </div>
                 {% endif %}
 

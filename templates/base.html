@@ -188,14 +188,14 @@
             background: var(--forest-green);
         }
 
-        /* DROPDOWN */
+        /* DROPDOWN – efekt rozwijania od góry z opóźnieniem przy znikanu */
         .dropdown { position: relative; }
         .dropdown-toggle::after { content: ' ▾'; font-size: 10px; }
+
         .dropdown-menu {
-            display: none;
+            display: block;
             position: absolute;
             top: 100%;
-            padding-top: 8px;
             left: 0;
             background: var(--accent-dark);
             border: 1px solid var(--gold);
@@ -203,7 +203,24 @@
             min-width: 160px;
             overflow: hidden;
             z-index: 999;
+            
+            transform-origin: top;
+            transform: scaleY(0);
+            opacity: 0;
+            visibility: hidden;
+            
+            /* Płynne przejście z opóźnieniem przy zamykaniu (0.5s) */
+            transition: transform 0.7s ease, opacity 0.7s ease, visibility 0.7s ease;
+            transition-delay: 0.25s;   /* czekaj 0.5s przed rozpoczęciem zamykania */
         }
+
+        .dropdown:hover .dropdown-menu {
+            transform: scaleY(1);
+            opacity: 1;
+            visibility: visible;
+            transition-delay: 0s;     /* przy otwieraniu brak opóźnienia */
+        }
+
         .dropdown-menu a {
             display: block;
             padding: 10px 18px;
@@ -214,6 +231,11 @@
             letter-spacing: 0.5px;
             border-radius: 0;
             border: none;
+        }
+
+        .dropdown-menu a:hover,
+        .dropdown-menu a.active {
+            background: var(--forest-green);
         }
         .dropdown-menu a:hover,
         .dropdown-menu a.active { background: var(--forest-green); }
@@ -744,6 +766,11 @@
             color: var(--gold);
             border-color: var(--forest-green);
         }
+        .product-volume {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 12px;
+        }
     </style>
 </head>
 <body>
@@ -800,7 +827,7 @@
         </nav>
     </div>
 
-    <div class="trust-bar">Darmowa dostawa przy 3+ perfumach &bull; Hurtowe Ceny bez Marży sieci</div>
+    <div class="trust-bar">Darmowa dostawa od 3 produktów &bull; Ceny prosto z hurtowni – bez narzutów wielkich drogerii</div>
 </header>
 
 <!-- MOBILE MENU -->
@@ -812,7 +839,7 @@
     <a href="/?gender=U">Dla Każdego</a>
 
     <span class="mobile-section-label">Nawigacja</span>
-    <a href="{% url 'quiz' %}">🧪 Znajdź swój Psik</a>
+    <a href="{% url 'quiz' %}">🧪 Znajdź swój Zapach</a>
     <a href="{% url 'my_orders' %}">📦 Moje zamówienia</a>
     <a href="{% url 'cart_detail' %}">🛒 Koszyk</a>
 
