@@ -44,6 +44,9 @@
 
                 <div style="font-size:30px; font-weight:600; color:var(--forest-green); margin-bottom:24px;">{{ product.price }} zł</div>
 
+                <!-- NOWA LINIA Z POJEMNOŚCIĄ -->
+                <p style="font-size:14px; color:#888; margin-bottom:16px;">📦 Pojemność: 100 ml</p>
+
                 {% if product.stock_quantity > 0 %}
                 <p style="color:green; font-size:13px; margin-bottom:16px;">✓ Dostępny ({{ product.stock_quantity }} szt.)</p>
                 <a href="{% url 'cart_add' product.pk %}" class="btn" style="width:100%; padding:14px; font-size:15px; text-align:center; display:block; box-sizing:border-box; margin-bottom:10px;">Dodaj do koszyka</a>
