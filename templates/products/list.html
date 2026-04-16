@@ -7,11 +7,11 @@
     <canvas id="hero-particles"></canvas>
     <div class="container hero-inner">
         <p class="hero-eyebrow">Przystanek Perfumy</p>
-        <h1 class="hero-title">Znajdź swój<br><em>unikalny Psik</em></h1>
+        <h1 class="hero-title">Znajdź swój<br><em>unikalny Zapach</em></h1>
         <p class="hero-sub">{{ products.count }} Zapachy Bez Przepłacania</p>
         <div class="hero-actions">
             <a href="#produkty" class="btn">Odkryj kolekcję</a>
-            <a href="{% url 'quiz' %}" class="btn-ghost">Znajdź swój psik</a>
+            <a href="{% url 'quiz' %}" class="btn-ghost">Znajdź Swój Zapach</a>
         </div>
         <div class="hero-stats">
             <div class="stat-item">
@@ -35,35 +35,51 @@
 <section class="products-section" id="produkty">
     <div class="container">
 
+        <!-- PASEK WYSZUKIWANIA (bez zmian) -->
         <form method="get" style="margin-bottom: 32px;">
             <input type="hidden" name="gender" value="{{ request.GET.gender }}">
-
             <p style="text-align:center; font-size:10px; letter-spacing:3px; text-transform:uppercase; color:#024442; opacity:0.6; margin-bottom:14px;">Szukaj w kolekcji</p>
 
             <div class="search-bar">
-                <span class="search-icon">
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                        <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.4"/>
-                        <path d="M10.5 10.5L14 14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
-                    </svg>
-                </span>
+                <span class="search-icon">🔍</span>
                 <input class="search-input" type="text" name="brand"
                     placeholder="Szukaj marki, np. Dior..."
                     value="{{ request.GET.brand }}">
                 <button type="submit" class="search-btn">Szukaj</button>
             </div>
-
-            <div class="search-chips">
-                <a href="?brand=Chanel&gender={{ request.GET.gender }}" class="chip">Chanel</a>
-                <a href="?brand=Dior&gender={{ request.GET.gender }}" class="chip">Dior</a>
-                <a href="?brand=Versace&gender={{ request.GET.gender }}" class="chip">Versace</a>
-                <a href="?brand=Armani&gender={{ request.GET.gender }}" class="chip">Armani</a>
-                <a href="?brand=Yves Saint Laurent&gender={{ request.GET.gender }}" class="chip">YSL</a>
-                {% if request.GET.brand %}
-                <a href="/?gender={{ request.GET.gender }}" class="chip" style="border-color:#c0392b; color:#c0392b;">✕ wyczyść</a>
-                {% endif %}
-            </div>
         </form>
+
+        <!-- NOWE: RZĄD Z PRZYCISKAMI FILTRUJ I SORTUJ -->
+        <div class="filter-sort-bar">
+            <div class="dropdown-filter">
+                <button class="dropdown-btn" id="filterBtn">📋 Filtruj</button>
+                <div class="dropdown-content" id="filterDropdown">
+                    {% for brand in brands %}
+                        <a href="?{% if request.GET.gender %}gender={{ request.GET.gender }}&{% endif %}brand={{ brand }}{% if current_sort %}&sort={{ current_sort }}{% endif %}"
+                           class="{% if current_brand == brand %}active-filter{% endif %}">
+                            {{ brand }}
+                        </a>
+                    {% endfor %}
+                    {% if current_brand %}
+                        <a href="?{% if request.GET.gender %}gender={{ request.GET.gender }}{% endif %}" class="clear-filter">✕ Wyczyść filtr</a>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="dropdown-sort">
+                <button class="dropdown-btn" id="sortBtn">⚡ Sortuj</button>
+                <div class="dropdown-content" id="sortDropdown">
+                    <a href="?{% if request.GET.gender %}gender={{ request.GET.gender }}&{% endif %}{% if current_brand %}brand={{ current_brand }}&{% endif %}sort=name_asc">Nazwa A → Z</a>
+                    <a href="?{% if request.GET.gender %}gender={{ request.GET.gender }}&{% endif %}{% if current_brand %}brand={{ current_brand }}&{% endif %}sort=name_desc">Nazwa Z → A</a>
+                    <a href="?{% if request.GET.gender %}gender={{ request.GET.gender }}&{% endif %}{% if current_brand %}brand={{ current_brand }}&{% endif %}sort=price_asc">Cena rosnąco</a>
+                    <a href="?{% if request.GET.gender %}gender={{ request.GET.gender }}&{% endif %}{% if current_brand %}brand={{ current_brand }}&{% endif %}sort=price_desc">Cena malejąco</a>
+                    <a href="?{% if request.GET.gender %}gender={{ request.GET.gender }}&{% endif %}{% if current_brand %}brand={{ current_brand }}&{% endif %}sort=newest">Najnowsze</a>
+                </div>
+            </div>
+        </div>
+
+         <!-- WYŚWIETLANIE PRODUKTÓW -->
+         <
 
         <div class="product-grid">
             {% for product in products %}
@@ -115,4 +131,102 @@
     </div>
 </section>
 
+<style>
+.filter-sort-bar {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.dropdown-filter, .dropdown-sort {
+    position: relative;
+    display: inline-block;
+}
+.dropdown-btn {
+    background: var(--bg-main);
+    border: 1px solid var(--forest-green);
+    border-radius: 40px;
+    padding: 10px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--forest-green);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.dropdown-btn:hover {
+    background: var(--forest-green);
+    color: var(--gold);
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 110%;
+    left: 0;
+    background: white;
+    min-width: 200px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    border-radius: 12px;
+    z-index: 10;
+    padding: 8px 0;
+    border: 1px solid #eee;
+}
+.dropdown-content a {
+    display: block;
+    padding: 8px 20px;
+    color: #333;
+    text-decoration: none;
+    font-size: 14px;
+}
+.dropdown-content a:hover {
+    background: var(--gold);
+    color: #000;
+}
+.dropdown-content .active-filter {
+    background: var(--forest-green);
+    color: var(--gold);
+}
+.dropdown-content .clear-filter {
+    color: #c0392b;
+    border-top: 1px solid #eee;
+    margin-top: 6px;
+    padding-top: 10px;
+}
+.show {
+    display: block;
+}
+@media (max-width: 640px) {
+    .filter-sort-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .dropdown-btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+</style>
+
+<script>
+// Toggle dropdowns
+document.getElementById('filterBtn').addEventListener('click', function(e) {
+    e.stopPropagation();
+    const filterDrop = document.getElementById('filterDropdown');
+    const sortDrop = document.getElementById('sortDropdown');
+    filterDrop.classList.toggle('show');
+    sortDrop.classList.remove('show');
+});
+document.getElementById('sortBtn').addEventListener('click', function(e) {
+    e.stopPropagation();
+    const sortDrop = document.getElementById('sortDropdown');
+    const filterDrop = document.getElementById('filterDropdown');
+    sortDrop.classList.toggle('show');
+    filterDrop.classList.remove('show');
+});
+// Zamknij po kliknięciu poza dropdownem
+window.addEventListener('click', function() {
+    document.getElementById('filterDropdown').classList.remove('show');
+    document.getElementById('sortDropdown').classList.remove('show');
+});
+</script>
 {% endblock %}
