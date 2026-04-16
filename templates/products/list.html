@@ -7,11 +7,11 @@
     <canvas id="hero-particles"></canvas>
     <div class="container hero-inner">
         <p class="hero-eyebrow">Przystanek Perfumy</p>
-        <h1 class="hero-title">Znajdź swój<br><em>unikalny Psik.</em></h1>
-        <p class="hero-sub">{{ products.count }} Zapachów Bez Przepłacania.</p>
+        <h1 class="hero-title">Znajdź swój<br><em>unikalny Psik</em></h1>
+        <p class="hero-sub">{{ products.count }} Zapachy Bez Przepłacania</p>
         <div class="hero-actions">
             <a href="#produkty" class="btn">Odkryj kolekcję</a>
-            <a href="{% url 'quiz' %}" class="btn-ghost">Znajdź swój psik →</a>
+            <a href="{% url 'quiz' %}" class="btn-ghost">Znajdź swój psik</a>
         </div>
         <div class="hero-stats">
             <div class="stat-item">
@@ -86,25 +86,25 @@
             <p style="color:#888; grid-column: 1/-1;">Brak produktów spełniających kryteria.</p>
             {% endfor %}
         </div>
-        <!-- Paginacja z numerami stron -->
+        <!-- Paginacja z zachowaniem filtrów -->
         {% if page_obj.has_other_pages %}
         <div class="pagination" style="margin-top: 40px; text-align: center;">
             {% if page_obj.has_previous %}
-                <a href="?page=1" class="btn-ghost">&laquo; pierwsza</a>
-                <a href="?page={{ page_obj.previous_page_number }}" class="btn-ghost">poprzednia</a>
+                <a href="?{{ request.GET.urlencode }}&page=1" class="btn-ghost">&laquo; pierwsza</a>
+                <a href="?{{ request.GET.urlencode }}&page={{ page_obj.previous_page_number }}" class="btn-ghost">poprzednia</a>
             {% endif %}
 
             {% for num in page_obj.paginator.page_range %}
                 {% if page_obj.number == num %}
                     <span class="current">{{ num }}</span>
                 {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-                    <a href="?page={{ num }}" class="btn-ghost">{{ num }}</a>
+                    <a href="?{{ request.GET.urlencode }}&page={{ num }}" class="btn-ghost">{{ num }}</a>
                 {% endif %}
             {% endfor %}
 
             {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}" class="btn-ghost">następna</a>
-                <a href="?page={{ page_obj.paginator.num_pages }}" class="btn-ghost">ostatnia &raquo;</a>
+                <a href="?{{ request.GET.urlencode }}&page={{ page_obj.next_page_number }}" class="btn-ghost">następna</a>
+                <a href="?{{ request.GET.urlencode }}&page={{ page_obj.paginator.num_pages }}" class="btn-ghost">ostatnia &raquo;</a>
             {% endif %}
         </div>
         {% endif %}

@@ -61,7 +61,6 @@
             </div><!-- zamknięcie container max-width:700px -->
             <div class="container">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-                <a href="{% url 'quiz' %}" style="color:var(--gold); font-size:14px;">← Zacznij od nowa</a>
                 <a href="{% url 'quiz_reset' %}" class="btn-ghost" style="font-size:14px;">🗑️ Wyczyść i zacznij od nowa</a>
             </div>
 
@@ -89,25 +88,25 @@
                     {% endfor %}
                 </div>
 
-                <!-- Paginacja z numerami stron -->
+                <!-- Paginacja z zachowaniem filtrów -->
                 {% if page_obj.has_other_pages %}
                 <div class="pagination" style="margin-top: 40px; text-align: center;">
                     {% if page_obj.has_previous %}
-                        <a href="?page=1" class="btn-ghost">&laquo; pierwsza</a>
-                        <a href="?page={{ page_obj.previous_page_number }}" class="btn-ghost">poprzednia</a>
+                        <a href="?{{ request.GET.urlencode }}&page=1" class="btn-ghost">&laquo; pierwsza</a>
+                        <a href="?{{ request.GET.urlencode }}&page={{ page_obj.previous_page_number }}" class="btn-ghost">poprzednia</a>
                     {% endif %}
 
                     {% for num in page_obj.paginator.page_range %}
                         {% if page_obj.number == num %}
                             <span class="current">{{ num }}</span>
                         {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-                            <a href="?page={{ num }}" class="btn-ghost">{{ num }}</a>
+                            <a href="?{{ request.GET.urlencode }}&page={{ num }}" class="btn-ghost">{{ num }}</a>
                         {% endif %}
                     {% endfor %}
 
                     {% if page_obj.has_next %}
-                        <a href="?page={{ page_obj.next_page_number }}" class="btn-ghost">następna</a>
-                        <a href="?page={{ page_obj.paginator.num_pages }}" class="btn-ghost">ostatnia &raquo;</a>
+                        <a href="?{{ request.GET.urlencode }}&page={{ page_obj.next_page_number }}" class="btn-ghost">następna</a>
+                        <a href="?{{ request.GET.urlencode }}&page={{ page_obj.paginator.num_pages }}" class="btn-ghost">ostatnia &raquo;</a>
                     {% endif %}
                 </div>
                 {% endif %}
