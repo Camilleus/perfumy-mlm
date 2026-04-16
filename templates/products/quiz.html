@@ -58,36 +58,64 @@
         </div>
 
         {% else %}
-        </div><!-- zamknięcie container max-width:700px -->
-        <div class="container">
-            <a href="{% url 'quiz' %}" style="color:var(--gold); font-size:14px;">← Zacznij od nowa</a>
-            <div style="margin-top:24px;">
-                {% if results %}
-                <h2 style="font-size:22px; font-weight:300; margin-bottom:24px;">Twoje dopasowania: {{ results.count }}</h2>
+            </div><!-- zamknięcie container max-width:700px -->
+            <div class="container">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                <a href="{% url 'quiz' %}" style="color:var(--gold); font-size:14px;">← Zacznij od nowa</a>
+                <a href="{% url 'quiz_reset' %}" class="btn-ghost" style="font-size:14px;">🗑️ Wyczyść i zacznij od nowa</a>
+            </div>
+
+            {% if results %}
+                <h2 style="font-size:22px; font-weight:300; margin-bottom:24px;">Twoje dopasowania: {{ results.paginator.count }}</h2>
                 <div class="product-grid">
                     {% for product in results %}
-                    <a href="{% url 'product_detail' product.slug %}" style="text-decoration:none; color:inherit;">
-                        <div class="product-card">
-                            {% if product.image %}
-                            <img src="{{ product.image }}" alt="{{ product.name }}">
-                            {% else %}
-                            <div class="product-placeholder">🧴</div>
-                            {% endif %}
-                            <div class="product-name">{{ product.name }}</div>
-                            <div class="product-brand">{{ product.brand }}</div>
-                            <div class="product-gender">{{ product.get_gender_display }}</div>
-                            <div class="product-price">{{ product.price }} zł</div>
-                            <button class="btn" style="width:100%; padding:9px;">Zobacz więcej</button>
-                        </div>
-                    </a>
+                        <a href="{% url 'product_detail' product.slug %}" style="text-decoration:none; color:inherit;">
+                            <div class="product-card">
+                                {% if product.image %}
+                                <img src="{{ product.image }}" alt="{{ product.name }}">
+                                {% else %}
+                                <div class="product-placeholder">🧴</div>
+                                {% endif %}
+                                <div class="product-name">{{ product.name }}</div>
+                                <div class="product-brand">{{ product.brand }}</div>
+                                <div class="product-gender">{{ product.get_gender_display }}</div>
+                                <div class="product-price">{{ product.price }} zł</div>
+                                <button class="btn" style="width:100%; padding:9px;">Zobacz więcej</button>
+                            </div>
+                        </a>
+                    {% empty %}
+                        <p>Brak produktów spełniających kryteria.</p>
                     {% endfor %}
                 </div>
-                {% else %}
-                <p style="color:#888; text-align:center;">Brak produktów dla tych kryteriów. Spróbuj inne opcje.</p>
-                {% endif %}
-            </div>
-        {% endif %}
 
+                <!-- Paginacja -->
+                {% if page_obj.has_other_pages %}
+                <div class="pagination" style="margin-top: 40px; text-align: center;">
+                    <span class="step-links">
+                        {% if page_obj.has_previous %}
+                            <a href="?page=1" class="btn-ghost">&laquo; pierwsza</a>
+                            <a href="?page={{ page_obj.previous_page_number }}" class="btn-ghost">poprzednia</a>
+                        {% endif %}
+
+                        <span class="current" style="margin: 0 12px;">
+                            Strona {{ page_obj.number }} z {{ page_obj.paginator.num_pages }}
+                        </span>
+
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}" class="btn-ghost">następna</a>
+                            <a href="?page={{ page_obj.paginator.num_pages }}" class="btn-ghost">ostatnia &raquo;</a>
+                        {% endif %}
+                    </span>
+                </div>
+                {% endif %}
+
+                <div style="text-align: center; margin: 20px 0;">
+                    <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="btn-ghost">↑ Do góry</a>
+                </div>
+            {% else %}
+                <p style="text-align:center;">Nie znaleziono produktów. Spróbuj zmienić kryteria.</p>
+            {% endif %}
+        {% endif %}
     </div>
 </section>
 {% endblock %}

@@ -20,8 +20,8 @@
             </div>
             <div class="stat-divider"></div>
             <div class="stat-item">
-                <div class="stat-num">199<span style="font-size:14px">zł</span></div>
                 <div class="stat-label">od</div>
+                <div class="stat-num">199<span style="font-size:14px">zł</span></div>
             </div>
             <div class="stat-divider"></div>
             <div class="stat-item">
@@ -85,7 +85,30 @@
             <p style="color:#888; grid-column: 1/-1;">Brak produktów spełniających kryteria.</p>
             {% endfor %}
         </div>
+        <!-- Paginacja -->
+        {% if page_obj.has_other_pages %}
+        <div class="pagination" style="margin-top: 40px; text-align: center;">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?{% if request.GET.urlencode %}{{ request.GET.urlencode }}&{% endif %}page=1" class="btn-ghost" style="margin: 0 4px;">&laquo; pierwsza</a>
+                    <a href="?{% if request.GET.urlencode %}{{ request.GET.urlencode }}&{% endif %}page={{ page_obj.previous_page_number }}" class="btn-ghost" style="margin: 0 4px;">poprzednia</a>
+                {% endif %}
 
+                <span class="current" style="margin: 0 12px;">
+                    Strona {{ page_obj.number }} z {{ page_obj.paginator.num_pages }}
+                </span>
+
+                {% if page_obj.has_next %}
+                    <a href="?{{ request.GET.urlencode }}&page={{ page_obj.next_page_number }}">następna</a>
+                    <a href="?{% if request.GET.urlencode %}{{ request.GET.urlencode }}&{% endif %}page={{ page_obj.paginator.num_pages }}" class="btn-ghost" style="margin: 0 4px;">ostatnia &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+        {% endif %}
+
+    </div>
+    <div style="text-align: center; margin: 20px 0;">
+        <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="btn-ghost">↑ Do góry</a>
     </div>
 </section>
 
