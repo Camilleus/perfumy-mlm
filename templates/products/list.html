@@ -35,11 +35,9 @@
 <section class="products-section" id="produkty">
     <div class="container">
 
-        <!-- PASEK WYSZUKIWANIA (bez zmian) -->
         <form method="get" style="margin-bottom: 32px;">
             <input type="hidden" name="gender" value="{{ request.GET.gender }}">
             <p style="text-align:center; font-size:10px; letter-spacing:3px; text-transform:uppercase; color:#024442; opacity:0.6; margin-bottom:14px;">Szukaj w kolekcji</p>
-
             <div class="search-bar">
                 <span class="search-icon">🔍</span>
                 <input class="search-input" type="text" name="brand"
@@ -49,7 +47,6 @@
             </div>
         </form>
 
-        <!-- NOWE: RZĄD Z PRZYCISKAMI FILTRUJ I SORTUJ -->
         <div class="filter-sort-bar">
             <div class="dropdown-filter">
                 <button class="dropdown-btn" id="filterBtn">📋 Filtruj</button>
@@ -78,15 +75,12 @@
             </div>
         </div>
 
-         <!-- WYŚWIETLANIE PRODUKTÓW -->
-         <
-
         <div class="product-grid">
             {% for product in products %}
             <a href="{% url 'product_detail' product.slug %}" style="text-decoration:none; color:inherit;">
                 <div class="product-card">
                     {% if product.image %}
-                    <img src="{{ product.image }}" alt="{{ product.name }}">
+                    <img src="{{ product.image }}" alt="Perfumy {{ product.name }} – {{ product.brand }}">
                     {% else %}
                     <div class="product-placeholder">🧴</div>
                     {% endif %}
@@ -102,14 +96,13 @@
             <p style="color:#888; grid-column: 1/-1;">Brak produktów spełniających kryteria.</p>
             {% endfor %}
         </div>
-        <!-- Paginacja z zachowaniem filtrów -->
+
         {% if page_obj.has_other_pages %}
         <div class="pagination" style="margin-top: 40px; text-align: center;">
             {% if page_obj.has_previous %}
                 <a href="?{{ request.GET.urlencode }}&page=1" class="btn-ghost">&laquo; pierwsza</a>
                 <a href="?{{ request.GET.urlencode }}&page={{ page_obj.previous_page_number }}" class="btn-ghost">poprzednia</a>
             {% endif %}
-
             {% for num in page_obj.paginator.page_range %}
                 {% if page_obj.number == num %}
                     <span class="current">{{ num }}</span>
@@ -117,7 +110,6 @@
                     <a href="?{{ request.GET.urlencode }}&page={{ num }}" class="btn-ghost">{{ num }}</a>
                 {% endif %}
             {% endfor %}
-
             {% if page_obj.has_next %}
                 <a href="?{{ request.GET.urlencode }}&page={{ page_obj.next_page_number }}" class="btn-ghost">następna</a>
                 <a href="?{{ request.GET.urlencode }}&page={{ page_obj.paginator.num_pages }}" class="btn-ghost">ostatnia &raquo;</a>
@@ -131,102 +123,105 @@
     </div>
 </section>
 
+<!-- FAQ -->
+<section style="padding: 60px 0; background: white; margin-top: 40px;">
+    <div class="container" style="max-width: 800px;">
+        <div style="text-align:center; margin-bottom:40px;">
+            <p style="font-size:11px; letter-spacing:4px; text-transform:uppercase; color:var(--gold); margin-bottom:12px;">Masz pytania?</p>
+            <h2 style="font-size:clamp(24px, 4vw, 36px); font-weight:300;">Najczęściej zadawane pytania</h2>
+        </div>
+        <div id="faq-list">
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">Jakie perfumy na randkę do 200 zł?<span class="faq-arrow">▾</span></button>
+                <div class="faq-answer">Na romantyczną randkę świetnie sprawdzą się zapachy kwiatowo-piżmowe lub drzewne. Dla niej polecamy nuty różane i waniliowe – są zmysłowe i długo się utrzymują. Dla niego – drzewo sandałowe, wetyweria lub paczula. Wszystkie nasze perfumy są w cenach od 199,95 zł za 100 ml.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">Czy Przystanek Perfumy ma darmową dostawę?<span class="faq-arrow">▾</span></button>
+                <div class="faq-answer">Tak! Darmowa dostawa przy zamówieniu 3 lub więcej perfum. Przy mniejszych zamówieniach koszt dostawy InPost to 30 zł. Wysyłamy w 24 godziny od złożenia zamówienia.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">Czym różni się EDP od EDT?<span class="faq-arrow">▾</span></button>
+                <div class="faq-answer">EDP (Eau de Parfum) zawiera więcej olejków zapachowych (15–20%) i utrzymuje się na skórze 6–8 godzin. EDT (Eau de Toilette) to lżejsza wersja (5–15%), świeższa i idealna na co dzień. Parfum to najstężeńsza forma – kilka kropel wystarczy na cały dzień.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">Skąd macie takie niskie ceny?<span class="faq-arrow">▾</span></button>
+                <div class="faq-answer">Kupujemy perfumy bezpośrednio od hurtownika i sprzedajemy z minimalną marżą. Wielkie drogerie nakładają marże 100–300%. My tego nie robimy – zależy nam żebyś dostał dobry zapach w uczciwej cenie.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">Czy perfumy są oryginalne?<span class="faq-arrow">▾</span></button>
+                <div class="faq-answer">Tak, wszystkie perfumy w naszym sklepie są w 100% oryginalne. Pochodzą od sprawdzonego hurtownika i mają pełne opakowania z kodami partii.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">Jak wybrać perfumy jeśli nie wiem co lubię?<span class="faq-arrow">▾</span></button>
+                <div class="faq-answer">Skorzystaj z naszego quizu zapachowego! Odpowiadasz na 4 pytania (intensywność, nuty, okazja, dla kogo) i dostajesz dopasowane propozycje. Możesz też napisać do nas – Marcel, założyciel sklepu i pasjonat zapachów, chętnie doradzi.</div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleFaq(this)">Czy mogę zwrócić perfumy?<span class="faq-arrow">▾</span></button>
+                <div class="faq-answer">Tak, masz 14 dni na zwrot od daty otrzymania zamówienia. Perfumy muszą być w oryginalnym, nienaruszonym opakowaniu. Szczegóły znajdziesz w naszej <a href="/zwroty-reklamacje/" style="color:var(--gold);">Polityce zwrotów</a>.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {"@type":"Question","name":"Jakie perfumy na randkę do 200 zł?","acceptedAnswer":{"@type":"Answer","text":"Na romantyczną randkę świetnie sprawdzą się zapachy kwiatowo-piżmowe lub drzewne. Dla niej nuty różane i waniliowe, dla niego drzewo sandałowe lub wetyweria. Ceny od 199,95 zł za 100 ml."}},
+    {"@type":"Question","name":"Czy Przystanek Perfumy ma darmową dostawę?","acceptedAnswer":{"@type":"Answer","text":"Tak! Darmowa dostawa przy zamówieniu 3 lub więcej perfum. Przy mniejszych zamówieniach koszt InPost to 30 zł."}},
+    {"@type":"Question","name":"Czym różni się EDP od EDT?","acceptedAnswer":{"@type":"Answer","text":"EDP zawiera 15–20% olejków i utrzymuje się 6–8 godzin. EDT to 5–15%, lżejsza i świeższa, idealna na co dzień."}},
+    {"@type":"Question","name":"Skąd macie takie niskie ceny?","acceptedAnswer":{"@type":"Answer","text":"Kupujemy bezpośrednio od hurtownika z minimalną marżą. Drogerie nakładają 100–300% marży – my tego nie robimy."}},
+    {"@type":"Question","name":"Czy perfumy są oryginalne?","acceptedAnswer":{"@type":"Answer","text":"Tak, 100% oryginalne, od sprawdzonego hurtownika z kodami partii."}},
+    {"@type":"Question","name":"Jak wybrać perfumy jeśli nie wiem co lubię?","acceptedAnswer":{"@type":"Answer","text":"Skorzystaj z quizu zapachowego – 4 pytania i dostajesz dopasowane propozycje."}},
+    {"@type":"Question","name":"Czy mogę zwrócić perfumy?","acceptedAnswer":{"@type":"Answer","text":"Tak, 14 dni na zwrot w oryginalnym opakowaniu."}}
+  ]
+}
+</script>
+
 <style>
-.filter-sort-bar {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 32px;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-.dropdown-filter, .dropdown-sort {
-    position: relative;
-    display: inline-block;
-}
-.dropdown-btn {
-    background: var(--bg-main);
-    border: 1px solid var(--forest-green);
-    border-radius: 40px;
-    padding: 10px 24px;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--forest-green);
-    cursor: pointer;
-    transition: all 0.2s;
-}
-.dropdown-btn:hover {
-    background: var(--forest-green);
-    color: var(--gold);
-}
-.dropdown-content {
-    display: none;
-    position: absolute;
-    top: 110%;
-    left: 0;
-    background: white;
-    min-width: 200px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-    border-radius: 12px;
-    z-index: 10;
-    padding: 8px 0;
-    border: 1px solid #eee;
-}
-.dropdown-content a {
-    display: block;
-    padding: 8px 20px;
-    color: #333;
-    text-decoration: none;
-    font-size: 14px;
-}
-.dropdown-content a:hover {
-    background: var(--gold);
-    color: #000;
-}
-.dropdown-content .active-filter {
-    background: var(--forest-green);
-    color: var(--gold);
-}
-.dropdown-content .clear-filter {
-    color: #c0392b;
-    border-top: 1px solid #eee;
-    margin-top: 6px;
-    padding-top: 10px;
-}
-.show {
-    display: block;
-}
-@media (max-width: 640px) {
-    .filter-sort-bar {
-        flex-direction: column;
-        align-items: stretch;
-    }
-    .dropdown-btn {
-        width: 100%;
-        text-align: center;
-    }
-}
+.filter-sort-bar { display:flex; gap:16px; margin-bottom:32px; flex-wrap:wrap; justify-content:center; }
+.dropdown-filter, .dropdown-sort { position:relative; display:inline-block; }
+.dropdown-btn { background:var(--bg-main); border:1px solid var(--forest-green); border-radius:40px; padding:10px 24px; font-size:14px; font-weight:600; color:var(--forest-green); cursor:pointer; transition:all 0.2s; }
+.dropdown-btn:hover { background:var(--forest-green); color:var(--gold); }
+.dropdown-content { display:none; position:absolute; top:110%; left:0; background:white; min-width:200px; max-height:300px; overflow-y:auto; box-shadow:0 8px 16px rgba(0,0,0,0.1); border-radius:12px; z-index:10; padding:8px 0; border:1px solid #eee; }
+.dropdown-content a { display:block; padding:8px 20px; color:#333; text-decoration:none; font-size:14px; }
+.dropdown-content a:hover { background:var(--gold); color:#000; }
+.dropdown-content .active-filter { background:var(--forest-green); color:var(--gold); }
+.dropdown-content .clear-filter { color:#c0392b; border-top:1px solid #eee; margin-top:6px; padding-top:10px; }
+.show { display:block; }
+@media (max-width:640px) { .filter-sort-bar { flex-direction:column; align-items:stretch; } .dropdown-btn { width:100%; text-align:center; } }
+
+.faq-item { border-bottom:1px solid #eee; }
+.faq-question { width:100%; text-align:left; background:transparent; border:none; padding:20px 0; font-size:16px; font-weight:600; color:var(--forest-green); cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:16px; font-family:'Inter',sans-serif; transition:color 0.2s; }
+.faq-question:hover { color:var(--gold); }
+.faq-arrow { font-size:18px; transition:transform 0.3s; flex-shrink:0; color:var(--gold); }
+.faq-answer { display:none; padding:0 0 20px; font-size:15px; color:#555; line-height:1.8; }
+.faq-item.open .faq-arrow { transform:rotate(180deg); }
+.faq-item.open .faq-answer { display:block; }
 </style>
 
 <script>
-// Toggle dropdowns
 document.getElementById('filterBtn').addEventListener('click', function(e) {
     e.stopPropagation();
-    const filterDrop = document.getElementById('filterDropdown');
-    const sortDrop = document.getElementById('sortDropdown');
-    filterDrop.classList.toggle('show');
-    sortDrop.classList.remove('show');
+    document.getElementById('filterDropdown').classList.toggle('show');
+    document.getElementById('sortDropdown').classList.remove('show');
 });
 document.getElementById('sortBtn').addEventListener('click', function(e) {
     e.stopPropagation();
-    const sortDrop = document.getElementById('sortDropdown');
-    const filterDrop = document.getElementById('filterDropdown');
-    sortDrop.classList.toggle('show');
-    filterDrop.classList.remove('show');
+    document.getElementById('sortDropdown').classList.toggle('show');
+    document.getElementById('filterDropdown').classList.remove('show');
 });
-// Zamknij po kliknięciu poza dropdownem
 window.addEventListener('click', function() {
     document.getElementById('filterDropdown').classList.remove('show');
     document.getElementById('sortDropdown').classList.remove('show');
 });
+function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+}
 </script>
+
 {% endblock %}
