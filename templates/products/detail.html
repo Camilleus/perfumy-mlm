@@ -9,6 +9,28 @@
 <meta property="og:image" content="{{ product.image }}">
 <meta property="og:type" content="product">
 <meta property="og:url" content="{{ request.build_absolute_uri }}">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org/",
+  "@type": "Product",
+  "name": "{{ product.name }}",
+  "image": "{{ product.image }}",
+  "description": "{{ product.description|truncatewords:50 }}",
+  "brand": {
+    "@type": "Brand",
+    "name": "{{ product.brand }}"
+  },
+  "offers": {
+    "@type": "Offer",
+    "url": "{{ request.build_absolute_uri }}",
+    "priceCurrency": "PLN",
+    "price": "{{ product.price }}",
+    "availability": "{% if product.stock_quantity > 0 %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}",
+    "itemCondition": "https://schema.org/NewCondition"
+  }
+}
+</script>
 {% endblock %}
 
 {% block content %}
@@ -20,7 +42,9 @@
             <!-- ZDJĘCIE -->
             <div class="detail-image">
                 {% if product.image %}
-                <img src="{{ product.image }}" alt="{{ product.name }}" style="width:100%; object-fit:cover; display:block;">
+                <img src="{{ product.image }}"
+                     alt="Perfumy {{ product.name }} marki {{ product.brand }} {{ product.get_concentration_display }} – Przystanek Perfumy"
+                     style="width:100%; object-fit:cover; display:block;">
                 {% else %}
                 <div style="width:100%; height:300px; background:#f0f0f0; display:flex; align-items:center; justify-content:center; font-size:80px;">🧴</div>
                 {% endif %}
@@ -44,7 +68,6 @@
 
                 <div style="font-size:30px; font-weight:600; color:var(--forest-green); margin-bottom:24px;">{{ product.price }} zł</div>
 
-                <!-- NOWA LINIA Z POJEMNOŚCIĄ -->
                 <p style="font-size:14px; color:#888; margin-bottom:16px;">📦 Pojemność: 100 ml</p>
 
                 {% if product.stock_quantity > 0 %}

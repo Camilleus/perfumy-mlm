@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     'import_export',
     'cloudinary_storage',
     'cloudinary',
+    'django.contrib.sitemaps',
 ]
 
 MIDDLEWARE = [

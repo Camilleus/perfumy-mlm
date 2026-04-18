@@ -20,6 +20,40 @@ from django.conf.urls.static import static
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from django.views.generic import TemplateView
+from django.http import HttpResponse
+from django.contrib.sitemaps import Sitemap
+from django.contrib.sitemaps.views import sitemap
+from products.models import Product
+
+
+class ProductSitemap(Sitemap):
+    changefreq = 'weekly'
+    priority = 0.8
+
+    def items(self):
+        return Product.objects.filter(is_available=True)
+
+    def location(self, obj):
+        return f'/produkt/{obj.slug}/'
+
+
+def robots_txt(request):
+    lines = [
+        "User-agent: *",
+        "Allow: /",
+        "Disallow: /admin/",
+        "Disallow: /cart/",
+        "Disallow: /checkout/",
+        "Disallow: /panel/",
+        "Disallow: /moje-zamowienia/",
+        f"Sitemap: {request.scheme}://{request.get_host()}/sitemap.xml",
+    ]
+    return HttpResponse("\n".join(lines), content_type="text/plain")
+
+
+sitemaps = {
+    'products': ProductSitemap,
+}
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -36,4 +70,6 @@ urlpatterns = [
     path('omnibus/', TemplateView.as_view(template_name='policies/omnibus.html'), name='omnibus'),
     path('kontakt/', TemplateView.as_view(template_name='policies/contact.html'), name='contact'),
     path('odstapienie-formularz/', TemplateView.as_view(template_name='policies/withdrawal_form.html'), name='withdrawal_form'),
+    path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
+    path('robots.txt', robots_txt, name='robots_txt'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
