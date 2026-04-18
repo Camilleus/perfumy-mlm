@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Blog o perfumach – Przystanek Perfumy{% endblock %}
+
+{% block meta %}
+<meta name="description" content="Artykuły o perfumach, zapachach i świecie perfumerii. Ekspert Marcel Krzeja – Przystanek Perfumy.">
+{% endblock %}
+
+{% block content %}
+<section class="section-pad">
+    <div class="container" style="max-width: 900px;">
+
+        <div style="text-align:center; margin-bottom:48px;">
+            <p style="font-size:11px; letter-spacing:4px; text-transform:uppercase; color:var(--gold); margin-bottom:12px;">Wiedza o zapachach</p>
+            <h1 style="font-size:clamp(28px, 5vw, 44px); font-weight:300; margin-bottom:16px;">Blog Przystanku Perfumy</h1>
+            <p style="color:#888; font-size:15px;">Artykuły o perfumach, nutach zapachowych i sztuce wyboru idealnego zapachu.</p>
+        </div>
+
+        {% if posts %}
+        <div style="display:flex; flex-direction:column; gap:32px;">
+            {% for post in posts %}
+            <article style="background:white; padding:32px; border-left:3px solid var(--gold);">
+                <a href="{% url 'blog_detail' post.slug %}" style="text-decoration:none; color:inherit;">
+                    <h2 style="font-size:22px; font-weight:400; margin-bottom:12px; color:var(--forest-green);">{{ post.title }}</h2>
+                </a>
+                {% if post.excerpt %}
+                <p style="font-size:15px; color:#666; line-height:1.7; margin-bottom:16px;">{{ post.excerpt }}</p>
+                {% endif %}
+                <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                    <div style="font-size:13px; color:#aaa;">
+                        ✍️ {{ post.author_name }} &bull; {{ post.created_at|date:"d.m.Y" }}
+                    </div>
+                    <a href="{% url 'blog_detail' post.slug %}" class="btn-ghost" style="padding:8px 20px; font-size:12px;">Czytaj dalej →</a>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div style="text-align:center; padding:60px 0;">
+            <div style="font-size:48px; margin-bottom:16px;">✍️</div>
+            <p style="color:#888; font-size:15px;">Brak artykułów. Wróć wkrótce!</p>
+        </div>
+        {% endif %}
+
+    </div>
+</section>
+{% endblock %}
