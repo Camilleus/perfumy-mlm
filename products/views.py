@@ -54,7 +54,13 @@ def product_list(request):
 
 def product_detail(request, slug):
     product = get_object_or_404(Product, slug=slug)
-    return render(request, 'products/detail.html', {'product': product})
+    reviews = product.reviews.all()
+    avg_rating = round(sum(r.rating for r in reviews) / len(reviews), 1) if reviews else 0
+    return render(request, 'products/detail.html', {
+        'product': product,
+        'reviews': reviews,
+        'avg_rating': avg_rating,
+    })
 
 def quiz(request):
     # Jeśli POST – zapisz odpowiedzi w sesji i przekieruj na GET

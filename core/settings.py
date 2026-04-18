@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     'cloudinary',
     'django.contrib.sitemaps',
+    'reviews',
 ]
 
 MIDDLEWARE = [

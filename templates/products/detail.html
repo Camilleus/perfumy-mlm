@@ -17,10 +17,7 @@
   "name": "{{ product.name }}",
   "image": "{{ product.image }}",
   "description": "{{ product.description|truncatewords:50 }}",
-  "brand": {
-    "@type": "Brand",
-    "name": "{{ product.brand }}"
-  },
+  "brand": { "@type": "Brand", "name": "{{ product.brand }}" },
   "offers": {
     "@type": "Offer",
     "url": "{{ request.build_absolute_uri }}",
@@ -28,7 +25,12 @@
     "price": "{{ product.price }}",
     "availability": "{% if product.stock_quantity > 0 %}https://schema.org/InStock{% else %}https://schema.org/OutOfStock{% endif %}",
     "itemCondition": "https://schema.org/NewCondition"
-  }
+  }{% if reviews %},
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "{{ avg_rating }}",
+    "reviewCount": "{{ reviews.count }}"
+  }{% endif %}
 }
 </script>
 {% endblock %}
@@ -54,7 +56,16 @@
             <div class="detail-info">
                 <p style="color:#aaa; font-size:12px; text-transform:uppercase; letter-spacing:2px;">{{ product.brand }}</p>
                 <h1 style="font-size:clamp(24px, 5vw, 34px); font-weight:300; margin:10px 0 8px;">{{ product.name }}</h1>
-                <p style="color:#888; font-size:14px; margin-bottom:16px;">{{ product.get_gender_display }}</p>
+                <p style="color:#888; font-size:14px; margin-bottom:8px;">{{ product.get_gender_display }}</p>
+
+                {% if reviews %}
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px;">
+                    <span style="color:var(--gold); font-size:16px;">
+                        {% for i in "12345" %}{% if forloop.counter <= avg_rating %}★{% else %}☆{% endif %}{% endfor %}
+                    </span>
+                    <span style="font-size:13px; color:#888;">{{ avg_rating }}/5 ({{ reviews.count }} opinii)</span>
+                </div>
+                {% endif %}
 
                 {% if product.scent_notes %}
                 <p style="font-size:13px; color:#666; margin-bottom:16px;">
@@ -66,8 +77,7 @@
                 <p style="font-size:15px; color:#444; margin-bottom:24px; line-height:1.8;">{{ product.description }}</p>
                 {% endif %}
 
-                <div style="font-size:30px; font-weight:600; color:var(--forest-green); margin-bottom:24px;">{{ product.price }} zł</div>
-
+                <div style="font-size:30px; font-weight:600; color:var(--forest-green); margin-bottom:16px;">{{ product.price }} zł</div>
                 <p style="font-size:14px; color:#888; margin-bottom:16px;">📦 Pojemność: 100 ml</p>
 
                 {% if product.stock_quantity > 0 %}
@@ -79,6 +89,85 @@
                 {% endif %}
             </div>
         </div>
+
+        <!-- SEKCJA OPINII -->
+        <div style="margin-top:60px; border-top:2px solid var(--gold); padding-top:40px;">
+            <h2 style="font-size:24px; font-weight:300; margin-bottom:32px;">
+                Opinie o {{ product.name }}
+                {% if reviews %}<span style="font-size:16px; color:#888; font-weight:400;">({{ reviews.count }})</span>{% endif %}
+            </h2>
+
+            <div style="display:grid; grid-template-columns:1fr; gap:40px;">
+
+                <!-- LISTA OPINII -->
+                <div>
+                    {% if reviews %}
+                    <div style="display:flex; flex-direction:column; gap:20px; margin-bottom:32px;">
+                        {% for review in reviews %}
+                        <div style="background:white; padding:24px; border-left:3px solid {% if review.verified_purchase %}var(--gold){% else %}#eee{% endif %};">
+                            <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+                                <div>
+                                    <span style="font-weight:600;">{{ review.name }}</span>
+                                    {% if review.verified_purchase %}
+                                    <span style="font-size:11px; color:var(--gold); margin-left:8px; background:rgba(212,175,55,0.1); padding:2px 8px; border-radius:10px;">✓ Zweryfikowany zakup</span>
+                                    {% endif %}
+                                </div>
+                                <span style="color:#aaa; font-size:12px;">{{ review.created_at|date:"d.m.Y" }}</span>
+                            </div>
+                            <div style="color:var(--gold); margin-bottom:10px;">
+                                {% for i in "12345" %}{% if forloop.counter <= review.rating %}★{% else %}☆{% endif %}{% endfor %}
+                            </div>
+                            <p style="font-size:14px; color:#444; line-height:1.7;">{{ review.comment }}</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <p style="color:#888; font-size:14px; margin-bottom:32px;">Brak opinii. Bądź pierwszy!</p>
+                    {% endif %}
+
+                    <!-- FORMULARZ OPINII -->
+                    <div style="background:#f9f9f9; padding:32px;">
+                        <h3 style="font-size:18px; font-weight:400; margin-bottom:24px;">Dodaj opinię</h3>
+                        <form method="post" action="{% url 'add_review' product.slug %}">
+                            {% csrf_token %}
+
+                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
+                                <div>
+                                    <label class="form-label">Imię *</label>
+                                    <input type="text" name="name" required class="form-input" placeholder="np. Anna">
+                                </div>
+                                <div>
+                                    <label class="form-label">Email z zamówienia *</label>
+                                    <input type="email" name="email" required class="form-input" placeholder="twoj@email.pl">
+                                </div>
+                            </div>
+
+                            <div style="margin-bottom:16px;">
+                                <label class="form-label">Ocena *</label>
+                                <div style="display:flex; gap:8px; margin-top:8px;">
+                                    {% for i in "12345" %}
+                                    <label style="cursor:pointer; font-size:28px; color:#ddd; transition:color 0.2s;" class="star-label">
+                                        <input type="radio" name="rating" value="{{ forloop.counter }}" required style="display:none;">
+                                        ★
+                                    </label>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+                            <div style="margin-bottom:20px;">
+                                <label class="form-label">Twoja opinia *</label>
+                                <textarea name="comment" required class="form-input" rows="4" placeholder="Jak oceniasz ten zapach?"></textarea>
+                            </div>
+
+                            <p style="font-size:12px; color:#aaa; margin-bottom:16px;">* Jeśli email zgadza się z Twoim zamówieniem, opinia otrzyma oznaczenie „Zweryfikowany zakup".</p>
+
+                            <button type="submit" class="btn" style="padding:14px 32px;">Dodaj opinię</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </section>
 
@@ -90,10 +179,33 @@
     margin-top: 24px;
 }
 @media (min-width: 768px) {
-    .detail-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 60px;
-    }
+    .detail-grid { grid-template-columns: 1fr 1fr; gap: 60px; }
 }
+
+/* GWIAZDKI – interaktywne */
+.star-label { color: #ddd; }
+.star-label:hover,
+.star-label:hover ~ .star-label { color: var(--gold); }
+input[type="radio"]:checked + .star-label,
+input[type="radio"]:checked ~ label { color: var(--gold); }
 </style>
+
+<script>
+// Interaktywne gwiazdki
+const stars = document.querySelectorAll('.star-label');
+stars.forEach((star, index) => {
+    star.addEventListener('mouseover', () => {
+        stars.forEach((s, i) => s.style.color = i <= index ? 'var(--gold)' : '#ddd');
+    });
+    star.addEventListener('click', () => {
+        star.querySelector('input').checked = true;
+        stars.forEach((s, i) => s.style.color = i <= index ? 'var(--gold)' : '#ddd');
+    });
+});
+document.querySelector('.star-label').closest('div').addEventListener('mouseleave', () => {
+    const checked = document.querySelector('input[name="rating"]:checked');
+    const checkedIndex = checked ? parseInt(checked.value) - 1 : -1;
+    stars.forEach((s, i) => s.style.color = i <= checkedIndex ? 'var(--gold)' : '#ddd');
+});
+</script>
 {% endblock %}
