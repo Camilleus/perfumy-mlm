@@ -123,4 +123,4 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 SITE_URL = 'http://127.0.0.1:8000'  # lub http://127.0.0.1:8000 lokalnie #https://web-production-0c35c.up.railway.app/
-ANTHROPIC_API_KEY = config('ANTHROPIC_API_KEY')
+ANTHROPIC_API_KEY = config('ANTHROPIC_API_KEY', default='')
