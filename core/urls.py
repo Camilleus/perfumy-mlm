@@ -72,4 +72,5 @@ urlpatterns = [
     path('odstapienie-formularz/', TemplateView.as_view(template_name='policies/withdrawal_form.html'), name='withdrawal_form'),
     path('sitemap.xml', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
     path('robots.txt', robots_txt, name='robots_txt'),
+    path('o-nas/', TemplateView.as_view(template_name='policies/about.html'), name='about'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
