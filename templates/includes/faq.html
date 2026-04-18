@@ -37,3 +37,22 @@
         </div>
     </div>
 </section>
+
+<script>
+function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
+}
+</script>
+
+<style>
+.faq-item { border-bottom:1px solid #eee; }
+.faq-question { width:100%; text-align:left; background:transparent; border:none; padding:20px 0; font-size:16px; font-weight:600; color:var(--forest-green); cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:16px; font-family:'Inter',sans-serif; transition:color 0.2s; }
+.faq-question:hover { color:var(--gold); }
+.faq-arrow { font-size:18px; transition:transform 0.3s; flex-shrink:0; color:var(--gold); }
+.faq-answer { display:none; padding:0 0 20px; font-size:15px; color:#555; line-height:1.8; }
+.faq-item.open .faq-arrow { transform:rotate(180deg); }
+.faq-item.open .faq-answer { display:block; }
+</style>
