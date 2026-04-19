@@ -6,6 +6,22 @@ from products.models import Product
 from .cart import Cart
 from .models import Order, OrderItem
 from django.http import JsonResponse
+import threading
+
+
+def _send_email_async(subject, message, from_email, recipient_list):
+    """Wysyła email w osobnym wątku – nie blokuje requestu."""
+    try:
+        send_mail(
+            subject=subject,
+            message=message,
+            from_email=from_email,
+            recipient_list=recipient_list,
+            fail_silently=True,
+        )
+    except Exception:
+        pass
+
 
 def cart_add(request, pk):
     cart = Cart(request)
@@ -57,7 +73,7 @@ def checkout(request):
         postal_code = request.POST.get('postal_code')
         note = request.POST.get('note', '')
         referral_code = request.POST.get('referral_code', '').strip().upper()
-        shipping_method = request.POST.get('shipping_method', 'inpost')  # domyślnie InPost
+        shipping_method = request.POST.get('shipping_method', 'inpost')
 
         # Sprawdź kod polecenia
         referral_obj = None
@@ -71,7 +87,7 @@ def checkout(request):
                 referral_error = 'Nieprawidłowy kod polecenia.'
                 discount = Decimal('0')
 
-        # Oblicz koszt wysyłki na podstawie liczby sztuk
+        # Koszt wysyłki
         total_quantity = cart.get_total_quantity()
         if shipping_method == 'inpost':
             if total_quantity >= 3:
@@ -80,15 +96,13 @@ def checkout(request):
             else:
                 shipping_cost = Decimal('30')
                 shipping_method_name = 'InPost Kurier'
-        else:  # GLS lub inna – na razie niedostępna, ale dla bezpieczeństwa
+        else:
             shipping_cost = Decimal('40')
-            shipping_method_name = 'GLS ekspres (niedostępny)'
+            shipping_method_name = 'GLS ekspres'
 
-        # Całkowita kwota: produkty - rabat + koszt wysyłki
         total_products = Decimal(str(cart.get_total()))
         total = max(total_products - discount, Decimal('0')) + shipping_cost
 
-        # Tworzymy zamówienie z nowymi polami
         order = Order.objects.create(
             first_name=first_name,
             last_name=last_name,
@@ -105,7 +119,6 @@ def checkout(request):
             shipping_method_name=shipping_method_name,
         )
 
-        # Dodajemy produkty do OrderItem
         for item in cart.get_items():
             product = Product.objects.get(pk=item['pk'])
             OrderItem.objects.create(
@@ -127,14 +140,12 @@ def checkout(request):
             referral_obj.credit += Decimal('20')
             referral_obj.save()
 
-        # Email potwierdzający
+        # Email w osobnym wątku – nie blokuje requestu
         if email:
-            try:
-                send_mail(
-                    subject=f'Potwierdzenie zamówienia #{order.pk} – Przystanek PsikPsik',
-                    message=f'''Cześć {first_name or ""}!
+            subject = f'Potwierdzenie zamówienia #{order.pk} – Przystanek Perfumy'
+            message = f'''Cześć {first_name or ""}!
 
-Dziękujemy za zamówienie na Przystanku Perfumy :D
+Dziękujemy za zamówienie w Przystanku Perfumy!
 
 Numer zamówienia: #{order.pk}
 Łączna kwota: {order.total_amount} zł
@@ -152,13 +163,13 @@ Skontaktujemy się z Tobą wkrótce.
 
 Pozdrawiamy,
 Przystanek Perfumy
-''',
-                    from_email=settings.DEFAULT_FROM_EMAIL,
-                    recipient_list=[email],
-                    fail_silently=True,
-                )
-            except Exception:
-                pass
+'''
+            t = threading.Thread(
+                target=_send_email_async,
+                args=(subject, message, settings.DEFAULT_FROM_EMAIL, [email])
+            )
+            t.daemon = True
+            t.start()
 
         cart.clear()
         return redirect('order_confirmation', pk=order.pk)
@@ -169,9 +180,10 @@ Przystanek Perfumy
         'referral_error': referral_error,
     })
 
+
 def order_confirmation(request, pk):
     order = Order.objects.get(pk=pk)
-    return render(request, 'orders/confirmation.html', {'order': order})    
+    return render(request, 'orders/confirmation.html', {'order': order})
 
 
 def check_referral(request):
@@ -182,16 +194,15 @@ def check_referral(request):
         return JsonResponse({'valid': True})
     except Seller.DoesNotExist:
         return JsonResponse({'valid': False})
-    
+
+
 def my_orders(request):
     orders = None
     email_searched = None
 
     if request.user.is_authenticated:
-        # Zalogowany – szuka po emailu z konta
         orders = Order.objects.filter(email=request.user.email).order_by('-created_at')
     elif request.method == 'POST':
-        # Gość – wpisuje email
         email_searched = request.POST.get('email', '').strip()
         if email_searched:
             orders = Order.objects.filter(email=email_searched).order_by('-created_at')

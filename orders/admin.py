@@ -1,12 +1,11 @@
-from .models import Sale, Commission
 from django.contrib import admin
 from .models import Order, OrderItem
 
 
 class OrderItemInline(admin.TabularInline):
     model = OrderItem
-    readonly_fields = ['product', 'quantity', 'price']
-    extra = 0
+    extra = 1
+    fields = ['product', 'quantity', 'price']
 
 
 @admin.register(Order)
@@ -15,5 +14,5 @@ class OrderAdmin(admin.ModelAdmin):
     list_filter = ['status', 'created_at']
     search_fields = ['first_name', 'last_name', 'email', 'phone']
     list_editable = ['status']
-    readonly_fields = ['created_at', 'total_amount']
+    readonly_fields = ['created_at']
     inlines = [OrderItemInline]
