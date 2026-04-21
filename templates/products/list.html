@@ -274,11 +274,11 @@
     grid-template-columns: 1fr;
     gap: 24px;
     margin-bottom: 40px;
+    align-items: start; /* ważne dla sticky */
 }
 @media (min-width: 1024px) {
     .filters-wrapper {
         grid-template-columns: 260px 1fr;
-        align-items: start;
     }
 }
 .filters-sidebar {
@@ -286,7 +286,18 @@
     padding: 24px;
     border: 1px solid #eee;
     position: sticky;
-    top: 90px;
+    top: 90px;          /* dostosuj do wysokości headera */
+    align-self: start;  /* kluczowe – trzyma sticky w gridzie */
+    height: fit-content;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;   /* jeśli filtr dłuższy niż ekran – wewnętrzny scroll */
+}
+@media (max-width: 1024px) {
+    .filters-sidebar {
+        position: static;
+        max-height: none;
+        overflow-y: visible;
+    }
 }
 .filter-group { border-bottom: 1px solid #f0f0f0; padding: 14px 0; }
 .filter-group:last-of-type { border-bottom: none; }
