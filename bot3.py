@@ -738,25 +738,10 @@ def main():
 
     app.add_handler(conv)
 
-    # Railway ustawia PORT automatycznie
-    # WEBHOOK_URL ustawiasz w Railway jako zmienną środowiskową
-    webhook_url = os.environ.get("WEBHOOK_URL", "")
-    port = int(os.environ.get("PORT", "8443"))
+    # NA RAILWAY UŻYWAJ POLLING – NIE POTRZEBUJESZ WEBHOOKA
+    logger.info("🤖 Bot PsikPsik uruchomiony! Tryb: polling")
+    app.run_polling(allowed_updates=Update.ALL_TYPES)
 
-    if webhook_url:
-        # Tryb produkcyjny – Railway / serwer
-        logger.info(f"🤖 Bot PsikPsik uruchomiony! Webhook: {webhook_url}")
-        app.run_webhook(
-            listen="0.0.0.0",
-            port=port,
-            url_path='telegram-webhook',  # ← DODAJ TEN WIERSZ – bez wiodącego i końcowego ukośnika
-            webhook_url=webhook_url,
-            allowed_updates=Update.ALL_TYPES,
-        )
-    else:
-        # Tryb lokalny – polling (do testów)
-        logger.info("🤖 Bot PsikPsik uruchomiony! Tryb: polling (lokalny)")
-        app.run_polling(allowed_updates=Update.ALL_TYPES)
 
 if __name__ == "__main__":
     main()
