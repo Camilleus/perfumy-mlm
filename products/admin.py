@@ -16,3 +16,4 @@ class ProductAdmin(ImportExportModelAdmin):
     search_fields = ['name', 'brand', 'scent_notes']
     list_editable = ['price', 'stock_quantity', 'is_available']
     prepopulated_fields = {'slug': ('brand', 'name')}
+    ordering = ('name',)   # <--- dodaj tę linię
