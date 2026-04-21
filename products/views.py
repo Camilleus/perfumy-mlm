@@ -2,36 +2,57 @@ from .models import Product
 from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect
-from django.db.models import Q
+from django.db.models import Q, Min, Max
+
 
 def product_list(request):
     products = Product.objects.filter(is_available=True)
 
-    # Filtrowanie (istniejące)
-    gender = request.GET.get('gender')
+    # --- FILTRY ---
+    gender = request.GET.get('gender', '')
+    brand = request.GET.get('brand', '')
+    category = request.GET.get('category', '')
+    concentration = request.GET.get('concentration', '')
+    occasion = request.GET.get('occasion', '')
+    intensity = request.GET.get('intensity', '')
+    price_min = request.GET.get('price_min', '')
+    price_max = request.GET.get('price_max', '')
+
     if gender:
         products = products.filter(gender=gender)
-
-    brand = request.GET.get('brand')
     if brand:
         products = products.filter(brand__icontains=brand)
+    if category:
+        products = products.filter(category=category)
+    if concentration:
+        products = products.filter(concentration=concentration)
+    if occasion:
+        products = products.filter(occasion=occasion)
+    if intensity:
+        products = products.filter(intensity=intensity)
+    if price_min:
+        try:
+            products = products.filter(price__gte=float(price_min))
+        except ValueError:
+            pass
+    if price_max:
+        try:
+            products = products.filter(price__lte=float(price_max))
+        except ValueError:
+            pass
 
-    # Nowe: sortowanie
-    sort_by = request.GET.get('sort')
-    if sort_by == 'price_asc':
-        products = products.order_by('price')
-    elif sort_by == 'price_desc':
-        products = products.order_by('-price')
-    elif sort_by == 'name_asc':
-        products = products.order_by('name')
-    elif sort_by == 'name_desc':
-        products = products.order_by('-name')
-    elif sort_by == 'newest':
-        products = products.order_by('-id')  # lub '-created_at' jeśli masz
-    else:
-        products = products.order_by('name')  # domyślnie po nazwie
+    # --- SORTOWANIE ---
+    sort_by = request.GET.get('sort', 'name_asc')
+    sort_map = {
+        'price_asc': 'price',
+        'price_desc': '-price',
+        'name_asc': 'name',
+        'name_desc': '-name',
+        'newest': '-id',
+    }
+    products = products.order_by(sort_map.get(sort_by, 'name'))
 
-    # Paginacja
+    # --- PAGINACJA ---
     paginator = Paginator(products, 24)
     page = request.GET.get('page')
     try:
@@ -39,16 +60,33 @@ def product_list(request):
     except:
         products_page = paginator.page(1)
 
-    # Pobierz unikalne marki dla filtra
-    brands = Product.objects.filter(is_available=True).values_list('brand', flat=True).distinct().order_by('brand')
+    # --- DANE DLA FILTRÓW ---
+    all_products = Product.objects.filter(is_available=True)
+    brands = all_products.values_list('brand', flat=True).distinct().order_by('brand')
+    price_range = all_products.aggregate(min=Min('price'), max=Max('price'))
 
     return render(request, 'products/list.html', {
         'products': products_page,
         'page_obj': products_page,
         'brands': brands,
-        'current_brand': request.GET.get('brand', ''),
+        'price_range': price_range,
+        # choices dla filtrów
+        'categories': Product.CATEGORY_CHOICES,
+        'concentrations': Product.CONCENTRATION_CHOICES,
+        'occasions': Product.OCCASION_CHOICES,
+        'intensities': Product.INTENSITY_CHOICES,
+        # aktywne filtry
+        'current_brand': brand,
         'current_sort': sort_by,
         'current_gender': gender,
+        'current_category': category,
+        'current_concentration': concentration,
+        'current_occasion': occasion,
+        'current_intensity': intensity,
+        'current_price_min': price_min,
+        'current_price_max': price_max,
+        # liczba wyników
+        'total_count': paginator.count,
     })
 
 
@@ -62,8 +100,8 @@ def product_detail(request, slug):
         'avg_rating': avg_rating,
     })
 
+
 def quiz(request):
-    # Jeśli POST – zapisz odpowiedzi w sesji i przekieruj na GET
     if request.method == 'POST':
         request.session['quiz_intensity'] = request.POST.get('intensity')
         request.session['quiz_category'] = request.POST.get('category')
@@ -71,14 +109,13 @@ def quiz(request):
         request.session['quiz_gender'] = request.POST.get('gender')
         return redirect('quiz')
 
-    # Dla GET – odczytaj filtry z sesji
     intensity = request.session.get('quiz_intensity')
     category = request.session.get('quiz_category')
     occasion = request.session.get('quiz_occasion')
     gender = request.session.get('quiz_gender')
 
     results = None
-    if intensity and occasion:   # wymagane pola
+    if intensity and occasion:
         results = Product.objects.filter(
             is_available=True,
             intensity=intensity,
@@ -89,7 +126,6 @@ def quiz(request):
         if gender:
             results = results.filter(gender=gender)
 
-    # Paginacja
     if results:
         paginator = Paginator(results, 24)
         page = request.GET.get('page')
@@ -103,13 +139,12 @@ def quiz(request):
         results_page = None
 
     return render(request, 'products/quiz.html', {
-        'results': results_page,      # produkty (stronicowane)
-        'page_obj': results_page,     # dla paginacji
+        'results': results_page,
+        'page_obj': results_page,
     })
 
 
 def quiz_reset(request):
-    """Wyczyść wszystkie zapisane odpowiedzi quizu w sesji"""
     for key in list(request.session.keys()):
         if key.startswith('quiz_'):
             del request.session[key]
