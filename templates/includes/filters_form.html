@@ -12,7 +12,20 @@
            style="font-size:12px; color:#c0392b;">✕ Wyczyść</a>
         {% endif %}
     </div>
-
+    <!-- MARKA -->
+    <div class="filter-group">
+        <div class="filter-group-title" onclick="toggleFilter('brand')">
+            Marka <span class="filter-arrow" id="arrow-brand">▾</span>
+        </div>
+        <div class="filter-group-body" id="filter-brand">
+            <select name="brand" onchange="this.form.submit()" style="width:100%; padding:8px; border:1px solid #ddd; border-radius:4px;">
+                <option value="">Wszystkie marki</option>
+                {% for brand in brands %}
+                <option value="{{ brand }}" {% if current_brand == brand %}selected{% endif %}>{{ brand }}</option>
+                {% endfor %}
+            </select>
+        </div>
+    </div>
     <!-- CENA -->
     <div class="filter-group">
         <div class="filter-group-title" onclick="toggleFilter('price')">
