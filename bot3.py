@@ -749,6 +749,7 @@ def main():
         app.run_webhook(
             listen="0.0.0.0",
             port=port,
+            url_path='telegram-webhook',  # ← DODAJ TEN WIERSZ – bez wiodącego i końcowego ukośnika
             webhook_url=webhook_url,
             allowed_updates=Update.ALL_TYPES,
         )
