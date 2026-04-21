@@ -83,7 +83,11 @@
                 <!-- AKTYWNE FILTRY (tagi) -->
                 {% if current_category or current_concentration or current_occasion or current_intensity or current_price_min or current_price_max %}
                 <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;">
-                    {% if current_brand %}<span class="active-tag">{{ current_brand }} <a href="#" onclick="return removeParam('brand')">✕</a></span>{% endif %}
+                    {% if selected_brands %}
+                        {% for brand in selected_brands %}
+                        <span class="active-tag">{{ brand }} <a href="#" onclick="return removeBrand('{{ brand }}')">✕</a></span>
+                        {% endfor %}
+                    {% endif %}
                     {% if current_category %}<span class="active-tag">{{ current_category }} <a href="#" onclick="return removeParam('category')">✕</a></span>{% endif %}
                     {% if current_concentration %}<span class="active-tag">{{ current_concentration }} <a href="#" onclick="return removeParam('concentration')">✕</a></span>{% endif %}
                     {% if current_occasion %}<span class="active-tag">{{ current_occasion }} <a href="#" onclick="return removeParam('occasion')">✕</a></span>{% endif %}
@@ -381,6 +385,22 @@ if (overlay) {
     overlay.addEventListener('click', (e) => {
         if (e.target === overlay) overlay.classList.remove('active');
     });
+}
+function clearBrands() {
+    const params = new URLSearchParams(window.location.search);
+    params.delete('brands');
+    params.delete('page');
+    window.location.href = '?' + params.toString();
+}
+
+function removeBrand(brand) {
+    const params = new URLSearchParams(window.location.search);
+    let brands = params.getAll('brands');
+    const newBrands = brands.filter(b => b !== brand);
+    params.delete('brands');
+    newBrands.forEach(b => params.append('brands', b));
+    params.delete('page');
+    window.location.href = '?' + params.toString();
 }
 </script>
 

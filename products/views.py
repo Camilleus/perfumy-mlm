@@ -10,7 +10,7 @@ def product_list(request):
 
     # --- FILTRY ---
     gender = request.GET.get('gender', '')
-    brand = request.GET.get('brand', '')
+    brands_selected = request.GET.getlist('brands')          # lista wybranych marek
     category = request.GET.get('category', '')
     concentration = request.GET.get('concentration', '')
     occasion = request.GET.get('occasion', '')
@@ -20,8 +20,8 @@ def product_list(request):
 
     if gender:
         products = products.filter(gender=gender)
-    if brand:
-        products = products.filter(brand__icontains=brand)
+    if brands_selected:
+        products = products.filter(brand__in=brands_selected)
     if category:
         products = products.filter(category=category)
     if concentration:
@@ -62,21 +62,21 @@ def product_list(request):
 
     # --- DANE DLA FILTRÓW ---
     all_products = Product.objects.filter(is_available=True)
-    brands = all_products.values_list('brand', flat=True).distinct().order_by('brand')
+    all_brands = all_products.values_list('brand', flat=True).distinct().order_by('brand')
     price_range = all_products.aggregate(min=Min('price'), max=Max('price'))
 
     return render(request, 'products/list.html', {
         'products': products_page,
         'page_obj': products_page,
-        'brands': brands,
+        'brands': all_brands,                     # lista wszystkich marek do checkboxów
+        'selected_brands': brands_selected,       # lista wybranych marek
         'price_range': price_range,
         # choices dla filtrów
         'categories': Product.CATEGORY_CHOICES,
         'concentrations': Product.CONCENTRATION_CHOICES,
         'occasions': Product.OCCASION_CHOICES,
         'intensities': Product.INTENSITY_CHOICES,
-        # aktywne filtry
-        'current_brand': brand,
+        # aktywne filtry (dla pojedynczych wartości)
         'current_sort': sort_by,
         'current_gender': gender,
         'current_category': category,
@@ -88,7 +88,6 @@ def product_list(request):
         # liczba wyników
         'total_count': paginator.count,
     })
-
 
 def product_detail(request, slug):
     product = get_object_or_404(Product, slug=slug)
