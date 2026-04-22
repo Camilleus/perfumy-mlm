@@ -92,8 +92,12 @@ def product_list(request):
 def product_detail(request, slug):
     import json
     import threading
-    import anthropic
     from django.conf import settings
+    try:
+        import anthropic
+        ANTHROPIC_AVAILABLE = True
+    except ImportError:
+        ANTHROPIC_AVAILABLE = False
 
     product = get_object_or_404(Product, slug=slug)
     reviews = product.reviews.all()
@@ -101,14 +105,13 @@ def product_detail(request, slug):
 
     # Parsuj FAQ z bazy
     faq_items = []
-    if product.faq_json:
+    if not product.faq_json and ANTHROPIC_AVAILABLE and settings.ANTHROPIC_API_KEY:
         try:
             faq_items = json.loads(product.faq_json)
         except Exception:
             faq_items = []
 
-    # Generuj FAQ w tle jeśli go nie ma
-    if not product.faq_json:
+    if not product.faq_json and ANTHROPIC_AVAILABLE and settings.ANTHROPIC_API_KEY:
         def generate_faq():
             try:
                 client = anthropic.Anthropic(api_key=settings.ANTHROPIC_API_KEY)
