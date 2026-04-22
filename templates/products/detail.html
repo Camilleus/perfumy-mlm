@@ -232,7 +232,7 @@
     </div>
 </section>
 <!-- FAQ PRODUKTU generowane przez AI -->
-{% if faq_items %}
+{% comment %} {% if faq_items %}
 <section style="padding:40px 0; background:#f9f9f9; margin-top:40px;">
     <div class="container" style="max-width:800px;">
         <h2 style="font-size:22px; font-weight:300; margin-bottom:24px;">
@@ -259,7 +259,7 @@
         {% endfor %}
     </div>
 </section>
-{% endif %}
+{% endif %} {% endcomment %}
 {% include "includes/faq.html" %}
 
 <style>

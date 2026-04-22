@@ -42,7 +42,7 @@ class Product(models.Model):
     occasion = models.CharField(max_length=10, choices=OCCASION_CHOICES, blank=True)
     image = models.ImageField(upload_to='products/', blank=True, null=True)
     is_available = models.BooleanField(default=True)
-    faq_json = models.TextField(blank=True, default='', verbose_name='FAQ (JSON)')
+    # faq_json = models.TextField(blank=True, default='', verbose_name='FAQ (JSON)')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def save(self, *args, **kwargs):
