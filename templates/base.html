@@ -6,7 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Przystanek Perfumy | Twój świat zapachów{% endblock %}</title>
     {% block meta %}
-    <meta name="description" content="Przystanek Perfumy – perfumy znanych marek w świetnych cenach. Darmowa dostawa od 200 zł.">
+        <meta name="description" content="Przystanek Perfumy – perfumy znanych marek w świetnych cenach. Darmowa dostawa od 200 zł.">
+        <script type="application/ld+json">
+        {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "Przystanek Perfumy",
+        "url": "{{ request.scheme }}://{{ request.get_host }}",
+        "logo": "{{ request.scheme }}://{{ request.get_host }}{% load static %}{% static 'images/projektbeznazwy.png' %}",
+        "description": "Perfumy znanych marek w cenach hurtowych. Bez marży drogerii.",
+        "foundingDate": "2026",
+        "founder": {
+            "@type": "Person",
+            "name": "Marcel Krzeja"
+        },
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "contactType": "customer service",
+            "availableLanguage": "Polish"
+        },
+        "sameAs": []
+        }
+        </script>
     {% endblock %}
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
     <style>

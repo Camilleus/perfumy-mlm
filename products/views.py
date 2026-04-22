@@ -90,13 +90,72 @@ def product_list(request):
     })
 
 def product_detail(request, slug):
+    import json
+    import threading
+    import anthropic
+    from django.conf import settings
+
     product = get_object_or_404(Product, slug=slug)
     reviews = product.reviews.all()
     avg_rating = round(sum(r.rating for r in reviews) / len(reviews), 1) if reviews else 0
+
+    # Parsuj FAQ z bazy
+    faq_items = []
+    if product.faq_json:
+        try:
+            faq_items = json.loads(product.faq_json)
+        except Exception:
+            faq_items = []
+
+    # Generuj FAQ w tle jeśli go nie ma
+    if not product.faq_json:
+        def generate_faq():
+            try:
+                client = anthropic.Anthropic(api_key=settings.ANTHROPIC_API_KEY)
+                prompt = f"""Jesteś ekspertem perfumerii. Napisz 4 pytania i odpowiedzi FAQ dla tych perfum.
+
+Produkt: {product.name}
+Marka: {product.brand}
+Rodzaj: {product.get_gender_display()}
+Nuty zapachowe: {product.scent_notes or 'brak danych'}
+Koncentracja: {product.get_concentration_display()}
+Okazja: {product.get_occasion_display() if product.occasion else 'różne'}
+Intensywność: {product.get_intensity_display() if product.intensity else 'różne'}
+Cena: {product.price} zł
+
+Pytania muszą być konwersacyjne, naturalne, takie jak zadałaby Gen Z głosowo.
+Przykłady: "Czy {product.name} nadaje się na randkę?", "Jak długo trzymają się {product.name}?", "Dla kogo są {product.name}?"
+
+Odpowiedz TYLKO w formacie JSON, bez żadnego tekstu przed ani po:
+[
+  {{"q": "pytanie 1", "a": "odpowiedź 1"}},
+  {{"q": "pytanie 2", "a": "odpowiedź 2"}},
+  {{"q": "pytanie 3", "a": "odpowiedź 3"}},
+  {{"q": "pytanie 4", "a": "odpowiedź 4"}}
+]"""
+
+                message = client.messages.create(
+                    model='claude-sonnet-4-20250514',
+                    max_tokens=800,
+                    messages=[{'role': 'user', 'content': prompt}]
+                )
+                raw = message.content[0].text.strip()
+                # Upewnij się że to valid JSON
+                parsed = json.loads(raw)
+                product.faq_json = json.dumps(parsed, ensure_ascii=False)
+                product.save(update_fields=['faq_json'])
+            except Exception as e:
+                pass
+
+        t = threading.Thread(target=generate_faq)
+        t.daemon = True
+        t.start()
+
     return render(request, 'products/detail.html', {
         'product': product,
         'reviews': reviews,
         'avg_rating': avg_rating,
+        'faq_items': faq_items,
     })
 
 
