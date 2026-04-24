@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
 from django.conf import settings
 from decimal import Decimal
 from products.models import Product
@@ -9,16 +9,105 @@ from django.http import JsonResponse
 import threading
 
 
-def _send_email_async(subject, message, from_email, recipient_list):
-    """Wysyła email w osobnym wątku – nie blokuje requestu."""
+def _build_email_html(order, items, discount, shipping_method_name, shipping_cost):
+    items_rows = ""
+    for item in items:
+        subtotal = item.price * item.quantity
+        items_rows += f"""
+        <tr>
+          <td style="padding:10px 14px;border-bottom:1px solid #e8dfc0;font-size:14px;color:#012b2a;">
+            <strong>{item.product.name}</strong><br>
+            <span style="font-size:12px;color:#8a7a3a;">100 ml &middot; szt. {item.quantity}</span>
+          </td>
+          <td style="padding:10px 14px;border-bottom:1px solid #e8dfc0;font-size:14px;color:#012b2a;text-align:right;white-space:nowrap;">
+            {subtotal:.2f} zł
+          </td>
+        </tr>"""
+
+    discount_row = ""
+    if discount:
+        discount_row = f'<tr><td style="padding:4px 0;font-size:13px;color:#8a2020;">Rabat (kod polecenia)</td><td style="padding:4px 0;font-size:13px;color:#8a2020;text-align:right;">-{discount:.2f} zł</td></tr>'
+
+    shipping_display = "GRATIS" if shipping_cost == 0 else f"{shipping_cost:.2f} zł"
+    shipping_color = "#2a6a2a" if shipping_cost == 0 else "#012b2a"
+    total_products = order.total_amount + discount - shipping_cost
+
+    html = f"""<!DOCTYPE html>
+<html><head><meta charset="UTF-8"></head>
+<body style="margin:0;padding:0;background:#f5f0e8;font-family:Georgia,serif;">
+<table width="100%" cellpadding="0" cellspacing="0">
+<tr><td align="center" style="padding:2rem;">
+<table width="560" cellpadding="0" cellspacing="0" style="background:#FFFAE2;border:1px solid #c9a227;">
+
+  <tr><td style="background:#012b2a;padding:2rem;text-align:center;border-bottom:3px solid #D4AF37;">
+    <div style="font-size:11px;letter-spacing:3px;color:#D4AF37;text-transform:uppercase;">Przystanek</div>
+    <div style="font-size:26px;font-weight:700;color:#D4AF37;letter-spacing:1px;">Perfumy</div>
+  </td></tr>
+
+  <tr><td style="padding:2rem 2rem 1rem;text-align:center;border-bottom:1px solid #e8dfc0;">
+    <div style="font-size:11px;letter-spacing:2px;color:#8a7a3a;text-transform:uppercase;">Potwierdzenie zamówienia</div>
+    <div style="font-size:22px;color:#012b2a;font-weight:700;margin-top:0.5rem;">Dziękujemy, {order.first_name}!</div>
+    <p style="color:#4a4030;font-size:14px;line-height:1.7;">Twoje zamówienie <strong style="color:#012b2a;">#{order.pk}</strong> zostało przyjęte i wkrótce trafi w drogę.</p>
+  </td></tr>
+
+  <tr><td style="padding:1.5rem 2rem 0.5rem;">
+    <div style="font-size:11px;letter-spacing:2px;color:#8a7a3a;text-transform:uppercase;margin-bottom:1rem;">Zamówione produkty</div>
+    <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e8dfc0;">
+      {items_rows}
+    </table>
+  </td></tr>
+
+  <tr><td style="padding:1rem 2rem 1.5rem;">
+    <table width="100%" cellpadding="0" cellspacing="0" style="background:#f5f0e0;padding:1rem;border-radius:3px;">
+      <tr><td style="padding:4px 0;font-size:13px;color:#4a4030;">Produkty</td><td style="padding:4px 0;font-size:13px;color:#4a4030;text-align:right;">{total_products:.2f} zł</td></tr>
+      <tr><td style="padding:4px 0;font-size:13px;color:#4a4030;">Dostawa ({shipping_method_name})</td><td style="padding:4px 0;font-size:13px;color:{shipping_color};font-weight:600;text-align:right;">{shipping_display}</td></tr>
+      {discount_row}
+      <tr><td colspan="2" style="padding:8px 0 4px;"><hr style="border:none;border-top:1px solid #D4AF37;opacity:0.5;"></td></tr>
+      <tr><td style="font-size:16px;font-weight:700;color:#012b2a;">Razem do zapłaty</td><td style="font-size:16px;font-weight:700;color:#012b2a;text-align:right;">{order.total_amount:.2f} zł</td></tr>
+      <tr><td colspan="2" style="font-size:12px;color:#8a7a3a;text-align:right;padding-top:4px;">płatność za pobraniem</td></tr>
+    </table>
+  </td></tr>
+
+  <tr><td style="padding:0 2rem 1.5rem;">
+    <table width="100%" cellpadding="0" cellspacing="0"><tr>
+      <td width="48%" style="background:#f5f0e0;padding:0.9rem 1rem;vertical-align:top;">
+        <div style="font-size:10px;letter-spacing:2px;color:#8a7a3a;text-transform:uppercase;margin-bottom:6px;">Dostawa</div>
+        <div style="font-size:13px;color:#012b2a;">{order.first_name} {order.last_name}</div>
+        <div style="font-size:13px;color:#4a4030;">{order.address}</div>
+        <div style="font-size:13px;color:#4a4030;">{order.postal_code} {order.city}</div>
+        <div style="font-size:13px;color:#4a4030;">tel. {order.phone}</div>
+      </td>
+      <td width="4%"></td>
+      <td width="48%" style="background:#f5f0e0;padding:0.9rem 1rem;vertical-align:top;">
+        <div style="font-size:10px;letter-spacing:2px;color:#8a7a3a;text-transform:uppercase;margin-bottom:6px;">Wysyłka</div>
+        <div style="font-size:13px;color:#012b2a;font-weight:600;">{shipping_method_name}</div>
+        <div style="font-size:12px;color:#4a4030;margin-top:4px;">Zamówienie przetworzymy w ciągu 1–2 dni roboczych.</div>
+      </td>
+    </tr></table>
+  </td></tr>
+
+  <tr><td style="background:#012b2a;padding:1.25rem 2rem;text-align:center;border-top:2px solid #D4AF37;">
+    <p style="color:#D4AF37;font-size:13px;margin:0 0 0.5rem;font-style:italic;">&ldquo;Każda perfuma to historia — cieszymy się, że piszesz ją z nami.&rdquo;</p>
+    <p style="color:#8a9a8a;font-size:11px;margin:0;letter-spacing:1px;">przystanekperfumy.pl &middot; kontakt@przystanekperfumy.pl</p>
+  </td></tr>
+
+</table>
+</td></tr>
+</table>
+</body></html>"""
+    return html
+
+
+def _send_email_html_async(subject, html_message, from_email, recipient_list):
     try:
-        send_mail(
+        msg = EmailMultiAlternatives(
             subject=subject,
-            message=message,
+            body="Dziękujemy za zamówienie w Przystanku Perfumy!",
             from_email=from_email,
-            recipient_list=recipient_list,
-            fail_silently=False,
+            to=recipient_list,
         )
+        msg.attach_alternative(html_message, "text/html")
+        msg.send(fail_silently=False)
     except Exception:
         pass
 
@@ -140,42 +229,23 @@ def checkout(request):
             referral_obj.credit += Decimal('20')
             referral_obj.save()
 
-        # Email w osobnym wątku – nie blokuje requestu
+        # Wyślij email
         if email:
             subject = f'Potwierdzenie zamówienia #{order.pk} – Przystanek Perfumy'
-            message = f'''Cześć {first_name or ""}!
-
-Dziękujemy za zamówienie w Przystanku Perfumy!
-
-Numer zamówienia: #{order.pk}
-Łączna kwota: {order.total_amount} zł
-{f"Zastosowana zniżka: -{discount} zł" if discount else ""}
-Dostawa: {shipping_method_name} – {shipping_cost} zł
-Płatność: za pobraniem
-
-Adres dostawy:
-{first_name} {last_name}
-{address}
-{postal_code} {city}
-Tel: {phone}
-
-Skontaktujemy się z Tobą wkrótce.
-
-Pozdrawiamy,
-Przystanek Perfumy
-'''
-            # Odbiorcy: klient + sklep (CONTACT_EMAIL)
-            contact_emails = [e.strip() for e in settings.CONTACT_EMAIL.split(',')] if settings.CONTACT_EMAIL else []
-            recipients = [email] + contact_emails
-            if getattr(settings, 'CONTACT_EMAIL', None):
-                # Brevo akceptuje listę adresów; jeśli CONTACT_EMAIL zawiera kilka adresów po przecinku,
-                # możesz je rozdzielić, ale bezpieczniej wysłać jako jeden string – Brevo i tak obsłuży.
-                # Dla prostoty dodajemy jako kolejny element listy.
-                recipients.append(settings.CONTACT_EMAIL)
+            order_items = OrderItem.objects.filter(order=order)
+            html_message = _build_email_html(
+                order=order,
+                items=order_items,
+                discount=discount,
+                shipping_method_name=shipping_method_name,
+                shipping_cost=shipping_cost,
+            )
+            contact_emails = [e.strip() for e in settings.CONTACT_EMAIL.split(',')] if getattr(settings, 'CONTACT_EMAIL', None) else []
+            recipients = list(set([email] + contact_emails))  # bez duplikatów
 
             t = threading.Thread(
-                target=_send_email_async,
-                args=(subject, message, settings.DEFAULT_FROM_EMAIL, recipients)
+                target=_send_email_html_async,
+                args=(subject, html_message, settings.DEFAULT_FROM_EMAIL, recipients)
             )
             t.daemon = True
             t.start()
