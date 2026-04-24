@@ -88,7 +88,7 @@ def _build_email_html(order, items, discount, shipping_method_name, shipping_cos
 
   <tr><td style="background:#012b2a;padding:1.25rem 2rem;text-align:center;border-top:2px solid #D4AF37;">
     <p style="color:#D4AF37;font-size:13px;margin:0 0 0.5rem;font-style:italic;">&ldquo;Każda perfuma to historia — cieszymy się, że piszesz ją z nami.&rdquo;</p>
-    <p style="color:#8a9a8a;font-size:11px;margin:0;letter-spacing:1px;">przystanekperfumy.pl &middot; kontakt@przystanekperfumy.pl</p>
+    <p style="color:#8a9a8a;font-size:11px;margin:0;letter-spacing:1px;">przystanekperfumy.pl &middot; przystanekperfumy@gmail.com</p>
   </td></tr>
 
 </table>
