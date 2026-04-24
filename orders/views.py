@@ -164,9 +164,18 @@ Skontaktujemy się z Tobą wkrótce.
 Pozdrawiamy,
 Przystanek Perfumy
 '''
+            # Odbiorcy: klient + sklep (CONTACT_EMAIL)
+            contact_emails = [e.strip() for e in settings.CONTACT_EMAIL.split(',')] if settings.CONTACT_EMAIL else []
+            recipients = [email] + contact_emails
+            if getattr(settings, 'CONTACT_EMAIL', None):
+                # Brevo akceptuje listę adresów; jeśli CONTACT_EMAIL zawiera kilka adresów po przecinku,
+                # możesz je rozdzielić, ale bezpieczniej wysłać jako jeden string – Brevo i tak obsłuży.
+                # Dla prostoty dodajemy jako kolejny element listy.
+                recipients.append(settings.CONTACT_EMAIL)
+
             t = threading.Thread(
                 target=_send_email_async,
-                args=(subject, message, settings.DEFAULT_FROM_EMAIL, [email])
+                args=(subject, message, settings.DEFAULT_FROM_EMAIL, recipients)
             )
             t.daemon = True
             t.start()
