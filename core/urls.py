@@ -35,6 +35,18 @@ class ProductSitemap(Sitemap):
 
     def location(self, obj):
         return f'/produkt/{obj.slug}/'
+    
+class BrandSitemap(Sitemap):
+    changefreq = 'weekly'
+    priority = 0.7
+
+    def items(self):
+        from django.utils.text import slugify
+        brands = Product.objects.filter(is_available=True).values_list('brand', flat=True).distinct()
+        return [slugify(b) for b in brands]
+
+    def location(self, slug):
+        return f'/perfumy/{slug}/'
 
 
 def robots_txt(request):
@@ -53,6 +65,7 @@ def robots_txt(request):
 
 sitemaps = {
     'products': ProductSitemap,
+    'brands': BrandSitemap,
 }
 
 urlpatterns = [

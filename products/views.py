@@ -210,3 +210,60 @@ def quiz_reset(request):
         if key.startswith('quiz_'):
             del request.session[key]
     return redirect('quiz')
+
+def brand_page(request, brand_slug, gender=None):
+    """Static page dla marki – lepsze SEO niż ?brand=Dior"""
+    from django.utils.text import slugify
+
+    # Znajdź markę po slug – szukamy produktu którego brand slug pasuje
+    all_brands = Product.objects.filter(is_available=True).values_list('brand', flat=True).distinct()
+    brand_name = None
+    for b in all_brands:
+        if slugify(b) == brand_slug:
+            brand_name = b
+            break
+
+    if not brand_name:
+        from django.http import Http404
+        raise Http404("Marka nie istnieje")
+
+    products = Product.objects.filter(is_available=True, brand=brand_name)
+
+    if gender:
+        products = products.filter(gender=gender)
+
+    # Sortowanie
+    sort_by = request.GET.get('sort', 'name_asc')
+    sort_map = {
+        'price_asc': 'price',
+        'price_desc': '-price',
+        'name_asc': 'name',
+        'name_desc': '-name',
+    }
+    products = products.order_by(sort_map.get(sort_by, 'name'))
+
+    # Paginacja
+    paginator = Paginator(products, 24)
+    page = request.GET.get('page')
+    try:
+        products_page = paginator.page(page)
+    except Exception:
+        products_page = paginator.page(1)
+
+    # Opis dla SEO generowany dynamicznie
+    gender_label = {'K': 'damskie', 'M': 'męskie', 'U': 'unisex'}.get(gender, '')
+    title = f"Perfumy {brand_name} {gender_label}".strip()
+    description = f"Sprawdź perfumy {brand_name} w Przystanku Perfumy. {paginator.count} zapachów od {brand_name} w cenach hurtowych – {gender_label or 'dla niej, dla niego i unisex'}. Darmowa dostawa od 3 perfum."
+
+    return render(request, 'products/brand_page.html', {
+        'brand_name': brand_name,
+        'brand_slug': brand_slug,
+        'gender': gender,
+        'gender_label': gender_label,
+        'products': products_page,
+        'page_obj': products_page,
+        'total_count': paginator.count,
+        'current_sort': sort_by,
+        'title': title,
+        'seo_description': description,
+    })

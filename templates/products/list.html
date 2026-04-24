@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+{% block title %}
+{% if current_gender == 'K' %}Damskie {% elif current_gender == 'M' %}Męskie {% elif current_gender == 'U' %}Unisex {% endif %}Perfumy{% if current_brand %} {{ current_brand }}{% endif %}{% if current_category %} – {{ current_category }}{% endif %} | Przystanek Perfumy
+{% endblock %}
 {% load static %}
 
 {% block content %}
@@ -102,7 +105,7 @@
                     <a href="{% url 'product_detail' product.slug %}" style="text-decoration:none; color:inherit;">
                         <div class="product-card">
                             {% if product.image %}
-                            <img src="{{ product.image }}" alt="Perfumy {{ product.name }} – {{ product.brand }}">
+                            <img src="{{ product.image }}" alt="Perfumy {{ product.name }} – {{ product.brand }}" loading="lazy">
                             {% else %}
                             <div class="product-placeholder">🧴</div>
                             {% endif %}

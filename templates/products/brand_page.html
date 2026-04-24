@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }} – Przystanek Perfumy{% endblock %}
+
+{% block meta %}
+<meta name="description" content="{{ seo_description }}">
+<meta property="og:title" content="{{ title }} – Przystanek Perfumy">
+<meta property="og:description" content="{{ seo_description }}">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ request.build_absolute_uri }}">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "{{ title }}",
+  "description": "{{ seo_description }}",
+  "url": "{{ request.build_absolute_uri }}",
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {"@type":"ListItem","position":1,"name":"Strona główna","item":"{{ request.scheme }}://{{ request.get_host }}/"},
+      {"@type":"ListItem","position":2,"name":"Perfumy {{ brand_name }}","item":"{{ request.scheme }}://{{ request.get_host }}/perfumy/{{ brand_slug }}/"}
+      {% if gender %},{"@type":"ListItem","position":3,"name":"{{ gender_label|title }}","item":"{{ request.build_absolute_uri }}"}{% endif %}
+    ]
+  }
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<section class="section-pad">
+    <div class="container">
+
+        <!-- BREADCRUMB -->
+        <nav style="font-size:13px; color:#aaa; margin-bottom:20px;">
+            <a href="/" style="color:var(--gold);">Strona główna</a>
+            <span style="margin:0 6px;">›</span>
+            <a href="/perfumy/{{ brand_slug }}/" style="color:var(--gold);">{{ brand_name }}</a>
+            {% if gender %}
+            <span style="margin:0 6px;">›</span>
+            <span style="color:#666;">{{ gender_label|title }}</span>
+            {% endif %}
+        </nav>
+
+        <!-- NAGŁÓWEK -->
+        <div style="margin-bottom:32px;">
+            <h1 style="font-size:clamp(28px, 5vw, 44px); font-weight:300; margin-bottom:12px;">
+                Perfumy <em style="font-style:italic; color:var(--gold);">{{ brand_name }}</em>
+                {% if gender_label %} – {{ gender_label }}{% endif %}
+            </h1>
+            <p style="color:#888; font-size:15px; margin-bottom:16px;">{{ seo_description }}</p>
+
+            <!-- FILTRY PŁCI -->
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                <a href="/perfumy/{{ brand_slug }}/"
+                   style="{% if not gender %}background:var(--forest-green); color:var(--gold);{% else %}color:var(--forest-green);{% endif %} border:1px solid var(--forest-green); border-radius:20px; padding:5px 14px; font-size:12px; font-weight:700; text-transform:uppercase;">
+                    Wszystkie
+                </a>
+                <a href="/perfumy/{{ brand_slug }}/damskie/"
+                   style="{% if gender == 'K' %}background:var(--forest-green); color:var(--gold);{% else %}color:var(--forest-green);{% endif %} border:1px solid var(--forest-green); border-radius:20px; padding:5px 14px; font-size:12px; font-weight:700; text-transform:uppercase;">
+                    Dla niej
+                </a>
+                <a href="/perfumy/{{ brand_slug }}/meskie/"
+                   style="{% if gender == 'M' %}background:var(--forest-green); color:var(--gold);{% else %}color:var(--forest-green);{% endif %} border:1px solid var(--forest-green); border-radius:20px; padding:5px 14px; font-size:12px; font-weight:700; text-transform:uppercase;">
+                    Dla niego
+                </a>
+                <a href="/perfumy/{{ brand_slug }}/unisex/"
+                   style="{% if gender == 'U' %}background:var(--forest-green); color:var(--gold);{% else %}color:var(--forest-green);{% endif %} border:1px solid var(--forest-green); border-radius:20px; padding:5px 14px; font-size:12px; font-weight:700; text-transform:uppercase;">
+                    Unisex
+                </a>
+            </div>
+        </div>
+
+        <!-- SORTOWANIE -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; flex-wrap:wrap; gap:10px;">
+            <div style="font-size:13px; color:#888;">
+                Znaleziono: <strong style="color:var(--forest-green);">{{ total_count }}</strong> perfum
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:13px; color:#888;">Sortuj:</span>
+                <select onchange="window.location.href='?sort='+this.value"
+                    style="padding:8px 12px; border:1px solid #ddd; font-size:13px; background:white; cursor:pointer; border-radius:4px;">
+                    <option value="name_asc" {% if current_sort == 'name_asc' %}selected{% endif %}>Nazwa A→Z</option>
+                    <option value="name_desc" {% if current_sort == 'name_desc' %}selected{% endif %}>Nazwa Z→A</option>
+                    <option value="price_asc" {% if current_sort == 'price_asc' %}selected{% endif %}>Cena rosnąco</option>
+                    <option value="price_desc" {% if current_sort == 'price_desc' %}selected{% endif %}>Cena malejąco</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- SIATKA PRODUKTÓW -->
+        <div class="product-grid">
+            {% for product in products %}
+            <a href="{% url 'product_detail' product.slug %}" style="text-decoration:none; color:inherit;">
+                <div class="product-card">
+                    {% if product.image %}
+                    <img src="{{ product.image }}" alt="Perfumy {{ product.name }} {{ brand_name }} – Przystanek Perfumy" loading="lazy">
+                    {% else %}
+                    <div class="product-placeholder">🧴</div>
+                    {% endif %}
+                    <div class="product-name">{{ product.name }}</div>
+                    <div class="product-brand">{{ product.brand }}</div>
+                    <div class="product-gender">{{ product.get_gender_display }}</div>
+                    <div class="product-price">{{ product.price }} zł</div>
+                    <div class="product-volume">📦 100 ml</div>
+                    <button class="btn" style="width:100%; padding:9px;">Zobacz więcej</button>
+                </div>
+            </a>
+            {% empty %}
+            <p style="color:#888; grid-column:1/-1;">Brak produktów {{ brand_name }} {% if gender_label %}{{ gender_label }}{% endif %}.</p>
+            {% endfor %}
+        </div>
+
+        <!-- PAGINACJA -->
+        {% if page_obj.has_other_pages %}
+        <div class="pagination" style="margin-top:40px; text-align:center;">
+            {% if page_obj.has_previous %}
+                <a href="?page=1&sort={{ current_sort }}" class="btn-ghost">&laquo; pierwsza</a>
+                <a href="?page={{ page_obj.previous_page_number }}&sort={{ current_sort }}" class="btn-ghost">poprzednia</a>
+            {% endif %}
+            {% for num in page_obj.paginator.page_range %}
+                {% if page_obj.number == num %}
+                    <span class="current">{{ num }}</span>
+                {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                    <a href="?page={{ num }}&sort={{ current_sort }}" class="btn-ghost">{{ num }}</a>
+                {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}&sort={{ current_sort }}" class="btn-ghost">następna</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}&sort={{ current_sort }}" class="btn-ghost">ostatnia &raquo;</a>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <!-- TEKST SEO na dole -->
+        <div style="margin-top:60px; padding:32px; background:white; border-left:3px solid var(--gold);">
+            <h2 style="font-size:20px; font-weight:400; margin-bottom:12px;">Perfumy {{ brand_name }} w Przystanku Perfumy</h2>
+            <p style="font-size:14px; color:#666; line-height:1.9;">
+                Oferujemy pełną kolekcję perfum {{ brand_name }} w cenach hurtowych – bez marży wielkich drogerii.
+                {% if gender == 'K' %}Nasze perfumy {{ brand_name }} dla kobiet to starannie wyselekcjonowane zapachy – od delikatnych i kwiatowych po zmysłowe i orientalne.{% endif %}
+                {% if gender == 'M' %}Perfumy {{ brand_name }} dla mężczyzn w naszym sklepie to bogaty wybór zapachów – od świeżych i sportowych po drzewne i eleganckie.{% endif %}
+                {% if not gender %}W naszej ofercie znajdziesz perfumy {{ brand_name }} dla kobiet, mężczyzn i unisex – każdy zapach w pojemności 100 ml, z szybką wysyłką.{% endif %}
+                Darmowa dostawa przy zamówieniu 3 lub więcej perfum. Płatność za pobraniem.
+            </p>
+        </div>
+
+    </div>
+</section>
+{% endblock %}
