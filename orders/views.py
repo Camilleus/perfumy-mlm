@@ -17,7 +17,7 @@ def _send_email_async(subject, message, from_email, recipient_list):
             message=message,
             from_email=from_email,
             recipient_list=recipient_list,
-            fail_silently=True,
+            fail_silently=False,
         )
     except Exception:
         pass
