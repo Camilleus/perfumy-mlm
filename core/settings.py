@@ -9,7 +9,7 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-=c^uynh9*!efh=v-g$ap9
 
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default=['*']) #przystanekperfumy.pl
 
 INSTALLED_APPS = [
     'django.contrib.admin',
