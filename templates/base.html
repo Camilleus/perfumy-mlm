@@ -817,6 +817,28 @@
             color: #888;
             margin-bottom: 12px;
         }
+        /* Django form inputs – pełna szerokość */
+        .card-border input[type="text"],
+        .card-border input[type="email"],
+        .card-border input[type="password"],
+        .card-border textarea,
+        .card-border select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            font-size: 15px;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.2s;
+            background: white;
+        }
+
+        .card-border input:focus,
+        .card-border textarea:focus,
+        .card-border select:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
     </style>
 </head>
 <body>
