@@ -30,6 +30,13 @@ INSTALLED_APPS = [
     'blog',
     'anymail',
 ]
+CSRF_TRUSTED_ORIGINS = [
+    'https://web-production-0c35c.up.railway.app',
+    'https://przystanekperfumy.pl',
+    'https://www.przystanekperfumy.pl',
+]
+
+SITE_URL = 'https://przystanekperfumy.pl'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
