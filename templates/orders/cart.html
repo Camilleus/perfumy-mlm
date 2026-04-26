@@ -45,6 +45,14 @@
             <div style="font-size:22px; font-weight:600; margin-bottom:16px;">
                 Razem: {{ cart.get_total }} zł
             </div>
+            <!-- UWAGA O DOSTĘPNOŚCI -->
+            <div style="background:#fffdf0; border:1px solid var(--gold); border-left:4px solid var(--gold); padding:16px 20px; margin-bottom:20px; font-size:14px; line-height:1.7; color:#555;">
+                <strong style="color:var(--forest-green);">⚠️ Ważna informacja:</strong><br>
+                Jeśli któregoś z zamówionych perfum zabraknie w magazynie, skontaktujemy się z Tobą niezwłocznie –
+                przez <strong>WhatsApp pod numerem <a href="https://wa.me/48534293389" style="color:var(--forest-green);">+48 534 293 389</a></strong>
+                lub mailowo na adres podany przy zamówieniu.
+                Dziękujemy za wyrozumiałość! 🌿
+            </div>
             <a href="{% url 'checkout' %}" class="btn" style="padding:14px 36px; font-size:15px;">Przejdź do zamówienia →</a>
         </div>
 
