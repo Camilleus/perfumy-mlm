@@ -863,115 +863,154 @@
     </style>
 </head>
 <body>
-{% if messages %}
-    <div class="container" style="margin-top: 20px;">
-        {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}" style="padding: 12px; background: #f0f7f0; border-left: 4px solid green; margin-bottom: 12px;">
-                {{ message }}
-            </div>
-        {% endfor %}
-    </div>
-{% endif %}
-<header>
-    <div class="container">
-        <nav>
-            <div class="logo">
-                <a href="/"><img src="{% static 'images/projektbeznazwy.png' %}" alt="Przystanek Perfumy"></a>
-            </div>
-
-            <!-- DESKTOP NAV -->
-            <ul class="nav-links">
-                <li class="dropdown">
-                    <a href="/" class="dropdown-toggle {% if request.path == '/' %}active{% endif %}">Kolekcja</a>
-                    <div class="dropdown-menu">
-                        <a href="/?gender=" class="{% if not request.GET.gender %}active{% endif %}">Wszystkie</a>
-                        <a href="/?gender=M" class="{% if request.GET.gender == 'M' %}active{% endif %}">Dla Niego</a>
-                        <a href="/?gender=K" class="{% if request.GET.gender == 'K' %}active{% endif %}">Dla Niej</a>
-                        <a href="/?gender=U" class="{% if request.GET.gender == 'U' %}active{% endif %}">Dla Każdego</a>
-                    </div>
-                </li>
-                <li><a href="{% url 'quiz' %}">Znajdź swój Zapach</a></li>
-                <li><a href="{% url 'my_orders' %}">Moje zamówienia</a></li>
-                {% if not request.user.is_authenticated %}
-                    <li><a href="{% url 'register' %}">Dołącz</a></li>
-                    <li><a href="{% url 'login' %}">Zaloguj</a></li>
-                {% else %}
-                    <li><a href="{% url 'seller_panel' %}">Moje Konto</a></li>
-                    <li>
-                        <form method="post" action="{% url 'logout' %}">
-                            {% csrf_token %}
-                            <button type="submit">Wyloguj</button>
-                        </form>
-                    </li>
-                {% endif %}
-            </ul>
-
-            <div style="display:flex; align-items:center; gap:12px;">
-                <a href="{% url 'cart_detail' %}" class="cart-icon">🛒</a>
-                <!-- HAMBURGER (mobile only) -->
-                <button class="hamburger" id="hamburger" aria-label="Menu">
-                    <span></span><span></span><span></span>
-                </button>
-            </div>
-        </nav>
-    </div>
-
-    <div class="trust-bar">Darmowa dostawa od 3 produktów &bull; Ceny prosto z hurtowni – bez narzutów wielkich drogerii</div>
-</header>
-
-<!-- MOBILE MENU -->
-<div class="mobile-menu" id="mobile-menu">
-    <span class="mobile-section-label">Kolekcja</span>
-    <a href="/?gender=">Wszystkie</a>
-    <a href="/?gender=M">Dla Niego</a>
-    <a href="/?gender=K">Dla Niej</a>
-    <a href="/?gender=U">Dla Każdego</a>
-
-    <span class="mobile-section-label">Nawigacja</span>
-    <a href="{% url 'quiz' %}">🧪 Znajdź swój Zapach</a>
-    <a href="{% url 'my_orders' %}">📦 Moje zamówienia</a>
-    <a href="{% url 'cart_detail' %}">🛒 Koszyk</a>
-
-    <span class="mobile-section-label">Konto</span>
-    {% if not request.user.is_authenticated %}
-        <a href="{% url 'register' %}">Dołącz</a>
-        <a href="{% url 'login' %}">Zaloguj</a>
-    {% else %}
-        <a href="{% url 'seller_panel' %}">Moje Konto</a>
-        <form method="post" action="{% url 'logout' %}">
-            {% csrf_token %}
-            <button type="submit">Wyloguj</button>
-        </form>
+    {% if messages %}
+        <div class="container" style="margin-top: 20px;">
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}" style="padding: 12px; background: #f0f7f0; border-left: 4px solid green; margin-bottom: 12px;">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
     {% endif %}
-</div>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <a href="/"><img src="{% static 'images/projektbeznazwy.png' %}" alt="Przystanek Perfumy"></a>
+                </div>
 
+                <!-- DESKTOP NAV -->
+                <ul class="nav-links">
+                    <li class="dropdown">
+                        <a href="/" class="dropdown-toggle {% if request.path == '/' %}active{% endif %}">Kolekcja</a>
+                        <div class="dropdown-menu">
+                            <a href="/?gender=" class="{% if not request.GET.gender %}active{% endif %}">Wszystkie</a>
+                            <a href="/?gender=M" class="{% if request.GET.gender == 'M' %}active{% endif %}">Dla Niego</a>
+                            <a href="/?gender=K" class="{% if request.GET.gender == 'K' %}active{% endif %}">Dla Niej</a>
+                            <a href="/?gender=U" class="{% if request.GET.gender == 'U' %}active{% endif %}">Dla Każdego</a>
+                        </div>
+                    </li>
+                    <li><a href="{% url 'quiz' %}">Znajdź swój Zapach</a></li>
+                    <li><a href="{% url 'my_orders' %}">Moje zamówienia</a></li>
+                    {% if not request.user.is_authenticated %}
+                        <li><a href="{% url 'register' %}">Dołącz</a></li>
+                        <li><a href="{% url 'login' %}">Zaloguj</a></li>
+                    {% else %}
+                        <li><a href="{% url 'seller_panel' %}">Moje Konto</a></li>
+                        <li>
+                            <form method="post" action="{% url 'logout' %}">
+                                {% csrf_token %}
+                                <button type="submit">Wyloguj</button>
+                            </form>
+                        </li>
+                    {% endif %}
+                </ul>
 
-{% block content %}{% endblock %}
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <a href="{% url 'cart_detail' %}" class="cart-icon" style="position: relative;">
+                        🛒
+                        <span id="cart-count" style="
+                            position: absolute;
+                            top: -8px;
+                            right: -12px;
+                            background: var(--gold);
+                            color: #000;
+                            font-size: 11px;
+                            font-weight: bold;
+                            border-radius: 50%;
+                            min-width: 18px;
+                            height: 18px;
+                            padding: 0 4px;
+                            display: none;
+                            align-items: center;
+                            justify-content: center;
+                            line-height: 1;
+                            box-shadow: 0 0 0 2px var(--accent-dark);
+                        ">0</span>
+                    </a>
+                    <!-- HAMBURGER (mobile only) -->
+                    <button class="hamburger" id="hamburger" aria-label="Menu">
+                        <span></span><span></span><span></span>
+                    </button>
+                </div>
+            </nav>
+        </div>
 
-<footer>
-    <div class="container footer-grid">
-        <div>
-            <strong style="color: var(--forest-green); font-size: 1.1em;">Przystanek Perfumy</strong>
-            <p style="margin-top:8px; font-size:13px; color:#666;">Najlepszy przystanek na Twojej drodze do idealnego zapachu.</p>
-        </div>
-        <div>
-            <ul style="list-style:none; line-height: 2.2;">
-                <li><a href="{% url 'regulamin' %}">Regulamin</a></li>
-                <li><a href="{% url 'polityka_prywatnosci' %}">Polityka prywatności</a></li>
-                <li><a href="{% url 'returns_policy' %}">Zwroty i reklamacje</a></li>
-                <li><a href="{% url 'odr' %}">Pozasądowe rozwiązywanie sporów (ODR)</a></li>
-                <li><a href="{% url 'omnibus' %}">Dyrektywa Omnibus</a></li>
-                <li><a href="{% url 'contact' %}">Kontakt</a></li>
-                <li><a href="{% url 'about' %}">O nas</a></li>
-                <li><a href="{% url 'blog_list' %}">Blog</a></li>
-            </ul>
-        </div>
-        <div style="opacity: 0.7; font-size:13px;">
-            &copy; 2026 przystanekperfumy.pl<br>
-            Wszystkie prawa zastrzeżone.
-        </div>
+        <div class="trust-bar">Darmowa dostawa od 3 produktów &bull; Ceny prosto z hurtowni – bez narzutów wielkich drogerii</div>
+    </header>
+
+    <!-- MOBILE MENU -->
+    <div class="mobile-menu" id="mobile-menu">
+        <span class="mobile-section-label">Kolekcja</span>
+        <a href="/?gender=">Wszystkie</a>
+        <a href="/?gender=M">Dla Niego</a>
+        <a href="/?gender=K">Dla Niej</a>
+        <a href="/?gender=U">Dla Każdego</a>
+
+        <span class="mobile-section-label">Nawigacja</span>
+        <a href="{% url 'quiz' %}">🧪 Znajdź swój Zapach</a>
+        <a href="{% url 'my_orders' %}">📦 Moje zamówienia</a>
+        <a href="{% url 'cart_detail' %}">🛒 Koszyk</a>
+
+        <span class="mobile-section-label">Konto</span>
+        {% if not request.user.is_authenticated %}
+            <a href="{% url 'register' %}">Dołącz</a>
+            <a href="{% url 'login' %}">Zaloguj</a>
+        {% else %}
+            <a href="{% url 'seller_panel' %}">Moje Konto</a>
+            <form method="post" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button type="submit">Wyloguj</button>
+            </form>
+        {% endif %}
     </div>
-</footer>
+
+
+    {% block content %}{% endblock %}
+
+    <footer>
+        <div class="container footer-grid">
+            <div>
+                <strong style="color: var(--forest-green); font-size: 1.1em;">Przystanek Perfumy</strong>
+                <p style="margin-top:8px; font-size:13px; color:#666;">Najlepszy przystanek na Twojej drodze do idealnego zapachu.</p>
+            </div>
+            <div>
+                <ul style="list-style:none; line-height: 2.2;">
+                    <li><a href="{% url 'regulamin' %}">Regulamin</a></li>
+                    <li><a href="{% url 'polityka_prywatnosci' %}">Polityka prywatności</a></li>
+                    <li><a href="{% url 'returns_policy' %}">Zwroty i reklamacje</a></li>
+                    <li><a href="{% url 'odr' %}">Pozasądowe rozwiązywanie sporów (ODR)</a></li>
+                    <li><a href="{% url 'omnibus' %}">Dyrektywa Omnibus</a></li>
+                    <li><a href="{% url 'contact' %}">Kontakt</a></li>
+                    <li><a href="{% url 'about' %}">O nas</a></li>
+                    <li><a href="{% url 'blog_list' %}">Blog</a></li>
+                </ul>
+            </div>
+            <div style="opacity: 0.7; font-size:13px;">
+                &copy; 2026 przystanekperfumy.pl<br>
+                Wszystkie prawa zastrzeżone.
+            </div>
+        </div>
+    </footer>
+// CART COUNT UPDATE SCRIPT
+<script>
+function updateCartCount() {
+    fetch("{% url 'cart_count' %}")
+        .then(response => response.json())
+        .then(data => {
+            const countSpan = document.getElementById('cart-count');
+            if (countSpan) {
+                const count = data.count || 0;
+                countSpan.textContent = count;
+                countSpan.style.display = count > 0 ? 'inline-flex' : 'none';
+            }
+        })
+        .catch(err => console.warn('Nie udało się pobrać liczby produktów w koszyku'));
+}
+document.addEventListener('DOMContentLoaded', updateCartCount);
+</script>
+
+</body>    
 
 <script>
 // HAMBURGER MENU

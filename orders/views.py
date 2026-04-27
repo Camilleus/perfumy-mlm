@@ -290,3 +290,7 @@ def my_orders(request):
         'orders': orders,
         'email_searched': email_searched,
     })
+
+def cart_count(request):
+    cart = Cart(request)
+    return JsonResponse({'count': cart.count()})
