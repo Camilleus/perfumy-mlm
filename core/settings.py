@@ -2,6 +2,7 @@ from pathlib import Path
 from decouple import config
 import dj_database_url
 import os
+from django.utils.translation import gettext_lazy as _
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -42,6 +43,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -151,3 +153,17 @@ CSRF_TRUSTED_ORIGINS = [
 
 SITE_URL = 'http://127.0.0.1:8000'  # lub http://127.0.0.1:8000 lokalnie #https://web-production-0c35c.up.railway.app/
 ANTHROPIC_API_KEY = config('ANTHROPIC_API_KEY', default='')
+
+LANGUAGE_CODE = 'pl'
+
+LANGUAGES = [
+    ('pl', 'Polski'),
+    ('es', 'Español'),
+]
+
+USE_I18N = True
+USE_L10N = True
+
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]

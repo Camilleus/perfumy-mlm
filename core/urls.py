@@ -24,6 +24,9 @@ from django.http import HttpResponse
 from django.contrib.sitemaps import Sitemap
 from django.contrib.sitemaps.views import sitemap
 from products.models import Product
+from django.conf.urls.i18n import i18n_patterns
+from django.urls import path, include
+import django.views.i18n
 
 
 class ProductSitemap(Sitemap):
@@ -88,4 +91,5 @@ urlpatterns = [
     path('o-nas/', TemplateView.as_view(template_name='policies/about.html'), name='about'),
     path('', include('reviews.urls')),
     path('', include('blog.urls')),
+    path('i18n/', include('django.conf.urls.i18n')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
