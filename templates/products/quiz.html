@@ -1,9 +1,10 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block content %}
 <section class="section-pad">
     <div class="container" style="max-width:700px;">
-        <h1 style="font-size:26px; font-weight:300; text-align:center; margin-bottom:32px;">Znajdź swój zapach</h1>
+        <h1 style="font-size:26px; font-weight:300; text-align:center; margin-bottom:32px;">{% trans "Znajdź swój zapach" %}</h1>
 
         {% if results is None %}
         <div class="card-white">
@@ -11,49 +12,49 @@
                 {% csrf_token %}
 
                 <div style="margin-bottom:24px;">
-                    <h3 style="margin-bottom:14px; font-size:16px;">Jaką intensywność preferujesz?</h3>
+                    <h3 style="margin-bottom:14px; font-size:16px;">{% trans "Jaką intensywność preferujesz?" %}</h3>
                     <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; font-size:15px; cursor:pointer;">
-                        <input type="radio" name="intensity" value="light" required> Delikatna i świeża
+                        <input type="radio" name="intensity" value="light" required> {% trans "Delikatna i świeża" %}
                     </label>
                     <label style="display:flex; align-items:center; gap:10px; font-size:15px; cursor:pointer;">
-                        <input type="radio" name="intensity" value="strong"> Mocna i wieczorowa
+                        <input type="radio" name="intensity" value="strong"> {% trans "Mocna i wieczorowa" %}
                     </label>
                 </div>
 
                 <div style="margin-bottom:24px;">
-                    <h3 style="margin-bottom:14px; font-size:16px;">Główne nuty zapachowe?</h3>
+                    <h3 style="margin-bottom:14px; font-size:16px;">{% trans "Główne nuty zapachowe?" %}</h3>
                     <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; font-size:15px; cursor:pointer;">
-                        <input type="radio" name="category" value="floral" required> Kwiatowe / Owocowe
+                        <input type="radio" name="category" value="floral" required> {% trans "Kwiatowe / Owocowe" %}
                     </label>
                     <label style="display:flex; align-items:center; gap:10px; font-size:15px; cursor:pointer;">
-                        <input type="radio" name="category" value="woody"> Drzewne / Korzenne
+                        <input type="radio" name="category" value="woody"> {% trans "Drzewne / Korzenne" %}
                     </label>
                 </div>
 
                 <div style="margin-bottom:24px;">
-                    <h3 style="margin-bottom:14px; font-size:16px;">Na jaką okazję?</h3>
+                    <h3 style="margin-bottom:14px; font-size:16px;">{% trans "Na jaką okazję?" %}</h3>
                     <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; font-size:15px; cursor:pointer;">
-                        <input type="radio" name="occasion" value="daily" required> Na co dzień
+                        <input type="radio" name="occasion" value="daily" required> {% trans "Na co dzień" %}
                     </label>
                     <label style="display:flex; align-items:center; gap:10px; font-size:15px; cursor:pointer;">
-                        <input type="radio" name="occasion" value="special"> Specjalne wyjścia
+                        <input type="radio" name="occasion" value="special"> {% trans "Specjalne wyjścia" %}
                     </label>
                 </div>
 
                 <div style="margin-bottom:28px;">
-                    <h3 style="margin-bottom:14px; font-size:16px;">Dla kogo?</h3>
+                    <h3 style="margin-bottom:14px; font-size:16px;">{% trans "Dla kogo?" %}</h3>
                     <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; font-size:15px; cursor:pointer;">
-                        <input type="radio" name="gender" value="K"> Dla niej
+                        <input type="radio" name="gender" value="K"> {% trans "Dla niej" %}
                     </label>
                     <label style="display:flex; align-items:center; gap:10px; margin-bottom:10px; font-size:15px; cursor:pointer;">
-                        <input type="radio" name="gender" value="M"> Dla niego
+                        <input type="radio" name="gender" value="M"> {% trans "Dla niego" %}
                     </label>
                     <label style="display:flex; align-items:center; gap:10px; font-size:15px; cursor:pointer;">
-                        <input type="radio" name="gender" value=""> Wszystkie
+                        <input type="radio" name="gender" value=""> {% trans "Wszystkie" %}
                     </label>
                 </div>
 
-                <button type="submit" class="btn" style="width:100%; padding:14px; font-size:15px;">Znajdź perfumy</button>
+                <button type="submit" class="btn" style="width:100%; padding:14px; font-size:15px;">{% trans "Znajdź perfumy" %}</button>
             </form>
         </div>
 
@@ -61,11 +62,11 @@
             </div><!-- zamknięcie container max-width:700px -->
             <div class="container">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-                <a href="{% url 'quiz_reset' %}" class="btn-ghost" style="font-size:14px;">🗑️ Wyczyść i zacznij od nowa</a>
+                <a href="{% url 'quiz_reset' %}" class="btn-ghost" style="font-size:14px;">{% trans "🗑️ Wyczyść i zacznij od nowa" %}</a>
             </div>
 
             {% if results %}
-                <h2 style="font-size:22px; font-weight:300; margin-bottom:24px;">Twoje dopasowania: {{ results.paginator.count }}</h2>
+                <h2 style="font-size:22px; font-weight:300; margin-bottom:24px;">{% trans "Twoje dopasowania:" %} {{ results.paginator.count }}</h2>
                 <div class="product-grid">
                     {% for product in results %}
                         <a href="{% url 'product_detail' product.slug %}" style="text-decoration:none; color:inherit;">
@@ -77,14 +78,18 @@
                                 {% endif %}
                                 <div class="product-name">{{ product.name }}</div>
                                 <div class="product-brand">{{ product.brand }}</div>
-                                <div class="product-gender">{{ product.get_gender_display }}</div>
+                                <div class="product-gender">
+                                    {% if product.gender == 'K' %}{% trans "Damskie" %}
+                                    {% elif product.gender == 'M' %}{% trans "Męskie" %}
+                                    {% else %}{% trans "Unisex" %}{% endif %}
+                                </div>
                                 <div class="product-price">{{ product.price }} zł</div>
-                                <div class="product-volume">📦 100 ml</div>
-                                <button class="btn" style="width:100%; padding:9px;">Zobacz więcej</button>
+                                <div class="product-volume">{% trans "📦 100 ml" %}</div>
+                                <button class="btn" style="width:100%; padding:9px;">{% trans "Zobacz więcej" %}</button>
                             </div>
                         </a>
                     {% empty %}
-                        <p>Brak produktów spełniających kryteria.</p>
+                        <p>{% trans "Brak produktów spełniających kryteria." %}</p>
                     {% endfor %}
                 </div>
 
@@ -92,8 +97,8 @@
                 {% if page_obj.has_other_pages %}
                 <div class="pagination" style="margin-top: 40px; text-align: center;">
                     {% if page_obj.has_previous %}
-                        <a href="?{{ request.GET.urlencode }}&page=1" class="btn-ghost">&laquo; pierwsza</a>
-                        <a href="?{{ request.GET.urlencode }}&page={{ page_obj.previous_page_number }}" class="btn-ghost">poprzednia</a>
+                        <a href="?{{ request.GET.urlencode }}&page=1" class="btn-ghost">{% trans "&laquo; pierwsza" %}</a>
+                        <a href="?{{ request.GET.urlencode }}&page={{ page_obj.previous_page_number }}" class="btn-ghost">{% trans "poprzednia" %}</a>
                     {% endif %}
 
                     {% for num in page_obj.paginator.page_range %}
@@ -105,17 +110,17 @@
                     {% endfor %}
 
                     {% if page_obj.has_next %}
-                        <a href="?{{ request.GET.urlencode }}&page={{ page_obj.next_page_number }}" class="btn-ghost">następna</a>
-                        <a href="?{{ request.GET.urlencode }}&page={{ page_obj.paginator.num_pages }}" class="btn-ghost">ostatnia &raquo;</a>
+                        <a href="?{{ request.GET.urlencode }}&page={{ page_obj.next_page_number }}" class="btn-ghost">{% trans "następna" %}</a>
+                        <a href="?{{ request.GET.urlencode }}&page={{ page_obj.paginator.num_pages }}" class="btn-ghost">{% trans "ostatnia &raquo;" %}</a>
                     {% endif %}
                 </div>
                 {% endif %}
 
                 <div style="text-align: center; margin: 20px 0;">
-                    <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="btn-ghost">↑ Do góry</a>
+                    <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="btn-ghost">{% trans "↑ Do góry" %}</a>
                 </div>
             {% else %}
-                <p style="text-align:center;">Nie znaleziono produktów. Spróbuj zmienić kryteria.</p>
+                <p style="text-align:center;">{% trans "Nie znaleziono produktów. Spróbuj zmienić kryteria." %}</p>
             {% endif %}
         {% endif %}
     </div>

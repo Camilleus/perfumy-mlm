@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load static %}
 
 {% block title %}Zwroty i reklamacje – Przystanek Perfumy{% endblock %}
@@ -7,58 +8,58 @@
 <section class="section-pad">
     <div class="container" style="max-width: 1000px;">
         <div class="prose" style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.05);">
-            <h1 class="text-center" style="font-size: 28px; font-weight: 300; margin-bottom: 32px;">Zwroty i reklamacje</h1>
+            <h1 class="text-center" style="font-size: 28px; font-weight: 300; margin-bottom: 32px;">{% trans "Zwroty i reklamacje" %}</h1>
 
-            <h2>1. Prawo odstąpienia od umowy (zwrot towaru)</h2>
-            <p>Zgodnie z ustawą z dnia 30 maja 2014 r. o prawach konsumenta, masz prawo odstąpić od umowy zawartej na odległość w terminie <strong>14 dni</strong> bez podawania przyczyny.</p>
+            <h2>{% trans "1. Prawo odstąpienia od umowy (zwrot towaru)" %}</h2>
+            <p>{% trans "Zgodnie z ustawą z dnia 30 maja 2014 r. o prawach konsumenta, masz prawo odstąpić od umowy zawartej na odległość w terminie" %} <strong>{% trans "14 dni" %}</strong> {% trans "bez podawania przyczyny." %}</p>
             <ul>
-                <li>Termin biegnie od dnia, w którym objąłeś towar w posiadanie (lub osoba przez Ciebie wskazana).</li>
-                <li>Aby skorzystać z prawa odstąpienia, musisz poinformować nas o swojej decyzji w sposób jednoznaczny (np. listownie, e‑mail lub za pomocą formularza na stronie).</li>
-                <li>Możesz skorzystać z <a href="{% url 'withdrawal_form' %}">wzoru formularza odstąpienia</a>, ale nie jest to obowiązkowe.</li>
+                <li>{% trans "Termin biegnie od dnia, w którym objąłeś towar w posiadanie (lub osoba przez Ciebie wskazana)." %}</li>
+                <li>{% trans "Aby skorzystać z prawa odstąpienia, musisz poinformować nas o swojej decyzji w sposób jednoznaczny (np. listownie, e‑mail lub za pomocą formularza na stronie)." %}</li>
+                <li>{% trans "Możesz skorzystać z" %} <a href="{% url 'withdrawal_form' %}">{% trans "wzoru formularza odstąpienia" %}</a>{% trans ", ale nie jest to obowiązkowe." %}</li>
             </ul>
 
             <div style="background: #fff3e0; padding: 16px; margin: 20px 0; border-left: 4px solid var(--gold);">
-                <p><strong>⚠️ Ważny wyjątek dla perfum:</strong> Zgodnie z art. 38 ustawy o prawach konsumenta, prawo odstąpienia od umowy <strong>nie przysługuje</strong> w przypadku towarów dostarczanych w zapieczętowanym opakowaniu, które po otwarciu nie mogą zostać zwrócone ze względów higienicznych lub zdrowotnych, jeśli opakowanie zostało otwarte po dostarczeniu. Oznacza to, że <strong>perfumy możesz zwrócić tylko wtedy, gdy oryginalne opakowanie jest nienaruszone (folia, plomba)</strong>. Produkty testowane (np. psiknięte) nie podlegają zwrotowi.</p>
+                <p><strong>{% trans "⚠️ Ważny wyjątek dla perfum:" %}</strong> {% trans "Zgodnie z art. 38 ustawy o prawach konsumenta, prawo odstąpienia od umowy" %} <strong>{% trans "nie przysługuje" %}</strong> {% trans "w przypadku towarów dostarczanych w zapieczętowanym opakowaniu, które po otwarciu nie mogą zostać zwrócone ze względów higienicznych lub zdrowotnych, jeśli opakowanie zostało otwarte po dostarczeniu. Oznacza to, że" %} <strong>{% trans "perfumy możesz zwrócić tylko wtedy, gdy oryginalne opakowanie jest nienaruszone (folia, plomba)" %}</strong>{% trans ". Produkty testowane (np. psiknięte) nie podlegają zwrotowi." %}</p>
             </div>
 
-            <h3>Koszty zwrotu</h3>
-            <p>Przy odstąpieniu od umowy ponosisz tylko bezpośrednie koszty zwrotu towaru (koszt przesyłki z powrotem do nas). My zwracamy Ci pełną kwotę zapłaconą za produkt (wraz z kosztami dostawy podstawowej – najtańszej oferowanej przez nas metody).</p>
+            <h3>{% trans "Koszty zwrotu" %}</h3>
+            <p>{% trans "Przy odstąpieniu od umowy ponosisz tylko bezpośrednie koszty zwrotu towaru (koszt przesyłki z powrotem do nas). My zwracamy Ci pełną kwotę zapłaconą za produkt (wraz z kosztami dostawy podstawowej – najtańszej oferowanej przez nas metody)." %}</p>
 
-            <h3>Termin na zwrot pieniędzy</h3>
-            <p>Zwrot środków nastąpi niezwłocznie, nie później niż w ciągu 14 dni od otrzymania Twojego oświadczenia o odstąpieniu od umowy. Możemy wstrzymać zwrot do czasu otrzymania towaru z powrotem lub dostarczenia dowodu jego odesłania – w zależności od tego, co nastąpi wcześniej.</p>
+            <h3>{% trans "Termin na zwrot pieniędzy" %}</h3>
+            <p>{% trans "Zwrot środków nastąpi niezwłocznie, nie później niż w ciągu 14 dni od otrzymania Twojego oświadczenia o odstąpieniu od umowy. Możemy wstrzymać zwrot do czasu otrzymania towaru z powrotem lub dostarczenia dowodu jego odesłania – w zależności od tego, co nastąpi wcześniej." %}</p>
 
             <hr>
 
-            <h2>2. Reklamacje (rękojmia za wady)</h2>
-            <p>Jako sprzedawca odpowiadamy za wady fizyczne i prawne towaru (rękojmia) na zasadach określonych w Kodeksie cywilnym.</p>
+            <h2>{% trans "2. Reklamacje (rękojmia za wady)" %}</h2>
+            <p>{% trans "Jako sprzedawca odpowiadamy za wady fizyczne i prawne towaru (rękojmia) na zasadach określonych w Kodeksie cywilnym." %}</p>
 
-            <h3>Zgłoszenie reklamacji</h3>
+            <h3>{% trans "Zgłoszenie reklamacji" %}</h3>
             <ul>
-                <li>Reklamację możesz złożyć pisemnie na adres: Marcel Krzeja, ul. Kwiatowa 5, 00-001 Warszawa, lub elektronicznie na e-mail: <a href="mailto:przystanekperfumy@gmail.com">przystanekperfumy@gmail.com</a>.</li>
-                <li>W zgłoszeniu podaj: numer zamówienia, opis wady oraz swoje żądanie (wymiana, naprawa, obniżenie ceny lub odstąpienie od umowy).</li>
-                <li>Dołącz dowód zakupu (paragon, faktura lub potwierdzenie zamówienia).</li>
+                <li>{% trans "Reklamację możesz złożyć pisemnie na adres: Marcel Krzeja, ul. Kwiatowa 5, 00-001 Warszawa, lub elektronicznie na e-mail:" %} <a href="mailto:przystanekperfumy@gmail.com">{% trans "przystanekperfumy@gmail.com" %}</a>.</li>
+                <li>{% trans "W zgłoszeniu podaj: numer zamówienia, opis wady oraz swoje żądanie (wymiana, naprawa, obniżenie ceny lub odstąpienie od umowy)." %}</li>
+                <li>{% trans "Dołącz dowód zakupu (paragon, faktura lub potwierdzenie zamówienia)." %}</li>
             </ul>
 
-            <h3>Terminy rozpatrzenia</h3>
-            <p>Odpowiemy na reklamację w ciągu 14 dni od jej otrzymania. Jeśli uznamy reklamację za zasadną, wymienimy towar na wolny od wad, naprawimy go, obniżymy cenę lub zwrócimy pieniądze – zgodnie z Twoim żądaniem (jeśli jest możliwe i zgodne z prawem).</p>
+            <h3>{% trans "Terminy rozpatrzenia" %}</h3>
+            <p>{% trans "Odpowiemy na reklamację w ciągu 14 dni od jej otrzymania. Jeśli uznamy reklamację za zasadną, wymienimy towar na wolny od wad, naprawimy go, obniżymy cenę lub zwrócimy pieniądze – zgodnie z Twoim żądaniem (jeśli jest możliwe i zgodne z prawem)." %}</p>
 
-            <h3>Koszty</h3>
-            <p>W przypadku uznanej reklamacji koszty wymiany/naprawy oraz koszty przesyłki zwrotnej ponosi sprzedawca.</p>
+            <h3>{% trans "Koszty" %}</h3>
+            <p>{% trans "W przypadku uznanej reklamacji koszty wymiany/naprawy oraz koszty przesyłki zwrotnej ponosi sprzedawca." %}</p>
 
             <hr>
 
-            <h2>3. Informacje dodatkowe</h2>
+            <h2>{% trans "3. Informacje dodatkowe" %}</h2>
             <ul>
-                <li>Jeśli chcesz zwrócić towar (zgodnie z prawem odstąpienia), odeślij go na nasz adres: Marcel Krzeja, ul. Kwiatowa 5, 00-001 Warszawa.</li>
-                <li>Zalecamy zachowanie dowodu nadania przesyłki – w razie sporu.</li>
-                <li>W przypadku pytań lub wątpliwości – skontaktuj się z nami: <a href="mailto:przystanekperfumy@gmail.com">przystanekperfumy@gmail.com</a> lub <a href="tel:+48534293389">+48 534 293 389</a>.</li>
+                <li>{% trans "Jeśli chcesz zwrócić towar (zgodnie z prawem odstąpienia), odeślij go na nasz adres: Marcel Krzeja, ul. Kwiatowa 5, 00-001 Warszawa." %}</li>
+                <li>{% trans "Zalecamy zachowanie dowodu nadania przesyłki – w razie sporu." %}</li>
+                <li>{% trans "W przypadku pytań lub wątpliwości – skontaktuj się z nami:" %} <a href="mailto:przystanekperfumy@gmail.com">{% trans "przystanekperfumy@gmail.com" %}</a> {% trans "lub" %} <a href="tel:+48534293389">{% trans "+48 534 293 389" %}</a>.</li>
             </ul>
 
             <hr>
 
             <div class="text-center mt-32">
-                <a href="{% url 'withdrawal_form' %}" class="btn">Pobierz formularz odstąpienia</a>
-                <a href="{% url 'regulamin' %}" class="btn-ghost" style="margin-left: 12px;">Regulamin sklepu</a>
+                <a href="{% url 'withdrawal_form' %}" class="btn">{% trans "Pobierz formularz odstąpienia" %}</a>
+                <a href="{% url 'regulamin' %}" class="btn-ghost" style="margin-left: 12px;">{% trans "Regulamin sklepu" %}</a>
             </div>
         </div>
     </div>

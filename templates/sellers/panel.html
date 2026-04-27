@@ -1,11 +1,12 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block content %}
 <section class="section-pad">
     <div class="container" style="max-width:800px;">
 
         <h1 style="font-size:26px; font-weight:300; margin-bottom:6px;">Cześć, {{ seller.user.username }}! 👋</h1>
-        <p style="color:#888; margin-bottom:28px; font-size:14px;">Twój panel polecającego</p>
+        <p style="color:#888; margin-bottom:28px; font-size:14px;">{% trans "Twój panel polecającego" %}</p>
 
         <!-- POZIOM I PASEK POSTĘPU -->
         <div style="background:white; border:2px solid var(--gold); padding:24px; margin-bottom:24px;">
@@ -13,15 +14,15 @@
                 <div>
                     <div style="font-size:24px; font-weight:700;">{{ seller.get_level_display }}</div>
                     {% if seller.level == 'ambasador' %}
-                    <div style="color:#888; font-size:12px; margin-top:4px;">Twoja nagroda: -20 zł na każde zamówienie</div>
+                    <div style="color:#888; font-size:12px; margin-top:4px;">{% trans "Twoja nagroda: -20 zł na każde zamówienie" %}</div>
                     {% elif seller.level == 'vip' %}
-                    <div style="color:#888; font-size:12px; margin-top:4px;">Twoja nagroda: -5% na wszystko + early access</div>
+                    <div style="color:#888; font-size:12px; margin-top:4px;">{% trans "Twoja nagroda: -5% na wszystko + early access" %}</div>
                     {% else %}
-                    <div style="color:#888; font-size:12px; margin-top:4px;">Zacznij polecać i zdobywaj nagrody!</div>
+                    <div style="color:#888; font-size:12px; margin-top:4px;">{% trans "Zacznij polecać i zdobywaj nagrody!" %}</div>
                     {% endif %}
                 </div>
                 <div style="text-align:right;">
-                    <div style="font-size:12px; color:#888;">Kredyt na koncie</div>
+                    <div style="font-size:12px; color:#888;">{% trans "Kredyt na koncie" %}</div>
                     <div style="font-size:28px; font-weight:700; color:var(--forest-green);">{{ seller.credit }} zł</div>
                 </div>
             </div>
@@ -30,7 +31,7 @@
             {% if next %}
             <div style="margin-top:10px;">
                 <div style="display:flex; justify-content:space-between; font-size:12px; color:#888; margin-bottom:6px;">
-                    <span>Postęp do: <strong>{{ next.next }}</strong></span>
+                    <span>{% trans "Postęp do:" %} <strong>{{ next.next }}</strong></span>
                     <span>{{ next.current }} / {{ next.target }}</span>
                 </div>
                 <div style="background:#eee; border-radius:20px; height:10px; overflow:hidden;">
@@ -49,29 +50,29 @@
         <div class="stats-grid">
             <div class="stat-box">
                 <div class="stat-box-num">{{ referral_count }}</div>
-                <div class="stat-box-label">Znajomi którzy kupili</div>
+                <div class="stat-box-label">{% trans "Znajomi którzy kupili" %}</div>
             </div>
             <div class="stat-box">
                 <div class="stat-box-num">{{ seller.credit }} zł</div>
-                <div class="stat-box-label">Zaoszczędzone</div>
+                <div class="stat-box-label">{% trans "Zaoszczędzone" %}</div>
             </div>
             <div class="stat-box">
                 <div class="stat-box-num">{{ successful_referrals }}</div>
-                <div class="stat-box-label">Udane polecenia</div>
+                <div class="stat-box-label">{% trans "Udane polecenia" %}</div>
             </div>
         </div>
 
         <!-- LINK POLECAJĄCY -->
         <div style="background:#fffdf0; border:1px solid var(--gold); padding:24px; margin-bottom:24px;">
-            <h3 style="font-weight:600; margin-bottom:8px; font-size:16px;">🔗 Twój link polecający</h3>
+            <h3 style="font-weight:600; margin-bottom:8px; font-size:16px;">{% trans "🔗 Twój link polecający" %}</h3>
             <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;">
                 <input type="text" id="referral-link"
                     value="{{ request.scheme }}://{{ request.get_host }}/rejestracja/{{ seller.referral_code }}/"
                     readonly
                     style="flex:1; min-width:200px; padding:12px; border:1px solid #ddd; font-size:13px; background:white; box-sizing:border-box;">
-                <button onclick="copyLink()" class="btn" style="padding:12px 20px; white-space:nowrap;">Kopiuj</button>
+                <button onclick="copyLink()" class="btn" style="padding:12px 20px; white-space:nowrap;">{% trans "Kopiuj" %}</button>
             </div>
-            <div id="copy-msg" style="font-size:13px; color:green; margin-top:8px; display:none;">✅ Link skopiowany!</div>
+            <div id="copy-msg" style="font-size:13px; color:green; margin-top:8px; display:none;">{% trans "✅ Link skopiowany!" %}</div>
             <div style="margin-top:12px; font-size:13px; color:#888;">
                 Twój kod: <strong style="font-size:15px; letter-spacing:2px;">{{ seller.referral_code }}</strong>
             </div>
@@ -90,30 +91,30 @@
 
         <!-- PROGI -->
         <div class="card-border" style="margin-bottom:24px; overflow-x:auto;">
-            <h3 style="font-weight:600; margin-bottom:16px; font-size:16px;">🏆 Struktura nagród</h3>
+            <h3 style="font-weight:600; margin-bottom:16px; font-size:16px;">{% trans "🏆 Struktura nagród" %}</h3>
             <table style="width:100%; border-collapse:collapse; min-width:280px;">
                 <thead>
                     <tr style="border-bottom:2px solid var(--gold);">
-                        <th style="text-align:left; padding:10px 0; font-size:12px;">Poziom</th>
-                        <th style="text-align:center; padding:10px 0; font-size:12px;">Polecenia</th>
-                        <th style="text-align:right; padding:10px 0; font-size:12px;">Nagroda</th>
+                        <th style="text-align:left; padding:10px 0; font-size:12px;">{% trans "Poziom" %}</th>
+                        <th style="text-align:center; padding:10px 0; font-size:12px;">{% trans "Polecenia" %}</th>
+                        <th style="text-align:right; padding:10px 0; font-size:12px;">{% trans "Nagroda" %}</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr style="border-bottom:1px solid #eee; {% if seller.level == 'starter' %}background:#fffdf0;{% endif %}">
-                        <td style="padding:10px 0; font-size:14px;">🌱 Starter</td>
+                        <td style="padding:10px 0; font-size:14px;">{% trans "🌱 Starter" %}</td>
                         <td style="text-align:center; color:#888; font-size:13px;">0</td>
-                        <td style="text-align:right; font-size:12px; color:#666;">Twój link polecający</td>
+                        <td style="text-align:right; font-size:12px; color:#666;">{% trans "Twój link polecający" %}</td>
                     </tr>
                     <tr style="border-bottom:1px solid #eee; {% if seller.level == 'ambasador' %}background:#fffdf0;{% endif %}">
-                        <td style="padding:10px 0; font-size:14px;">🥈 Ambasador</td>
+                        <td style="padding:10px 0; font-size:14px;">{% trans "🥈 Ambasador" %}</td>
                         <td style="text-align:center; color:#888; font-size:13px;">3</td>
-                        <td style="text-align:right; font-size:12px; color:#666;">-20 zł/zamówienie</td>
+                        <td style="text-align:right; font-size:12px; color:#666;">{% trans "-20 zł/zamówienie" %}</td>
                     </tr>
                     <tr style="{% if seller.level == 'vip' %}background:#fffdf0;{% endif %}">
-                        <td style="padding:10px 0; font-size:14px;">🥇 VIP</td>
+                        <td style="padding:10px 0; font-size:14px;">{% trans "🥇 VIP" %}</td>
                         <td style="text-align:center; color:#888; font-size:13px;">10</td>
-                        <td style="text-align:right; font-size:12px; color:#666;">-5% + early access</td>
+                        <td style="text-align:right; font-size:12px; color:#666;">{% trans "-5% + early access" %}</td>
                     </tr>
                 </tbody>
             </table>
@@ -122,12 +123,12 @@
         <!-- HISTORIA POLECEŃ -->
         {% if referrals %}
         <div class="card-border">
-            <h3 style="font-weight:600; margin-bottom:16px; font-size:16px;">📋 Historia poleceń</h3>
+            <h3 style="font-weight:600; margin-bottom:16px; font-size:16px;">{% trans "📋 Historia poleceń" %}</h3>
             {% for ref in referrals %}
             <div style="display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px solid #f0f0f0; font-size:13px; flex-wrap:wrap; gap:6px;">
                 <span style="color:#444;">{{ ref.referred_email }}</span>
                 <div style="display:flex; gap:12px; align-items:center;">
-                    <span style="color:green; font-size:12px;">✅ +20 zł</span>
+                    <span style="color:green; font-size:12px;">{% trans "✅ +20 zł" %}</span>
                     <span style="color:#aaa; font-size:12px;">{{ ref.created_at|date:"d.m.Y" }}</span>
                 </div>
             </div>

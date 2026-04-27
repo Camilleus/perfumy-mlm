@@ -222,3 +222,10 @@ __marimo__/
 *.jpeg
 *.gif
 *.bmp
+
+# Bakcups
+.bak
+*.bak
+*.backup
+*.tmp
+*.temp

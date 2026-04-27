@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load static %}
 
 {% block title %}Pozasądowe rozwiązywanie sporów (ODR) – Przystanek Perfumy{% endblock %}
@@ -7,50 +8,50 @@
 <section class="section-pad">
     <div class="container" style="max-width: 900px;">
         <div class="prose" style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.05);">
-            <h1 class="text-center" style="font-size: 28px; font-weight: 300; margin-bottom: 32px;">Pozasądowe rozwiązywanie sporów (ODR)</h1>
+            <h1 class="text-center" style="font-size: 28px; font-weight: 300; margin-bottom: 32px;">{% trans "Pozasądowe rozwiązywanie sporów (ODR)" %}</h1>
 
-            <h2>Platforma internetowa ODR</h2>
-            <p>Zgodnie z rozporządzeniem Parlamentu Europejskiego i Rady (UE) nr 524/2013, konsumenci mają możliwość skorzystania z unijnej platformy internetowego systemu rozstrzygania sporów (ODR) w celu polubownego rozwiązania sporu wynikającego z umowy zawartej przez internet.</p>
+            <h2>{% trans "Platforma internetowa ODR" %}</h2>
+            <p>{% trans "Zgodnie z rozporządzeniem Parlamentu Europejskiego i Rady (UE) nr 524/2013, konsumenci mają możliwość skorzystania z unijnej platformy internetowego systemu rozstrzygania sporów (ODR) w celu polubownego rozwiązania sporu wynikającego z umowy zawartej przez internet." %}</p>
 
-            <p>Platforma ODR jest dostępna pod adresem:<br>
-            <strong><a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener noreferrer">https://ec.europa.eu/consumers/odr/</a></strong></p>
+            <p>{% trans "Platforma ODR jest dostępna pod adresem:" %}<br>
+            <strong><a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener noreferrer">{% trans "https://ec.europa.eu/consumers/odr/" %}</a></strong></p>
 
-            <h2>Kiedy możesz skorzystać z platformy ODR?</h2>
+            <h2>{% trans "Kiedy możesz skorzystać z platformy ODR?" %}</h2>
             <ul>
-                <li>Jesteś konsumentem (osobą fizyczną kupującą towar niezwiązany z działalnością zawodową).</li>
-                <li>Masz spór ze sprzedawcą (Przystanek Perfumy) dotyczący zakupu dokonanego przez internet.</li>
-                <li>Próbowałeś rozwiązać spór bezpośrednio ze sprzedawcą, ale nie udało się dojść do porozumienia.</li>
+                <li>{% trans "Jesteś konsumentem (osobą fizyczną kupującą towar niezwiązany z działalnością zawodową)." %}</li>
+                <li>{% trans "Masz spór ze sprzedawcą (Przystanek Perfumy) dotyczący zakupu dokonanego przez internet." %}</li>
+                <li>{% trans "Próbowałeś rozwiązać spór bezpośrednio ze sprzedawcą, ale nie udało się dojść do porozumienia." %}</li>
             </ul>
 
-            <h2>Jak działa platforma ODR?</h2>
+            <h2>{% trans "Jak działa platforma ODR?" %}</h2>
             <ul>
-                <li>Za pośrednictwem platformy możesz złożyć skargę online.</li>
-                <li>Platforma automatycznie przekaże skargę do właściwego podmiotu zajmującego się pozasądowym rozwiązywaniem sporów (np. rzecznika konsumentów, mediatora).</li>
-                <li>Postępowanie jest dobrowolne – obie strony muszą wyrazić zgodę na udział w mediacji.</li>
-                <li>Rozwiązanie sporu nie jest wiążące, chyba że obie strony zaakceptują proponowane rozwiązanie.</li>
+                <li>{% trans "Za pośrednictwem platformy możesz złożyć skargę online." %}</li>
+                <li>{% trans "Platforma automatycznie przekaże skargę do właściwego podmiotu zajmującego się pozasądowym rozwiązywaniem sporów (np. rzecznika konsumentów, mediatora)." %}</li>
+                <li>{% trans "Postępowanie jest dobrowolne – obie strony muszą wyrazić zgodę na udział w mediacji." %}</li>
+                <li>{% trans "Rozwiązanie sporu nie jest wiążące, chyba że obie strony zaakceptują proponowane rozwiązanie." %}</li>
             </ul>
 
-            <h2>Alternatywne metody rozwiązywania sporów</h2>
-            <p>Jeśli nie chcesz korzystać z platformy ODR, możesz zwrócić się o pomoc do:</p>
+            <h2>{% trans "Alternatywne metody rozwiązywania sporów" %}</h2>
+            <p>{% trans "Jeśli nie chcesz korzystać z platformy ODR, możesz zwrócić się o pomoc do:" %}</p>
             <ul>
-                <li>Rzecznika praw konsumenta (w swoim mieście lub powiatowego rzecznika konsumentów),</li>
-                <li>Organizacji pozarządowych zajmujących się ochroną konsumentów,</li>
-                <li>Sądu powszechnego (postępowanie cywilne).</li>
+                <li>{% trans "Rzecznika praw konsumenta (w swoim mieście lub powiatowego rzecznika konsumentów)," %}</li>
+                <li>{% trans "Organizacji pozarządowych zajmujących się ochroną konsumentów," %}</li>
+                <li>{% trans "Sądu powszechnego (postępowanie cywilne)." %}</li>
             </ul>
 
-            <h2>Dane sprzedawcy do kontaktu w sprawie sporów</h2>
+            <h2>{% trans "Dane sprzedawcy do kontaktu w sprawie sporów" %}</h2>
             <ul>
-                <li>Marcel Krzeja (Przystanek Perfumy)</li>
-                <li>Adres: ul. Kwiatowa 5, 00-001 Warszawa</li>
-                <li>E-mail: <a href="mailto:sklep@przystanekperfumy.pl">sklep@przystanekperfumy.pl</a></li>
-                <li>Telefon: +48 453 305 509</li>
+                <li>{% trans "Marcel Krzeja (Przystanek Perfumy)" %}</li>
+                <li>{% trans "Adres: ul. Kwiatowa 5, 00-001 Warszawa" %}</li>
+                <li>{% trans "E-mail:" %} <a href="mailto:sklep@przystanekperfumy.pl">{% trans "sklep@przystanekperfumy.pl" %}</a></li>
+                <li>{% trans "Telefon: +48 453 305 509" %}</li>
             </ul>
 
             <div style="background: #f0f7f0; padding: 16px; margin: 24px 0; border-left: 4px solid var(--forest-green);">
-                <p style="margin: 0; font-size: 14px;"><strong>📌 Informacja obowiązkowa:</strong> Zgodnie z art. 14 rozporządzenia ODR, jako sprzedawca informujemy o istnieniu platformy ODR oraz o naszym adresie e-mail. Nie jesteśmy zobowiązani do uczestnictwa w pozasądowym rozwiązywaniu sporów, ale zawsze staramy się rozwiązać każdą reklamację polubownie.</p>
+                <p style="margin: 0; font-size: 14px;"><strong>{% trans "📌 Informacja obowiązkowa:" %}</strong> {% trans "Zgodnie z art. 14 rozporządzenia ODR, jako sprzedawca informujemy o istnieniu platformy ODR oraz o naszym adresie e-mail. Nie jesteśmy zobowiązani do uczestnictwa w pozasądowym rozwiązywaniu sporów, ale zawsze staramy się rozwiązać każdą reklamację polubownie." %}</p>
             </div>
 
-            <p class="text-center mt-32" style="font-size: 12px; color: #888;">Link do platformy ODR: <a href="https://ec.europa.eu/consumers/odr/" target="_blank">ec.europa.eu/consumers/odr/</a></p>
+            <p class="text-center mt-32" style="font-size: 12px; color: #888;">{% trans "Link do platformy ODR:" %} <a href="https://ec.europa.eu/consumers/odr/" target="_blank">{% trans "ec.europa.eu/consumers/odr/" %}</a></p>
         </div>
     </div>
 </section>

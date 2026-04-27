@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load static %}
 
 {% block title %}Regulamin Sklepu – Przystanek Perfumy{% endblock %}
@@ -7,148 +8,148 @@
 <section class="section-pad">
     <div class="container" style="max-width: 1000px;">
         <div class="prose" style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.05);">
-            <h1 class="text-center" style="font-size: 28px; font-weight: 300; margin-bottom: 32px;">Regulamin Sklepu internetowego „Przystanek Perfumy”</h1>
+            <h1 class="text-center" style="font-size: 28px; font-weight: 300; margin-bottom: 32px;">{% trans "Regulamin Sklepu internetowego „Przystanek Perfumy”" %}</h1>
 
             <!-- I. DEFINICJE -->
-            <h2>I. Definicje</h2>
+            <h2>{% trans "I. Definicje" %}</h2>
             <ul>
-                <li><strong>Regulamin</strong> – niniejszy dokument.</li>
-                <li><strong>Sklep</strong> – serwis internetowy dostępny pod adresem <a href="https://przystanekperfumy.pl">https://przystanekperfumy.pl</a>, prowadzony przez Sprzedawcę.</li>
-                <li><strong>Sprzedawca</strong> – Marcel Krzeja, prowadzący działalność gospodarczą pod firmą „Przystanek Perfumy”, NIP: 123-456-78-90, REGON: 123456789, adres siedziby: ul. Kwiatowa 5, 00-001 Warszawa (dane przykładowe – <strong>uzupełnij własnymi</strong>).</li>
-                <li><strong>Klient</strong> – osoba fizyczna (konsument) lub przedsiębiorca dokonujący zakupów w Sklepie.</li>
-                <li><strong>Kodeks cywilny</strong> – Ustawa z dnia 23 kwietnia 1964 r.</li>
-                <li><strong>Ustawa o prawach konsumenta</strong> – Ustawa z dnia 30 maja 2014 r.</li>
-                <li><strong>RODO</strong> – Rozporządzenie Parlamentu Europejskiego i Rady (UE) 2016/679.</li>
+                <li><strong>{% trans "Regulamin" %}</strong> {% trans "– niniejszy dokument." %}</li>
+                <li><strong>{% trans "Sklep" %}</strong> {% trans "– serwis internetowy dostępny pod adresem" %} <a href="https://przystanekperfumy.pl">{% trans "https://przystanekperfumy.pl" %}</a>{% trans ", prowadzony przez Sprzedawcę." %}</li>
+                <li><strong>{% trans "Sprzedawca" %}</strong> {% trans "– Marcel Krzeja, prowadzący działalność gospodarczą pod firmą „Przystanek Perfumy”, NIP: 123-456-78-90, REGON: 123456789, adres siedziby: ul. Kwiatowa 5, 00-001 Warszawa (dane przykładowe –" %} <strong>{% trans "uzupełnij własnymi" %}</strong>).</li>
+                <li><strong>{% trans "Klient" %}</strong> {% trans "– osoba fizyczna (konsument) lub przedsiębiorca dokonujący zakupów w Sklepie." %}</li>
+                <li><strong>{% trans "Kodeks cywilny" %}</strong> {% trans "– Ustawa z dnia 23 kwietnia 1964 r." %}</li>
+                <li><strong>{% trans "Ustawa o prawach konsumenta" %}</strong> {% trans "– Ustawa z dnia 30 maja 2014 r." %}</li>
+                <li><strong>{% trans "RODO" %}</strong> {% trans "– Rozporządzenie Parlamentu Europejskiego i Rady (UE) 2016/679." %}</li>
             </ul>
 
             <!-- II. DANE SPRZEDAWCY -->
-            <h2>II. Dane Sprzedawcy i kontakt</h2>
+            <h2>{% trans "II. Dane Sprzedawcy i kontakt" %}</h2>
             <ul>
-                <li>Marcel Krzeja</li>
-                <li>NIP: 123-456-78-90</li>
-                <li>REGON: 123456789</li>
-                <li>Adres: ul. Kwiatowa 5, 00-001 Warszawa</li>
-                <li>E-mail: <a href="mailto:przystanekperfumy@gmail.com">przystanekperfumy@gmail.com</a></li>
-                <li>Telefon: <a href="tel:+48534293389">+48 534 293 389</a> (czynny pon.–pt. 10:00–16:00)</li>
+                <li>{% trans "Marcel Krzeja" %}</li>
+                <li>{% trans "NIP: 123-456-78-90" %}</li>
+                <li>{% trans "REGON: 123456789" %}</li>
+                <li>{% trans "Adres: ul. Kwiatowa 5, 00-001 Warszawa" %}</li>
+                <li>{% trans "E-mail:" %} <a href="mailto:przystanekperfumy@gmail.com">{% trans "przystanekperfumy@gmail.com" %}</a></li>
+                <li>{% trans "Telefon:" %} <a href="tel:+48534293389">{% trans "+48 534 293 389" %}</a> {% trans "(czynny pon.–pt. 10:00–16:00)" %}</li>
             </ul>
 
             <!-- III. ZAWARCIE UMOWY -->
-            <h2>III. Zawarcie umowy sprzedaży</h2>
+            <h2>{% trans "III. Zawarcie umowy sprzedaży" %}</h2>
             <ul>
-                <li>Umowa sprzedaży zostaje zawarta w momencie kliknięcia przez Klienta przycisku „Zamawiam i płacę” (lub „Złóż zamówienie”) po uprzednim dodaniu produktów do koszyka i podaniu danych niezbędnych do realizacji.</li>
-                <li>Po złożeniu zamówienia Klient otrzymuje na podany adres e-mail potwierdzenie przyjęcia zamówienia do realizacji.</li>
-                <li>Warunkiem realizacji zamówienia jest akceptacja Regulaminu i Polityki Prywatności.</li>
+                <li>{% trans "Umowa sprzedaży zostaje zawarta w momencie kliknięcia przez Klienta przycisku „Zamawiam i płacę” (lub „Złóż zamówienie”) po uprzednim dodaniu produktów do koszyka i podaniu danych niezbędnych do realizacji." %}</li>
+                <li>{% trans "Po złożeniu zamówienia Klient otrzymuje na podany adres e-mail potwierdzenie przyjęcia zamówienia do realizacji." %}</li>
+                <li>{% trans "Warunkiem realizacji zamówienia jest akceptacja Regulaminu i Polityki Prywatności." %}</li>
             </ul>
 
             <!-- IV. CENY I PŁATNOŚCI (OMNIBUS) -->
-            <h2>IV. Ceny i płatności</h2>
+            <h2>{% trans "IV. Ceny i płatności" %}</h2>
             <ul>
-                <li>Wszystkie ceny podane w Sklepie są cenami brutto (zawierają podatek VAT).</li>
-                <li>Sklep informuje o najniższej cenie produktu z ostatnich 30 dni przed obniżką (zgodnie z dyrektywą Omnibus) – dotyczy wszystkich produktów objętych promocją cenową.</li>
-                <li>Dostępne metody płatności: <strong>za pobraniem</strong> (gotówka przy odbiorze przesyłki).</li>
-                <li>Koszt dostawy jest podany przy wyborze metody wysyłki i doliczany do wartości zamówienia.</li>
+                <li>{% trans "Wszystkie ceny podane w Sklepie są cenami brutto (zawierają podatek VAT)." %}</li>
+                <li>{% trans "Sklep informuje o najniższej cenie produktu z ostatnich 30 dni przed obniżką (zgodnie z dyrektywą Omnibus) – dotyczy wszystkich produktów objętych promocją cenową." %}</li>
+                <li>{% trans "Dostępne metody płatności:" %} <strong>{% trans "za pobraniem" %}</strong> {% trans "(gotówka przy odbiorze przesyłki)." %}</li>
+                <li>{% trans "Koszt dostawy jest podany przy wyborze metody wysyłki i doliczany do wartości zamówienia." %}</li>
             </ul>
 
             <!-- V. DOSTAWA -->
-            <h2>V. Dostawa</h2>
+            <h2>{% trans "V. Dostawa" %}</h2>
             <ul>
-                <li>Realizacja zamówień odbywa się za pośrednictwem kuriera (InPost, GLS – obecnie tylko InPost).</li>
-                <li>Termin dostawy: do 1 dnia roboczego od nadania przesyłki.</li>
+                <li>{% trans "Realizacja zamówień odbywa się za pośrednictwem kuriera (InPost, GLS – obecnie tylko InPost)." %}</li>
+                <li>{% trans "Termin dostawy: do 1 dnia roboczego od nadania przesyłki." %}</li>
                 <li>Koszty dostawy:
                     <ul>
-                        <li>InPost Kurier: 30 zł (przy zamówieniu 3 lub więcej sztuk – dostawa gratis).</li>
-                        <li>GLS – obecnie niedostępny.</li>
+                        <li>{% trans "InPost Kurier: 30 zł (przy zamówieniu 3 lub więcej sztuk – dostawa gratis)." %}</li>
+                        <li>{% trans "GLS – obecnie niedostępny." %}</li>
                     </ul>
                 </li>
-                <li>Dostawa wyłącznie na terenie Polski.</li>
+                <li>{% trans "Dostawa wyłącznie na terenie Polski." %}</li>
             </ul>
 
             <!-- VI. REKLAMACJE (RĘKOJMIA) -->
-            <h2>VI. Reklamacje (rękojmia)</h2>
+            <h2>{% trans "VI. Reklamacje (rękojmia)" %}</h2>
             <ul>
-                <li>Sklep odpowiada za wady fizyczne i prawne towaru na zasadach określonych w Kodeksie cywilnym (rękojmia).</li>
-                <li>Reklamację należy zgłosić pisemnie na adres e-mail <a href="mailto:przystanekperfumy@gmail.com">przystanekperfumy@gmail.com</a> lub listownie na adres siedziby.</li>
-                <li>W zgłoszeniu należy podać: numer zamówienia, opis wady oraz żądanie (wymiana, naprawa, obniżenie ceny lub odstąpienie od umowy).</li>
-                <li>Sklep ustosunkuje się do reklamacji w ciągu 14 dni od jej otrzymania.</li>
+                <li>{% trans "Sklep odpowiada za wady fizyczne i prawne towaru na zasadach określonych w Kodeksie cywilnym (rękojmia)." %}</li>
+                <li>{% trans "Reklamację należy zgłosić pisemnie na adres e-mail" %} <a href="mailto:przystanekperfumy@gmail.com">{% trans "przystanekperfumy@gmail.com" %}</a> {% trans "lub listownie na adres siedziby." %}</li>
+                <li>{% trans "W zgłoszeniu należy podać: numer zamówienia, opis wady oraz żądanie (wymiana, naprawa, obniżenie ceny lub odstąpienie od umowy)." %}</li>
+                <li>{% trans "Sklep ustosunkuje się do reklamacji w ciągu 14 dni od jej otrzymania." %}</li>
             </ul>
 
             <!-- VII. ODSTĄPIENIE OD UMOWY (ZWROTY) -->
-            <h2>VII. Odstąpienie od umowy (zwroty)</h2>
+            <h2>{% trans "VII. Odstąpienie od umowy (zwroty)" %}</h2>
             <ul>
-                <li>Konsument ma prawo odstąpić od umowy zawartej na odległość w terminie 14 dni bez podawania przyczyny (zgodnie z ustawą o prawach konsumenta).</li>
-                <li><strong>Ważne:</strong> Prawo odstąpienia nie przysługuje w przypadku perfum, po otwarciu oryginalnego opakowania, ze względów higienicznych i zdrowotnych (art. 38 ustawy o prawach konsumenta). Zwrot jest możliwy wyłącznie, jeśli opakowanie jest nienaruszone i produkt nie był używany.</li>
-                <li>Wzór formularza odstąpienia od umowy dostępny jest <a href="{% url 'withdrawal_form' %}">tutaj</a> (do pobrania jako PDF).</li>
+                <li>{% trans "Konsument ma prawo odstąpić od umowy zawartej na odległość w terminie 14 dni bez podawania przyczyny (zgodnie z ustawą o prawach konsumenta)." %}</li>
+                <li><strong>{% trans "Ważne:" %}</strong> {% trans "Prawo odstąpienia nie przysługuje w przypadku perfum, po otwarciu oryginalnego opakowania, ze względów higienicznych i zdrowotnych (art. 38 ustawy o prawach konsumenta). Zwrot jest możliwy wyłącznie, jeśli opakowanie jest nienaruszone i produkt nie był używany." %}</li>
+                <li>{% trans "Wzór formularza odstąpienia od umowy dostępny jest" %} <a href="{% url 'withdrawal_form' %}">{% trans "tutaj" %}</a> {% trans "(do pobrania jako PDF)." %}</li>
             </ul>
 
             <!-- VIII. POZASĄDOWE ROZWIĄZYWANIE SPORÓW (ODR) -->
-            <h2>VIII. Pozasądowe rozwiązywanie sporów (ODR)</h2>
+            <h2>{% trans "VIII. Pozasądowe rozwiązywanie sporów (ODR)" %}</h2>
             <ul>
-                <li>Konsument ma możliwość skorzystania z unijnej platformy internetowej ODR pod adresem: <a href="https://ec.europa.eu/consumers/odr/" target="_blank">https://ec.europa.eu/consumers/odr/</a>.</li>
-                <li>Platforma służy do rozstrzygania sporów pomiędzy konsumentami a sprzedawcami w drodze mediacji.</li>
+                <li>{% trans "Konsument ma możliwość skorzystania z unijnej platformy internetowej ODR pod adresem:" %} <a href="https://ec.europa.eu/consumers/odr/" target="_blank">{% trans "https://ec.europa.eu/consumers/odr/" %}</a>.</li>
+                <li>{% trans "Platforma służy do rozstrzygania sporów pomiędzy konsumentami a sprzedawcami w drodze mediacji." %}</li>
             </ul>
 
             <!-- IX. OPINIE O PRODUKTACH (OMNIBUS) -->
-            <h2>IX. Opinie o produktach (Omnibus)</h2>
+            <h2>{% trans "IX. Opinie o produktach (Omnibus)" %}</h2>
             <ul>
-                <li>Wszystkie opinie zamieszczone na stronie pochodzą od Klientów, którzy dokonali zakupu danego produktu w Sklepie. Każda opinia jest weryfikowana pod kątem autentyczności.</li>
-                <li>Sklep nie zamieszcza opinii sponsorowanych ani nieprawdziwych.</li>
+                <li>{% trans "Wszystkie opinie zamieszczone na stronie pochodzą od Klientów, którzy dokonali zakupu danego produktu w Sklepie. Każda opinia jest weryfikowana pod kątem autentyczności." %}</li>
+                <li>{% trans "Sklep nie zamieszcza opinii sponsorowanych ani nieprawdziwych." %}</li>
             </ul>
 
             <!-- X. DANE OSOBOWE I PLIKI COOKIES (RODO) – ROZSZERZONE -->
-            <h2>X. Dane osobowe i pliki cookies (RODO)</h2>
-            <p>Administratorem danych osobowych jest Sprzedawca (Marcel Krzeja). Dane są przetwarzane w celu:</p>
+            <h2>{% trans "X. Dane osobowe i pliki cookies (RODO)" %}</h2>
+            <p>{% trans "Administratorem danych osobowych jest Sprzedawca (Marcel Krzeja). Dane są przetwarzane w celu:" %}</p>
             <ul>
-                <li>realizacji zamówień (podstawa prawna: art. 6 ust. 1 lit. b RODO),</li>
-                <li>marketingu własnego i newslettera (na podstawie zgody – art. 6 ust. 1 lit. a RODO),</li>
-                <li>analityki i statystyk (art. 6 ust. 1 lit. f RODO – prawnie uzasadniony interes).</li>
+                <li>{% trans "realizacji zamówień (podstawa prawna: art. 6 ust. 1 lit. b RODO)," %}</li>
+                <li>{% trans "marketingu własnego i newslettera (na podstawie zgody – art. 6 ust. 1 lit. a RODO)," %}</li>
+                <li>{% trans "analityki i statystyk (art. 6 ust. 1 lit. f RODO – prawnie uzasadniony interes)." %}</li>
             </ul>
-            <p>Sklep zbiera i przechowuje następujące dane Klientów:</p>
+            <p>{% trans "Sklep zbiera i przechowuje następujące dane Klientów:" %}</p>
             <ul>
-                <li>dane podane podczas rejestracji (nazwa użytkownika, imię, nazwisko, adres e-mail, numer telefonu, adres dostawy),</li>
-                <li>dane automatycznie gromadzone: adres IP, typ przeglądarki, rozdzielczość ekranu, przybliżona lokalizacja, czas spędzony na stronach, źródło wejścia, system operacyjny, język przeglądarki, dostawca usług internetowych, a także anonimowe dane demograficzne (płeć, wiek, zainteresowania) za pośrednictwem Google Analytics,</li>
-                <li>dane dotyczące zachowań zakupowych (historia zamówień, ulubione produkty, użyte kody rabatowe).</li>
+                <li>{% trans "dane podane podczas rejestracji (nazwa użytkownika, imię, nazwisko, adres e-mail, numer telefonu, adres dostawy)," %}</li>
+                <li>{% trans "dane automatycznie gromadzone: adres IP, typ przeglądarki, rozdzielczość ekranu, przybliżona lokalizacja, czas spędzony na stronach, źródło wejścia, system operacyjny, język przeglądarki, dostawca usług internetowych, a także anonimowe dane demograficzne (płeć, wiek, zainteresowania) za pośrednictwem Google Analytics," %}</li>
+                <li>{% trans "dane dotyczące zachowań zakupowych (historia zamówień, ulubione produkty, użyte kody rabatowe)." %}</li>
             </ul>
-            <p>Pliki cookies („ciasteczka”) są wykorzystywane do:</p>
+            <p>{% trans "Pliki cookies („ciasteczka”) są wykorzystywane do:" %}</p>
             <ul>
-                <li>utrzymania sesji i koszyka zakupowego,</li>
-                <li>zapamiętywania preferencji (np. wybór metody dostawy),</li>
-                <li>celów analitycznych (Google Analytics),</li>
-                <li>remarketingu (wyświetlanie spersonalizowanych reklam).</li>
+                <li>{% trans "utrzymania sesji i koszyka zakupowego," %}</li>
+                <li>{% trans "zapamiętywania preferencji (np. wybór metody dostawy)," %}</li>
+                <li>{% trans "celów analitycznych (Google Analytics)," %}</li>
+                <li>{% trans "remarketingu (wyświetlanie spersonalizowanych reklam)." %}</li>
             </ul>
-            <p>Klient ma prawo w każdej chwili:</p>
+            <p>{% trans "Klient ma prawo w każdej chwili:" %}</p>
             <ul>
-                <li>żądać dostępu do swoich danych, ich sprostowania, usunięcia („prawo do bycia zapomnianym”) lub ograniczenia przetwarzania,</li>
-                <li>wnieść sprzeciw wobec przetwarzania,</li>
-                <li>przenieść dane,</li>
-                <li>cofnąć zgodę na przetwarzanie w celach marketingowych (wypisać się z newslettera).</li>
+                <li>{% trans "żądać dostępu do swoich danych, ich sprostowania, usunięcia („prawo do bycia zapomnianym”) lub ograniczenia przetwarzania," %}</li>
+                <li>{% trans "wnieść sprzeciw wobec przetwarzania," %}</li>
+                <li>{% trans "przenieść dane," %}</li>
+                <li>{% trans "cofnąć zgodę na przetwarzanie w celach marketingowych (wypisać się z newslettera)." %}</li>
             </ul>
-            <p>Szczegółowa polityka prywatności dostępna jest pod adresem: <a href="{% url 'polityka_prywatnosci' %}">Polityka prywatności i plików cookies</a>.</p>
+            <p>{% trans "Szczegółowa polityka prywatności dostępna jest pod adresem:" %} <a href="{% url 'polityka_prywatnosci' %}">{% trans "Polityka prywatności i plików cookies" %}</a>.</p>
 
             <!-- XI. PRAWA AUTORSKIE -->
-            <h2>XI. Prawa autorskie</h2>
+            <h2>{% trans "XI. Prawa autorskie" %}</h2>
             <ul>
-                <li>Właścicielem Sklepu oraz praw autorskich do jego zawartości (opisy produktów, zdjęcia, logotypy, układ graficzny) jest Sprzedawca.</li>
-                <li>Kopiowanie, powielanie lub rozpowszechnianie treści bez pisemnej zgody Sprzedawcy jest zabronione.</li>
+                <li>{% trans "Właścicielem Sklepu oraz praw autorskich do jego zawartości (opisy produktów, zdjęcia, logotypy, układ graficzny) jest Sprzedawca." %}</li>
+                <li>{% trans "Kopiowanie, powielanie lub rozpowszechnianie treści bez pisemnej zgody Sprzedawcy jest zabronione." %}</li>
             </ul>
 
             <!-- XII. ZMIANY REGULAMINU -->
-            <h2>XII. Zmiany Regulaminu</h2>
+            <h2>{% trans "XII. Zmiany Regulaminu" %}</h2>
             <ul>
-                <li>Sklep zastrzega sobie prawo do zmiany Regulaminu. Zmiany wchodzą w życie po upływie 7 dni od ich opublikowania na stronie.</li>
-                <li>Klienci posiadający konto w Sklepie zostaną poinformowani o zmianach drogą e-mail.</li>
-                <li>Zamówienia złożone przed zmianą Regulaminu realizowane są na podstawie jego poprzedniej wersji.</li>
+                <li>{% trans "Sklep zastrzega sobie prawo do zmiany Regulaminu. Zmiany wchodzą w życie po upływie 7 dni od ich opublikowania na stronie." %}</li>
+                <li>{% trans "Klienci posiadający konto w Sklepie zostaną poinformowani o zmianach drogą e-mail." %}</li>
+                <li>{% trans "Zamówienia złożone przed zmianą Regulaminu realizowane są na podstawie jego poprzedniej wersji." %}</li>
             </ul>
 
             <!-- XIII. POSTANOWIENIA KOŃCOWE -->
-            <h2>XIII. Postanowienia końcowe</h2>
+            <h2>{% trans "XIII. Postanowienia końcowe" %}</h2>
             <ul>
-                <li>W sprawach nieuregulowanych Regulaminem stosuje się przepisy prawa polskiego, w szczególności Kodeksu cywilnego oraz ustawy o prawach konsumenta.</li>
-                <li>Wszelkie spory między Sprzedawcą a Klientem będą rozstrzygane przez właściwy sąd powszechny według przepisów Kodeksu postępowania cywilnego.</li>
-                <li>Regulamin wchodzi w życie z dniem 14 kwietnia 2026 r.</li>
-                <li>Treść Regulaminu jest dostępna bezpłatnie na stronie Sklepu w formie umożliwiającej jej pobranie i wydrukowanie.</li>
+                <li>{% trans "W sprawach nieuregulowanych Regulaminem stosuje się przepisy prawa polskiego, w szczególności Kodeksu cywilnego oraz ustawy o prawach konsumenta." %}</li>
+                <li>{% trans "Wszelkie spory między Sprzedawcą a Klientem będą rozstrzygane przez właściwy sąd powszechny według przepisów Kodeksu postępowania cywilnego." %}</li>
+                <li>{% trans "Regulamin wchodzi w życie z dniem 14 kwietnia 2026 r." %}</li>
+                <li>{% trans "Treść Regulaminu jest dostępna bezpłatnie na stronie Sklepu w formie umożliwiającej jej pobranie i wydrukowanie." %}</li>
             </ul>
 
-            <p class="text-center mt-32" style="font-size: 12px; color: #888;">Regulamin dostępny jest także w formacie PDF do pobrania.</p>
+            <p class="text-center mt-32" style="font-size: 12px; color: #888;">{% trans "Regulamin dostępny jest także w formacie PDF do pobrania." %}</p>
         </div>
     </div>
 </section>

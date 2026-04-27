@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 
 <form method="get" id="filters-form">
     <input type="hidden" name="gender" value="{{ current_gender }}">
@@ -6,16 +7,16 @@
     <input type="hidden" name="sort" value="{{ current_sort }}">
 
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-        <h3 style="font-size:14px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--forest-green);">Filtry</h3>
+        <h3 style="font-size:14px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--forest-green);">{% trans "Filtry" %}</h3>
         {% if current_category or current_concentration or current_occasion or current_intensity or current_price_min or current_price_max %}
         <a href="?gender={{ current_gender }}&brand={{ current_brand }}&sort={{ current_sort }}"
-           style="font-size:12px; color:#c0392b;">✕ Wyczyść</a>
+           style="font-size:12px; color:#c0392b;">{% trans "✕ Wyczyść" %}</a>
         {% endif %}
     </div>
     <!-- MARKA (wielokrotny wybór) -->
     <div class="filter-group">
         <div class="filter-group-title" onclick="toggleFilter('brand')">
-            Marka <span class="filter-arrow" id="arrow-brand">▾</span>
+            {% trans "Marka" %} <span class="filter-arrow" id="arrow-brand">▾</span>
         </div>
         <div class="filter-group-body" id="filter-brand" style="max-height: 200px; overflow-y: auto;">
             {% for brand in brands %}
@@ -28,7 +29,7 @@
             {% endfor %}
             {% if selected_brands %}
             <label class="filter-checkbox" style="margin-top: 8px; color: #c0392b;">
-                <input type="checkbox" onchange="clearBrands()"> Wyczyść wszystkie
+                <input type="checkbox" onchange="clearBrands()"> {% trans "Wyczyść wszystkie" %}
             </label>
             {% endif %}
         </div>
@@ -36,22 +37,22 @@
     <!-- CENA -->
     <div class="filter-group">
         <div class="filter-group-title" onclick="toggleFilter('price')">
-            Cena (zł) <span class="filter-arrow" id="arrow-price">▾</span>
+            {% trans "Cena (zł)" %} <span class="filter-arrow" id="arrow-price">▾</span>
         </div>
         <div class="filter-group-body" id="filter-price">
             <div style="display:flex; gap:8px; align-items:center; margin-bottom:8px;">
-                <input type="number" name="price_min" placeholder="od"
+                <input type="number" name="price_min" placeholder="{% trans "od" %}"
                     value="{{ current_price_min }}"
                     style="width:80px; padding:8px; border:1px solid #ddd; font-size:13px; box-sizing:border-box;">
                 <span style="color:#888;">–</span>
-                <input type="number" name="price_max" placeholder="do"
+                <input type="number" name="price_max" placeholder="{% trans "do" %}"
                     value="{{ current_price_max }}"
                     style="width:80px; padding:8px; border:1px solid #ddd; font-size:13px; box-sizing:border-box;">
             </div>
             <div style="display:flex; gap:6px; flex-wrap:wrap;">
-                <button type="button" class="price-chip" onclick="setPrice(0, 199.95)">do 200 zł</button>
-                <button type="button" class="price-chip" onclick="setPrice(200, 249.95)">200–250 zł</button>
-                <button type="button" class="price-chip" onclick="setPrice(249.95, 999)">250+ zł</button>
+                <button type="button" class="price-chip" onclick="setPrice(0, 199.95)">{% trans "do 200 zł" %}</button>
+                <button type="button" class="price-chip" onclick="setPrice(200, 249.95)">{% trans "200–250 zł" %}</button>
+                <button type="button" class="price-chip" onclick="setPrice(249.95, 999)">{% trans "250+ zł" %}</button>
             </div>
         </div>
     </div>
@@ -59,7 +60,7 @@
     <!-- KONCENTRACJA -->
     <div class="filter-group">
         <div class="filter-group-title" onclick="toggleFilter('concentration')">
-            Koncentracja <span class="filter-arrow" id="arrow-concentration">▾</span>
+            {% trans "Koncentracja" %} <span class="filter-arrow" id="arrow-concentration">▾</span>
         </div>
         <div class="filter-group-body" id="filter-concentration">
             {% for val, label in concentrations %}
@@ -72,7 +73,7 @@
             {% endfor %}
             {% if current_concentration %}
             <label class="filter-checkbox" style="margin-top:4px; color:#888;">
-                <input type="radio" name="concentration" value="" onchange="this.form.submit()"> Wszystkie
+                <input type="radio" name="concentration" value="" onchange="this.form.submit()"> {% trans "Wszystkie" %}
             </label>
             {% endif %}
         </div>
@@ -81,7 +82,7 @@
     <!-- RODZINA ZAPACHOWA -->
     <div class="filter-group">
         <div class="filter-group-title" onclick="toggleFilter('category')">
-            Rodzina zapachowa <span class="filter-arrow" id="arrow-category">▾</span>
+            {% trans "Rodzina zapachowa" %} <span class="filter-arrow" id="arrow-category">▾</span>
         </div>
         <div class="filter-group-body" id="filter-category">
             {% for val, label in categories %}
@@ -94,7 +95,7 @@
             {% endfor %}
             {% if current_category %}
             <label class="filter-checkbox" style="margin-top:4px; color:#888;">
-                <input type="radio" name="category" value="" onchange="this.form.submit()"> Wszystkie
+                <input type="radio" name="category" value="" onchange="this.form.submit()"> {% trans "Wszystkie" %}
             </label>
             {% endif %}
         </div>
@@ -103,7 +104,7 @@
     <!-- OKAZJA -->
     <div class="filter-group">
         <div class="filter-group-title" onclick="toggleFilter('occasion')">
-            Okazja <span class="filter-arrow" id="arrow-occasion">▾</span>
+            {% trans "Okazja" %} <span class="filter-arrow" id="arrow-occasion">▾</span>
         </div>
         <div class="filter-group-body" id="filter-occasion">
             {% for val, label in occasions %}
@@ -116,7 +117,7 @@
             {% endfor %}
             {% if current_occasion %}
             <label class="filter-checkbox" style="margin-top:4px; color:#888;">
-                <input type="radio" name="occasion" value="" onchange="this.form.submit()"> Wszystkie
+                <input type="radio" name="occasion" value="" onchange="this.form.submit()"> {% trans "Wszystkie" %}
             </label>
             {% endif %}
         </div>
@@ -125,7 +126,7 @@
     <!-- INTENSYWNOŚĆ -->
     <div class="filter-group">
         <div class="filter-group-title" onclick="toggleFilter('intensity')">
-            Intensywność <span class="filter-arrow" id="arrow-intensity">▾</span>
+            {% trans "Intensywność" %} <span class="filter-arrow" id="arrow-intensity">▾</span>
         </div>
         <div class="filter-group-body" id="filter-intensity">
             {% for val, label in intensities %}
@@ -138,11 +139,11 @@
             {% endfor %}
             {% if current_intensity %}
             <label class="filter-checkbox" style="margin-top:4px; color:#888;">
-                <input type="radio" name="intensity" value="" onchange="this.form.submit()"> Wszystkie
+                <input type="radio" name="intensity" value="" onchange="this.form.submit()"> {% trans "Wszystkie" %}
             </label>
             {% endif %}
         </div>
     </div>
 
-    <button type="submit" class="btn" style="width:100%; padding:12px; margin-top:16px;">Zastosuj filtry</button>
+    <button type="submit" class="btn" style="width:100%; padding:12px; margin-top:16px;">{% trans "Zastosuj filtry" %}</button>
 </form>

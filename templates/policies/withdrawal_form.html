@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load static %}
 
 {% block title %}Formularz odstąpienia od umowy – Przystanek Perfumy{% endblock %}
@@ -7,48 +8,48 @@
 <section class="section-pad">
     <div class="container" style="max-width: 800px;">
         <div class="card-border">
-            <h1 class="text-center" style="font-size: 28px; font-weight: 300; margin-bottom: 24px;">Formularz odstąpienia od umowy</h1>
-            <p style="color: #555; margin-bottom: 24px;">(wzór – zgodny z art. 32 ustawy z dnia 30 maja 2014 r. o prawach konsumenta)</p>
+            <h1 class="text-center" style="font-size: 28px; font-weight: 300; margin-bottom: 24px;">{% trans "Formularz odstąpienia od umowy" %}</h1>
+            <p style="color: #555; margin-bottom: 24px;">{% trans "(wzór – zgodny z art. 32 ustawy z dnia 30 maja 2014 r. o prawach konsumenta)" %}</p>
 
             <form method="post" action="{% url 'withdrawal_submit' %}">
                 {% csrf_token %}
                 <div class="form-group">
-                    <label class="form-label">Imię i nazwisko (konsumenta)</label>
+                    <label class="form-label">{% trans "Imię i nazwisko (konsumenta)" %}</label>
                     <input type="text" name="name" class="form-input" required>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Adres zamieszkania</label>
+                    <label class="form-label">{% trans "Adres zamieszkania" %}</label>
                     <input type="text" name="address" class="form-input" required>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Adres e-mail</label>
+                    <label class="form-label">{% trans "Adres e-mail" %}</label>
                     <input type="email" name="email" class="form-input" required>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Numer zamówienia / nr faktury</label>
+                    <label class="form-label">{% trans "Numer zamówienia / nr faktury" %}</label>
                     <input type="text" name="order_number" class="form-input" required>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Data otrzymania towaru (jeśli dotyczy)</label>
+                    <label class="form-label">{% trans "Data otrzymania towaru (jeśli dotyczy)" %}</label>
                     <input type="date" name="delivery_date" class="form-input">
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Nazwa produktu / produktów, od których odstępuję</label>
+                    <label class="form-label">{% trans "Nazwa produktu / produktów, od których odstępuję" %}</label>
                     <textarea name="products" rows="3" class="form-input" required placeholder="np. 1x Dior Sauvage 100ml, 2x Chanel No.5 50ml"></textarea>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Podpis (lub imię i nazwisko w przypadku wysyłki elektronicznej)</label>
+                    <label class="form-label">{% trans "Podpis (lub imię i nazwisko w przypadku wysyłki elektronicznej)" %}</label>
                     <input type="text" name="signature" class="form-input" required>
                 </div>
 
                 <div class="form-group">
-                    <label class="form-label">Data wypełnienia formularza</label>
+                    <label class="form-label">{% trans "Data wypełnienia formularza" %}</label>
                     <input type="date" name="date" class="form-input" value="{% now 'Y-m-d' %}" required>
                 </div>
 
@@ -56,18 +57,18 @@
                 <div class="form-group" style="margin-top: 20px;">
                     <label style="display: flex; align-items: flex-start; gap: 10px; font-size: 13px; cursor: pointer;">
                         <input type="checkbox" name="accept_rules" required style="margin-top: 2px;">
-                        <span>Klikając „Wyślij”, przyjmuję do wiadomości, że zwrot perfum z otwartym opakowaniem nie jest możliwy zgodnie z art. 38 ustawy o prawach konsumenta.</span>
+                        <span>{% trans "Klikając „Wyślij”, przyjmuję do wiadomości, że zwrot perfum z otwartym opakowaniem nie jest możliwy zgodnie z art. 38 ustawy o prawach konsumenta." %}</span>
                     </label>
                 </div>
 
                 <div class="text-center">
-                    <button type="submit" class="btn" style="padding: 12px 32px;">Wyślij formularz</button>
-                    <button type="button" class="btn-ghost" onclick="window.print();" style="margin-left: 12px;">Drukuj / Zapisz jako PDF</button>
+                    <button type="submit" class="btn" style="padding: 12px 32px;">{% trans "Wyślij formularz" %}</button>
+                    <button type="button" class="btn-ghost" onclick="window.print();" style="margin-left: 12px;">{% trans "Drukuj / Zapisz jako PDF" %}</button>
                 </div>
             </form>
 
             <hr style="margin: 32px 0;">
-            <p class="text-center" style="font-size: 12px; color: #aaa;">Możesz również skorzystać z poniższego tekstu i wysłać go bez formularza – wystarczy, że wyraźnie poinformujesz Sprzedawcę o odstąpieniu od umowy.</p>
+            <p class="text-center" style="font-size: 12px; color: #aaa;">{% trans "Możesz również skorzystać z poniższego tekstu i wysłać go bez formularza – wystarczy, że wyraźnie poinformujesz Sprzedawcę o odstąpieniu od umowy." %}</p>
             <div style="background: #f5f5f5; padding: 16px; font-family: monospace; font-size: 13px; white-space: pre-wrap;">
 Ja, ……………………………………, niniejszym informuję o odstąpieniu od umowy sprzedaży następujących produktów:
 ………………………………………………………………………………………

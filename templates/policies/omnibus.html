@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 {% load static %}
 
 {% block title %}Dyrektywa Omnibus – Przystanek Perfumy{% endblock %}
@@ -7,49 +8,49 @@
 <section class="section-pad">
     <div class="container" style="max-width: 900px;">
         <div class="prose" style="background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 2px 12px rgba(0,0,0,0.05);">
-            <h1 class="text-center" style="font-size: 28px; font-weight: 300; margin-bottom: 32px;">Dyrektywa Omnibus – Twoje prawa jako konsumenta</h1>
+            <h1 class="text-center" style="font-size: 28px; font-weight: 300; margin-bottom: 32px;">{% trans "Dyrektywa Omnibus – Twoje prawa jako konsumenta" %}</h1>
 
-            <h2>Czym jest dyrektywa Omnibus?</h2>
-            <p>Dyrektywa Omnibus (2019/2161) to unijne prawo, które wzmacnia ochronę konsumentów w handlu internetowym. W Polsce została wdrożona nowelizacją ustawy o prawach konsumenta oraz ustawy o przeciwdziałaniu nieuczciwym praktykom rynkowym. Jej celem jest zapewnienie większej przejrzystości cen, wiarygodności opinii oraz informacji o promocjach.</p>
+            <h2>{% trans "Czym jest dyrektywa Omnibus?" %}</h2>
+            <p>{% trans "Dyrektywa Omnibus (2019/2161) to unijne prawo, które wzmacnia ochronę konsumentów w handlu internetowym. W Polsce została wdrożona nowelizacją ustawy o prawach konsumenta oraz ustawy o przeciwdziałaniu nieuczciwym praktykom rynkowym. Jej celem jest zapewnienie większej przejrzystości cen, wiarygodności opinii oraz informacji o promocjach." %}</p>
 
-            <h2>1. Informacja o najniższej cenie z ostatnich 30 dni</h2>
-            <p>Przy każdej obniżce ceny produktu („promocja”, „sale”, „-X%”) mamy obowiązek poinformować Cię o <strong>najniższej cenie produktu z okresu 30 dni przed wprowadzeniem obniżki</strong>. Dzięki temu możesz ocenić, czy promocja jest rzeczywiście korzystna.</p>
+            <h2>{% trans "1. Informacja o najniższej cenie z ostatnich 30 dni" %}</h2>
+            <p>{% trans "Przy każdej obniżce ceny produktu („promocja”, „sale”, „-X%”) mamy obowiązek poinformować Cię o" %} <strong>{% trans "najniższej cenie produktu z okresu 30 dni przed wprowadzeniem obniżki" %}</strong>{% trans ". Dzięki temu możesz ocenić, czy promocja jest rzeczywiście korzystna." %}</p>
             <div style="background: #f0f7f0; padding: 16px; margin: 20px 0; border-left: 4px solid var(--forest-green);">
-                <p><strong>📉 Przykład:</strong> Perfumy kosztowały 200 zł. Przez ostatnie 30 dni najniższa cena wynosiła 180 zł. Jeśli zrobimy promocję „-20%”, obok ceny promocyjnej (160 zł) wyświetlimy również informację: „Najniższa cena z ostatnich 30 dni: 180 zł”.</p>
+                <p><strong>{% trans "📉 Przykład:" %}</strong> {% trans "Perfumy kosztowały 200 zł. Przez ostatnie 30 dni najniższa cena wynosiła 180 zł. Jeśli zrobimy promocję „-20%”, obok ceny promocyjnej (160 zł) wyświetlimy również informację: „Najniższa cena z ostatnich 30 dni: 180 zł”." %}</p>
             </div>
 
-            <h2>2. Weryfikacja opinii o produktach</h2>
-            <p>Wszystkie opinie zamieszczone w naszym sklepie pochodzą wyłącznie od klientów, którzy dokonali zakupu danego produktu. Każda opinia jest weryfikowana pod kątem autentyczności. Nie publikujemy opinii sponsorowanych ani nieprawdziwych.</p>
+            <h2>{% trans "2. Weryfikacja opinii o produktach" %}</h2>
+            <p>{% trans "Wszystkie opinie zamieszczone w naszym sklepie pochodzą wyłącznie od klientów, którzy dokonali zakupu danego produktu. Każda opinia jest weryfikowana pod kątem autentyczności. Nie publikujemy opinii sponsorowanych ani nieprawdziwych." %}</p>
             <ul>
-                <li>Przy każdej opinii informujemy, czy pochodzi od klienta, który kupił produkt.</li>
-                <li>Nie usuwamy negatywnych opinii, chyba że są sprzeczne z regulaminem (np. wulgarne lub nie na temat).</li>
-                <li>Nie zlecamy pisania opinii osobom trzecim ani nie wystawiamy fałszywych opinii.</li>
+                <li>{% trans "Przy każdej opinii informujemy, czy pochodzi od klienta, który kupił produkt." %}</li>
+                <li>{% trans "Nie usuwamy negatywnych opinii, chyba że są sprzeczne z regulaminem (np. wulgarne lub nie na temat)." %}</li>
+                <li>{% trans "Nie zlecamy pisania opinii osobom trzecim ani nie wystawiamy fałszywych opinii." %}</li>
             </ul>
 
-            <h2>3. Przejrzystość promocji i rabatów</h2>
-            <p>Wszelkie promocje (obniżki cen, kody rabatowe, darmowa dostawa przy określonej liczbie produktów) są jasno opisane. Nie stosujemy praktyk wprowadzających w błąd, takich jak sztuczne zawyżanie ceny przed promocją.</p>
+            <h2>{% trans "3. Przejrzystość promocji i rabatów" %}</h2>
+            <p>{% trans "Wszelkie promocje (obniżki cen, kody rabatowe, darmowa dostawa przy określonej liczbie produktów) są jasno opisane. Nie stosujemy praktyk wprowadzających w błąd, takich jak sztuczne zawyżanie ceny przed promocją." %}</p>
 
-            <h2>4. Twoje prawa wynikające z Omnibus</h2>
+            <h2>{% trans "4. Twoje prawa wynikające z Omnibus" %}</h2>
             <ul>
-                <li>Masz prawo żądać informacji o najniższej cenie produktu z ostatnich 30 dni.</li>
-                <li>Jeśli uważasz, że informacja o cenie jest nieprawdziwa, możesz zgłosić reklamację do nas lub do Inspekcji Handlowej.</li>
-                <li>Możesz sprawdzić autentyczność opinii – pytając o dowód zakupu (dane są anonimizowane, ale my możemy potwierdzić, że opinia pochodzi od faktycznego klienta).</li>
+                <li>{% trans "Masz prawo żądać informacji o najniższej cenie produktu z ostatnich 30 dni." %}</li>
+                <li>{% trans "Jeśli uważasz, że informacja o cenie jest nieprawdziwa, możesz zgłosić reklamację do nas lub do Inspekcji Handlowej." %}</li>
+                <li>{% trans "Możesz sprawdzić autentyczność opinii – pytając o dowód zakupu (dane są anonimizowane, ale my możemy potwierdzić, że opinia pochodzi od faktycznego klienta)." %}</li>
             </ul>
 
-            <h2>Jak sprawdzamy zgodność z Omnibus w Przystanku Perfumy?</h2>
+            <h2>{% trans "Jak sprawdzamy zgodność z Omnibus w Przystanku Perfumy?" %}</h2>
             <ul>
-                <li>Nasz system automatycznie rejestruje najniższą cenę każdego produktu z ostatnich 30 dni.</li>
-                <li>Przy każdej promocji cenowej wyświetlamy tę informację obok ceny.</li>
-                <li>Opinie są zbierane tylko od zweryfikowanych nabywców (po zakupie wysyłamy e-mail z prośbą o ocenę).</li>
-                <li>Nie używamy wprowadzających w błąd liczników „ostatnia sztuka” ani innych sztuczek socjotechnicznych.</li>
+                <li>{% trans "Nasz system automatycznie rejestruje najniższą cenę każdego produktu z ostatnich 30 dni." %}</li>
+                <li>{% trans "Przy każdej promocji cenowej wyświetlamy tę informację obok ceny." %}</li>
+                <li>{% trans "Opinie są zbierane tylko od zweryfikowanych nabywców (po zakupie wysyłamy e-mail z prośbą o ocenę)." %}</li>
+                <li>{% trans "Nie używamy wprowadzających w błąd liczników „ostatnia sztuka” ani innych sztuczek socjotechnicznych." %}</li>
             </ul>
 
             <div style="background: #fff3e0; padding: 16px; margin: 24px 0; border-left: 4px solid var(--gold);">
-                <p><strong>📢 Masz pytania dotyczące cen lub opinii?</strong><br>
-                Skontaktuj się z nami: <a href="mailto:sklep@przystanekperfumy.pl">sklep@przystanekperfumy.pl</a> lub +48 453 305 509. Jesteśmy do Twojej dyspozycji.</p>
+                <p><strong>{% trans "📢 Masz pytania dotyczące cen lub opinii?" %}</strong><br>
+                Skontaktuj się z nami: <a href="mailto:sklep@przystanekperfumy.pl">{% trans "sklep@przystanekperfumy.pl" %}</a> {% trans "lub +48 453 305 509. Jesteśmy do Twojej dyspozycji." %}</p>
             </div>
 
-            <p class="text-center mt-32" style="font-size: 12px; color: #888;">Niniejsza strona została przygotowana zgodnie z wymogami dyrektywy Omnibus (2019/2161) i ustawy o prawach konsumenta.</p>
+            <p class="text-center mt-32" style="font-size: 12px; color: #888;">{% trans "Niniejsza strona została przygotowana zgodnie z wymogami dyrektywy Omnibus (2019/2161) i ustawy o prawach konsumenta." %}</p>
         </div>
     </div>
 </section>

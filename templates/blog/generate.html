@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block title %}Generuj artykuł – Blog{% endblock %}
 
@@ -6,8 +7,8 @@
 <section class="section-pad">
     <div class="container" style="max-width: 700px;">
 
-        <h1 style="font-size:28px; font-weight:300; margin-bottom:8px;">✍️ Generator artykułów AI</h1>
-        <p style="color:#888; margin-bottom:32px;">Wpisz temat – Claude napisze artykuł o perfumach dla Twojego bloga.</p>
+        <h1 style="font-size:28px; font-weight:300; margin-bottom:8px;">{% trans "✍️ Generator artykułów AI" %}</h1>
+        <p style="color:#888; margin-bottom:32px;">{% trans "Wpisz temat – Claude napisze artykuł o perfumach dla Twojego bloga." %}</p>
 
         {% if error %}
         <div style="background:#fff0f0; border-left:3px solid #c0392b; padding:16px; margin-bottom:24px; color:#c0392b;">
@@ -24,11 +25,11 @@
         <div style="background:white; padding:32px; margin-bottom:40px;">
             <form method="post">
                 {% csrf_token %}
-                <label class="form-label">Temat artykułu</label>
+                <label class="form-label">{% trans "Temat artykułu" %}</label>
                 <input type="text" name="topic" class="form-input" style="margin-bottom:8px;"
                     placeholder="np. Top 5 perfum na lato, Jak wybrać pierwsze perfumy, Czym różni się EDP od EDT..."
                     required>
-                <p style="font-size:12px; color:#aaa; margin-bottom:20px;">Podaj konkretny temat – im bardziej szczegółowy, tym lepszy artykuł.</p>
+                <p style="font-size:12px; color:#aaa; margin-bottom:20px;">{% trans "Podaj konkretny temat – im bardziej szczegółowy, tym lepszy artykuł." %}</p>
                 <button type="submit" class="btn" style="padding:14px 32px;">
                     🤖 Generuj artykuł
                 </button>
@@ -37,7 +38,7 @@
 
         <!-- POMYSŁY NA TEMATY -->
         <div style="background:#f9f9f9; padding:24px; margin-bottom:40px;">
-            <h3 style="font-size:15px; font-weight:600; margin-bottom:16px;">💡 Pomysły na tematy:</h3>
+            <h3 style="font-size:15px; font-weight:600; margin-bottom:16px;">{% trans "💡 Pomysły na tematy:" %}</h3>
             <div style="display:flex; flex-wrap:wrap; gap:8px;">
                 {% for temat in "Top 5 perfum na lato|Jak wybrać pierwsze perfumy|Czym różni się EDP od EDT|Perfumy drzewne – przewodnik|Nuty piżmowe w perfumerii|Jakie perfumy na randkę|Perfumy dla mężczyzn – poradnik|Jak prawidłowo nakładać perfumy|Xerjoff – luksus w przystępnej cenie|Amouage – historia i bestsellery" %}
                 <button onclick="document.querySelector('[name=topic]').value='{{ temat }}'" type="button"
@@ -52,7 +53,7 @@
 
         <!-- OSTATNIE ARTYKUŁY -->
         {% if posts %}
-        <h3 style="font-size:18px; font-weight:400; margin-bottom:16px;">Ostatnie artykuły</h3>
+        <h3 style="font-size:18px; font-weight:400; margin-bottom:16px;">{% trans "Ostatnie artykuły" %}</h3>
         <div style="display:flex; flex-direction:column; gap:12px;">
             {% for post in posts %}
             <div style="background:white; padding:16px; display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap;">
@@ -61,7 +62,7 @@
                     <div style="font-size:12px; color:#aaa;">{{ post.created_at|date:"d.m.Y" }}</div>
                 </div>
                 <div style="display:flex; gap:8px;">
-                    <a href="{% url 'blog_detail' post.slug %}" class="btn-ghost" style="padding:6px 14px; font-size:12px;">Zobacz</a>
+                    <a href="{% url 'blog_detail' post.slug %}" class="btn-ghost" style="padding:6px 14px; font-size:12px;">{% trans "Zobacz" %}</a>
                 </div>
             </div>
             {% endfor %}

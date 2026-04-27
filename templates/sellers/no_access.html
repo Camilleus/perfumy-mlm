@@ -1,11 +1,12 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block content %}
 <section class="section-pad">
     <div class="container text-center">
-        <h1 style="font-size: 32px; font-weight: 300; margin-bottom: 20px;">Brak dostępu</h1>
-        <p style="color: #888;">Twoje konto nie jest kontem sprzedawcy.</p>
-        <a href="/" class="btn" style="margin-top: 24px; display: inline-block;">Wróć do sklepu</a>
+        <h1 style="font-size: 32px; font-weight: 300; margin-bottom: 20px;">{% trans "Brak dostępu" %}</h1>
+        <p style="color: #888;">{% trans "Twoje konto nie jest kontem sprzedawcy." %}</p>
+        <a href="/" class="btn" style="margin-top: 24px; display: inline-block;">{% trans "Wróć do sklepu" %}</a>
     </div>
 </section>
 {% endblock %}

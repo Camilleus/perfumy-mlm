@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block title %}{{ title }} – Przystanek Perfumy{% endblock %}
 
@@ -34,11 +35,11 @@
 
         <!-- BREADCRUMB -->
         <nav style="font-size:13px; color:#aaa; margin-bottom:20px;">
-            <a href="/" style="color:var(--gold);">Strona główna</a>
-            <span style="margin:0 6px;">›</span>
+            <a href="/" style="color:var(--gold);">{% trans "Strona główna" %}</a>
+            <span style="margin:0 6px;">{% trans "›" %}</span>
             <a href="/perfumy/{{ brand_slug }}/" style="color:var(--gold);">{{ brand_name }}</a>
             {% if gender %}
-            <span style="margin:0 6px;">›</span>
+            <span style="margin:0 6px;">{% trans "›" %}</span>
             <span style="color:#666;">{{ gender_label|title }}</span>
             {% endif %}
         </nav>
@@ -78,13 +79,13 @@
                 Znaleziono: <strong style="color:var(--forest-green);">{{ total_count }}</strong> perfum
             </div>
             <div style="display:flex; align-items:center; gap:8px;">
-                <span style="font-size:13px; color:#888;">Sortuj:</span>
+                <span style="font-size:13px; color:#888;">{% trans "Sortuj:" %}</span>
                 <select onchange="window.location.href='?sort='+this.value"
                     style="padding:8px 12px; border:1px solid #ddd; font-size:13px; background:white; cursor:pointer; border-radius:4px;">
-                    <option value="name_asc" {% if current_sort == 'name_asc' %}selected{% endif %}>Nazwa A→Z</option>
-                    <option value="name_desc" {% if current_sort == 'name_desc' %}selected{% endif %}>Nazwa Z→A</option>
-                    <option value="price_asc" {% if current_sort == 'price_asc' %}selected{% endif %}>Cena rosnąco</option>
-                    <option value="price_desc" {% if current_sort == 'price_desc' %}selected{% endif %}>Cena malejąco</option>
+                    <option value="name_asc" {% if current_sort == 'name_asc' %}selected{% endif %}>{% trans "Nazwa A→Z" %}</option>
+                    <option value="name_desc" {% if current_sort == 'name_desc' %}selected{% endif %}>{% trans "Nazwa Z→A" %}</option>
+                    <option value="price_asc" {% if current_sort == 'price_asc' %}selected{% endif %}>{% trans "Cena rosnąco" %}</option>
+                    <option value="price_desc" {% if current_sort == 'price_desc' %}selected{% endif %}>{% trans "Cena malejąco" %}</option>
                 </select>
             </div>
         </div>
@@ -97,14 +98,14 @@
                     {% if product.image %}
                     <img src="{{ product.image }}" alt="Perfumy {{ product.name }} {{ brand_name }} – Przystanek Perfumy" loading="lazy">
                     {% else %}
-                    <div class="product-placeholder">🧴</div>
+                    <div class="product-placeholder">{% trans "🧴" %}</div>
                     {% endif %}
                     <div class="product-name">{{ product.name }}</div>
                     <div class="product-brand">{{ product.brand }}</div>
                     <div class="product-gender">{{ product.get_gender_display }}</div>
                     <div class="product-price">{{ product.price }} zł</div>
-                    <div class="product-volume">📦 100 ml</div>
-                    <button class="btn" style="width:100%; padding:9px;">Zobacz więcej</button>
+                    <div class="product-volume">{% trans "📦 100 ml" %}</div>
+                    <button class="btn" style="width:100%; padding:9px;">{% trans "Zobacz więcej" %}</button>
                 </div>
             </a>
             {% empty %}
@@ -116,8 +117,8 @@
         {% if page_obj.has_other_pages %}
         <div class="pagination" style="margin-top:40px; text-align:center;">
             {% if page_obj.has_previous %}
-                <a href="?page=1&sort={{ current_sort }}" class="btn-ghost">&laquo; pierwsza</a>
-                <a href="?page={{ page_obj.previous_page_number }}&sort={{ current_sort }}" class="btn-ghost">poprzednia</a>
+                <a href="?page=1&sort={{ current_sort }}" class="btn-ghost">{% trans "&laquo; pierwsza" %}</a>
+                <a href="?page={{ page_obj.previous_page_number }}&sort={{ current_sort }}" class="btn-ghost">{% trans "poprzednia" %}</a>
             {% endif %}
             {% for num in page_obj.paginator.page_range %}
                 {% if page_obj.number == num %}
@@ -127,8 +128,8 @@
                 {% endif %}
             {% endfor %}
             {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}&sort={{ current_sort }}" class="btn-ghost">następna</a>
-                <a href="?page={{ page_obj.paginator.num_pages }}&sort={{ current_sort }}" class="btn-ghost">ostatnia &raquo;</a>
+                <a href="?page={{ page_obj.next_page_number }}&sort={{ current_sort }}" class="btn-ghost">{% trans "następna" %}</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}&sort={{ current_sort }}" class="btn-ghost">{% trans "ostatnia &raquo;" %}</a>
             {% endif %}
         </div>
         {% endif %}

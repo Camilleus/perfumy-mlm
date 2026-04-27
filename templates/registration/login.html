@@ -1,9 +1,10 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block content %}
 <section class="section-pad">
     <div class="container" style="max-width: 400px;">
-        <h1 style="font-size: 32px; font-weight: 300; margin-bottom: 32px; text-align: center;">Zaloguj się</h1>
+        <h1 style="font-size: 32px; font-weight: 300; margin-bottom: 32px; text-align: center;">{% trans "Zaloguj się" %}</h1>
         <div class="card-border">
             <form method="post">
                 {% csrf_token %}
@@ -16,11 +17,11 @@
                     {% endif %}
                 </div>
                 {% endfor %}
-                <button type="submit" class="btn" style="width: 100%; padding: 12px;">Zaloguj</button>
+                <button type="submit" class="btn" style="width: 100%; padding: 12px;">{% trans "Zaloguj" %}</button>
             </form>
         </div>
         <p class="text-center mt-16" style="font-size: 13px;">
-            Nie masz konta? <a href="{% url 'register' %}" style="color: var(--forest-green); font-weight: 600;">Dołącz teraz</a>
+            Nie masz konta? <a href="{% url 'register' %}" style="color: var(--forest-green); font-weight: 600;">{% trans "Dołącz teraz" %}</a>
         </p>
     </div>
 </section>

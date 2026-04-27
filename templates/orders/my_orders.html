@@ -1,11 +1,12 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block title %}Moje zamówienia – Przystanek Perfumy{% endblock %}
 
 {% block content %}
 <section class="section-pad">
     <div class="container" style="max-width:800px;">
-        <h1 style="font-size:26px; font-weight:300; margin-bottom:32px;">Moje zamówienia</h1>
+        <h1 style="font-size:26px; font-weight:300; margin-bottom:32px;">{% trans "Moje zamówienia" %}</h1>
 
         {% if not request.user.is_authenticated and orders is None %}
         <!-- Formularz dla gościa -->
@@ -15,16 +16,16 @@
             </p>
             <form method="post">
                 {% csrf_token %}
-                <label class="form-label">Twój email *</label>
+                <label class="form-label">{% trans "Twój email *" %}</label>
                 <input type="email" name="email" required placeholder="np. jan@kowalski.pl"
                     class="form-input" style="margin-bottom:14px;">
-                <button type="submit" class="btn" style="width:100%; padding:13px;">Sprawdź zamówienia</button>
+                <button type="submit" class="btn" style="width:100%; padding:13px;">{% trans "Sprawdź zamówienia" %}</button>
             </form>
         </div>
 
         {% elif orders is not None and orders.count == 0 %}
         <div class="card-border" style="text-align:center; max-width:500px;">
-            <div style="font-size:48px; margin-bottom:14px;">📭</div>
+            <div style="font-size:48px; margin-bottom:14px;">{% trans "📭" %}</div>
             <p style="color:#888; font-size:15px; margin-bottom:20px;">
                 {% if email_searched %}
                     Nie znaleźliśmy zamówień dla <strong>{{ email_searched }}</strong>.
@@ -32,10 +33,10 @@
                     Nie masz jeszcze żadnych zamówień.
                 {% endif %}
             </p>
-            <a href="/" class="btn" style="padding:12px 28px;">Przejdź do sklepu</a>
+            <a href="/" class="btn" style="padding:12px 28px;">{% trans "Przejdź do sklepu" %}</a>
             {% if email_searched %}
             <div style="margin-top:14px;">
-                <a href="{% url 'my_orders' %}" style="color:var(--gold); font-size:13px;">← Spróbuj inny email</a>
+                <a href="{% url 'my_orders' %}" style="color:var(--gold); font-size:13px;">{% trans "← Spróbuj inny email" %}</a>
             </div>
             {% endif %}
         </div>
@@ -44,7 +45,7 @@
         {% if email_searched %}
         <p style="color:#888; font-size:13px; margin-bottom:20px;">
             Zamówienia dla: <strong>{{ email_searched }}</strong>
-            <a href="{% url 'my_orders' %}" style="color:var(--gold); margin-left:10px; font-size:12px;">← Szukaj innego</a>
+            <a href="{% url 'my_orders' %}" style="color:var(--gold); margin-left:10px; font-size:12px;">{% trans "← Szukaj innego" %}</a>
         </p>
         {% endif %}
 
@@ -67,15 +68,15 @@
                 <!-- Status -->
                 <div style="margin-bottom:14px;">
                     {% if order.status == 'new' %}
-                    <span style="background:#fff3cd; color:#856404; padding:4px 12px; border-radius:20px; font-size:11px; font-weight:600;">🕐 Nowe</span>
+                    <span style="background:#fff3cd; color:#856404; padding:4px 12px; border-radius:20px; font-size:11px; font-weight:600;">{% trans "🕐 Nowe" %}</span>
                     {% elif order.status == 'confirmed' %}
-                    <span style="background:#d1ecf1; color:#0c5460; padding:4px 12px; border-radius:20px; font-size:11px; font-weight:600;">✅ Potwierdzone</span>
+                    <span style="background:#d1ecf1; color:#0c5460; padding:4px 12px; border-radius:20px; font-size:11px; font-weight:600;">{% trans "✅ Potwierdzone" %}</span>
                     {% elif order.status == 'shipped' %}
-                    <span style="background:#d4edda; color:#155724; padding:4px 12px; border-radius:20px; font-size:11px; font-weight:600;">📦 Wysłane</span>
+                    <span style="background:#d4edda; color:#155724; padding:4px 12px; border-radius:20px; font-size:11px; font-weight:600;">{% trans "📦 Wysłane" %}</span>
                     {% elif order.status == 'delivered' %}
-                    <span style="background:#d4edda; color:#155724; padding:4px 12px; border-radius:20px; font-size:11px; font-weight:600;">🎉 Dostarczone</span>
+                    <span style="background:#d4edda; color:#155724; padding:4px 12px; border-radius:20px; font-size:11px; font-weight:600;">{% trans "🎉 Dostarczone" %}</span>
                     {% elif order.status == 'cancelled' %}
-                    <span style="background:#f8d7da; color:#721c24; padding:4px 12px; border-radius:20px; font-size:11px; font-weight:600;">❌ Anulowane</span>
+                    <span style="background:#f8d7da; color:#721c24; padding:4px 12px; border-radius:20px; font-size:11px; font-weight:600;">{% trans "❌ Anulowane" %}</span>
                     {% endif %}
                 </div>
 

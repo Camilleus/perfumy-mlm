@@ -1,77 +1,82 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block content %}
 <section class="section-pad">
     <div class="container" style="max-width:700px;">
-        <h1 style="font-size:26px; font-weight:300; margin-bottom:28px;">Dane do zamówienia</h1>
+        <h1 style="font-size:26px; font-weight:300; margin-bottom:28px;">{% trans "Dane do zamówienia" %}</h1>
 
         <form method="post" id="checkout-form">
             {% csrf_token %}
             <input type="hidden" name="referral_code" id="referral_code_hidden" value="">
             <input type="hidden" name="shipping_method" id="shipping_method_hidden" value="inpost">
 
+            <!-- … pozostałe pola formularza (imię, nazwisko, email, telefon, adres, kod, miasto) … -->
             <div class="form-grid-2">
                 <div class="form-group">
-                    <label class="form-label">Imię</label>
+                    <label class="form-label">{% trans "Imię" %}</label>
                     <input type="text" name="first_name" required class="form-input">
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Nazwisko</label>
+                    <label class="form-label">{% trans "Nazwisko" %}</label>
                     <input type="text" name="last_name" required class="form-input">
                 </div>
             </div>
 
             <div class="form-grid-2">
                 <div class="form-group">
-                    <label class="form-label">Email</label>
+                    <label class="form-label">{% trans "Email" %}</label>
                     <input type="email" name="email" required class="form-input">
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Telefon *</label>
+                    <label class="form-label">{% trans "Telefon *" %}</label>
                     <input type="tel" name="phone" required class="form-input">
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="form-label">Ulica i numer *</label>
+                <label class="form-label">{% trans "Ulica i numer *" %}</label>
                 <input type="text" name="address" required class="form-input">
             </div>
 
             <div class="form-grid-2">
                 <div class="form-group">
-                    <label class="form-label">Kod pocztowy *</label>
+                    <label class="form-label">{% trans "Kod pocztowy *" %}</label>
                     <input type="text" name="postal_code" placeholder="00-000" required class="form-input">
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Miasto *</label>
+                    <label class="form-label">{% trans "Miasto *" %}</label>
                     <input type="text" name="city" required class="form-input">
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="form-label">Uwagi do zamówienia</label>
+                <label class="form-label">{% trans "Kraj" %}</label>
+                <input type="text" name="country" placeholder="Polska" class="form-input" value="Polska">
+                <small style="font-size:11px; color:#888;">{% trans "W przypadku wysyłki zagranicznej wpisz kraj docelowy." %}</small>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">{% trans "Uwagi do zamówienia" %}</label>
                 <textarea name="note" rows="3" class="form-input"></textarea>
             </div>
 
-            <!-- KOD POLECENIA -->
+            <!-- Sekcja kodu polecenia (bez zmian) -->
             <div style="background:#fffdf0; border:1px solid var(--gold); padding:20px; margin-bottom:24px;">
-                <label style="display:block; font-size:14px; font-weight:600; margin-bottom:6px;">🎁 Masz kod polecenia?</label>
-                <p style="font-size:13px; color:#888; margin-bottom:12px;">Wpisz kod znajomego i otrzymaj <strong>-20 zł</strong> na to zamówienie!</p>
+                <label style="display:block; font-size:14px; font-weight:600; margin-bottom:6px;">{% trans "🎁 Masz kod polecenia?" %}</label>
+                <p style="font-size:13px; color:#888; margin-bottom:12px;">{% trans "Wpisz kod znajomego i otrzymaj" %} <strong>{% trans "-20 zł" %}</strong> {% trans "na to zamówienie!" %}</p>
                 <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                    <input type="text" id="referral_code_input" placeholder="np. KAMIL-X7K2"
-                        style="flex:1; min-width:160px; padding:12px; border:1px solid #ddd; font-size:15px; box-sizing:border-box; text-transform:uppercase;">
-                    <button type="button" onclick="checkReferral()" class="btn" style="padding:12px 20px; white-space:nowrap;">
-                        Sprawdź
-                    </button>
+                    <input type="text" id="referral_code_input" placeholder="np. KAMIL-X7K2" style="flex:1; min-width:160px; padding:12px; border:1px solid #ddd; font-size:15px; text-transform:uppercase;">
+                    <button type="button" onclick="checkReferral()" class="btn" style="padding:12px 20px;">Sprawdź</button>
                 </div>
                 <div id="referral_result" style="margin-top:10px; font-size:14px;"></div>
             </div>
 
-            <p style="font-size:12px; color:#aaa; margin-bottom:20px;">* pola obowiązkowe</p>
+            <p style="font-size:12px; color:#aaa; margin-bottom:20px;">{% trans "* pola obowiązkowe" %}</p>
 
-            <!-- PODSUMOWANIE -->
+            <!-- PODSUMOWANIE ZAMÓWIENIA -->
             <div style="background:#f9f9f9; padding:20px; margin-bottom:20px;">
-                <h3 style="font-weight:400; margin-bottom:14px; font-size:16px;">Twoje zamówienie</h3>
+                <h3 style="font-weight:400; margin-bottom:14px; font-size:16px;">{% trans "Twoje zamówienie" %}</h3>
                 {% for item in cart.get_items %}
                 <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:14px;">
                     <span>{{ item.name }} × {{ item.quantity }}</span>
@@ -79,30 +84,42 @@
                 </div>
                 {% endfor %}
 
-                <!-- WYBÓR DOSTAWY -->
+                <!-- WYBÓR DOSTAWY – dodana opcja międzynarodowa -->
                 <div style="margin:16px 0; padding:14px 0; border-top:1px solid #eee; border-bottom:1px solid #eee;">
-                    <h4 style="font-weight:400; margin-bottom:10px; font-size:14px;">✈️ Wybierz dostawę (za pobraniem)</h4>
+                    <h4 style="font-weight:400; margin-bottom:10px; font-size:14px;">{% trans "✈️ Wybierz dostawę" %}</h4>
 
                     {% with total_qty=cart.get_total_quantity %}
                     <p style="font-size:13px; margin-bottom:10px; color:#555;">
                         📦 W koszyku: <strong>{{ total_qty }} szt.</strong>
-                        {% if total_qty >= 3 %} – <span style="color:green;">🎉 Darmowa dostawa!</span>{% endif %}
+                        <span id="free-shipping-note">{% if total_qty >= 3 %} – <span style="color:green;">{% trans "🎉 Darmowa dostawa InPost!" %}</span>{% endif %}</span>
                     </p>
 
                     <div style="display:flex; flex-direction:column; gap:10px;">
+                        <!-- GLS – wyłączony -->
                         <label style="display:flex; align-items:flex-start; gap:8px; opacity:0.6; font-size:13px;">
                             <input type="radio" name="shipping_method_radio" value="gls" disabled style="margin-top:3px;">
-                            <span>GLS ekspres (następny dzień) – <strong>40 zł</strong> <span style="color:#999;">(niedostępne)</span></span>
+                            <span>{% trans "GLS ekspres (dostawa do 48h) –" %} <strong>40 zł</strong> <span style="color:#999;">{% trans "(niedostępne)" %}</span></span>
                         </label>
 
+                        <!-- InPost (krajowa) -->
                         <label style="display:flex; align-items:flex-start; gap:8px; font-size:13px;">
                             <input type="radio" name="shipping_method_radio" value="inpost"
                                 data-cost="{% if total_qty >= 3 %}0{% else %}30{% endif %}"
-                                checked style="margin-top:3px;">
-                            <span>InPost Kurier (następny dzień) –
+                                style="margin-top:3px;">
+                            <span>{% trans "InPost Kurier (wysyłka do 48) –" %}
                                 <strong id="inpost-cost-label">
-                                    {% if total_qty >= 3 %}0 zł (darmowa!){% else %}30 zł{% endif %}
+                                    {% if total_qty >= 3 %}0 {% trans "zł (darmowa!)" %}{% else %}30 {% trans "zł" %}{% endif %}
                                 </strong>
+                            </span>
+                        </label>
+
+                        <!-- Wysyłka zagraniczna -->
+                        <label style="display:flex; align-items:flex-start; gap:8px; font-size:13px;">
+                            <input type="radio" name="shipping_method_radio" value="international"
+                                data-cost="250" style="margin-top:3px;">
+                            <span>{% trans "Wysyłka zagraniczna –" %}
+                                <strong>{% trans "do 250 zł" %}</strong>
+                                <span id="international-note" style="display:inline-block; font-size:11px; color:#888;"> ({% trans "cena ustalana indywidualnie, płatność przelewem lub kartą" %})</span>
                             </span>
                         </label>
                     </div>
@@ -111,23 +128,26 @@
 
                 <div style="border-top:1px solid #ddd; padding-top:12px; margin-top:12px;">
                     <div style="display:flex; justify-content:space-between; font-size:15px; margin-bottom:6px;">
-                        <span>Suma produktów</span>
+                        <span>{% trans "Suma produktów" %}</span>
                         <span id="total-base">{{ cart.get_total }} zł</span>
                     </div>
                     <div id="discount-row" style="display:none; justify-content:space-between; font-size:14px; color:green; margin-bottom:6px;">
-                        <span>Zniżka (kod polecenia)</span>
-                        <span>-20 zł</span>
+                        <span>{% trans "Zniżka (kod polecenia)" %}</span>
+                        <span>{% trans "-20 zł" %}</span>
                     </div>
                     <div id="shipping-row" style="display:flex; justify-content:space-between; font-size:14px; margin-bottom:6px;">
-                        <span>Dostawa</span>
+                        <span>{% trans "Dostawa" %}</span>
                         <span id="shipping-cost">
                             {% with total_qty=cart.get_total_quantity %}
                                 {% if total_qty >= 3 %}0 zł{% else %}30 zł{% endif %}
                             {% endwith %}
                         </span>
                     </div>
+                    <div id="international-payment-note" style="display:none; background:#f9f2e0; padding:8px; margin-top:8px; font-size:12px; color:#555;">
+                        🌍 {% trans "W przypadku wysyłki zagranicznej – skontaktujemy się z Tobą e-mailowo lub przez WhatsApp, aby ustalić ostateczny koszt i formę płatności." %}
+                    </div>
                     <div style="display:flex; justify-content:space-between; font-size:19px; font-weight:700; margin-top:10px;">
-                        <span>Razem</span>
+                        <span>{% trans "Razem" %}</span>
                         <span id="total-final" style="color:var(--forest-green);">
                             {% with total_qty=cart.get_total_quantity %}
                                 {% if total_qty >= 3 %}{{ cart.get_total }} zł
@@ -137,14 +157,21 @@
                     </div>
                 </div>
 
-                <div style="margin-top:12px; font-size:13px; color:#888;">💳 Płatność: za pobraniem</div>
+                <div style="margin-top:12px; font-size:13px; color:#888;">
+                    <span id="payment-info">💳 {% trans "Płatność: za pobraniem" %}</span>
+                </div>
             </div>
-                <!-- NOTATKA O PŁATNOŚCI ZA POBRANIEM -->
-            <div style="background: #f0f7f0; padding: 12px 16px; margin: 16px 0; border-left: 4px solid var(--forest-green); font-size: 13px;">
-                💡 <strong>Dlaczego tylko za pobraniem?</strong> Dzięki temu nie płacimy za drogie bramki płatnicze – oszczędności przekładamy na niższe ceny dla Ciebie. Żadnych ukrytych kosztów, tylko zapłacisz przy odbiorze.
+
+            <div id="cash-on-delivery-note" style="background: #f0f7f0; padding: 12px 16px; margin: 16px 0; border-left: 4px solid var(--forest-green); font-size: 13px;">
+                💡 <strong>{% trans "Dlaczego tylko za pobraniem?" %}</strong> Dzięki temu nie płacimy za drogie bramki płatnicze – oszczędności przekładamy na niższe ceny dla Ciebie. Żadnych ukrytych kosztów, tylko zapłacisz przy odbiorze.
             </div>
+            <div id="international-payment-warning" style="display:none; background: #fff0e0; padding: 12px 16px; margin: 16px 0; border-left: 4px solid var(--forest-green); font-size: 13px;">
+                🌍 <strong>{% trans "Wysyłka zagraniczna" %}</strong><br>
+                {% trans "Koszt wysyłki: maksymalnie 250 zł (ostateczna kwota może być niższa – prześlemy ofertę). Płatność: przelew lub karta – skontaktujemy się z Tobą." %}
+            </div>
+
             <button type="submit" class="btn" style="width:100%; padding:16px; font-size:15px;">
-                Złóż zamówienie →
+                {% trans "Złóż zamówienie →" %}
             </button>
         </form>
     </div>
@@ -164,16 +191,62 @@ function updateTotal() {
     document.getElementById('shipping-cost').textContent = currentShipping + ' zł';
 }
 
-const inpostRadio = document.querySelector('input[name="shipping_method_radio"][value="inpost"]');
-if (inpostRadio) {
-    inpostRadio.addEventListener('change', function() {
-        let cost = (totalQuantity >= 3) ? 0 : 30;
-        currentShipping = cost;
-        document.getElementById('shipping_method_hidden').value = 'inpost';
-        document.getElementById('inpost-cost-label').innerHTML = (cost === 0) ? '0 zł (darmowa!)' : '30 zł';
-        updateTotal();
-    });
+function updatePaymentMethod(isInternational) {
+    const cashNote = document.getElementById('cash-on-delivery-note');
+    const intlWarning = document.getElementById('international-payment-warning');
+    const paymentInfo = document.getElementById('payment-info');
+    const freeShippingNote = document.getElementById('free-shipping-note');
+    const intlNoteText = document.getElementById('international-payment-note');
+
+    if (isInternational) {
+        if (cashNote) cashNote.style.display = 'none';
+        if (intlWarning) intlWarning.style.display = 'block';
+        if (paymentInfo) paymentInfo.innerHTML = '🌍 {% trans "Płatność: przelew / karta (ustalana indywidualnie)" %}';
+        if (intlNoteText) intlNoteText.style.display = 'block';
+        if (freeShippingNote) freeShippingNote.style.display = 'none';
+    } else {
+        if (cashNote) cashNote.style.display = 'block';
+        if (intlWarning) intlWarning.style.display = 'none';
+        if (paymentInfo) paymentInfo.innerHTML = '💳 {% trans "Płatność: za pobraniem" %}';
+        if (intlNoteText) intlNoteText.style.display = 'none';
+        if (freeShippingNote) freeShippingNote.style.display = (totalQuantity >= 3) ? 'inline' : 'none';
+    }
 }
+
+const radios = document.querySelectorAll('input[name="shipping_method_radio"]');
+radios.forEach(radio => {
+    radio.addEventListener('change', function() {
+        let cost = 0;
+        let isInternational = false;
+        if (this.value === 'inpost') {
+            cost = (totalQuantity >= 3) ? 0 : 30;
+            isInternational = false;
+            document.getElementById('shipping_method_hidden').value = 'inpost';
+            const inpostLabel = document.getElementById('inpost-cost-label');
+            if (inpostLabel) inpostLabel.innerHTML = (cost === 0) ? '0 zł (darmowa!)' : '30 zł';
+        } else if (this.value === 'international') {
+            cost = 250;
+            isInternational = true;
+            document.getElementById('shipping_method_hidden').value = 'international';
+        } else {
+            return;
+        }
+        currentShipping = cost;
+        updateTotal();
+        updatePaymentMethod(isInternational);
+    });
+});
+
+// Inicjalny stan (domyślnie InPost)
+function initShipping() {
+    const defaultRadio = document.querySelector('input[name="shipping_method_radio"][value="inpost"]');
+    if (defaultRadio && defaultRadio.checked) {
+        currentShipping = (totalQuantity >= 3) ? 0 : 30;
+        updateTotal();
+        updatePaymentMethod(false);
+    }
+}
+initShipping();
 
 function checkReferral() {
     const code = document.getElementById('referral_code_input').value.trim().toUpperCase();
@@ -199,7 +272,5 @@ function checkReferral() {
             updateTotal();
         });
 }
-
-updateTotal();
 </script>
 {% endblock %}

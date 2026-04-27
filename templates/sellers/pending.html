@@ -1,11 +1,12 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block content %}
 <section class="section-pad">
     <div class="container text-center">
-        <h1 style="font-size: 32px; font-weight: 300; margin-bottom: 20px;">Konto oczekuje na weryfikację</h1>
-        <p style="color: #888;">Skontaktujemy się z Tobą wkrótce.</p>
-        <a href="/" class="btn" style="margin-top: 24px; display: inline-block;">Wróć do sklepu</a>
+        <h1 style="font-size: 32px; font-weight: 300; margin-bottom: 20px;">{% trans "Konto oczekuje na weryfikację" %}</h1>
+        <p style="color: #888;">{% trans "Skontaktujemy się z Tobą wkrótce." %}</p>
+        <a href="/" class="btn" style="margin-top: 24px; display: inline-block;">{% trans "Wróć do sklepu" %}</a>
     </div>
 </section>
 {% endblock %}

@@ -24,11 +24,15 @@ class Order(models.Model):
     note = models.TextField(blank=True, verbose_name='Uwagi do zamówienia')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Data zamówienia')
     discount = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name='Zniżka')
+    country = models.CharField(max_length=100, blank=True, verbose_name='Kraj')
     
     # Nowe pola dla wysyłki
     shipping_method = models.CharField(max_length=20, default='inpost', verbose_name='Metoda dostawy')
     shipping_cost = models.DecimalField(max_digits=6, decimal_places=2, default=0, verbose_name='Koszt wysyłki')
     shipping_method_name = models.CharField(max_length=50, blank=True, verbose_name='Nazwa metody dostawy')
+
+    #   Język zamówienia (domyślnie polski)
+    language = models.CharField(max_length=10, default='pl', verbose_name='Język')
 
     def __str__(self):
         return f"Zamówienie #{self.pk} – {self.first_name} {self.last_name}"

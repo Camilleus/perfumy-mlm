@@ -1,0 +1,113 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+</head>
+<body style="margin:0;padding:0;background:#f5f0e8;font-family:Georgia,serif;">
+<table width="100%" cellpadding="0" cellspacing="0">
+    <tr><td align="center" style="padding:2rem;">
+        <table width="560" cellpadding="0" cellspacing="0" style="background:#FFFAE2;border:1px solid #c9a227;">
+            <!-- HEADER -->
+            <tr><td style="background:#012b2a;padding:2rem;text-align:center;border-bottom:3px solid #D4AF37;">
+                <div style="font-size:11px;letter-spacing:3px;color:#D4AF37;text-transform:uppercase;">{% trans "Przystanek" %}</div>
+                <div style="font-size:26px;font-weight:700;color:#D4AF37;letter-spacing:1px;">{% trans "Perfumy" %}</div>
+            </td></tr>
+            <!-- GREETING -->
+            <tr><td style="padding:2rem 2rem 1rem;text-align:center;border-bottom:1px solid #e8dfc0;">
+                <div style="font-size:11px;letter-spacing:2px;color:#8a7a3a;text-transform:uppercase;">{% trans "Potwierdzenie zamówienia" %}</div>
+                <div style="font-size:22px;color:#012b2a;font-weight:700;margin-top:0.5rem;">{% trans "Dziękujemy" %}, {{ order.first_name }}!</div>
+                <p style="color:#4a4030;font-size:14px;line-height:1.7;">
+                    {% trans "Twoje zamówienie" %} <strong>#{{ order.pk }}</strong> {% trans "zostało przyjęte i wkrótce trafi w drogę." %}
+                </p>
+            </td></tr>
+            <!-- ORDER ITEMS -->
+            <tr><td style="padding:1.5rem 2rem 0.5rem;">
+                <div style="font-size:11px;letter-spacing:2px;color:#8a7a3a;text-transform:uppercase;">{% trans "Zamówione produkty" %}</div>
+                <table width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #e8dfc0;">
+                    {% for item in items %}
+                    <tr><td style="padding:10px 14px;border-bottom:1px solid #e8dfc0;font-size:14px;color:#012b2a;">
+                        <strong>{{ item.product.name }}</strong><br>
+                        <span style="font-size:12px;color:#8a7a3a;">{% trans "100 ml" %} &middot; {% trans "szt." %} {{ item.quantity }}</span>
+                     </td>
+                     <td style="padding:10px 14px;border-bottom:1px solid #e8dfc0;font-size:14px;color:#012b2a;text-align:right;">{{ item.price|floatformat:2 }} zł</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </td></tr>
+            <!-- SUMMARY (produkty + dostawa = total_amount) -->
+            <tr><td style="padding:1rem 2rem 1.5rem;">
+                <!-- Zamiast wiersza "Produkty" – nie wyświetlaj go w ogóle. Zostaw tylko dostawę, rabat i razem -->
+                <table width="100%" cellpadding="0" cellspacing="0" style="background:#f5f0e0;padding:1rem;border-radius:3px;">
+                    <tr>
+                        <td style="padding:4px 0;font-size:13px;color:#4a4030;">
+                            {% trans "Dostawa" %}
+                            {% if order.shipping_method == 'international' %}({% trans "Wysyłka zagraniczna" %})
+                            {% elif order.shipping_method == 'inpost_free' %}(InPost Kurier – {% trans "darmowa" %})
+                            {% elif order.shipping_method == 'inpost' %}(InPost Kurier)
+                            {% elif order.shipping_method == 'gls' %}(GLS ekspres)
+                            {% endif %}
+                        </td>
+                        <td style="padding:4px 0;font-size:13px;text-align:right;">
+                            {% if order.shipping_method == 'international' %}
+                                {% trans "do 250 zł (uzgodniona indywidualnie)" %}
+                            {% else %}
+                                {% if order.shipping_cost == 0 %}{% trans "GRATIS" %}{% else %}{{ order.shipping_cost }} zł{% endif %}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% if discount %}
+                    <tr>
+                        <td style="padding:4px 0;font-size:13px;color:#8a2020;">{% trans "Rabat (kod polecenia)" %}</td>
+                        <td style="padding:4px 0;font-size:13px;color:#8a2020;text-align:right;">-{{ discount }} zł</td>
+                    </tr>
+                    {% endif %}
+                    <tr><td colspan="2" style="padding:8px 0;"><hr style="border-top:1px solid #D4AF37;"></td></tr>
+                    <tr>
+                        <td style="font-size:16px;font-weight:700;color:#012b2a;">{% trans "Razem do zapłaty" %}</td>
+                        <td style="font-size:16px;font-weight:700;color:#012b2a;text-align:right;">{{ order.total_amount }} zł</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="font-size:12px;color:#8a7a3a;text-align:right;">{% trans "płatność za pobraniem" %}</td>
+                    </tr>
+                </table>
+            </td></tr>
+            <!-- ADDRESS -->
+            <tr><td style="padding:0 2rem 1.5rem;">
+                <table width="100%" cellpadding="0" cellspacing="0">
+                    <tr><td width="48%" style="background:#f5f0e0;padding:0.9rem 1rem;">
+                        <div style="font-size:10px;letter-spacing:2px;color:#8a7a3a;">{% trans "Dostawa" %}</div>
+                        <div>{{ order.first_name }} {{ order.last_name }}</div>
+                        <div>{{ order.address }}</div>
+                        <div>{{ order.postal_code }} {{ order.city }}</div>
+                        {% if order.country %}<div>{{ order.country }}</div>{% endif %}
+                        <div>{% trans "tel." %} {{ order.phone }}</div>
+                     </td>
+                     <td width="4%"></td>
+                     <td width="48%" style="background:#f5f0e0;padding:0.9rem 1rem;">
+                        <div style="font-size:10px;letter-spacing:2px;color:#8a7a3a;">{% trans "Wysyłka" %}</div>
+                        <div>
+                            {% if order.shipping_method == 'international' %}{% trans "Wysyłka zagraniczna" %}
+                            {% elif order.shipping_method == 'inpost_free' %}InPost Kurier ({% trans "darmowa" %})
+                            {% elif order.shipping_method == 'inpost' %}InPost Kurier
+                            {% elif order.shipping_method == 'gls' %}GLS ekspres
+                            {% endif %}
+                        </div>
+                        <div style="font-size:12px;margin-top:4px;">{% trans "Zamówienie przetworzymy w ciągu 1–2 dni roboczych." %}</div>
+                        {% if order.shipping_method == 'international' %}
+                            <div style="margin-top:8px; font-size:12px; color:#888;">{% trans "Maksymalny koszt wysyłki to 250 zł. Ostateczna kwota zostanie ustalona indywidualnie – skontaktujemy się z Tobą e‑mailowo lub przez WhatsApp." %}</div>
+                        {% endif %}
+                     </td>
+                    </tr>
+                </table>
+            </td></tr>
+            <!-- FOOTER -->
+            <tr><td style="background:#012b2a;padding:1rem;text-align:center;border-top:2px solid #D4AF37;">
+                <p style="color:#D4AF37;">&ldquo;{% trans "Każda perfuma to historia — cieszymy się, że piszesz ją z nami." %}&rdquo;</p>
+                <p style="color:#8a9a8a;font-size:11px;">przystanekperfumy.pl &middot; przystanekperfumy@proton.me</p>
+            </td></tr>
+        </table>
+    </td></tr>
+</table>
+</body>
+</html>

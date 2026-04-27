@@ -1,162 +1,163 @@
+{% load i18n %}
 <section style="padding: 60px 0; background: white; margin-top: 40px;" id="faq">
     <div class="container" style="max-width: 860px;">
 
         <div style="text-align:center; margin-bottom:48px;">
-            <p style="font-size:11px; letter-spacing:4px; text-transform:uppercase; color:var(--gold); margin-bottom:12px;">Encyklopedia zapachu</p>
-            <h2 style="font-size:clamp(24px, 4vw, 36px); font-weight:300; margin-bottom:12px;">Najczęściej zadawane pytania</h2>
-            <p style="color:#888; font-size:14px;">Wszystko co chciałeś wiedzieć o perfumach, ale bałeś się zapytać.</p>
+            <p style="font-size:11px; letter-spacing:4px; text-transform:uppercase; color:var(--gold); margin-bottom:12px;">{% trans "Encyklopedia zapachu" %}</p>
+            <h2 style="font-size:clamp(24px, 4vw, 36px); font-weight:300; margin-bottom:12px;">{% trans "Najczęściej zadawane pytania" %}</h2>
+            <p style="color:#888; font-size:14px;">{% trans "Wszystko co chciałeś wiedzieć o perfumach, ale bałeś się zapytać." %}</p>
         </div>
 
         <!-- FILTRY KATEGORII -->
         <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-bottom:40px;">
-            <button class="faq-cat-btn active" onclick="filterFaq('all', this)">Wszystkie</button>
-            <button class="faq-cat-btn" onclick="filterFaq('podstawy', this)">🔬 Podstawy i trwałość</button>
-            <button class="faq-cat-btn" onclick="filterFaq('aplikacja', this)">💧 Aplikacja</button>
-            <button class="faq-cat-btn" onclick="filterFaq('przechowywanie', this)">📦 Przechowywanie</button>
-            <button class="faq-cat-btn" onclick="filterFaq('wybor', this)">🎯 Wybór zapachu</button>
-            <button class="faq-cat-btn" onclick="filterFaq('jakosc', this)">✅ Jakość i oryginalność</button>
+            <button class="faq-cat-btn active" onclick="filterFaq('all', this)">{% trans "Wszystkie" %}</button>
+            <button class="faq-cat-btn" onclick="filterFaq('podstawy', this)">{% trans "🔬 Podstawy i trwałość" %}</button>
+            <button class="faq-cat-btn" onclick="filterFaq('aplikacja', this)">{% trans "💧 Aplikacja" %}</button>
+            <button class="faq-cat-btn" onclick="filterFaq('przechowywanie', this)">{% trans "📦 Przechowywanie" %}</button>
+            <button class="faq-cat-btn" onclick="filterFaq('wybor', this)">{% trans "🎯 Wybór zapachu" %}</button>
+            <button class="faq-cat-btn" onclick="filterFaq('jakosc', this)">{% trans "✅ Jakość i oryginalność" %}</button>
         </div>
 
         <div id="faq-list">
 
             <!-- PODSTAWY I TRWAŁOŚĆ -->
             <div class="faq-category" data-cat="podstawy">
-                <h3 class="faq-cat-title">🔬 Podstawy i trwałość</h3>
+                <h3 class="faq-cat-title">{% trans "🔬 Podstawy i trwałość" %}</h3>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">Czym różni się EDP od EDT?<span class="faq-arrow">▾</span></button>
-                    <div class="faq-answer">EDP (Eau de Parfum) zawiera 15–20% olejków zapachowych i utrzymuje się na skórze 6–8 godzin – idealne na wieczór i specjalne okazje. EDT (Eau de Toilette) to 5–15% olejków, lżejszy i świeższy zapach na co dzień, utrzymuje się 3–5 godzin. Parfum (Extrait) to najstężeńsza forma – 20–40% olejków, wystarczy kilka kropel na cały dzień.</div>
+                    <button class="faq-question" onclick="toggleFaq(this)">{% trans "Czym różni się EDP od EDT?" %}<span class="faq-arrow">{% trans "▾" %}</span></button>
+                    <div class="faq-answer">{% trans "EDP (Eau de Parfum) zawiera 15–20% olejków zapachowych i utrzymuje się na skórze 6–8 godzin – idealne na wieczór i specjalne okazje. EDT (Eau de Toilette) to 5–15% olejków, lżejszy i świeższy zapach na co dzień, utrzymuje się 3–5 godzin. Parfum (Extrait) to najstężeńsza forma – 20–40% olejków, wystarczy kilka kropel na cały dzień." %}</div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">Dlaczego te same perfumy pachną inaczej na różnych osobach?<span class="faq-arrow">▾</span></button>
-                    <div class="faq-answer">Zapach reaguje z Twoją chemią skóry – pH, poziomem hormonów, dietą i nawet lekami. Dlatego Chanel No. 5 na Tobie może pachnieć zupełnie inaczej niż na przyjaciółce. To właśnie sprawia, że perfumy są tak osobiste – to Twój unikalny zapach, nie tylko butelki.</div>
+                    <button class="faq-question" onclick="toggleFaq(this)">{% trans "Dlaczego te same perfumy pachną inaczej na różnych osobach?" %}<span class="faq-arrow">{% trans "▾" %}</span></button>
+                    <div class="faq-answer">{% trans "Zapach reaguje z Twoją chemią skóry – pH, poziomem hormonów, dietą i nawet lekami. Dlatego Chanel No. 5 na Tobie może pachnieć zupełnie inaczej niż na przyjaciółce. To właśnie sprawia, że perfumy są tak osobiste – to Twój unikalny zapach, nie tylko butelki." %}</div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">Jak długo zapach powinien utrzymywać się na skórze?<span class="faq-arrow">▾</span></button>
-                    <div class="faq-answer">EDT: 3–5 godzin. EDP: 6–8 godzin. Parfum: 8–12 godzin i więcej. Na trwałość wpływa też Twoja skóra (sucha skóra słabiej trzyma zapach – nawilżaj przed aplikacją), temperatura ciała i aktywność fizyczna.</div>
+                    <button class="faq-question" onclick="toggleFaq(this)">{% trans "Jak długo zapach powinien utrzymywać się na skórze?" %}<span class="faq-arrow">{% trans "▾" %}</span></button>
+                    <div class="faq-answer">{% trans "EDT: 3–5 godzin. EDP: 6–8 godzin. Parfum: 8–12 godzin i więcej. Na trwałość wpływa też Twoja skóra (sucha skóra słabiej trzyma zapach – nawilżaj przed aplikacją), temperatura ciała i aktywność fizyczna." %}</div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">Co to są nuty głowy, serca i bazy?<span class="faq-arrow">▾</span></button>
-                    <div class="faq-answer">Perfumy rozwijają się w czasie w trzech fazach. Nuty głowy (top notes) czujesz pierwsze – trwają 15–30 minut, często cytrusowe lub świeże. Nuty serca (heart notes) to właściwy charakter zapachu – pojawiają się po 30 minutach i trwają kilka godzin. Nuty bazy (base notes) to fundament – drzewo sandałowe, piżmo, wanilia – zostają najdłużej i decydują o tym jak wspominasz zapach.</div>
+                    <button class="faq-question" onclick="toggleFaq(this)">{% trans "Co to są nuty głowy, serca i bazy?" %}<span class="faq-arrow">{% trans "▾" %}</span></button>
+                    <div class="faq-answer">{% trans "Perfumy rozwijają się w czasie w trzech fazach. Nuty głowy (top notes) czujesz pierwsze – trwają 15–30 minut, często cytrusowe lub świeże. Nuty serca (heart notes) to właściwy charakter zapachu – pojawiają się po 30 minutach i trwają kilka godzin. Nuty bazy (base notes) to fundament – drzewo sandałowe, piżmo, wanilia – zostają najdłużej i decydują o tym jak wspominasz zapach." %}</div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">Dlaczego przestaję czuć swoje własne perfumy?<span class="faq-arrow">▾</span></button>
-                    <div class="faq-answer">To zjawisko nazywa się zmęczeniem olfaktorycznym (ślepota nosowa). Twój nos adaptuje się do zapachu który ciągle czujesz i przestaje go rejestrować – tak mózg oszczędza zasoby. Inni wciąż Cię czują! Aby znowu poczuć swój zapach, wdech przez kawę lub swój własny rękaw bez perfum – to resetuje nos.</div>
+                    <button class="faq-question" onclick="toggleFaq(this)">{% trans "Dlaczego przestaję czuć swoje własne perfumy?" %}<span class="faq-arrow">{% trans "▾" %}</span></button>
+                    <div class="faq-answer">{% trans "To zjawisko nazywa się zmęczeniem olfaktorycznym (ślepota nosowa). Twój nos adaptuje się do zapachu który ciągle czujesz i przestaje go rejestrować – tak mózg oszczędza zasoby. Inni wciąż Cię czują! Aby znowu poczuć swój zapach, wdech przez kawę lub swój własny rękaw bez perfum – to resetuje nos." %}</div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">Czy perfumy mają datę ważności?<span class="faq-arrow">▾</span></button>
-                    <div class="faq-answer">Tak, choć nie jest ona tak krytyczna jak w jedzeniu. Większość perfum zachowuje jakość przez 3–5 lat od otwarcia. Zamknięte, przechowywane prawidłowo – nawet 10+ lat. Sygnały że zapach się zepsuł: zmiana koloru (ciemnienie), metaliczny lub kwaśny zapach, zmiana struktury.</div>
+                    <button class="faq-question" onclick="toggleFaq(this)">{% trans "Czy perfumy mają datę ważności?" %}<span class="faq-arrow">{% trans "▾" %}</span></button>
+                    <div class="faq-answer">{% trans "Tak, choć nie jest ona tak krytyczna jak w jedzeniu. Większość perfum zachowuje jakość przez 3–5 lat od otwarcia. Zamknięte, przechowywane prawidłowo – nawet 10+ lat. Sygnały że zapach się zepsuł: zmiana koloru (ciemnienie), metaliczny lub kwaśny zapach, zmiana struktury." %}</div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">Jak sprawdzić czy perfumy są jeszcze dobre?<span class="faq-arrow">▾</span></button>
-                    <div class="faq-answer">Zrób test: pryśnij na pasek testowy i poczekaj 30 sekund. Jeśli czujesz nieprzyjemny, kwaśny lub metaliczny zapach – perfumy się utleniły. Dobry zapach powinien rozwijać się w przewidywalny sposób. Sprawdź też kolor – mocne pożółknięcie może wskazywać na degradację.</div>
+                    <button class="faq-question" onclick="toggleFaq(this)">{% trans "Jak sprawdzić czy perfumy są jeszcze dobre?" %}<span class="faq-arrow">{% trans "▾" %}</span></button>
+                    <div class="faq-answer">{% trans "Zrób test: pryśnij na pasek testowy i poczekaj 30 sekund. Jeśli czujesz nieprzyjemny, kwaśny lub metaliczny zapach – perfumy się utleniły. Dobry zapach powinien rozwijać się w przewidywalny sposób. Sprawdź też kolor – mocne pożółknięcie może wskazywać na degradację." %}</div>
                 </div>
             </div>
 
             <!-- APLIKACJA -->
             <div class="faq-category" data-cat="aplikacja">
-                <h3 class="faq-cat-title">💧 Aplikacja i użytkowanie</h3>
+                <h3 class="faq-cat-title">{% trans "💧 Aplikacja i użytkowanie" %}</h3>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">Gdzie aplikować perfumy, aby trwały najdłużej?<span class="faq-arrow">▾</span></button>
-                    <div class="faq-answer">Aplikuj na tzw. "pulse points" – miejsca gdzie tętno jest wyczuwalne i ciepło ciała unosi zapach: nadgarstki, szyja, za uszami, wewnętrzna strona łokci i kolan. Ciepło skóry aktywuje cząsteczki zapachu przez cały dzień.</div>
+                    <button class="faq-question" onclick="toggleFaq(this)">{% trans "Gdzie aplikować perfumy, aby trwały najdłużej?" %}<span class="faq-arrow">{% trans "▾" %}</span></button>
+                    <div class="faq-answer">{% trans "Aplikuj na tzw. 'pulse points' – miejsca gdzie tętno jest wyczuwalne i ciepło ciała unosi zapach: nadgarstki, szyja, za uszami, wewnętrzna strona łokci i kolan. Ciepło skóry aktywuje cząsteczki zapachu przez cały dzień." %}</div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">Czy można pryskać perfumami ubrania?<span class="faq-arrow">▾</span></button>
-                    <div class="faq-answer">Tak, ale ostrożnie! Tkaniny świetnie trzymają zapach – często dłużej niż skóra. Unikaj jednak jasnych tkanin (ryzyko plam od alkoholu i barwników) i delikatnych materiałów jak jedwab. Bezpieczne opcje: wewnętrzna strona kołnierzyka, szalik, swetr.</div>
+                    <button class="faq-question" onclick="toggleFaq(this)">{% trans "Czy można pryskać perfumami ubrania?" %}<span class="faq-arrow">{% trans "▾" %}</span></button>
+                    <div class="faq-answer">{% trans "Tak, ale ostrożnie! Tkaniny świetnie trzymają zapach – często dłużej niż skóra. Unikaj jednak jasnych tkanin (ryzyko plam od alkoholu i barwników) i delikatnych materiałów jak jedwab. Bezpieczne opcje: wewnętrzna strona kołnierzyka, szalik, swetr." %}</div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">Czy wcieranie perfum w nadgarstki to dobry pomysł?<span class="faq-arrow">▾</span></button>
-                    <div class="faq-answer">Nie! To jeden z największych mitów perfumerii. Tarcie generuje ciepło które przyspiesza reakcje chemiczne i "łamie" cząsteczki zapachu – szczególnie delikatne nuty głowy i serca. Efekt? Zapach trwa krócej i może zmienić charakter. Prawidłowo: pryśnij i zostaw. Nie trzyj.</div>
+                    <button class="faq-question" onclick="toggleFaq(this)">{% trans "Czy wcieranie perfum w nadgarstki to dobry pomysł?" %}<span class="faq-arrow">{% trans "▾" %}</span></button>
+                    <div class="faq-answer">{% trans "Nie! To jeden z największych mitów perfumerii. Tarcie generuje ciepło które przyspiesza reakcje chemiczne i 'łamie' cząsteczki zapachu – szczególnie delikatne nuty głowy i serca. Efekt? Zapach trwa krócej i może zmienić charakter. Prawidłowo: pryśnij i zostaw. Nie trzyj." %}</div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">Jak dawkować perfumy żeby nie przytłoczyć otoczenia?<span class="faq-arrow">▾</span></button>
-                    <div class="faq-answer">Zasada: 2–3 pshh dla EDP, 3–4 dla EDT. Testuj z odległości 15–20 cm od skóry. Pamiętaj o ślepocie nosowej – jeśli Cię nie czujesz, nie znaczy że inni też nie. W zamkniętych przestrzeniach (biuro, winda) zawsze dawkuj o połowę mniej.</div>
+                    <button class="faq-question" onclick="toggleFaq(this)">{% trans "Jak dawkować perfumy żeby nie przytłoczyć otoczenia?" %}<span class="faq-arrow">{% trans "▾" %}</span></button>
+                    <div class="faq-answer">{% trans "Zasada: 2–3 pshh dla EDP, 3–4 dla EDT. Testuj z odległości 15–20 cm od skóry. Pamiętaj o ślepocie nosowej – jeśli Cię nie czujesz, nie znaczy że inni też nie. W zamkniętych przestrzeniach (biuro, winda) zawsze dawkuj o połowę mniej." %}</div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">Czy perfumy można stosować na włosy?<span class="faq-arrow">▾</span></button>
-                    <div class="faq-answer">Włosy świetnie trzymają zapach, ale alkohol w perfumach może je wysuszać przy regularnym stosowaniu. Bezpieczniejsza opcja: pryśnij na szczotkę i przeczesz, lub użyj dedykowanego hair mist. Jeśli stosujesz perfumy bezpośrednio – trzymaj butelkę 20–30 cm od włosów.</div>
+                    <button class="faq-question" onclick="toggleFaq(this)">{% trans "Czy perfumy można stosować na włosy?" %}<span class="faq-arrow">{% trans "▾" %}</span></button>
+                    <div class="faq-answer">{% trans "Włosy świetnie trzymają zapach, ale alkohol w perfumach może je wysuszać przy regularnym stosowaniu. Bezpieczniejsza opcja: pryśnij na szczotkę i przeczesz, lub użyj dedykowanego hair mist. Jeśli stosujesz perfumy bezpośrednio – trzymaj butelkę 20–30 cm od włosów." %}</div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">Jak uniknąć plam z perfum na jasnych tkaninach?<span class="faq-arrow">▾</span></button>
-                    <div class="faq-answer">Aplikuj perfumy przed ubraniem się – na skórę, nie na tkaninę. Jeśli musisz pryskać na ubranie, poczekaj aż alkohol odparuje (30–60 sekund) zanim założysz. Szczególnie uważaj na jedwab, wiskozę i białe tkaniny – barwniki w perfumach mogą zostawić żółte plamy.</div>
+                    <button class="faq-question" onclick="toggleFaq(this)">{% trans "Jak uniknąć plam z perfum na jasnych tkaninach?" %}<span class="faq-arrow">{% trans "▾" %}</span></button>
+                    <div class="faq-answer">{% trans "Aplikuj perfumy przed ubraniem się – na skórę, nie na tkaninę. Jeśli musisz pryskać na ubranie, poczekaj aż alkohol odparuje (30–60 sekund) zanim założysz. Szczególnie uważaj na jedwab, wiskozę i białe tkaniny – barwniki w perfumach mogą zostawić żółte plamy." %}</div>
                 </div>
             </div>
 
             <!-- PRZECHOWYWANIE -->
             <div class="faq-category" data-cat="przechowywanie">
-                <h3 class="faq-cat-title">📦 Przechowywanie</h3>
+                <h3 class="faq-cat-title">{% trans "📦 Przechowywanie" %}</h3>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">Gdzie najlepiej trzymać flakon perfum?<span class="faq-arrow">▾</span></button>
-                    <div class="faq-answer">Idealne warunki: ciemne miejsce, stała temperatura (15–20°C), z dala od wilgoci i wahań temperatury. Szuflada w sypialni, zamknięta szafka lub oryginalne pudełko to najlepsze opcje. Perfumy nie lubią: światła słonecznego, wilgoci, ekstremalnych temperatur.</div>
+                    <button class="faq-question" onclick="toggleFaq(this)">{% trans "Gdzie najlepiej trzymać flakon perfum?" %}<span class="faq-arrow">{% trans "▾" %}</span></button>
+                    <div class="faq-answer">{% trans "Idealne warunki: ciemne miejsce, stała temperatura (15–20°C), z dala od wilgoci i wahań temperatury. Szuflada w sypialni, zamknięta szafka lub oryginalne pudełko to najlepsze opcje. Perfumy nie lubią: światła słonecznego, wilgoci, ekstremalnych temperatur." %}</div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">Czy łazienka to dobre miejsce na perfumy?<span class="faq-arrow">▾</span></button>
-                    <div class="faq-answer">Absolutnie nie – łazienka to najgorsze możliwe miejsce! Wilgoć, wahania temperatury, para wodna – wszystko to przyspiesza degradację zapachu. Większość ludzi tak robi, i właśnie dlatego ich perfumy "psują się" szybciej niż powinny.</div>
+                    <button class="faq-question" onclick="toggleFaq(this)">{% trans "Czy łazienka to dobre miejsce na perfumy?" %}<span class="faq-arrow">{% trans "▾" %}</span></button>
+                    <div class="faq-answer">{% trans "Absolutnie nie – łazienka to najgorsze możliwe miejsce! Wilgoć, wahania temperatury, para wodna – wszystko to przyspiesza degradację zapachu. Większość ludzi tak robi, i właśnie dlatego ich perfumy 'psują się' szybciej niż powinny." %}</div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">Czy światło słoneczne szkodzi perfumom?<span class="faq-arrow">▾</span></button>
-                    <div class="faq-answer">Tak, bardzo. Promieniowanie UV rozbija cząsteczki zapachowe i przyspiesza utlenianie. Dlatego luksusowe flakony często mają ciemne szkło lub są pakowane w pudełka – to nie tylko estetyka, to ochrona zawartości. Nigdy nie stawiaj perfum na parapecie.</div>
+                    <button class="faq-question" onclick="toggleFaq(this)">{% trans "Czy światło słoneczne szkodzi perfumom?" %}<span class="faq-arrow">{% trans "▾" %}</span></button>
+                    <div class="faq-answer">{% trans "Tak, bardzo. Promieniowanie UV rozbija cząsteczki zapachowe i przyspiesza utlenianie. Dlatego luksusowe flakony często mają ciemne szkło lub są pakowane w pudełka – to nie tylko estetyka, to ochrona zawartości. Nigdy nie stawiaj perfum na parapecie." %}</div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">Czy warto trzymać perfumy w lodówce?<span class="faq-arrow">▾</span></button>
-                    <div class="faq-answer">To dyskusyjne. Niska temperatura spowalnia utlenianie – w teorii dobra rzecz. W praktyce: kondensacja przy wyjmowaniu z lodówki może uszkodzić mechanizm spray, a wahania temperatury robią więcej szkody niż pożytku. Lepiej: ciemne, chłodne miejsce w temperaturze pokojowej.</div>
+                    <button class="faq-question" onclick="toggleFaq(this)">{% trans "Czy warto trzymać perfumy w lodówce?" %}<span class="faq-arrow">{% trans "▾" %}</span></button>
+                    <div class="faq-answer">{% trans "To dyskusyjne. Niska temperatura spowalnia utlenianie – w teorii dobra rzecz. W praktyce: kondensacja przy wyjmowaniu z lodówki może uszkodzić mechanizm spray, a wahania temperatury robią więcej szkody niż pożytku. Lepiej: ciemne, chłodne miejsce w temperaturze pokojowej." %}</div>
                 </div>
             </div>
 
             <!-- WYBÓR ZAPACHU -->
             <div class="faq-category" data-cat="wybor">
-                <h3 class="faq-cat-title">🎯 Wybór zapachu</h3>
+                <h3 class="faq-cat-title">{% trans "🎯 Wybór zapachu" %}</h3>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">Jak dobrać perfumy do pory roku?<span class="faq-arrow">▾</span></button>
-                    <div class="faq-answer">Wiosna/Lato: lekkie, świeże i kwiatowe – cytrusy, aquatiki, zielone nuty. Jesień/Zima: ciepłe, głębsze zapachy – drzewo, przyprawy, wanilia, bursztyn. Zimne powietrze "tłumi" zapachy, więc w zimie możesz używać odrobinę więcej. Latem ciepło intensyfikuje każdy zapach – dawkuj ostrożniej.</div>
+                    <button class="faq-question" onclick="toggleFaq(this)">{% trans "Jak dobrać perfumy do pory roku?" %}<span class="faq-arrow">{% trans "▾" %}</span></button>
+                    <div class="faq-answer">{% trans "Wiosna/Lato: lekkie, świeże i kwiatowe – cytrusy, aquatiki, zielone nuty. Jesień/Zima: ciepłe, głębsze zapachy – drzewo, przyprawy, wanilia, bursztyn. Zimne powietrze 'tłumi' zapachy, więc w zimie możesz używać odrobinę więcej. Latem ciepło intensyfikuje każdy zapach – dawkuj ostrożniej." %}</div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">Jakie zapachy do biura, jakie na randkę?<span class="faq-arrow">▾</span></button>
-                    <div class="faq-answer">Do biura: świeże, delikatne zapachy – aquatiki, zielone nuty, lekkie floral. Unikaj intensywnych orientalnych – w zamkniętej przestrzeni mogą przytłaczać. Na randkę: zmysłowe, ciepłe zapachy – nuty drzewne, piżmowe, waniliowe. Zapachy które "zapraszają bliżej" – mają słabszą projekcję, ale długo trwają na skórze.</div>
+                    <button class="faq-question" onclick="toggleFaq(this)">{% trans "Jakie zapachy do biura, jakie na randkę?" %}<span class="faq-arrow">{% trans "▾" %}</span></button>
+                    <div class="faq-answer">{% trans "Do biura: świeże, delikatne zapachy – aquatiki, zielone nuty, lekkie floral. Unikaj intensywnych orientalnych – w zamkniętej przestrzeni mogą przytłaczać. Na randkę: zmysłowe, ciepłe zapachy – nuty drzewne, piżmowe, waniliowe. Zapachy które 'zapraszają bliżej' – mają słabszą projekcję, ale długo trwają na skórze." %}</div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">Czym są perfumy unisex?<span class="faq-arrow">▾</span></button>
-                    <div class="faq-answer">Perfumy unisex to zapachy zaprojektowane tak, aby pięknie pachnieć niezależnie od płci – nie są ani typowo "damskie" ani "męskie". Często bazują na nutach drzewnych, skórzanych, zielonych lub cytrusowych. Wiele niszowych marek tworzy wyłącznie unisex – bo zapach nie ma płci.</div>
+                    <button class="faq-question" onclick="toggleFaq(this)">{% trans "Czym są perfumy unisex?" %}<span class="faq-arrow">{% trans "▾" %}</span></button>
+                    <div class="faq-answer">{% trans "Perfumy unisex to zapachy zaprojektowane tak, aby pięknie pachnieć niezależnie od płci – nie są ani typowo 'damskie' ani 'męskie'. Często bazują na nutach drzewnych, skórzanych, zielonych lub cytrusowych. Wiele niszowych marek tworzy wyłącznie unisex – bo zapach nie ma płci." %}</div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">Jak testować perfumy żeby nie pomieszać zapachów?<span class="faq-arrow">▾</span></button>
-                    <div class="faq-answer">Testuj maksymalnie 3–4 zapachy naraz. Najpierw na paskach testowych, potem najciekawszy na skórze. Między testami wdychaj kawę lub skórę własnego przedramienia (bez perfum) – to "resetuje" nos. Nie oceniaj od razu – poczekaj 20–30 minut aż nuty głowy odparują.</div>
+                    <button class="faq-question" onclick="toggleFaq(this)">{% trans "Jak testować perfumy żeby nie pomieszać zapachów?" %}<span class="faq-arrow">{% trans "▾" %}</span></button>
+                    <div class="faq-answer">{% trans "Testuj maksymalnie 3–4 zapachy naraz. Najpierw na paskach testowych, potem najciekawszy na skórze. Między testami wdychaj kawę lub skórę własnego przedramienia (bez perfum) – to 'resetuje' nos. Nie oceniaj od razu – poczekaj 20–30 minut aż nuty głowy odparują." %}</div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">Co to są perfumy niszowe i czym różnią się od designerskich?<span class="faq-arrow">▾</span></button>
-                    <div class="faq-answer">Perfumy designerskie (Dior, Chanel, Armani) to masowa produkcja – zaprojektowane żeby podobać się jak największej liczbie osób. Perfumy niszowe (Xerjoff, Amouage, Creed) to artystyczne kreacje małych domów perfumeryjnych – droższe składniki, unikalne kompozycje. Niszowe są bardziej oryginalne i trwalsze.</div>
+                    <button class="faq-question" onclick="toggleFaq(this)">{% trans "Co to są perfumy niszowe i czym różnią się od designerskich?" %}<span class="faq-arrow">{% trans "▾" %}</span></button>
+                    <div class="faq-answer">{% trans "Perfumy designerskie (Dior, Chanel, Armani) to masowa produkcja – zaprojektowane żeby podobać się jak największej liczbie osób. Perfumy niszowe (Xerjoff, Amouage, Creed) to artystyczne kreacje małych domów perfumeryjnych – droższe składniki, unikalne kompozycje. Niszowe są bardziej oryginalne i trwalsze." %}</div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">Jakie grupy zapachowe wyróżniamy?<span class="faq-arrow">▾</span></button>
-                    <div class="faq-answer">Główne rodziny: Kwiatowe (floral) – róża, jaśmin; Drzewne (woody) – sandał, cedr, wetyweria; Orientalne – wanilia, bursztyn, przyprawy; Świeże/Cytrusowe – bergamotka, cytryna; Fougère – lawenda + drzewo; Chypre – mech dębowy + cytrusy; Skórzane – dym, smoła; Aquatyczne – morze, świeżość. Większość zapachów to mieszanki kilku rodzin.</div>
+                    <button class="faq-question" onclick="toggleFaq(this)">{% trans "Jakie grupy zapachowe wyróżniamy?" %}<span class="faq-arrow">{% trans "▾" %}</span></button>
+                    <div class="faq-answer">{% trans "Główne rodziny: Kwiatowe (floral) – róża, jaśmin; Drzewne (woody) – sandał, cedr, wetyweria; Orientalne – wanilia, bursztyn, przyprawy; Świeże/Cytrusowe – bergamotka, cytryna; Fougère – lawenda + drzewo; Chypre – mech dębowy + cytrusy; Skórzane – dym, smoła; Aquatyczne – morze, świeżość. Większość zapachów to mieszanki kilku rodzin." %}</div>
                 </div>
             </div>
 
             <!-- JAKOŚĆ I ORYGINALNOŚĆ -->
             <div class="faq-category" data-cat="jakosc">
-                <h3 class="faq-cat-title">✅ Jakość i oryginalność</h3>
+                <h3 class="faq-cat-title">{% trans "✅ Jakość i oryginalność" %}</h3>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">Jak rozpoznać oryginalne perfumy?<span class="faq-arrow">▾</span></button>
-                    <div class="faq-answer">Oryginalne perfumy mają: równe, staranne nadruki bez rozmazań; batch code na pudełku i flakonie zgodny z datą produkcji; sprawny, precyzyjny atomizer; prawidłowy zapach. Możesz sprawdzić batch code na checkfresh.com – podaj numer i dowiedz się kiedy wyprodukowano perfumy.</div>
+                    <button class="faq-question" onclick="toggleFaq(this)">{% trans "Jak rozpoznać oryginalne perfumy?" %}<span class="faq-arrow">{% trans "▾" %}</span></button>
+                    <div class="faq-answer">{% trans "Oryginalne perfumy mają: równe, staranne nadruki bez rozmazań; batch code na pudełku i flakonie zgodny z datą produkcji; sprawny, precyzyjny atomizer; prawidłowy zapach. Możesz sprawdzić batch code na checkfresh.com – podaj numer i dowiedz się kiedy wyprodukowano perfumy." %}</div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">Dlaczego kolor soku w butelce może się różnić od zdjęcia?<span class="faq-arrow">▾</span></button>
-                    <div class="faq-answer">To normalne i nie oznacza podróbki! Kolor zapachu zależy od użytych składników i może się delikatnie różnić między partiami. Zdjęcia marketingowe są retuszowane, a ekran pokazuje inną gamę kolorów. Lekkie pożółknięcie przy starszych perfumach to naturalne utlenianie – nie dyskwalifikuje zapachu.</div>
+                    <button class="faq-question" onclick="toggleFaq(this)">{% trans "Dlaczego kolor soku w butelce może się różnić od zdjęcia?" %}<span class="faq-arrow">{% trans "▾" %}</span></button>
+                    <div class="faq-answer">{% trans "To normalne i nie oznacza podróbki! Kolor zapachu zależy od użytych składników i może się delikatnie różnić między partiami. Zdjęcia marketingowe są retuszowane, a ekran pokazuje inną gamę kolorów. Lekkie pożółknięcie przy starszych perfumach to naturalne utlenianie – nie dyskwalifikuje zapachu." %}</div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">Co to jest reformulacja i dlaczego zapach mógł się zmienić?<span class="faq-arrow">▾</span></button>
-                    <div class="faq-answer">Reformulacja to zmiana składu perfum przez producenta bez zmiany nazwy. Powody: regulacje UE zakazujące niektórych składników, rosnące ceny surowców, zmiana dostawców. Dlatego Chanel No. 5 sprzed 20 lat pachnie inaczej niż dzisiejszy. Jeśli znajdziesz starą partię ulubionego zapachu – to skarb.</div>
+                    <button class="faq-question" onclick="toggleFaq(this)">{% trans "Co to jest reformulacja i dlaczego zapach mógł się zmienić?" %}<span class="faq-arrow">{% trans "▾" %}</span></button>
+                    <div class="faq-answer">{% trans "Reformulacja to zmiana składu perfum przez producenta bez zmiany nazwy. Powody: regulacje UE zakazujące niektórych składników, rosnące ceny surowców, zmiana dostawców. Dlatego Chanel No. 5 sprzed 20 lat pachnie inaczej niż dzisiejszy. Jeśli znajdziesz starą partię ulubionego zapachu – to skarb." %}</div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">Czy testery perfum są mocniejsze od zwykłych flakonów?<span class="faq-arrow">▾</span></button>
-                    <div class="faq-answer">Mit! Testery mają dokładnie ten sam skład co regularne flakony. Różnica to opakowanie – testery są w prostszych pudełkach lub bez zakrętki. Jeśli "lepiej pachną" to efekt placebo lub lepszych warunków przechowywania. Zawartość – identyczna.</div>
+                    <button class="faq-question" onclick="toggleFaq(this)">{% trans "Czy testery perfum są mocniejsze od zwykłych flakonów?" %}<span class="faq-arrow">{% trans "▾" %}</span></button>
+                    <div class="faq-answer">{% trans "Mit! Testery mają dokładnie ten sam skład co regularne flakony. Różnica to opakowanie – testery są w prostszych pudełkach lub bez zakrętki. Jeśli 'lepiej pachną' to efekt placebo lub lepszych warunków przechowywania. Zawartość – identyczna." %}</div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">Czym są odlewki lub dekanty perfum?<span class="faq-arrow">▾</span></button>
-                    <div class="faq-answer">Dekant to mała próbka zapachu (1–10 ml) przelana z oryginalnego flakonu. Pozwala przetestować drogi zapach przed kupnem całości. Legalne i popularne w społeczności perfumiarskiej. Zużyj w ciągu 6–12 miesięcy – małe butelki szybciej się utleniają.</div>
+                    <button class="faq-question" onclick="toggleFaq(this)">{% trans "Czym są odlewki lub dekanty perfum?" %}<span class="faq-arrow">{% trans "▾" %}</span></button>
+                    <div class="faq-answer">{% trans "Dekant to mała próbka zapachu (1–10 ml) przelana z oryginalnego flakonu. Pozwala przetestować drogi zapach przed kupnem całości. Legalne i popularne w społeczności perfumiarskiej. Zużyj w ciągu 6–12 miesięcy – małe butelki szybciej się utleniają." %}</div>
                 </div>
                 <div class="faq-item">
-                    <button class="faq-question" onclick="toggleFaq(this)">Co oznacza "projekcja" i "sillage" (ogon)?<span class="faq-arrow">▾</span></button>
-                    <div class="faq-answer">Projekcja to jak daleko od ciała "wyrzuca się" zapach. Sillage (czyt. "sijah", z fr. "ślad statku") to zapachowy ślad który zostawiasz po sobie – wchodzisz do pokoju, wychodzisz, a zapach zostaje. Silne sillage to cecha zapachów drzewnych i orientalnych. Zapachy "skin scent" mają słabe sillage – pachną tylko gdy ktoś jest bardzo blisko.</div>
+                    <button class="faq-question" onclick="toggleFaq(this)">{% trans "Co oznacza 'projekcja' i 'sillage' (ogon)?" %}<span class="faq-arrow">{% trans "▾" %}</span></button>
+                    <div class="faq-answer">{% trans "Projekcja to jak daleko od ciała 'wyrzuca się' zapach. Sillage (czyt. 'sijah', z fr. 'ślad statku') to zapachowy ślad który zostawiasz po sobie – wchodzisz do pokoju, wychodzisz, a zapach zostaje. Silne sillage to cecha zapachów drzewnych i orientalnych. Zapachy 'skin scent' mają słabe sillage – pachną tylko gdy ktoś jest bardzo blisko." %}</div>
                 </div>
             </div>
 

@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {% block title %}{{ product.brand }} {{ product.name }} {{ product.get_concentration_display }} – Przystanek Perfumy{% endblock %}
 
@@ -66,12 +67,12 @@
 <section class="section-pad">
     <div class="container">
 
-        <!-- BREADCRUMB widoczny -->
+        <!-- BREADCRUMB -->
         <nav style="font-size:13px; color:#aaa; margin-bottom:16px;">
-            <a href="/" style="color:var(--gold);">Strona główna</a>
-            <span style="margin:0 6px;">›</span>
+            <a href="/" style="color:var(--gold);">{% trans "Strona główna" %}</a>
+            <span style="margin:0 6px;">{% trans "›" %}</span>
             <a href="/?brand={{ product.brand }}" style="color:var(--gold);">{{ product.brand }}</a>
-            <span style="margin:0 6px;">›</span>
+            <span style="margin:0 6px;">{% trans "›" %}</span>
             <span style="color:#666;">{{ product.name }}</span>
         </nav>
 
@@ -91,69 +92,90 @@
             <div class="detail-info">
                 <p style="color:#aaa; font-size:12px; text-transform:uppercase; letter-spacing:2px;">{{ product.brand }}</p>
                 <h1 style="font-size:clamp(24px, 5vw, 34px); font-weight:300; margin:10px 0 8px;">{{ product.name }}</h1>
-                <p style="color:#888; font-size:14px; margin-bottom:8px;">{{ product.get_gender_display }}</p>
+                <p style="color:#888; font-size:14px; margin-bottom:8px;">
+                    {% if product.gender == 'K' %}{% trans "Damskie" %}
+                    {% elif product.gender == 'M' %}{% trans "Męskie" %}
+                    {% else %}{% trans "Unisex" %}{% endif %}
+                </p>
 
                 {% if reviews %}
                 <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px;">
                     <span style="color:var(--gold); font-size:16px;">
                         {% for i in "12345" %}{% if forloop.counter <= avg_rating %}★{% else %}☆{% endif %}{% endfor %}
                     </span>
-                    <span style="font-size:13px; color:#888;">{{ avg_rating }}/5 ({{ reviews.count }} opinii)</span>
+                    <span style="font-size:13px; color:#888;">{{ avg_rating }}/5 ({{ reviews.count }} {% trans "opinii" %})</span>
                 </div>
                 {% endif %}
 
                 {% if product.scent_notes %}
-                <p style="font-size:13px; color:#666; margin-bottom:16px;">
-                    <strong>Nuty zapachowe:</strong> {{ product.scent_notes }}
-                </p>
+                <div>
+                    <p style="font-size:13px; color:#666; margin-bottom:8px;">
+                        <strong>{% trans "Nuty zapachowe:" %}</strong> {{ product.scent_notes }}
+                    </p>
+                    <p style="font-size:12px; color:#888; font-style:italic; margin-bottom:16px;">
+                        {% trans "Tłumaczenie nut zapachowych wkrótce 😇" %}
+                    </p>
+                </div>
                 {% endif %}
 
                 {% if product.description %}
-                <p style="font-size:15px; color:#444; margin-bottom:16px; line-height:1.8;">{{ product.description }}</p>
+                <div>
+                    <p style="font-size:15px; color:#444; margin-bottom:8px; line-height:1.8;">{{ product.description }}</p>
+                    <p style="font-size:12px; color:#888; font-style:italic; margin-bottom:16px;">
+                        {% trans "Tłumaczenie opisu produktu wkrótce. Dziękujemy za cierpliwość 😇" %}
+                    </p>
+                </div>
                 {% endif %}
 
-                <!-- ATRYBUTY – tagi widoczne dla AI i użytkownika -->
+                <!-- ATRYBUTY (tłumaczone) -->
                 <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px;">
                     {% if product.intensity %}
                     <a href="/?intensity={{ product.intensity }}" class="attr-tag">
-                        {% if product.intensity == 'light' %}💨 Delikatna i świeża{% else %}🔥 Mocna i wieczorowa{% endif %}
+                        {% if product.intensity == 'light' %}💨 {% trans "Delikatna i świeża" %}{% else %}🔥 {% trans "Mocna i wieczorowa" %}{% endif %}
                     </a>
                     {% endif %}
                     {% if product.occasion %}
                     <a href="/?occasion={{ product.occasion }}" class="attr-tag">
-                        {% if product.occasion == 'daily' %}☀️ Na co dzień{% else %}✨ Specjalne wyjścia{% endif %}
+                        {% if product.occasion == 'daily' %}☀️ {% trans "Na co dzień" %}{% else %}✨ {% trans "Specjalne wyjścia" %}{% endif %}
                     </a>
                     {% endif %}
                     {% if product.category %}
                     <a href="/?category={{ product.category }}" class="attr-tag">
-                        🌸 {{ product.get_category_display }}
+                        🌸 {% if product.category == 'floral' %}{% trans "Kwiatowe" %}{% elif product.category == 'woody' %}{% trans "Drzewne" %}{% elif product.category == 'fresh' %}{% trans "Świeże" %}{% elif product.category == 'oriental' %}{% trans "Orientalne" %}{% elif product.category == 'citrus' %}{% trans "Cytrusowe" %}{% endif %}
                     </a>
                     {% endif %}
                     {% if product.concentration %}
                     <a href="/?concentration={{ product.concentration }}" class="attr-tag">
-                        💧 {{ product.get_concentration_display }}
+                        💧 {% if product.concentration == 'edt' %}{% trans "EDT" %}{% elif product.concentration == 'edp' %}{% trans "EDP" %}{% elif product.concentration == 'parfum' %}{% trans "Parfum" %}{% endif %}
                     </a>
                     {% endif %}
                 </div>
 
-                <div style="font-size:30px; font-weight:600; color:var(--forest-green); margin-bottom:16px;">{{ product.price }} zł</div>
-                <p style="font-size:14px; color:#888; margin-bottom:16px;">📦 Pojemność: 100 ml</p>
+                <div style="font-size:30px; font-weight:600; color:var(--forest-green); margin-bottom:12px;">{{ product.price }} zł</div>
+                <p style="font-size:14px; color:#888; margin-bottom:16px;">{% trans "📦 Pojemność: 100 ml" %}</p>
 
                 {% if product.stock_quantity > 0 %}
-                <p style="color:green; font-size:13px; margin-bottom:16px;">✓ Dostępny ({{ product.stock_quantity }} szt.)</p>
-                <a href="{% url 'cart_add' product.pk %}" class="btn" style="width:100%; padding:14px; font-size:15px; text-align:center; display:block; box-sizing:border-box; margin-bottom:10px;">Dodaj do koszyka</a>
-                <a href="{% url 'cart_detail' %}" class="btn" style="width:100%; padding:14px; font-size:15px; text-align:center; display:block; box-sizing:border-box;">Przejdź do koszyka</a>
+                <p style="color:green; font-size:13px; margin-bottom:16px;">✓ {% trans "Dostępny" %} ({{ product.stock_quantity }} szt.)</p>
+                <a href="{% url 'cart_add' product.pk %}" class="btn" style="width:100%; padding:14px; font-size:15px; text-align:center; display:block; box-sizing:border-box; margin-bottom:10px;">{% trans "Dodaj do koszyka" %}</a>
+                <a href="{% url 'cart_detail' %}" class="btn" style="width:100%; padding:14px; font-size:15px; text-align:center; display:block; box-sizing:border-box;">{% trans "Przejdź do koszyka" %}</a>
                 {% else %}
-                <p style="color:#c0392b; font-size:13px;">✗ Brak w magazynie</p>
+                <p style="color:#c0392b; font-size:13px;">{% trans "✗ Brak w magazynie" %}</p>
                 {% endif %}
 
-                <!-- LINKOWANIE WEWNĘTRZNE – Semantic SEO -->
+                <!-- LINKOWANIE WEWNĘTRZNE -->
                 <div style="font-size:13px; color:#888; margin-top:20px; line-height:2.2; border-top:1px solid #eee; padding-top:16px;">
-                    <strong style="color:#666;">Szukasz więcej?</strong><br>
-                    <a href="/?brand={{ product.brand }}" style="color:var(--gold);">Wszystkie perfumy {{ product.brand }}</a>
-                    {% if product.category %} · <a href="/?category={{ product.category }}&gender={{ product.gender }}" style="color:var(--gold);">{{ product.get_category_display }} {{ product.get_gender_display|lower }}</a>{% endif %}
-                    {% if product.occasion %} · <a href="/?occasion={{ product.occasion }}" style="color:var(--gold);">Perfumy {% if product.occasion == 'special' %}na wyjątkowe okazje{% else %}na co dzień{% endif %}</a>{% endif %}
-                    {% if product.intensity %} · <a href="/?intensity={{ product.intensity }}" style="color:var(--gold);">{% if product.intensity == 'light' %}Delikatne i świeże zapachy{% else %}Mocne zapachy wieczorowe{% endif %}</a>{% endif %}
+                    <strong style="color:#666;">{% trans "Szukasz więcej?" %}</strong><br>
+                    <a href="/?brand={{ product.brand }}" style="color:var(--gold);">{% trans "Wszystkie perfumy" %} {{ product.brand }}</a>
+                    {% if product.category %}<span> · </span><a href="/?category={{ product.category }}&gender={{ product.gender }}" style="color:var(--gold);">
+                        {% if product.category == 'floral' %}{% trans "Kwiatowe" %}{% elif product.category == 'woody' %}{% trans "Drzewne" %}{% elif product.category == 'fresh' %}{% trans "Świeże" %}{% elif product.category == 'oriental' %}{% trans "Orientalne" %}{% elif product.category == 'citrus' %}{% trans "Cytrusowe" %}{% endif %}
+                        {% if product.gender == 'K' %}{% trans " damskie" %}{% elif product.gender == 'M' %}{% trans " męskie" %}{% else %}{% trans " unisex" %}{% endif %}
+                    </a>{% endif %}
+                    {% if product.occasion %}<span> · </span><a href="/?occasion={{ product.occasion }}" style="color:var(--gold);">
+                        {% if product.occasion == 'special' %}{% trans "Perfumy na wyjątkowe okazje" %}{% else %}{% trans "Perfumy na co dzień" %}{% endif %}
+                    </a>{% endif %}
+                    {% if product.intensity %}<span> · </span><a href="/?intensity={{ product.intensity }}" style="color:var(--gold);">
+                        {% if product.intensity == 'light' %}{% trans "Delikatne i świeże zapachy" %}{% else %}{% trans "Mocne zapachy wieczorowe" %}{% endif %}
+                    </a>{% endif %}
                 </div>
             </div>
         </div>
@@ -161,7 +183,7 @@
         <!-- SEKCJA OPINII -->
         <div style="margin-top:60px; border-top:2px solid var(--gold); padding-top:40px;">
             <h2 style="font-size:24px; font-weight:300; margin-bottom:32px;">
-                Opinie o {{ product.name }}
+                {% trans "Opinie o" %} {{ product.name }}
                 {% if reviews %}<span style="font-size:16px; color:#888; font-weight:400;">({{ reviews.count }})</span>{% endif %}
             </h2>
 
@@ -175,7 +197,7 @@
                                 <div>
                                     <span style="font-weight:600;">{{ review.name }}</span>
                                     {% if review.verified_purchase %}
-                                    <span style="font-size:11px; color:var(--gold); margin-left:8px; background:rgba(212,175,55,0.1); padding:2px 8px; border-radius:10px;">✓ Zweryfikowany zakup</span>
+                                    <span style="font-size:11px; color:var(--gold); margin-left:8px; background:rgba(212,175,55,0.1); padding:2px 8px; border-radius:10px;">{% trans "✓ Zweryfikowany zakup" %}</span>
                                     {% endif %}
                                 </div>
                                 <span style="color:#aaa; font-size:12px;">{{ review.created_at|date:"d.m.Y" }}</span>
@@ -188,26 +210,26 @@
                         {% endfor %}
                     </div>
                     {% else %}
-                    <p style="color:#888; font-size:14px; margin-bottom:32px;">Brak opinii. Bądź pierwszy!</p>
+                    <p style="color:#888; font-size:14px; margin-bottom:32px;">{% trans "Brak opinii. Bądź pierwszy!" %}</p>
                     {% endif %}
 
                     <!-- FORMULARZ OPINII -->
                     <div style="background:#f9f9f9; padding:32px;">
-                        <h3 style="font-size:18px; font-weight:400; margin-bottom:24px;">Dodaj opinię</h3>
+                        <h3 style="font-size:18px; font-weight:400; margin-bottom:24px;">{% trans "Dodaj opinię" %}</h3>
                         <form method="post" action="{% url 'add_review' product.slug %}">
                             {% csrf_token %}
                             <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
                                 <div>
-                                    <label class="form-label">Imię *</label>
+                                    <label class="form-label">{% trans "Imię *" %}</label>
                                     <input type="text" name="name" required class="form-input" placeholder="np. Anna">
                                 </div>
                                 <div>
-                                    <label class="form-label">Email z zamówienia *</label>
+                                    <label class="form-label">{% trans "Email z zamówienia *" %}</label>
                                     <input type="email" name="email" required class="form-input" placeholder="twoj@email.pl">
                                 </div>
                             </div>
                             <div style="margin-bottom:16px;">
-                                <label class="form-label">Ocena *</label>
+                                <label class="form-label">{% trans "Ocena *" %}</label>
                                 <div style="display:flex; gap:8px; margin-top:8px;">
                                     {% for i in "12345" %}
                                     <label style="cursor:pointer; font-size:28px; color:#ddd; transition:color 0.2s;" class="star-label">
@@ -218,11 +240,11 @@
                                 </div>
                             </div>
                             <div style="margin-bottom:20px;">
-                                <label class="form-label">Twoja opinia *</label>
+                                <label class="form-label">{% trans "Twoja opinia *" %}</label>
                                 <textarea name="comment" required class="form-input" rows="4" placeholder="Jak oceniasz ten zapach?"></textarea>
                             </div>
-                            <p style="font-size:12px; color:#aaa; margin-bottom:16px;">* Jeśli email zgadza się z Twoim zamówieniem, opinia otrzyma oznaczenie „Zweryfikowany zakup".</p>
-                            <button type="submit" class="btn" style="padding:14px 32px;">Dodaj opinię</button>
+                            <p style="font-size:12px; color:#aaa; margin-bottom:16px;">* {% trans "Jeśli email zgadza się z Twoim zamówieniem, opinia otrzyma oznaczenie „Zweryfikowany zakup'." %}</p>
+                            <button type="submit" class="btn" style="padding:14px 32px;">{% trans "Dodaj opinię" %}</button>
                         </form>
                     </div>
                 </div>
@@ -231,35 +253,8 @@
 
     </div>
 </section>
-<!-- FAQ PRODUKTU generowane przez AI -->
-{% comment %} {% if faq_items %}
-<section style="padding:40px 0; background:#f9f9f9; margin-top:40px;">
-    <div class="container" style="max-width:800px;">
-        <h2 style="font-size:22px; font-weight:300; margin-bottom:24px;">
-            ❓ Pytania o {{ product.name }}
-        </h2>
-        <script type="application/ld+json">
-        {
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          "mainEntity": [
-            {% for item in faq_items %}
-            {"@type":"Question","name":"{{ item.q }}","acceptedAnswer":{"@type":"Answer","text":"{{ item.a }}"}}{% if not forloop.last %},{% endif %}
-            {% endfor %}
-          ]
-        }
-        </script>
-        {% for item in faq_items %}
-        <div class="faq-item">
-            <button class="faq-question" onclick="toggleFaq(this)">
-                {{ item.q }}<span class="faq-arrow">▾</span>
-            </button>
-            <div class="faq-answer">{{ item.a }}</div>
-        </div>
-        {% endfor %}
-    </div>
-</section>
-{% endif %} {% endcomment %}
+
+<!-- FAQ strony (produktowe zakomentowane, ogólne include) -->
 {% include "includes/faq.html" %}
 
 <style>
