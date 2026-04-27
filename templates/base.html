@@ -890,6 +890,29 @@
         .dropdown-item:hover {
             background: var(--forest-green);
         }
+        /* Styl dla przycisku "Język" – taki sam jak "Kolekcja" */
+        .nav-right .dropdown-toggle {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--gold);
+            padding: 7px 14px;
+            border-radius: 25px;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            background: transparent;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .nav-right .dropdown-toggle:hover {
+            border-color: var(--gold);
+            background: var(--forest-green);
+        }
     </style>
 </head>
 <body>
@@ -909,7 +932,7 @@
                     <a href="/"><img src="{% static 'images/projektbeznazwy.png' %}" alt="Przystanek Perfumy"></a>
                 </div>
 
-                <!-- DESKTOP NAV -->
+                <!-- DESKTOP NAV (widoczne tylko na dużych ekranach) -->
                 <ul class="nav-links">
                     <li class="dropdown">
                         <a href="/" class="dropdown-toggle {% if request.path == '/' %}active{% endif %}">{% trans "Kolekcja" %}</a>
@@ -935,49 +958,36 @@
                         </li>
                     {% endif %}
                 </ul>
-                <ul class="nav-links">
-                    <div class="dropdown">
-                        <a href="/" class="dropdown-toggle" style="color: var(--gold); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">{% trans "Język" %}</a>
+
+                <!-- PRAWY PANEL (zawsze widoczny, zawiera język, koszyk i hamburger) -->
+                <div class="nav-right">
+                    <div class="dropdown dropdown-right">
+                        <a href="#" class="dropdown-toggle no-arrow">{% trans "Język" %}</a>
                         <div class="dropdown-menu">
                             <form action="{% url 'set_language' %}" method="post" style="display: block; margin: 0;">
                                 {% csrf_token %}
                                 <input name="next" type="hidden" value="{{ request.get_full_path }}">
                                 <input name="language" type="hidden" value="pl">
-                                <button type="submit" style="display: block; width: 100%; text-align: left; background: none; border: none; padding: 10px 18px; color: var(--gold); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer; font-family: inherit;">🇵🇱 Polski</button>
+                                <button type="submit" class="dropdown-item">🇵🇱 Polski</button>
                             </form>
                             <form action="{% url 'set_language' %}" method="post" style="display: block; margin: 0;">
                                 {% csrf_token %}
                                 <input name="next" type="hidden" value="{{ request.get_full_path }}">
                                 <input name="language" type="hidden" value="es">
-                                <button type="submit" style="display: block; width: 100%; text-align: left; background: none; border: none; padding: 10px 18px; color: var(--gold); font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; cursor: pointer; font-family: inherit;">🇪🇸 Español</button>
+                                <button type="submit" class="dropdown-item">🇪🇸 Español</button>
                             </form>
                         </div>
                     </div>
-                                            <!-- koszyk i hamburger -->
-                    <div style="display:flex; align-items:center; gap:12px;">
-                        <a href="{% url 'cart_detail' %}" class="cart-icon" style="position: relative;">
-                            🛒
-                            <span id="cart-count" style="
-                            position: absolute;
-                            top: -8px;
-                            right: -12px;
-                            background: var(--gold);
-                            color: #000;
-                            font-size: 11px;
-                            font-weight: bold;
-                            border-radius: 50%;
-                            min-width: 18px;
-                            height: 18px;
-                            padding: 0 4px;
-                            display: none;
-                            align-items: center;
-                            justify-content: center;
-                            line-height: 1;
-                            box-shadow: 0 0 0 2px var(--accent-dark);
-                        ">0</span>
-                        </a>
-                    </div>
-                </ul>
+
+                    <a href="{% url 'cart_detail' %}" class="cart-icon" style="position: relative;">
+                        🛒
+                        <span id="cart-count" style="position: absolute; top: -8px; right: -12px; background: var(--gold); color: #000; font-size: 11px; font-weight: bold; border-radius: 50%; min-width: 18px; height: 18px; padding: 0 4px; display: none; align-items: center; justify-content: center; line-height: 1; box-shadow: 0 0 0 2px var(--accent-dark);">0</span>
+                    </a>
+
+                    <button class="hamburger" id="hamburger" aria-label="Menu">
+                        <span></span><span></span><span></span>
+                    </button>
+                </div>
             </nav>
         </div>
 
