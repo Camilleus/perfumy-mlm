@@ -12,4 +12,6 @@ urlpatterns = [
     path('check-referral/', views.check_referral, name='check_referral'),
     path('my-orders/', views.my_orders, name='my_orders'),
     path('cart/count/', views.cart_count, name='cart_count'),
+    path('calculate-checkout/', views.calculate_checkout, name='calculate_checkout'),
+
 ]

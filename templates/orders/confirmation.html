@@ -15,71 +15,100 @@
             {% trans "Numer zamówienia:" %} <strong>#{{ order.pk }}</strong>
         </p>
 
+        <!-- SZCZEGÓŁY -->
         <div class="card-border" style="text-align: left; margin-bottom: 32px;">
             <h3 style="font-weight: 400; margin-bottom: 20px;">{% trans "Szczegóły zamówienia" %}</h3>
 
             {% for item in order.items.all %}
-            <div style="display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 14px;">
+            <div style="display:flex; justify-content:space-between; margin-bottom:12px; font-size:14px;">
                 <span>{{ item.product.name }} × {{ item.quantity }}</span>
-                <span style="font-weight: 600;">{{ item.price|convert_price:CURR }} {{ CURRENCY_SYMBOL }}</span>
+                <span style="font-weight:600;">{{ item.price|convert_price:CURR }} {{ CURRENCY_SYMBOL }}</span>
             </div>
             {% endfor %}
 
-            <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px; border-top: 1px solid #ddd; padding-top: 12px; margin-top: 12px;">
-                <span>{% trans "Dostawa" %}
+            <!-- DOSTAWA -->
+            <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:14px; border-top:1px solid #ddd; padding-top:12px; margin-top:12px;">
+                <span>
+                    {% trans "Dostawa" %}
                     {% if order.shipping_method == 'international' %}({% trans "Wysyłka zagraniczna" %})
-                    {% elif order.shipping_method == 'inpost_free' %}(InPost Kurier – {% trans "darmowa" %})
                     {% elif order.shipping_method == 'inpost' %}(InPost Kurier)
-                    {% elif order.shipping_method == 'gls' %}(GLS ekspres)
+                    {% elif order.shipping_method == 'dhl' %}(DHL Kurier)
+                    {% elif order.shipping_method == 'dpd' %}(DPD Kurier)
+                    {% elif order.shipping_method == 'gls' %}(GLS Ekspres)
                     {% endif %}
                 </span>
-                <span style="font-weight: 600;">
+                <span style="font-weight:600;">
                     {% if order.shipping_method == 'international' %}
-                        {% trans "do 250 zł (uzgodniona indywidualnie)" %}
+                        {% trans "do" %} {{ order.shipping_cost_currency }} {{ order.currency_symbol }} ({% trans "uzgodniona indywidualnie" %})
+                    {% elif order.shipping_cost == 0 %}
+                        {% trans "GRATIS" %}
                     {% else %}
-                        {% if order.shipping_cost == 0 %}{% trans "GRATIS" %}{% else %}{{ order.shipping_cost|convert_price:CURR }} {{ CURRENCY_SYMBOL }}{% endif %}
+                        {{ order.shipping_cost_currency }} {{ order.currency_symbol }}
                     {% endif %}
                 </span>
             </div>
 
-            <div style="display: flex; justify-content: space-between; font-size: 18px; font-weight: 700;">
+            {% if order.discount > 0 %}
+            <div style="display:flex; justify-content:space-between; margin-bottom:10px; font-size:14px; color:green;">
+                <span>{% trans "Zniżka (kod polecenia)" %}</span>
+                <span>-{{ CURR.discount }} {{ order.currency_symbol }}</span>
+            </div>
+            {% endif %}
+
+            <!-- RAZEM -->
+            <div style="display:flex; justify-content:space-between; font-size:18px; font-weight:700; border-top:2px solid #eee; padding-top:12px; margin-top:4px;">
                 <span>{% trans "Razem" %}</span>
-                <span style="color: var(--forest-green);">{{ order.total_amount|convert_price:CURR }} {{ CURRENCY_SYMBOL }}</span>
+                <span style="color:var(--forest-green);">{{ order.total_amount_currency }} {{ order.currency_symbol }}</span>
+            </div>
+
+            {% if order.shipping_method != 'international' %}
+            <div style="margin-top:12px; font-size:12px; color:#888; text-align:right;">
+                💳 {% trans "Płatność: za pobraniem" %}
+            </div>
+            {% else %}
+            <div style="margin-top:12px; font-size:12px; color:#888; text-align:right;">
+                🌍 {% trans "Płatność: przelew lub karta (skontaktujemy się z Tobą)" %}
+            </div>
+            {% endif %}
         </div>
 
+        <!-- ADRES -->
         <div class="card-border" style="text-align: left; margin-bottom: 32px;">
             <h3 style="font-weight: 400; margin-bottom: 16px;">{% trans "Adres dostawy" %}</h3>
-            <p style="margin: 0; line-height: 1.7; color: #444; font-size: 14px;">
+            <p style="margin:0; line-height:1.7; color:#444; font-size:14px;">
                 {{ order.first_name }} {{ order.last_name }}<br>
                 {{ order.address }}<br>
                 {{ order.postal_code }} {{ order.city }}<br>
-                {% if order.country and order.country != "Polska" %}
-                    {% trans "Kraj:" %} {{ order.country }}<br>
-                {% endif %}
+                {% if order.country %}{% trans "Kraj:" %} {{ order.country }}<br>{% endif %}
                 {% trans "Tel:" %} {{ order.phone }}<br>
-                <strong>{% trans "Dostawa:" %}</strong>
+                <strong>{% trans "Metoda dostawy:" %}</strong>
                 {% if order.shipping_method == 'international' %}
                     {% trans "Wysyłka zagraniczna" %}
-                {% elif order.shipping_method == 'inpost_free' %}
-                    InPost Kurier ({% trans "darmowa" %})
+                    <br><span style="font-size:12px; color:#888;">{% trans "Skontaktujemy się z Tobą e-mailowo lub przez WhatsApp aby ustalić koszt i formę płatności." %}</span>
                 {% elif order.shipping_method == 'inpost' %}
-                    InPost Kurier
+                    InPost Kurier{% if order.shipping_cost == 0 %} ({% trans "darmowa" %}){% endif %}
+                {% elif order.shipping_method == 'dhl' %}
+                    DHL Kurier
+                {% elif order.shipping_method == 'dpd' %}
+                    DPD Kurier
                 {% elif order.shipping_method == 'gls' %}
-                    GLS ekspres
-                {% endif %}
-                {% if order.shipping_method == 'international' %}
-                    <br><span style="font-size: 12px; color: #888;">{% trans "Wysyłka zagraniczna – koszt maksymalnie 250 zł (ostateczna kwota zostanie ustalona indywidualnie). Skontaktujemy się z Tobą e‑mailowo lub przez WhatsApp." %}</span>
-                {% elif order.shipping_cost == 0 and order.shipping_method != 'international' %}
-                    ({% trans "darmowa" %})
+                    GLS Ekspres
                 {% endif %}
             </p>
         </div>
 
-        <p style="color: #888; font-size: 13px; margin-bottom: 32px;">
+        {% if order.note %}
+        <div class="card-border" style="text-align:left; margin-bottom:32px;">
+            <h3 style="font-weight:400; margin-bottom:8px;">{% trans "Uwagi do zamówienia" %}</h3>
+            <p style="font-size:14px; color:#555;">{{ order.note }}</p>
+        </div>
+        {% endif %}
+
+        <p style="color:#888; font-size:13px; margin-bottom:32px;">
             {% trans "Potwierdzenie zamówienia zostało wysłane na" %} <strong>{{ order.email }}</strong>
         </p>
 
-        <a href="/" class="btn" style="padding: 12px 32px;">{% trans "Wróć do sklepu" %}</a>
+        <a href="/" class="btn" style="padding:12px 32px;">{% trans "Wróć do sklepu" %}</a>
 
     </div>
 </section>

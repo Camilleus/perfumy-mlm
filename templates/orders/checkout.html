@@ -14,6 +14,7 @@
             <input type="hidden" name="referral_code" id="referral_code_hidden" value="">
             <input type="hidden" name="shipping_method" id="shipping_method_hidden" value="inpost">
 
+            <!-- DANE OSOBOWE -->
             <div class="form-grid-2">
                 <div class="form-group">
                     <label class="form-label">{% trans "Imię" %}</label>
@@ -52,7 +53,7 @@
                 </div>
             </div>
 
-            <!-- KRAJ – bez domyślnej wartości "Polska" -->
+            <!-- KRAJ -->
             <div class="form-group">
                 <label class="form-label">{% trans "Kraj" %}</label>
                 <input type="text" name="country" placeholder="{% trans 'np. Polska, España...' %}" class="form-input">
@@ -64,10 +65,10 @@
                 <textarea name="note" rows="3" class="form-input"></textarea>
             </div>
 
-            <!-- Sekcja kodu polecenia -->
+            <!-- KOD POLECENIA -->
             <div style="background:#fffdf0; border:1px solid var(--gold); padding:20px; margin-bottom:24px;">
                 <label style="display:block; font-size:14px; font-weight:600; margin-bottom:6px;">{% trans "🎁 Masz kod polecenia?" %}</label>
-                <p style="font-size:13px; color:#888; margin-bottom:12px;">{% trans "Wpisz kod znajomego i otrzymaj" %} <strong>{% trans "-20 zł" %}</strong> {% trans "na to zamówienie!" %}</p>
+                <p style="font-size:13px; color:#888; margin-bottom:12px;">{% trans "Wpisz kod znajomego i otrzymaj" %} <strong>-{{ CURR.discount }} {{ CURRENCY_SYMBOL }}</strong> {% trans "na to zamówienie!" %}</p>
                 <div style="display:flex; gap:10px; flex-wrap:wrap;">
                     <input type="text" id="referral_code_input" placeholder="np. KAMIL-X7K2" style="flex:1; min-width:160px; padding:12px; border:1px solid #ddd; font-size:15px; text-transform:uppercase;">
                     <button type="button" onclick="checkReferral()" class="btn" style="padding:12px 20px;">{% trans "Sprawdź" %}</button>
@@ -83,193 +84,193 @@
                 {% for item in cart.get_items %}
                 <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:14px;">
                     <span>{{ item.name }} × {{ item.quantity }}</span>
-                    <span style="font-weight:600; flex-shrink:0; margin-left:16px;">{{ item.price|convert_price:CURR }} {{ CURRENCY_SYMBOL }}</span>
+                    <span style="font-weight:600;">{{ item.price|convert_price:CURR }} {{ CURRENCY_SYMBOL }}</span>
                 </div>
                 {% endfor %}
 
-                <!-- WYBÓR DOSTAWY -->
+                <!-- WYBÓR DOSTAWY (generowany z SHIPPING_METHODS) -->
                 <div style="margin:16px 0; padding:14px 0; border-top:1px solid #eee; border-bottom:1px solid #eee;">
                     <h4 style="font-weight:400; margin-bottom:10px; font-size:14px;">{% trans "✈️ Wybierz dostawę" %}</h4>
-
-                    {% with total_qty=cart.get_total_quantity %}
                     <p style="font-size:13px; margin-bottom:10px; color:#555;">
-                        📦 {% trans "W koszyku:" %} <strong>{{ total_qty }} {% trans "szt." %}</strong>
-                        <span id="free-shipping-note">{% if total_qty >= 3 %} – <span style="color:green;">{% trans "🎉 Darmowa dostawa InPost!" %}</span>{% endif %}</span>
+                        📦 {% trans "W koszyku:" %} <strong>{{ cart.get_total_quantity }} {% trans "szt." %}</strong>
                     </p>
-
-                    <div style="display:flex; flex-direction:column; gap:10px;">
-                        <!-- GLS – wyłączony -->
-                        <label style="display:flex; align-items:flex-start; gap:8px; opacity:0.6; font-size:13px;">
-                            <input type="radio" name="shipping_method_radio" value="gls" disabled style="margin-top:3px;">
-                            <span>{% trans "GLS ekspres (dostawa do 48h) –" %} <strong>40 zł</strong> <span style="color:#999;">{% trans "(niedostępne)" %}</span></span>
-                        </label>
-
-                        <!-- InPost (krajowa) -->
-                        <label style="display:flex; align-items:flex-start; gap:8px; font-size:13px;">
-                            <input type="radio" name="shipping_method_radio" value="inpost"
-                                data-cost="{% if total_qty >= 3 %}0{% else %}30{% endif %}"
-                                style="margin-top:3px;">
-                            <span>{% trans "InPost Kurier (wysyłka do 48h) –" %}
-                                <strong id="inpost-cost-label">
-                                    {% if total_qty >= 3 %}0 {% trans "zł (darmowa!)" %}{% else %}30 {% trans "zł" %}{% endif %}
-                                </strong>
-                            </span>
-                        </label>
-
-                        <!-- Wysyłka zagraniczna -->
-                        <label style="display:flex; align-items:flex-start; gap:8px; font-size:13px;">
-                            <input type="radio" name="shipping_method_radio" value="international"
-                                data-cost="250" style="margin-top:3px;">
-                            <span>{% trans "Wysyłka zagraniczna –" %}
-                                <strong>{% trans "do 250 zł" %}</strong>
-                                <span id="international-note" style="display:inline-block; font-size:11px; color:#888;"> ({% trans "cena ustalana indywidualnie, płatność przelewem lub kartą" %})</span>
-                            </span>
-                        </label>
+                    <div id="shipping-options-container">
+                        <!-- Opcje dla Polski (wypełnione przez Django) -->
+                        {% for method in SHIPPING_METHODS.pl %}
+                            <div class="shipping-option" data-country-type="pl"
+                                data-cost-pln="{{ method.cost_pln }}"
+                                data-method-id="{{ method.id }}"
+                                data-free-qty="{{ method.free_above_qty|default:0 }}"
+                                data-is-estimate="false"
+                                style="display: none;">
+                                <label style="display:flex; align-items:flex-start; gap:8px; font-size:13px;">
+                                    <input type="radio" name="shipping_method_radio" value="{{ method.id }}"
+                                        {% if method.id != 'inpost' %}disabled{% endif %}
+                                        style="margin-top:3px;">
+                                    <span>
+                                        {{ method.name }} – 
+                                        <strong class="shipping-price-label">
+                                            {% if method.free_above_qty and cart.get_total_quantity >= method.free_above_qty %}
+                                                0 {{ CURRENCY_SYMBOL }} (darmowa!)
+                                            {% else %}
+                                                {{ CURR.shipping_pl }} {{ CURRENCY_SYMBOL }}
+                                            {% endif %}
+                                        </strong>
+                                        {% if method.id != 'inpost' %}
+                                            <span style="font-size:11px; color:#999;"> (wkrótce dostępne)</span>
+                                        {% endif %}
+                                    </span>
+                                </label>
+                            </div>
+                        {% endfor %}
+                        <!-- Opcja międzynarodowa -->
+                        {% comment %} {% for method in SHIPPING_METHODS.intl %}
+                        <div class="shipping-option" data-country-type="intl"
+                             data-cost-pln="{{ method.cost_pln }}"
+                             data-method-id="{{ method.id }}"
+                             data-is-estimate="true"
+                             style="display: none;">
+                            <label style="display:flex; align-items:flex-start; gap:8px; font-size:13px;">
+                                <input type="radio" name="shipping_method_radio" value="{{ method.id }}">
+                                <span>{{ method.name }} – 
+                                    <strong class="shipping-price-label">
+                                        {% if method.is_estimate %}
+                                            {% trans "od" %} {{ method.cost_pln|convert_shipping:CURR }} {{ CURRENCY_SYMBOL }}
+                                        {% else %}
+                                            {{ method.cost_pln|convert_shipping:CURR }} {{ CURRENCY_SYMBOL }}
+                                        {% endif %}
+                                    </strong>
+                                    {% if method.is_estimate %}
+                                    <span style="font-size:11px; color:#888;">({% trans "cena ustalana indywidualnie, płatność przelewem/kartą" %})</span>
+                                    {% endif %}
+                                </span>
+                            </label>
+                        </div>
+                        {% endfor %} {% endcomment %}
+                        <!-- Opcja międzynarodowa (stała cena, nie aktualizowana przez JS) -->
+                        {% for method in SHIPPING_METHODS.intl %}
+                        <div class="shipping-option" data-country-type="intl" style="display: none;">
+                            <label style="display:flex; align-items:flex-start; gap:8px; font-size:13px;">
+                                <input type="radio" name="shipping_method_radio" value="{{ method.id }}">
+                                <span>
+                                    {{ method.name }} – 
+                                    <strong id="intl-shipping-price">{{ max_shipping_display }} {{ CURRENCY_SYMBOL }}</strong>
+                                    <span style="font-size:11px; color:#888;"> ({% trans "maksymalnie, cena ustalana indywidualnie" %})</span>
+                                </span>
+                            </label>
+                        </div>
+                        {% endfor %}
                     </div>
-                    {% endwith %}
+                    <div id="international-note" style="font-size:12px; color:#888; margin-top:8px; display:none;">
+                        🌍 Po złożeniu zamówienia skontaktujemy się z Tobą, aby ustalić koszt wysyłki i formę płatności.
+                    </div>
                 </div>
 
+                <!-- KALKULACJA -->
                 <div style="border-top:1px solid #ddd; padding-top:12px; margin-top:12px;">
-                    <div style="display:flex; justify-content:space-between; font-size:15px; margin-bottom:6px;">
+                    <div style="display:flex; justify-content:space-between;">
                         <span>{% trans "Suma produktów" %}</span>
-                        <span id="total-base">{{ cart.get_total|convert_price:CURR }} {{ CURRENCY_SYMBOL }}</span>
+                        <span id="total-base">{{ cart_total_currency }} {{ currency_symbol }}</span>
                     </div>
-                    <div id="discount-row" style="display:none; justify-content:space-between; font-size:14px; color:green; margin-bottom:6px;">
+                    <div id="discount-row" style="display:none; justify-content:space-between; color:green;">
                         <span>{% trans "Zniżka (kod polecenia)" %}</span>
-                        <span>{% trans "-20 zł" %}</span>
+                        <span>-{{ 20|convert_price:CURR }} {{ CURRENCY_SYMBOL }}</span>
                     </div>
-                    <div id="shipping-row" style="display:flex; justify-content:space-between; font-size:14px; margin-bottom:6px;">
+                    <div id="shipping-row" style="display:flex; justify-content:space-between;">
                         <span>{% trans "Dostawa" %}</span>
-                        <span id="shipping-cost">
-                            {% with total_qty=cart.get_total_quantity %}
-                                {% if total_qty >= 3 %}0 {{ CURRENCY_SYMBOL }}{% else %}{{ CURR.shipping }} {{ CURRENCY_SYMBOL }}{% endif %}
-                            {% endwith %}
-                        </span>
+                        <span id="shipping-cost">0 {{ CURRENCY_SYMBOL }}</span>
                     </div>
-                    <div id="international-payment-note" style="display:none; background:#f9f2e0; padding:8px; margin-top:8px; font-size:12px; color:#555;">
-                        🌍 {% trans "W przypadku wysyłki zagranicznej – skontaktujemy się z Tobą e-mailowo lub przez WhatsApp, aby ustalić ostateczny koszt i formę płatności." %}
+                    <div id="international-payment-note" style="display:none; background:#f9f2e0; padding:8px; margin-top:8px; font-size:12px;">
+                        🌍 W przypadku wysyłki zagranicznej – skontaktujemy się z Tobą e-mailowo lub przez WhatsApp.
                     </div>
                     <div style="display:flex; justify-content:space-between; font-size:19px; font-weight:700; margin-top:10px;">
                         <span>{% trans "Razem" %}</span>
-                        <span id="total-final" style="color:var(--forest-green);">
-                                {% with converted=cart.get_total|convert_price:CURR %}
-                                {% if total_qty >= 3 %}{{ converted }} {{ CURRENCY_SYMBOL }}
-                                    {% else %}{{ converted|add_prices:CURR.shipping }} {{ CURRENCY_SYMBOL }}
-                                {% endif %}
-                            {% endwith %}
-                        </span>
+                        <span id="total-final" style="color:var(--forest-green);">0 {{ CURRENCY_SYMBOL }}</span>
                     </div>
                 </div>
-
-                <div style="margin-top:12px; font-size:13px; color:#888;">
+                <div style="margin-top:12px;">
                     <span id="payment-info">💳 {% trans "Płatność: za pobraniem" %}</span>
                 </div>
             </div>
 
-            <div id="cash-on-delivery-note" style="background: #f0f7f0; padding: 12px 16px; margin: 16px 0; border-left: 4px solid var(--forest-green); font-size: 13px;">
-                💡 <strong>{% trans "Dlaczego tylko za pobraniem?" %}</strong> {% trans "Dzięki temu nie płacimy za drogie bramki płatnicze – oszczędności przekładamy na niższe ceny dla Ciebie. Żadnych ukrytych kosztów, tylko zapłacisz przy odbiorze." %}
+            <div id="cash-on-delivery-note" style="background: #f0f7f0; padding:12px; margin:16px 0; border-left:4px solid var(--forest-green); font-size:13px;">
+                💡 <strong>{% trans "Dlaczego tylko za pobraniem?" %}</strong> {% trans "Brak kosztów bramek płatniczych = niższe ceny. Zapłacisz przy odbiorze." %}
             </div>
-            <div id="international-payment-warning" style="display:none; background: #fff0e0; padding: 12px 16px; margin: 16px 0; border-left: 4px solid var(--forest-green); font-size: 13px;">
+            <div id="international-payment-warning" style="display:none; background:#fff0e0; padding:12px; margin:16px 0; border-left:4px solid var(--forest-green); font-size:13px;">
                 🌍 <strong>{% trans "Wysyłka zagraniczna" %}</strong><br>
-                {% trans "Koszt wysyłki: maksymalnie 250 zł (ostateczna kwota może być niższa – prześlemy ofertę). Płatność: przelew lub karta – skontaktujemy się z Tobą." %}
+                {% trans "Koszt wysyłki ustalany indywidualnie (maksymalnie ok." %} {{ max_shipping_display }} {{ CURRENCY_SYMBOL }}{% trans ")" %}{% trans ")" %} ({% trans "ostateczna kwota może być niższa" %}). {% trans "Płatność: przelew lub karta – skontaktujemy się z Tobą." %}
             </div>
 
-           <button type="submit" class="btn" 
-                style="width:100%; padding:16px; font-size:15px;"
-                onclick="return validateForm()">
+            <button type="submit" class="btn" style="width:100%; padding:16px;" onclick="return validateForm()">
                 {% trans "Złóż zamówienie →" %}
             </button>
         </form>
     </div>
 </section>
+
 <script>
-const CURRENCY_SYMBOL = '{{ CURRENCY_SYMBOL }}';
-const SHIPPING_COST = parseFloat('{{ CURR.shipping }}'.replace(',', '.'));
-const baseTotal = parseFloat('{{ cart.get_total }}'.replace(',', '.'));
-let currentShipping = {% with total_qty=cart.get_total_quantity %}{% if total_qty >= 3 %}0{% else %}SHIPPING_COST{% endif %}{% endwith %};
-<script>
-const baseTotal = parseFloat("{{ cart.get_total }}".replace(',', '.'));
 let discountApplied = false;
-const baseTotal = parseFloat("{{ cart.get_total|convert_price:CURR }}".replace(',', '.'));
-const shippingCost = parseFloat("{{ CURR.shipping }}".replace(',', '.'));
-let currentShipping = {% with total_qty=cart.get_total_quantity %}{% if total_qty >= 3 %}0{% else %}shippingCost{% endif %}{% endwith %};
+const CURR_SYMBOL = '{{ CURRENCY_SYMBOL }}';
 
-const MSG_PAYMENT_COD = '💳 {% trans "Płatność: za pobraniem" %}';
-const MSG_PAYMENT_INTL = '🌍 {% trans "Płatność: przelew / karta (ustalana indywidualnie)" %}';
-const MSG_FREE = '{% trans "zł (darmowa!)" %}';
-const MSG_CODE_EMPTY = '{% trans "⚠ Wpisz kod polecenia." %}';
-const MSG_CODE_OK = '{% trans "✅ Kod zastosowany! Oszczędzasz 20 zł." %}';
-const MSG_CODE_BAD = '{% trans "⚠ Nieprawidłowy kod polecenia." %}';
+function recalculate() {
+    const country = document.querySelector('[name="country"]').value;
+    const shipping = document.querySelector('input[name="shipping_method_radio"]:checked');
+    const shippingMethod = shipping ? shipping.value : 'inpost';
 
-function updateTotal() {
-    let final = baseTotal;
-    if (discountApplied) final -= 20;
-    final += currentShipping;
-    document.getElementById('total-final').textContent = final.toFixed(2) + ' ' + CURRENCY_SYMBOL;
-    document.getElementById('shipping-cost').textContent = currentShipping + ' ' + CURRENCY_SYMBOL;
+    fetch(`/calculate-checkout/?country=${encodeURIComponent(country)}&shipping_method=${shippingMethod}&discount=${discountApplied}`)
+        .then(r => r.json())
+        .then(data => {
+            document.getElementById('shipping-cost').textContent = data.shipping + ' ' + data.symbol;
+            document.getElementById('total-final').textContent = data.total + ' ' + data.symbol;
+
+            // Pokaż/ukryj opcje wysyłki
+            document.querySelectorAll('.shipping-option').forEach(opt => {
+                const type = opt.dataset.countryType;
+                opt.style.display = ((data.is_poland && type === 'pl') || (!data.is_poland && type === 'intl')) ? 'block' : 'none';
+            });
+
+            // Zaznacz domyślną opcję jeśli żadna nie zaznaczona
+            const visible = [...document.querySelectorAll('.shipping-option[style*="block"] input:not([disabled])')];
+            if (visible.length && !visible.some(r => r.checked)) {
+                visible[0].checked = true;
+                document.getElementById('shipping_method_hidden').value = visible[0].value;
+                recalculate(); // przelicz ponownie z nową metodą
+            }
+
+            // Płatność
+            const cashNote = document.getElementById('cash-on-delivery-note');
+            const intlWarning = document.getElementById('international-payment-warning');
+            const paymentInfo = document.getElementById('payment-info');
+            const intlNote = document.getElementById('international-note');
+
+            if (!data.is_poland) {
+                if (cashNote) cashNote.style.display = 'none';
+                if (intlWarning) intlWarning.style.display = 'block';
+                if (paymentInfo) paymentInfo.textContent = '🌍 {% trans "Płatność: przelew / karta (indywidualnie)" %}';
+                if (intlNote) intlNote.style.display = 'block';
+            } else {
+                if (cashNote) cashNote.style.display = 'block';
+                if (intlWarning) intlWarning.style.display = 'none';
+                if (paymentInfo) paymentInfo.textContent = '💳 {% trans "Płatność: za pobraniem" %}';
+                if (intlNote) intlNote.style.display = 'none';
+            }
+        });
 }
 
-function updatePaymentMethod(isInternational) {
-    const cashNote = document.getElementById('cash-on-delivery-note');
-    const intlWarning = document.getElementById('international-payment-warning');
-    const paymentInfo = document.getElementById('payment-info');
-    const freeShippingNote = document.getElementById('free-shipping-note');
-    const intlNoteText = document.getElementById('international-payment-note');
-
-    if (isInternational) {
-        if (cashNote) cashNote.style.display = 'none';
-        if (intlWarning) intlWarning.style.display = 'block';
-        if (paymentInfo) paymentInfo.innerHTML = MSG_PAYMENT_INTL;
-        if (intlNoteText) intlNoteText.style.display = 'block';
-        if (freeShippingNote) freeShippingNote.style.display = 'none';
-    } else {
-        if (cashNote) cashNote.style.display = 'block';
-        if (intlWarning) intlWarning.style.display = 'none';
-        if (paymentInfo) paymentInfo.innerHTML = MSG_PAYMENT_COD;
-        if (intlNoteText) intlNoteText.style.display = 'none';
-        if (freeShippingNote) freeShippingNote.style.display = (totalQuantity >= 3) ? 'inline' : 'none';
-    }
-}
-
-const radios = document.querySelectorAll('input[name="shipping_method_radio"]');
-radios.forEach(radio => {
-    radio.addEventListener('change', function() {
-        let cost = 0;
-        let isInternational = false;
-        if (this.value === 'inpost') {
-            cost = (totalQuantity >= 3) ? 0 : shippingCost;
-            isInternational = false;
-            document.getElementById('shipping_method_hidden').value = 'inpost';
-            const inpostLabel = document.getElementById('inpost-cost-label');
-            if (inpostLabel) inpostLabel.innerHTML = (cost === 0) ? '0 ' + MSG_FREE : SHIPPING_COST + ' ' + CURRENCY_SYMBOL;
-        } else if (this.value === 'international') {
-            cost = 250;
-            isInternational = true;
-            document.getElementById('shipping_method_hidden').value = 'international';
-        } else {
-            return;
-        }
-        currentShipping = cost;
-        updateTotal();
-        updatePaymentMethod(isInternational);
+// Nasłuchiwanie
+document.querySelector('[name="country"]').addEventListener('input', recalculate);
+document.querySelectorAll('input[name="shipping_method_radio"]').forEach(r => {
+    r.addEventListener('change', () => {
+        document.getElementById('shipping_method_hidden').value = r.value;
+        recalculate();
     });
 });
-
-function initShipping() {
-    const defaultRadio = document.querySelector('input[name="shipping_method_radio"][value="inpost"]');
-    if (defaultRadio && defaultRadio.checked) {
-        currentShipping = (totalQuantity >= 3) ? 0 : 30;
-        updateTotal();
-        updatePaymentMethod(false);
-    }
-}
-initShipping();
 
 function checkReferral() {
     const code = document.getElementById('referral_code_input').value.trim().toUpperCase();
     const resultDiv = document.getElementById('referral_result');
     if (!code) {
-        resultDiv.innerHTML = '<span style="color:#c0392b;">' + MSG_CODE_EMPTY + '</span>';
+        resultDiv.innerHTML = '<span style="color:#c0392b;">{% trans "⚠ Wpisz kod polecenia." %}</span>';
         return;
     }
     fetch(`/check-referral/?code=${encodeURIComponent(code)}`)
@@ -279,43 +280,177 @@ function checkReferral() {
                 discountApplied = true;
                 document.getElementById('referral_code_hidden').value = code;
                 document.getElementById('discount-row').style.display = 'flex';
-                resultDiv.innerHTML = '<span style="color:green;">' + MSG_CODE_OK + '</span>';
+                resultDiv.innerHTML = '<span style="color:green;">{% trans "✅ Kod zastosowany! Oszczędzasz 20 zł." %}</span>';
             } else {
                 discountApplied = false;
                 document.getElementById('referral_code_hidden').value = '';
                 document.getElementById('discount-row').style.display = 'none';
-                resultDiv.innerHTML = '<span style="color:#c0392b;">' + MSG_CODE_BAD + '</span>';
+                resultDiv.innerHTML = '<span style="color:#c0392b;">{% trans "⚠ Nieprawidłowy kod polecenia." %}</span>';
             }
-            updateTotal();
+            recalculate();
         });
 }
-function validateForm() {
-    const fields = [
-        { name: 'first_name', msg: '{% trans "Wpisz imię." %}' },
-        { name: 'last_name',  msg: '{% trans "Wpisz nazwisko." %}' },
-        { name: 'email',      msg: '{% trans "Wpisz adres email." %}' },
-        { name: 'phone',      msg: '{% trans "Wpisz numer telefonu." %}' },
-        { name: 'address',    msg: '{% trans "Wpisz ulicę i numer." %}' },
-        { name: 'postal_code',msg: '{% trans "Wpisz kod pocztowy." %}' },
-        { name: 'city',       msg: '{% trans "Wpisz miasto." %}' },
-    ];
 
-    for (const field of fields) {
-        const input = document.querySelector(`[name="${field.name}"]`);
+function validateForm() {
+    const fields = ['first_name', 'last_name', 'email', 'phone', 'address', 'postal_code', 'city'];
+    for (let f of fields) {
+        const input = document.querySelector(`[name="${f}"]`);
         if (input && !input.value.trim()) {
-            alert(field.msg);
+            alert('{% trans "Wypełnij wszystkie pola obowiązkowe." %}');
             input.focus();
             return false;
         }
     }
-
     const shipping = document.querySelector('input[name="shipping_method_radio"]:checked');
     if (!shipping) {
         alert('{% trans "Wybierz metodę dostawy." %}');
         return false;
     }
-
     return true;
 }
+
+// Inicjalizacja
+recalculate();
 </script>
+{% comment %} const CURR_SYMBOL = '{{ CURRENCY_SYMBOL }}';
+const CURR_CODE = '{{ CURRENCY_CODE }}';
+const baseTotalConverted = parseFloat("{{ cart_total_currency }}".replace(',', '.'));
+const maxShippingNum = parseFloat("{{ max_shipping_display }}".replace(',', '.'));
+let totalQuantity = {{ cart.get_total_quantity }};
+let discountApplied = false;
+const discountConverted = parseFloat("{{ 20|convert_price:CURR }}".replace(',', '.'));
+
+function formatNumber(val) {
+    const decimalCurrencies = ['PLN','EUR','USD','GBP','CHF','CAD','NOK','SEK','DKK','RON'];
+    if (decimalCurrencies.includes(CURR_CODE)) {
+        return val.toFixed(2);
+    }
+    return Math.round(val).toString();
+}
+
+function getSelectedShippingConverted() {
+    const selected = document.querySelector('input[name="shipping_method_radio"]:checked');
+    if (!selected) return 0;
+    const optionDiv = selected.closest('.shipping-option');
+    if (!optionDiv) return 0;
+    if (selected.value === 'international') return maxShippingNum;
+    const priceLabel = optionDiv.querySelector('.shipping-price-label');
+    if (!priceLabel) return 0;
+    const text = priceLabel.textContent.trim();
+    if (text.includes('darmowa') || text.startsWith('0')) return 0;
+    const num = parseFloat(text.replace(/[^\d.,]/g, '').replace(',', '.'));
+    return isNaN(num) ? 0 : num;
+}
+
+function updateTotal() {
+    const shippingConv = getSelectedShippingConverted();
+    const discountVal = discountApplied ? discountConverted : 0;
+    const totalConv = baseTotalConverted - discountVal + shippingConv;
+
+    document.getElementById('shipping-cost').innerHTML = formatNumber(shippingConv) + ' ' + CURR_SYMBOL;
+    document.getElementById('total-final').innerHTML = formatNumber(totalConv) + ' ' + CURR_SYMBOL;
+}
+
+function updateShippingOptions(countryValue) {
+    const country = (countryValue || '').trim().toLowerCase();
+    const polishNames = ['polska', 'poland', 'pl', 'polonia', 'lechistan', 'lenkija', 'polen', 'rp', 'lechia'];
+    const isPoland = polishNames.includes(country) || country === '';
+
+    document.querySelectorAll('.shipping-option').forEach(opt => {
+        const type = opt.dataset.countryType;
+        opt.style.display = ((isPoland && type === 'pl') || (!isPoland && type === 'intl')) ? 'block' : 'none';
+    });
+
+    // Zaznacz domyślną opcję
+    const visibleInputs = [...document.querySelectorAll('.shipping-option[style*="block"] input:not([disabled])')];
+    if (visibleInputs.length && !visibleInputs.some(r => r.checked)) {
+        visibleInputs[0].checked = true;
+        document.getElementById('shipping_method_hidden').value = visibleInputs[0].value;
+    }
+
+    updateTotal();
+    updatePaymentMethod();
+}
+
+function updatePaymentMethod() {
+    const selected = document.querySelector('input[name="shipping_method_radio"]:checked');
+    const isInternational = selected && selected.value === 'international';
+    const cashNote = document.getElementById('cash-on-delivery-note');
+    const intlWarning = document.getElementById('international-payment-warning');
+    const paymentInfo = document.getElementById('payment-info');
+    const intlNote = document.getElementById('international-note');
+
+    if (isInternational) {
+        if (cashNote) cashNote.style.display = 'none';
+        if (intlWarning) intlWarning.style.display = 'block';
+        if (paymentInfo) paymentInfo.innerHTML = '🌍 {% trans "Płatność: przelew / karta (indywidualnie)" %}';
+        if (intlNote) intlNote.style.display = 'block';
+    } else {
+        if (cashNote) cashNote.style.display = 'block';
+        if (intlWarning) intlWarning.style.display = 'none';
+        if (paymentInfo) paymentInfo.innerHTML = '💳 {% trans "Płatność: za pobraniem" %}';
+        if (intlNote) intlNote.style.display = 'none';
+    }
+}
+
+const countryInput = document.querySelector('input[name="country"]');
+if (countryInput) {
+    countryInput.addEventListener('input', (e) => updateShippingOptions(e.target.value));
+    updateShippingOptions(countryInput.value);
+}
+
+document.querySelectorAll('input[name="shipping_method_radio"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+        updateTotal();
+        updatePaymentMethod();
+        document.getElementById('shipping_method_hidden').value = radio.value;
+    });
+});
+
+function checkReferral() {
+    const code = document.getElementById('referral_code_input').value.trim().toUpperCase();
+    const resultDiv = document.getElementById('referral_result');
+    if (!code) {
+        resultDiv.innerHTML = '<span style="color:#c0392b;">{% trans "⚠ Wpisz kod polecenia." %}</span>';
+        return;
+    }
+    fetch(`/check-referral/?code=${encodeURIComponent(code)}`)
+        .then(r => r.json())
+        .then(data => {
+            if (data.valid) {
+                discountApplied = true;
+                document.getElementById('referral_code_hidden').value = code;
+                document.getElementById('discount-row').style.display = 'flex';
+                resultDiv.innerHTML = `<span style="color:green;">{% trans "✅ Kod zastosowany! Oszczędzasz" %} ${formatNumber(discountConverted)} ${CURR_SYMBOL}</span>`;
+            } else {
+                discountApplied = false;
+                document.getElementById('referral_code_hidden').value = '';
+                document.getElementById('discount-row').style.display = 'none';
+                resultDiv.innerHTML = '<span style="color:#c0392b;">{% trans "⚠ Nieprawidłowy kod polecenia." %}</span>';
+            }
+            updateTotal();
+        });
+}
+
+function validateForm() {
+    const fields = ['first_name', 'last_name', 'email', 'phone', 'address', 'postal_code', 'city'];
+    for (let f of fields) {
+        let input = document.querySelector(`[name="${f}"]`);
+        if (input && !input.value.trim()) {
+            alert('{% trans "Wypełnij wszystkie pola obowiązkowe." %}');
+            input.focus();
+            return false;
+        }
+    }
+    const shipping = document.querySelector('input[name="shipping_method_radio"]:checked');
+    if (!shipping) {
+        alert('{% trans "Wybierz metodę dostawy." %}');
+        return false;
+    }
+    return true;
+}
+
+updateShippingOptions('');
+updatePaymentMethod();
+</script> {% endcomment %}
 {% endblock %}

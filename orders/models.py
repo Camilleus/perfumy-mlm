@@ -1,3 +1,4 @@
+# orders/models.py
 from django.db import models
 from products.models import Product
 from sellers.models import Seller
@@ -19,20 +20,28 @@ class Order(models.Model):
     address = models.CharField(max_length=200, verbose_name='Ulica i numer')
     city = models.CharField(max_length=100, verbose_name='Miasto')
     postal_code = models.CharField(max_length=10, verbose_name='Kod pocztowy')
+    country = models.CharField(max_length=100, blank=True, verbose_name='Kraj')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='new', verbose_name='Status')
-    total_amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Łączna kwota')
     note = models.TextField(blank=True, verbose_name='Uwagi do zamówienia')
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Data zamówienia')
-    discount = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name='Zniżka')
-    country = models.CharField(max_length=100, blank=True, verbose_name='Kraj')
-    
-    # Nowe pola dla wysyłki
+
+    # Kwoty w PLN (do rozliczeń)
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='Łączna kwota (PLN)')
+    discount = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name='Zniżka (PLN)')
+    shipping_cost = models.DecimalField(max_digits=6, decimal_places=2, default=0, verbose_name='Koszt wysyłki (PLN)')
+
+    # Wysyłka
     shipping_method = models.CharField(max_length=20, default='inpost', verbose_name='Metoda dostawy')
-    shipping_cost = models.DecimalField(max_digits=6, decimal_places=2, default=0, verbose_name='Koszt wysyłki')
     shipping_method_name = models.CharField(max_length=50, blank=True, verbose_name='Nazwa metody dostawy')
 
-    #   Język zamówienia (domyślnie polski)
+    # Język i waluta
     language = models.CharField(max_length=10, default='pl', verbose_name='Język')
+    currency = models.CharField(max_length=10, default='PLN', verbose_name='Waluta zamówienia')
+    currency_symbol = models.CharField(max_length=5, default='zł', verbose_name='Symbol waluty')
+
+    # Kwoty w walucie klienta (do wyświetlania)
+    total_amount_currency = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name='Łączna kwota w walucie')
+    shipping_cost_currency = models.DecimalField(max_digits=10, decimal_places=2, default=0, verbose_name='Koszt wysyłki w walucie')
 
     def __str__(self):
         return f"Zamówienie #{self.pk} – {self.first_name} {self.last_name}"
@@ -45,15 +54,12 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
-    product = models.ForeignKey(Product, on_delete=models.PROTECT)
-    quantity = models.IntegerField(default=1)
-    price = models.DecimalField(max_digits=10, decimal_places=2)
-
-    def get_total(self):
-        return self.price * self.quantity
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+    price = models.DecimalField(max_digits=8, decimal_places=2)
 
     def __str__(self):
-        return f"{self.product.name} x{self.quantity}"
+        return f"{self.product.name} × {self.quantity}"
 
     class Meta:
         verbose_name = 'Pozycja zamówienia'
