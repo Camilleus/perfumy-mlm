@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load currency_tags %}
+
+{% block title %}{% trans "Koszyk – Przystanek Perfumy" %}{% endblock %}
 
 {% block content %}
 <section class="section-pad">
@@ -32,8 +35,8 @@
                                 <a href="{% url 'cart_increase' item.pk %}" style="display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:50%; background:var(--gold-gradient); color:#000; font-weight:700; font-size:16px;">+</a>
                             </div>
                             <div style="display:flex; align-items:center; gap:16px;">
-                                <span style="color:var(--forest-green); font-weight:600;">{{ item.price }} zł</span>
-                                <a href="{% url 'cart_remove' item.pk %}" style="color:#c0392b; font-size:12px;">{% trans "Usuń" %}</a>
+                                <span style="color:var(--forest-green); font-weight:600;">{{ item.price|convert_price:CURR }} {{ CURRENCY_SYMBOL }}</span>
+                                <a href="{% url 'cart_remove' item.pk %}" style="color:#c0392b; font-size:12px;">{% trans "Usuń" %} "🗑️"</a>
                             </div>
                         </div>
                     </div>
@@ -44,13 +47,13 @@
 
         <div style="text-align:right; margin-top:8px;">
             <div style="font-size:22px; font-weight:600; margin-bottom:16px;">
-                {% trans "Razem:" %} {{ cart.get_total }} zł
+                {% trans "Razem:" %} {{ cart.get_total|convert_price:CURR }} {{ CURRENCY_SYMBOL }}
             </div>
             <!-- UWAGA O DOSTĘPNOŚCI -->
             <div style="background:#fffdf0; border:1px solid var(--gold); border-left:4px solid var(--gold); padding:16px 20px; margin-bottom:20px; font-size:14px; line-height:1.7; color:#555;">
                 <strong style="color:var(--forest-green);">{% trans "⚠️ Ważna informacja:" %}</strong><br>
                 {% trans "Jeśli któregoś z zamówionych perfum zabraknie w magazynie, skontaktujemy się z Tobą niezwłocznie – przez" %}
-                <strong>WhatsApp <a href="https://wa.me/48534293389" style="color:var(--forest-green);">{% trans "+48 534 293 389" %}</a></strong>
+                <strong>WhatsApp <a href="https://wa.me/48534293389" style="color:var(--forest-green);">+48 534 293 389</a></strong>
                 {% trans "lub mailowo na adres podany przy zamówieniu. Dziękujemy za wyrozumiałość! 🌿" %}
             </div>
             <a href="{% url 'checkout' %}" class="btn" style="padding:14px 36px; font-size:15px;">{% trans "Przejdź do zamówienia →" %}</a>

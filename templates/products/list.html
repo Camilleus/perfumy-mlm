@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load currency_tags %}
 {% block title %}
 {% if current_gender == 'K' %}{% trans "Damskie" %} {% elif current_gender == 'M' %}{% trans "Męskie" %} {% elif current_gender == 'U' %}{% trans "Unisex" %} {% endif %}{% trans "Perfumy" %}{% if current_brand %} {{ current_brand }}{% endif %}{% if current_category %} – {{ current_category }}{% endif %} | Przystanek Perfumy
 {% endblock %}
@@ -26,7 +27,7 @@
             <div class="stat-divider"></div>
             <div class="stat-item">
                 <div class="stat-label">{% trans "Już Od" %}</div>
-                <div class="stat-num">199.95 <span style="font-size:14px">{% trans "zł" %}</span></div>
+                <div class="stat-num">{{ CURR.p199 }} <span style="font-size:14px">{{ CURRENCY_SYMBOL }}</span></div>
             </div>
             <div class="stat-divider"></div>
             <div class="stat-item">
@@ -47,7 +48,7 @@
             <div class="search-bar">
                 <span class="search-icon">{% trans "🔍" %}</span>
                 <input class="search-input" type="text" name="brand"
-                    placeholder="Szukaj marki, np. Dior..."
+                    placeholder="{% trans "Szukaj marki, np. Dior..." %}"
                     value="{{ current_brand }}">
                 <button type="submit" class="search-btn">{% trans "Szukaj" %}</button>
             </div>
@@ -129,7 +130,7 @@
                         </span>
                     {% endif %}
                     {% if current_price_min or current_price_max %}
-                        <span class="active-tag">{{ current_price_min }}–{{ current_price_max }} zł <a href="#" onclick="return removeParams('price_min','price_max')">✕</a></span>
+                        <span class="active-tag">{{ current_price_min|convert_price:CURR }}–{{ current_price_max|convert_price:CURR }} {{ CURRENCY_SYMBOL }} <a href="#" onclick="return removeParams('price_min','price_max')">✕</a></span>
                     {% endif %}
                 </div>
 
@@ -150,7 +151,8 @@
                                 {% elif product.gender == 'M' %}{% trans "Męskie" %}
                                 {% else %}{% trans "Unisex" %}{% endif %}
                             </div>
-                            <div class="product-price">{{ product.price }} zł</div>
+                            {% load currency_tags %}
+                            <div class="product-price">{{ product.price|convert_price:CURR }} {{ CURRENCY_SYMBOL }}</div>
                             <div class="product-volume">{% trans "📦 100 ml" %}</div>
                             <button class="btn" style="width:100%; padding:9px;">{% trans "Zobacz więcej" %}</button>
                         </div>

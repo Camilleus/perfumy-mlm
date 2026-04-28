@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load currency_tags %}
 
-{% block title %}Moje zamówienia – Przystanek Perfumy{% endblock %}
+{% block title %}{% trans "Moje zamówienia – Przystanek Perfumy" %}{% endblock %}
 
 {% block content %}
 <section class="section-pad">
@@ -12,12 +13,12 @@
         <!-- Formularz dla gościa -->
         <div class="card-border" style="max-width:500px;">
             <p style="color:#888; margin-bottom:20px; font-size:15px;">
-                Wpisz email użyty przy zamówieniu – pokażemy Ci historię zakupów.
+                {% trans "Wpisz email użyty przy zamówieniu – pokażemy Ci historię zakupów." %}
             </p>
             <form method="post">
                 {% csrf_token %}
                 <label class="form-label">{% trans "Twój email *" %}</label>
-                <input type="email" name="email" required placeholder="np. jan@kowalski.pl"
+                <input type="email" name="email" required placeholder="{% trans 'np. jan@kowalski.pl' %}"
                     class="form-input" style="margin-bottom:14px;">
                 <button type="submit" class="btn" style="width:100%; padding:13px;">{% trans "Sprawdź zamówienia" %}</button>
             </form>
@@ -25,12 +26,12 @@
 
         {% elif orders is not None and orders.count == 0 %}
         <div class="card-border" style="text-align:center; max-width:500px;">
-            <div style="font-size:48px; margin-bottom:14px;">{% trans "📭" %}</div>
+            <div style="font-size:48px; margin-bottom:14px;">📭</div>
             <p style="color:#888; font-size:15px; margin-bottom:20px;">
                 {% if email_searched %}
-                    Nie znaleźliśmy zamówień dla <strong>{{ email_searched }}</strong>.
+                    {% blocktrans with email=email_searched %}Nie znaleźliśmy zamówień dla <strong>{{ email }}</strong>.{% endblocktrans %}
                 {% else %}
-                    Nie masz jeszcze żadnych zamówień.
+                    {% trans "Nie masz jeszcze żadnych zamówień." %}
                 {% endif %}
             </p>
             <a href="/" class="btn" style="padding:12px 28px;">{% trans "Przejdź do sklepu" %}</a>
@@ -44,7 +45,7 @@
         {% elif orders %}
         {% if email_searched %}
         <p style="color:#888; font-size:13px; margin-bottom:20px;">
-            Zamówienia dla: <strong>{{ email_searched }}</strong>
+            {% blocktrans with email=email_searched %}Zamówienia dla: <strong>{{ email }}</strong>{% endblocktrans %}
             <a href="{% url 'my_orders' %}" style="color:var(--gold); margin-left:10px; font-size:12px;">{% trans "← Szukaj innego" %}</a>
         </p>
         {% endif %}
@@ -54,13 +55,13 @@
             <div class="card-border">
                 <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
                     <div>
-                        <div style="font-size:16px; font-weight:600;">Zamówienie #{{ order.pk }}</div>
+                        <div style="font-size:16px; font-weight:600;">{% blocktrans with pk=order.pk %}Zamówienie #{{ pk }}{% endblocktrans %}</div>
                         <div style="color:#888; font-size:12px; margin-top:4px;">{{ order.created_at|date:"d.m.Y, H:i" }}</div>
                     </div>
                     <div style="text-align:right;">
-                        <div style="font-size:18px; font-weight:700; color:var(--forest-green);">{{ order.total_amount }} zł</div>
+                        <div style="font-size:18px; font-weight:700; color:var(--forest-green);">{{ order.total_amount|convert_price:CURR }} {{ CURRENCY_SYMBOL }}</div>
                         {% if order.discount %}
-                        <div style="font-size:11px; color:green;">Zniżka: -{{ order.discount }} zł</div>
+                        <div style="font-size:11px; color:green;">{% blocktrans with discount=order.discount %}Zniżka: -{{ discount }} zł{% endblocktrans %}</div>
                         {% endif %}
                     </div>
                 </div>
@@ -85,7 +86,7 @@
                     {% for item in order.items.all %}
                     <div style="display:flex; justify-content:space-between; font-size:13px; margin-bottom:6px; color:#444; flex-wrap:wrap; gap:4px;">
                         <span>{{ item.product.name }} <span style="color:#aaa;">× {{ item.quantity }}</span></span>
-                        <span style="font-weight:600;">{{ item.price }} zł</span>
+                        <span style="font-weight:600;">{{ item.price|convert_price:CURR }} {{ CURRENCY_SYMBOL }}</span>
                     </div>
                     {% endfor %}
                 </div>

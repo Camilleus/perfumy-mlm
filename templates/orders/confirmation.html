@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load currency_tags %}
+
+{% block title %}{% trans "Potwierdzenie zamówienia – Przystanek Perfumy" %}{% endblock %}
 
 {% block content %}
 <section class="section-pad">
@@ -18,13 +21,12 @@
             {% for item in order.items.all %}
             <div style="display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 14px;">
                 <span>{{ item.product.name }} × {{ item.quantity }}</span>
-                <span style="font-weight: 600;">{{ item.price }} zł</span>
+                <span style="font-weight: 600;">{{ item.price|convert_price:CURR }} {{ CURRENCY_SYMBOL }}</span>
             </div>
             {% endfor %}
 
-            <!-- DOSTAWA -->
             <div style="display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 14px; border-top: 1px solid #ddd; padding-top: 12px; margin-top: 12px;">
-                <span>{% trans "Dostawa" %} 
+                <span>{% trans "Dostawa" %}
                     {% if order.shipping_method == 'international' %}({% trans "Wysyłka zagraniczna" %})
                     {% elif order.shipping_method == 'inpost_free' %}(InPost Kurier – {% trans "darmowa" %})
                     {% elif order.shipping_method == 'inpost' %}(InPost Kurier)
@@ -35,16 +37,14 @@
                     {% if order.shipping_method == 'international' %}
                         {% trans "do 250 zł (uzgodniona indywidualnie)" %}
                     {% else %}
-                        {% if order.shipping_cost == 0 %}{% trans "GRATIS" %}{% else %}{{ order.shipping_cost }} zł{% endif %}
+                        {% if order.shipping_cost == 0 %}{% trans "GRATIS" %}{% else %}{{ order.shipping_cost|convert_price:CURR }} {{ CURRENCY_SYMBOL }}{% endif %}
                     {% endif %}
                 </span>
             </div>
 
-            <!-- RAZEM – bez żadnego liczenia, tylko order.total_amount -->
             <div style="display: flex; justify-content: space-between; font-size: 18px; font-weight: 700;">
                 <span>{% trans "Razem" %}</span>
-                <span style="color: var(--forest-green);">{{ order.total_amount }} zł</span>
-            </div>
+                <span style="color: var(--forest-green);">{{ order.total_amount|convert_price:CURR }} {{ CURRENCY_SYMBOL }}</span>
         </div>
 
         <div class="card-border" style="text-align: left; margin-bottom: 32px;">

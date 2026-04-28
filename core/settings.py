@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'reviews',
     'blog',
     'anymail',
+    'core',
 ]
 CSRF_TRUSTED_ORIGINS = [
     'https://web-production-0c35c.up.railway.app',
@@ -61,8 +62,10 @@ TEMPLATES = [
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
+                'django.template.context_processors.i18n',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'core.context_processors.currency'
             ],
         },
     },

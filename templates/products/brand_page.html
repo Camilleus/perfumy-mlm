@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load currency_tags %}
 
-{% block title %}{{ title }} – Przystanek Perfumy{% endblock %}
+{% block title %}{{ title }} – {% trans "Przystanek Perfumy" %}{% endblock %}
 
 {% block meta %}
 <meta name="description" content="{{ seo_description }}">
@@ -36,10 +37,10 @@
         <!-- BREADCRUMB -->
         <nav style="font-size:13px; color:#aaa; margin-bottom:20px;">
             <a href="/" style="color:var(--gold);">{% trans "Strona główna" %}</a>
-            <span style="margin:0 6px;">{% trans "›" %}</span>
+            <span style="margin:0 6px;">›</span>
             <a href="/perfumy/{{ brand_slug }}/" style="color:var(--gold);">{{ brand_name }}</a>
             {% if gender %}
-            <span style="margin:0 6px;">{% trans "›" %}</span>
+            <span style="margin:0 6px;">›</span>
             <span style="color:#666;">{{ gender_label|title }}</span>
             {% endif %}
         </nav>
@@ -47,7 +48,7 @@
         <!-- NAGŁÓWEK -->
         <div style="margin-bottom:32px;">
             <h1 style="font-size:clamp(28px, 5vw, 44px); font-weight:300; margin-bottom:12px;">
-                Perfumy <em style="font-style:italic; color:var(--gold);">{{ brand_name }}</em>
+                {% blocktrans with brand=brand_name %}Perfumy <em style="font-style:italic; color:var(--gold);">{{ brand }}</em>{% endblocktrans %}
                 {% if gender_label %} – {{ gender_label }}{% endif %}
             </h1>
             <p style="color:#888; font-size:15px; margin-bottom:16px;">{{ seo_description }}</p>
@@ -56,19 +57,19 @@
             <div style="display:flex; gap:8px; flex-wrap:wrap;">
                 <a href="/perfumy/{{ brand_slug }}/"
                    style="{% if not gender %}background:var(--forest-green); color:var(--gold);{% else %}color:var(--forest-green);{% endif %} border:1px solid var(--forest-green); border-radius:20px; padding:5px 14px; font-size:12px; font-weight:700; text-transform:uppercase;">
-                    Wszystkie
+                    {% trans "Wszystkie" %}
                 </a>
                 <a href="/perfumy/{{ brand_slug }}/damskie/"
                    style="{% if gender == 'K' %}background:var(--forest-green); color:var(--gold);{% else %}color:var(--forest-green);{% endif %} border:1px solid var(--forest-green); border-radius:20px; padding:5px 14px; font-size:12px; font-weight:700; text-transform:uppercase;">
-                    Dla niej
+                    {% trans "Dla niej" %}
                 </a>
                 <a href="/perfumy/{{ brand_slug }}/meskie/"
                    style="{% if gender == 'M' %}background:var(--forest-green); color:var(--gold);{% else %}color:var(--forest-green);{% endif %} border:1px solid var(--forest-green); border-radius:20px; padding:5px 14px; font-size:12px; font-weight:700; text-transform:uppercase;">
-                    Dla niego
+                    {% trans "Dla niego" %}
                 </a>
                 <a href="/perfumy/{{ brand_slug }}/unisex/"
                    style="{% if gender == 'U' %}background:var(--forest-green); color:var(--gold);{% else %}color:var(--forest-green);{% endif %} border:1px solid var(--forest-green); border-radius:20px; padding:5px 14px; font-size:12px; font-weight:700; text-transform:uppercase;">
-                    Unisex
+                    {% trans "Unisex" %}
                 </a>
             </div>
         </div>
@@ -76,7 +77,7 @@
         <!-- SORTOWANIE -->
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; flex-wrap:wrap; gap:10px;">
             <div style="font-size:13px; color:#888;">
-                Znaleziono: <strong style="color:var(--forest-green);">{{ total_count }}</strong> perfum
+                {% blocktrans with count=total_count %}Znaleziono: <strong style="color:var(--forest-green);">{{ count }}</strong> perfum{% endblocktrans %}
             </div>
             <div style="display:flex; align-items:center; gap:8px;">
                 <span style="font-size:13px; color:#888;">{% trans "Sortuj:" %}</span>
@@ -96,20 +97,23 @@
             <a href="{% url 'product_detail' product.slug %}" style="text-decoration:none; color:inherit;">
                 <div class="product-card">
                     {% if product.image %}
-                    <img src="{{ product.image }}" alt="Perfumy {{ product.name }} {{ brand_name }} – Przystanek Perfumy" loading="lazy">
+                    <img src="{{ product.image }}" alt="{% blocktrans with name=product.name brand=brand_name %}Perfumy {{ name }} {{ brand }} – Przystanek Perfumy{% endblocktrans %}" loading="lazy">
                     {% else %}
-                    <div class="product-placeholder">{% trans "🧴" %}</div>
+                    <div class="product-placeholder">🧴</div>
                     {% endif %}
                     <div class="product-name">{{ product.name }}</div>
                     <div class="product-brand">{{ product.brand }}</div>
                     <div class="product-gender">{{ product.get_gender_display }}</div>
-                    <div class="product-price">{{ product.price }} zł</div>
+                    <div class="product-price">{{ product.price|convert_price:CURR }} {{ CURRENCY_SYMBOL }}</div>
                     <div class="product-volume">{% trans "📦 100 ml" %}</div>
                     <button class="btn" style="width:100%; padding:9px;">{% trans "Zobacz więcej" %}</button>
                 </div>
             </a>
             {% empty %}
-            <p style="color:#888; grid-column:1/-1;">Brak produktów {{ brand_name }} {% if gender_label %}{{ gender_label }}{% endif %}.</p>
+            <p style="color:#888; grid-column:1/-1;">
+                {% blocktrans with brand=brand_name %}Brak produktów {{ brand }}{% endblocktrans %}
+                {% if gender_label %}{{ gender_label }}{% endif %}.
+            </p>
             {% endfor %}
         </div>
 
@@ -117,7 +121,7 @@
         {% if page_obj.has_other_pages %}
         <div class="pagination" style="margin-top:40px; text-align:center;">
             {% if page_obj.has_previous %}
-                <a href="?page=1&sort={{ current_sort }}" class="btn-ghost">{% trans "&laquo; pierwsza" %}</a>
+                <a href="?page=1&sort={{ current_sort }}" class="btn-ghost">{% trans "« pierwsza" %}</a>
                 <a href="?page={{ page_obj.previous_page_number }}&sort={{ current_sort }}" class="btn-ghost">{% trans "poprzednia" %}</a>
             {% endif %}
             {% for num in page_obj.paginator.page_range %}
@@ -129,20 +133,28 @@
             {% endfor %}
             {% if page_obj.has_next %}
                 <a href="?page={{ page_obj.next_page_number }}&sort={{ current_sort }}" class="btn-ghost">{% trans "następna" %}</a>
-                <a href="?page={{ page_obj.paginator.num_pages }}&sort={{ current_sort }}" class="btn-ghost">{% trans "ostatnia &raquo;" %}</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}&sort={{ current_sort }}" class="btn-ghost">{% trans "ostatnia »" %}</a>
             {% endif %}
         </div>
         {% endif %}
 
         <!-- TEKST SEO na dole -->
         <div style="margin-top:60px; padding:32px; background:white; border-left:3px solid var(--gold);">
-            <h2 style="font-size:20px; font-weight:400; margin-bottom:12px;">Perfumy {{ brand_name }} w Przystanku Perfumy</h2>
+            <h2 style="font-size:20px; font-weight:400; margin-bottom:12px;">
+                {% blocktrans with brand=brand_name %}Perfumy {{ brand }} w Przystanku Perfumy{% endblocktrans %}
+            </h2>
             <p style="font-size:14px; color:#666; line-height:1.9;">
-                Oferujemy pełną kolekcję perfum {{ brand_name }} w cenach hurtowych – bez marży wielkich drogerii.
-                {% if gender == 'K' %}Nasze perfumy {{ brand_name }} dla kobiet to starannie wyselekcjonowane zapachy – od delikatnych i kwiatowych po zmysłowe i orientalne.{% endif %}
-                {% if gender == 'M' %}Perfumy {{ brand_name }} dla mężczyzn w naszym sklepie to bogaty wybór zapachów – od świeżych i sportowych po drzewne i eleganckie.{% endif %}
-                {% if not gender %}W naszej ofercie znajdziesz perfumy {{ brand_name }} dla kobiet, mężczyzn i unisex – każdy zapach w pojemności 100 ml, z szybką wysyłką.{% endif %}
-                Darmowa dostawa przy zamówieniu 3 lub więcej perfum. Płatność za pobraniem.
+                {% blocktrans with brand=brand_name %}Oferujemy pełną kolekcję perfum {{ brand }} w cenach hurtowych – bez marży wielkich drogerii.{% endblocktrans %}
+                {% if gender == 'K' %}
+                    {% blocktrans with brand=brand_name %}Nasze perfumy {{ brand }} dla kobiet to starannie wyselekcjonowane zapachy – od delikatnych i kwiatowych po zmysłowe i orientalne.{% endblocktrans %}
+                {% endif %}
+                {% if gender == 'M' %}
+                    {% blocktrans with brand=brand_name %}Perfumy {{ brand }} dla mężczyzn w naszym sklepie to bogaty wybór zapachów – od świeżych i sportowych po drzewne i eleganckie.{% endblocktrans %}
+                {% endif %}
+                {% if not gender %}
+                    {% blocktrans with brand=brand_name %}W naszej ofercie znajdziesz perfumy {{ brand }} dla kobiet, mężczyzn i unisex – każdy zapach w pojemności 100 ml, z szybką wysyłką.{% endblocktrans %}
+                {% endif %}
+                {% trans "Darmowa dostawa przy zamówieniu 3 lub więcej perfum. Płatność za pobraniem." %}
             </p>
         </div>
 

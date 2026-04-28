@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load static %}
 
-{% block title %}Formularz odstąpienia od umowy – Przystanek Perfumy{% endblock %}
+{% block title %}{% trans "Formularz odstąpienia od umowy – Przystanek Perfumy" %}{% endblock %}
 
 {% block content %}
 <section class="section-pad">
@@ -40,7 +40,7 @@
 
                 <div class="form-group">
                     <label class="form-label">{% trans "Nazwa produktu / produktów, od których odstępuję" %}</label>
-                    <textarea name="products" rows="3" class="form-input" required placeholder="np. 1x Dior Sauvage 100ml, 2x Chanel No.5 50ml"></textarea>
+                    <textarea name="products" rows="3" class="form-input" required placeholder="{% trans "np. 1x Dior Sauvage 100ml, 2x Chanel No.5 50ml" %}"></textarea>
                 </div>
 
                 <div class="form-group">

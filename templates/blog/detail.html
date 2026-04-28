@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}{{ post.title }} – Przystanek Perfumy{% endblock %}
+{% block title %}{{ post.title }} – {% trans "Przystanek Perfumy" %}{% endblock %}
 
 {% block meta %}
 <meta name="description" content="{{ post.excerpt|default:post.content|truncatechars:150 }}">

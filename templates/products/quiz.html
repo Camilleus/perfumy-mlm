@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load currency_tags %}  
 
 {% block content %}
 <section class="section-pad">
@@ -54,7 +55,9 @@
                     </label>
                 </div>
 
-                <button type="submit" class="btn" style="width:100%; padding:14px; font-size:15px;">{% trans "Znajdź perfumy" %}</button>
+                <button type="submit" class="btn" style="width:100%; padding:14px; font-size:15px;" 
+                onclick="return validateQuiz()">{% trans "Znajdź perfumy" %}
+                </button>
             </form>
         </div>
 
@@ -83,7 +86,7 @@
                                     {% elif product.gender == 'M' %}{% trans "Męskie" %}
                                     {% else %}{% trans "Unisex" %}{% endif %}
                                 </div>
-                                <div class="product-price">{{ product.price }} zł</div>
+                                <div class="product-price">{{ product.price|convert_price:CURR }} {{ CURRENCY_SYMBOL }}</div>
                                 <div class="product-volume">{% trans "📦 100 ml" %}</div>
                                 <button class="btn" style="width:100%; padding:9px;">{% trans "Zobacz więcej" %}</button>
                             </div>
@@ -126,4 +129,22 @@
     </div>
 </section>
 {% include "includes/faq.html" %}
+<script>
+function validateQuiz() {
+    const groups = ['intensity', 'category', 'occasion'];
+    const msgs = {
+        'intensity': '{% trans "Wybierz intensywność zapachu." %}',
+        'category': '{% trans "Wybierz nuty zapachowe." %}',
+        'occasion': '{% trans "Wybierz okazję." %}',
+    };
+    for (const group of groups) {
+        const checked = document.querySelector(`input[name="${group}"]:checked`);
+        if (!checked) {
+            alert(msgs[group]);
+            return false;
+        }
+    }
+    return true;
+}
+</script>
 {% endblock %}

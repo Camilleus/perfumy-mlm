@@ -1,5 +1,8 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load currency_tags %}
+
+{% block title %}{% trans "Dane do zamówienia – Przystanek Perfumy" %}{% endblock %}
 
 {% block content %}
 <section class="section-pad">
@@ -11,7 +14,6 @@
             <input type="hidden" name="referral_code" id="referral_code_hidden" value="">
             <input type="hidden" name="shipping_method" id="shipping_method_hidden" value="inpost">
 
-            <!-- … pozostałe pola formularza (imię, nazwisko, email, telefon, adres, kod, miasto) … -->
             <div class="form-grid-2">
                 <div class="form-group">
                     <label class="form-label">{% trans "Imię" %}</label>
@@ -50,9 +52,10 @@
                 </div>
             </div>
 
+            <!-- KRAJ – bez domyślnej wartości "Polska" -->
             <div class="form-group">
                 <label class="form-label">{% trans "Kraj" %}</label>
-                <input type="text" name="country" placeholder="Polska" class="form-input" value="Polska">
+                <input type="text" name="country" placeholder="{% trans 'np. Polska, España...' %}" class="form-input">
                 <small style="font-size:11px; color:#888;">{% trans "W przypadku wysyłki zagranicznej wpisz kraj docelowy." %}</small>
             </div>
 
@@ -61,13 +64,13 @@
                 <textarea name="note" rows="3" class="form-input"></textarea>
             </div>
 
-            <!-- Sekcja kodu polecenia (bez zmian) -->
+            <!-- Sekcja kodu polecenia -->
             <div style="background:#fffdf0; border:1px solid var(--gold); padding:20px; margin-bottom:24px;">
                 <label style="display:block; font-size:14px; font-weight:600; margin-bottom:6px;">{% trans "🎁 Masz kod polecenia?" %}</label>
                 <p style="font-size:13px; color:#888; margin-bottom:12px;">{% trans "Wpisz kod znajomego i otrzymaj" %} <strong>{% trans "-20 zł" %}</strong> {% trans "na to zamówienie!" %}</p>
                 <div style="display:flex; gap:10px; flex-wrap:wrap;">
                     <input type="text" id="referral_code_input" placeholder="np. KAMIL-X7K2" style="flex:1; min-width:160px; padding:12px; border:1px solid #ddd; font-size:15px; text-transform:uppercase;">
-                    <button type="button" onclick="checkReferral()" class="btn" style="padding:12px 20px;">Sprawdź</button>
+                    <button type="button" onclick="checkReferral()" class="btn" style="padding:12px 20px;">{% trans "Sprawdź" %}</button>
                 </div>
                 <div id="referral_result" style="margin-top:10px; font-size:14px;"></div>
             </div>
@@ -80,17 +83,17 @@
                 {% for item in cart.get_items %}
                 <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:14px;">
                     <span>{{ item.name }} × {{ item.quantity }}</span>
-                    <span style="font-weight:600; flex-shrink:0; margin-left:16px;">{{ item.price }} zł</span>
+                    <span style="font-weight:600; flex-shrink:0; margin-left:16px;">{{ item.price|convert_price:CURR }} {{ CURRENCY_SYMBOL }}</span>
                 </div>
                 {% endfor %}
 
-                <!-- WYBÓR DOSTAWY – dodana opcja międzynarodowa -->
+                <!-- WYBÓR DOSTAWY -->
                 <div style="margin:16px 0; padding:14px 0; border-top:1px solid #eee; border-bottom:1px solid #eee;">
                     <h4 style="font-weight:400; margin-bottom:10px; font-size:14px;">{% trans "✈️ Wybierz dostawę" %}</h4>
 
                     {% with total_qty=cart.get_total_quantity %}
                     <p style="font-size:13px; margin-bottom:10px; color:#555;">
-                        📦 W koszyku: <strong>{{ total_qty }} szt.</strong>
+                        📦 {% trans "W koszyku:" %} <strong>{{ total_qty }} {% trans "szt." %}</strong>
                         <span id="free-shipping-note">{% if total_qty >= 3 %} – <span style="color:green;">{% trans "🎉 Darmowa dostawa InPost!" %}</span>{% endif %}</span>
                     </p>
 
@@ -106,7 +109,7 @@
                             <input type="radio" name="shipping_method_radio" value="inpost"
                                 data-cost="{% if total_qty >= 3 %}0{% else %}30{% endif %}"
                                 style="margin-top:3px;">
-                            <span>{% trans "InPost Kurier (wysyłka do 48) –" %}
+                            <span>{% trans "InPost Kurier (wysyłka do 48h) –" %}
                                 <strong id="inpost-cost-label">
                                     {% if total_qty >= 3 %}0 {% trans "zł (darmowa!)" %}{% else %}30 {% trans "zł" %}{% endif %}
                                 </strong>
@@ -129,7 +132,7 @@
                 <div style="border-top:1px solid #ddd; padding-top:12px; margin-top:12px;">
                     <div style="display:flex; justify-content:space-between; font-size:15px; margin-bottom:6px;">
                         <span>{% trans "Suma produktów" %}</span>
-                        <span id="total-base">{{ cart.get_total }} zł</span>
+                        <span id="total-base">{{ cart.get_total|convert_price:CURR }} {{ CURRENCY_SYMBOL }}</span>
                     </div>
                     <div id="discount-row" style="display:none; justify-content:space-between; font-size:14px; color:green; margin-bottom:6px;">
                         <span>{% trans "Zniżka (kod polecenia)" %}</span>
@@ -139,7 +142,7 @@
                         <span>{% trans "Dostawa" %}</span>
                         <span id="shipping-cost">
                             {% with total_qty=cart.get_total_quantity %}
-                                {% if total_qty >= 3 %}0 zł{% else %}30 zł{% endif %}
+                                {% if total_qty >= 3 %}0 {{ CURRENCY_SYMBOL }}{% else %}{{ CURR.shipping }} {{ CURRENCY_SYMBOL }}{% endif %}
                             {% endwith %}
                         </span>
                     </div>
@@ -149,9 +152,10 @@
                     <div style="display:flex; justify-content:space-between; font-size:19px; font-weight:700; margin-top:10px;">
                         <span>{% trans "Razem" %}</span>
                         <span id="total-final" style="color:var(--forest-green);">
-                            {% with total_qty=cart.get_total_quantity %}
-                                {% if total_qty >= 3 %}{{ cart.get_total }} zł
-                                {% else %}{{ cart.get_total|add:"30" }} zł{% endif %}
+                                {% with converted=cart.get_total|convert_price:CURR %}
+                                {% if total_qty >= 3 %}{{ converted }} {{ CURRENCY_SYMBOL }}
+                                    {% else %}{{ converted|add_prices:CURR.shipping }} {{ CURRENCY_SYMBOL }}
+                                {% endif %}
                             {% endwith %}
                         </span>
                     </div>
@@ -163,32 +167,46 @@
             </div>
 
             <div id="cash-on-delivery-note" style="background: #f0f7f0; padding: 12px 16px; margin: 16px 0; border-left: 4px solid var(--forest-green); font-size: 13px;">
-                💡 <strong>{% trans "Dlaczego tylko za pobraniem?" %}</strong> Dzięki temu nie płacimy za drogie bramki płatnicze – oszczędności przekładamy na niższe ceny dla Ciebie. Żadnych ukrytych kosztów, tylko zapłacisz przy odbiorze.
+                💡 <strong>{% trans "Dlaczego tylko za pobraniem?" %}</strong> {% trans "Dzięki temu nie płacimy za drogie bramki płatnicze – oszczędności przekładamy na niższe ceny dla Ciebie. Żadnych ukrytych kosztów, tylko zapłacisz przy odbiorze." %}
             </div>
             <div id="international-payment-warning" style="display:none; background: #fff0e0; padding: 12px 16px; margin: 16px 0; border-left: 4px solid var(--forest-green); font-size: 13px;">
                 🌍 <strong>{% trans "Wysyłka zagraniczna" %}</strong><br>
                 {% trans "Koszt wysyłki: maksymalnie 250 zł (ostateczna kwota może być niższa – prześlemy ofertę). Płatność: przelew lub karta – skontaktujemy się z Tobą." %}
             </div>
 
-            <button type="submit" class="btn" style="width:100%; padding:16px; font-size:15px;">
+           <button type="submit" class="btn" 
+                style="width:100%; padding:16px; font-size:15px;"
+                onclick="return validateForm()">
                 {% trans "Złóż zamówienie →" %}
             </button>
         </form>
     </div>
 </section>
-
+<script>
+const CURRENCY_SYMBOL = '{{ CURRENCY_SYMBOL }}';
+const SHIPPING_COST = parseFloat('{{ CURR.shipping }}'.replace(',', '.'));
+const baseTotal = parseFloat('{{ cart.get_total }}'.replace(',', '.'));
+let currentShipping = {% with total_qty=cart.get_total_quantity %}{% if total_qty >= 3 %}0{% else %}SHIPPING_COST{% endif %}{% endwith %};
 <script>
 const baseTotal = parseFloat("{{ cart.get_total }}".replace(',', '.'));
 let discountApplied = false;
-let currentShipping = {% with total_qty=cart.get_total_quantity %}{% if total_qty >= 3 %}0{% else %}30{% endif %}{% endwith %};
-const totalQuantity = {{ cart.get_total_quantity|default:0 }};
+const baseTotal = parseFloat("{{ cart.get_total|convert_price:CURR }}".replace(',', '.'));
+const shippingCost = parseFloat("{{ CURR.shipping }}".replace(',', '.'));
+let currentShipping = {% with total_qty=cart.get_total_quantity %}{% if total_qty >= 3 %}0{% else %}shippingCost{% endif %}{% endwith %};
+
+const MSG_PAYMENT_COD = '💳 {% trans "Płatność: za pobraniem" %}';
+const MSG_PAYMENT_INTL = '🌍 {% trans "Płatność: przelew / karta (ustalana indywidualnie)" %}';
+const MSG_FREE = '{% trans "zł (darmowa!)" %}';
+const MSG_CODE_EMPTY = '{% trans "⚠ Wpisz kod polecenia." %}';
+const MSG_CODE_OK = '{% trans "✅ Kod zastosowany! Oszczędzasz 20 zł." %}';
+const MSG_CODE_BAD = '{% trans "⚠ Nieprawidłowy kod polecenia." %}';
 
 function updateTotal() {
     let final = baseTotal;
     if (discountApplied) final -= 20;
     final += currentShipping;
-    document.getElementById('total-final').textContent = final.toFixed(2) + ' zł';
-    document.getElementById('shipping-cost').textContent = currentShipping + ' zł';
+    document.getElementById('total-final').textContent = final.toFixed(2) + ' ' + CURRENCY_SYMBOL;
+    document.getElementById('shipping-cost').textContent = currentShipping + ' ' + CURRENCY_SYMBOL;
 }
 
 function updatePaymentMethod(isInternational) {
@@ -201,13 +219,13 @@ function updatePaymentMethod(isInternational) {
     if (isInternational) {
         if (cashNote) cashNote.style.display = 'none';
         if (intlWarning) intlWarning.style.display = 'block';
-        if (paymentInfo) paymentInfo.innerHTML = '🌍 {% trans "Płatność: przelew / karta (ustalana indywidualnie)" %}';
+        if (paymentInfo) paymentInfo.innerHTML = MSG_PAYMENT_INTL;
         if (intlNoteText) intlNoteText.style.display = 'block';
         if (freeShippingNote) freeShippingNote.style.display = 'none';
     } else {
         if (cashNote) cashNote.style.display = 'block';
         if (intlWarning) intlWarning.style.display = 'none';
-        if (paymentInfo) paymentInfo.innerHTML = '💳 {% trans "Płatność: za pobraniem" %}';
+        if (paymentInfo) paymentInfo.innerHTML = MSG_PAYMENT_COD;
         if (intlNoteText) intlNoteText.style.display = 'none';
         if (freeShippingNote) freeShippingNote.style.display = (totalQuantity >= 3) ? 'inline' : 'none';
     }
@@ -219,11 +237,11 @@ radios.forEach(radio => {
         let cost = 0;
         let isInternational = false;
         if (this.value === 'inpost') {
-            cost = (totalQuantity >= 3) ? 0 : 30;
+            cost = (totalQuantity >= 3) ? 0 : shippingCost;
             isInternational = false;
             document.getElementById('shipping_method_hidden').value = 'inpost';
             const inpostLabel = document.getElementById('inpost-cost-label');
-            if (inpostLabel) inpostLabel.innerHTML = (cost === 0) ? '0 zł (darmowa!)' : '30 zł';
+            if (inpostLabel) inpostLabel.innerHTML = (cost === 0) ? '0 ' + MSG_FREE : SHIPPING_COST + ' ' + CURRENCY_SYMBOL;
         } else if (this.value === 'international') {
             cost = 250;
             isInternational = true;
@@ -237,7 +255,6 @@ radios.forEach(radio => {
     });
 });
 
-// Inicjalny stan (domyślnie InPost)
 function initShipping() {
     const defaultRadio = document.querySelector('input[name="shipping_method_radio"][value="inpost"]');
     if (defaultRadio && defaultRadio.checked) {
@@ -252,7 +269,7 @@ function checkReferral() {
     const code = document.getElementById('referral_code_input').value.trim().toUpperCase();
     const resultDiv = document.getElementById('referral_result');
     if (!code) {
-        resultDiv.innerHTML = '<span style="color:#c0392b;">⚠ Wpisz kod polecenia.</span>';
+        resultDiv.innerHTML = '<span style="color:#c0392b;">' + MSG_CODE_EMPTY + '</span>';
         return;
     }
     fetch(`/check-referral/?code=${encodeURIComponent(code)}`)
@@ -262,15 +279,43 @@ function checkReferral() {
                 discountApplied = true;
                 document.getElementById('referral_code_hidden').value = code;
                 document.getElementById('discount-row').style.display = 'flex';
-                resultDiv.innerHTML = '<span style="color:green;">✅ Kod zastosowany! Oszczędzasz 20 zł.</span>';
+                resultDiv.innerHTML = '<span style="color:green;">' + MSG_CODE_OK + '</span>';
             } else {
                 discountApplied = false;
                 document.getElementById('referral_code_hidden').value = '';
                 document.getElementById('discount-row').style.display = 'none';
-                resultDiv.innerHTML = '<span style="color:#c0392b;">⚠ Nieprawidłowy kod polecenia.</span>';
+                resultDiv.innerHTML = '<span style="color:#c0392b;">' + MSG_CODE_BAD + '</span>';
             }
             updateTotal();
         });
+}
+function validateForm() {
+    const fields = [
+        { name: 'first_name', msg: '{% trans "Wpisz imię." %}' },
+        { name: 'last_name',  msg: '{% trans "Wpisz nazwisko." %}' },
+        { name: 'email',      msg: '{% trans "Wpisz adres email." %}' },
+        { name: 'phone',      msg: '{% trans "Wpisz numer telefonu." %}' },
+        { name: 'address',    msg: '{% trans "Wpisz ulicę i numer." %}' },
+        { name: 'postal_code',msg: '{% trans "Wpisz kod pocztowy." %}' },
+        { name: 'city',       msg: '{% trans "Wpisz miasto." %}' },
+    ];
+
+    for (const field of fields) {
+        const input = document.querySelector(`[name="${field.name}"]`);
+        if (input && !input.value.trim()) {
+            alert(field.msg);
+            input.focus();
+            return false;
+        }
+    }
+
+    const shipping = document.querySelector('input[name="shipping_method_radio"]:checked');
+    if (!shipping) {
+        alert('{% trans "Wybierz metodę dostawy." %}');
+        return false;
+    }
+
+    return true;
 }
 </script>
 {% endblock %}

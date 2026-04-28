@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load static %}
 
-{% block title %}Polityka prywatności i plików cookies – Przystanek Perfumy{% endblock %}
+{% block title %}{% trans "Polityka prywatności i plików cookies – Przystanek Perfumy" %}{% endblock %}
 
 {% block content %}
 <section class="section-pad">
@@ -11,7 +11,7 @@
             <h1 class="text-center" style="font-size: 28px; font-weight: 300; margin-bottom: 32px;">{% trans "Polityka prywatności i plików cookies" %}</h1>
 
             <h2>{% trans "I. Administrator danych" %}</h2>
-            <p>{% trans "Administratorem Twoich danych osobowych jest" %} <strong>{% trans "Marcel Krzeja" %}</strong> {% trans "prowadzący działalność gospodarczą pod firmą „Przystanek Perfumy”, NIP: 123-456-78-90, REGON: 123456789, adres: ul. Kwiatowa 5, 00-001 Warszawa. Kontakt:" %} <a href="mailto:sklep@przystanekperfumy.pl">{% trans "sklep@przystanekperfumy.pl" %}</a>{% trans ", tel. +48 453 305 509." %}</p>
+            <p>{% trans "Administratorem Twoich danych osobowych jest" %} <strong>{% trans "Marcel Krzeja" %}</strong> {% trans 'prowadzący działalność nierejestrowaną pod nazwą „Przystanek Perfumy", adres:' %} "ul. Kwiatowa 5, 00-001" {% trans "Warszawa. Kontakt:" %} <a href="mailto:przystanekperfumy.techniczny@gmail.com">przystanekperfumy.techniczny@gmail.com</a>{% trans ", tel. +48 534 293 389." %}
 
             <h2>{% trans "II. Zakres i cele przetwarzania danych" %}</h2>
             <p>{% trans "Twoje dane osobowe przetwarzamy w następujących celach:" %}</p>
@@ -68,7 +68,7 @@
                 <li>{% trans "sprzeciwu wobec przetwarzania (art. 21 RODO)," %}</li>
                 <li>{% trans "cofnięcia zgody w dowolnym momencie (jeśli przetwarzanie opiera się na zgodzie)." %}</li>
             </ul>
-            <p>{% trans "W celu realizacji praw prosimy o kontakt e-mailowy:" %} <a href="mailto:sklep@przystanekperfumy.pl">{% trans "sklep@przystanekperfumy.pl" %}</a>{% trans ". Masz również prawo wniesienia skargi do Prezesa Urzędu Ochrony Danych Osobowych (PUODO)." %}</p>
+            <p>{% trans "W celu realizacji praw prosimy o kontakt e-mailowy:" %} <a href="mailto:przystanekperfumy.techniczny@gmail.com">{% trans "przystanekperfumy.techniczny@gmail.com" %}</a>{% trans ". Masz również prawo wniesienia skargi do Prezesa Urzędu Ochrony Danych Osobowych (PUODO)." %}</p>
 
             <h2>{% trans "VIII. Bezpieczeństwo danych" %}</h2>
             <p>{% trans "Stosujemy środki techniczne i organizacyjne (szyfrowanie SSL, regularne aktualizacje, kontrola dostępu) aby chronić Twoje dane przed nieuprawnionym dostępem, utratą lub uszkodzeniem." %}</p>
@@ -79,7 +79,7 @@
             <h2>{% trans "X. Kontakt w sprawie ochrony danych" %}</h2>
             <p>{% trans "We wszystkich sprawach dotyczących przetwarzania danych osobowych możesz skontaktować się z nami:" %}</p>
             <ul>
-                <li>{% trans "e-mail:" %} <a href="mailto:sklep@przystanekperfumy.pl">{% trans "sklep@przystanekperfumy.pl" %}</a></li>
+                <li>{% trans "e-mail:" %} <a href="mailto:przystanekperfumy.techniczny@gmail.com">"przystanekperfumy.techniczny@gmail.com"</a></li>
                 <li>{% trans "listownie: Marcel Krzeja, ul. Kwiatowa 5, 00-001 Warszawa" %}</li>
             </ul>
 

@@ -1,11 +1,13 @@
 {% extends "base.html" %}
 {% load i18n %}
 
+{% block title %}{% trans "Dołącz do nas – Przystanek Perfumy" %}{% endblock %}
+
 {% block content %}
 <section class="section-pad">
     <div class="container" style="max-width: 500px;">
         <div class="text-center mb-24">
-            <span style="font-size: 48px;">{% trans "✨" %}</span>
+            <span style="font-size: 48px;">✨</span>
             <h1 style="font-size: 32px; font-weight: 300; margin-top: 8px; margin-bottom: 8px;">{% trans "Dołącz do Nas ❤️" %}</h1>
             <p style="color: #888; font-size: 14px;">{% trans "i zarabiaj na polecaniu zapachów" %}</p>
         </div>
@@ -13,7 +15,6 @@
         <div class="card-border">
             <form method="post">
                 {% csrf_token %}
-                
                 {% for field in form %}
                 <div class="form-group">
                     <label class="form-label">{{ field.label }}</label>
@@ -26,17 +27,16 @@
                     {% endif %}
                 </div>
                 {% endfor %}
-
                 <button type="submit" class="btn" style="width: 100%; padding: 12px;">{% trans "Zarejestruj się" %}</button>
             </form>
 
             <p class="text-center mt-16" style="font-size: 13px;">
-                Masz już konto? <a href="{% url 'login' %}" style="color: var(--forest-green); font-weight: 600;">{% trans "Zaloguj się" %}</a>
+                {% trans "Masz już konto?" %} <a href="{% url 'login' %}" style="color: var(--forest-green); font-weight: 600;">{% trans "Zaloguj się" %}</a>
             </p>
         </div>
 
         <p class="text-center mt-16" style="font-size: 12px; color: #aaa;">
-            💡 Po rejestracji otrzymasz swój unikalny kod polecenia.
+            💡 {% trans "Po rejestracji otrzymasz swój unikalny kod polecenia." %}
         </p>
     </div>
 </section>

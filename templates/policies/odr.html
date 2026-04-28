@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load static %}
 
-{% block title %}Pozasądowe rozwiązywanie sporów (ODR) – Przystanek Perfumy{% endblock %}
+{% block title %}{% trans "Pozasądowe rozwiązywanie sporów (ODR) – Przystanek Perfumy" %}{% endblock %}
 
 {% block content %}
 <section class="section-pad">
@@ -41,10 +41,10 @@
 
             <h2>{% trans "Dane sprzedawcy do kontaktu w sprawie sporów" %}</h2>
             <ul>
-                <li>{% trans "Marcel Krzeja (Przystanek Perfumy)" %}</li>
-                <li>{% trans "Adres: ul. Kwiatowa 5, 00-001 Warszawa" %}</li>
-                <li>{% trans "E-mail:" %} <a href="mailto:sklep@przystanekperfumy.pl">{% trans "sklep@przystanekperfumy.pl" %}</a></li>
-                <li>{% trans "Telefon: +48 453 305 509" %}</li>
+                <li>"Marcel Krzeja" {% trans "(Przystanek Perfumy)" %}</li>
+                <li>{% trans "Adres:" %} "ul. Kwiatowa 5, 00-001" {% trans "Warszawa" %}</li>
+                <li>{% trans "E-mail:" %} <a href="mailto:przystanekperfumy.techniczny@gmail.com">przystanekperfumy.techniczny@gmail.com</a></li>
+                <li>{% trans "Telefon: +48 534 293 389" %}</li>
             </ul>
 
             <div style="background: #f0f7f0; padding: 16px; margin: 24px 0; border-left: 4px solid var(--forest-green);">

@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load currency_tags %}  
 
 {% block title %}{{ product.brand }} {{ product.name }} {{ product.get_concentration_display }} – Przystanek Perfumy{% endblock %}
 
@@ -151,7 +152,7 @@
                     {% endif %}
                 </div>
 
-                <div style="font-size:30px; font-weight:600; color:var(--forest-green); margin-bottom:12px;">{{ product.price }} zł</div>
+                <div style="font-size:30px; font-weight:600; color:var(--forest-green); margin-bottom:12px;">{{ product.price|convert_price:CURR }} {{ CURRENCY_SYMBOL }}</div>
                 <p style="font-size:14px; color:#888; margin-bottom:16px;">{% trans "📦 Pojemność: 100 ml" %}</p>
 
                 {% if product.stock_quantity > 0 %}
@@ -221,11 +222,11 @@
                             <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
                                 <div>
                                     <label class="form-label">{% trans "Imię *" %}</label>
-                                    <input type="text" name="name" required class="form-input" placeholder="np. Anna">
+                                    <input type="text" name="name" required class="form-input" placeholder="{% trans "np. Anna" %}">
                                 </div>
                                 <div>
                                     <label class="form-label">{% trans "Email z zamówienia *" %}</label>
-                                    <input type="email" name="email" required class="form-input" placeholder="twoj@email.pl">
+                                    <input type="email" name="email" required class="form-input" placeholder="{% trans "twoj@email.com" %}">
                                 </div>
                             </div>
                             <div style="margin-bottom:16px;">
@@ -241,7 +242,7 @@
                             </div>
                             <div style="margin-bottom:20px;">
                                 <label class="form-label">{% trans "Twoja opinia *" %}</label>
-                                <textarea name="comment" required class="form-input" rows="4" placeholder="Jak oceniasz ten zapach?"></textarea>
+                                <textarea name="comment" required class="form-input" rows="4" placeholder="{% trans "Jak oceniasz ten zapach?" %}"></textarea>
                             </div>
                             <p style="font-size:12px; color:#aaa; margin-bottom:16px;">* {% trans "Jeśli email zgadza się z Twoim zamówieniem, opinia otrzyma oznaczenie „Zweryfikowany zakup'." %}</p>
                             <button type="submit" class="btn" style="padding:14px 32px;">{% trans "Dodaj opinię" %}</button>

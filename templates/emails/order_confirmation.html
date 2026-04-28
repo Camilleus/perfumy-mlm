@@ -30,7 +30,7 @@
                         <strong>{{ item.product.name }}</strong><br>
                         <span style="font-size:12px;color:#8a7a3a;">{% trans "100 ml" %} &middot; {% trans "szt." %} {{ item.quantity }}</span>
                      </td>
-                     <td style="padding:10px 14px;border-bottom:1px solid #e8dfc0;font-size:14px;color:#012b2a;text-align:right;">{{ item.price|floatformat:2 }} zł</td>
+                     <td style="padding:10px 14px;border-bottom:1px solid #e8dfc0;font-size:14px;color:#012b2a;text-align:right;">{% load currency_tags %}{{ item.price|convert_price:curr }} {{ currency_symbol }}</td>
                     </tr>
                     {% endfor %}
                 </table>
@@ -52,7 +52,7 @@
                             {% if order.shipping_method == 'international' %}
                                 {% trans "do 250 zł (uzgodniona indywidualnie)" %}
                             {% else %}
-                                {% if order.shipping_cost == 0 %}{% trans "GRATIS" %}{% else %}{{ order.shipping_cost }} zł{% endif %}
+                                {% if order.shipping_cost == 0 %}{% trans "GRATIS" %}{% else %}{{ order.shipping_cost|convert_price:curr }} {{ currency_symbol }}{% endif %}
                             {% endif %}
                         </td>
                     </tr>
@@ -65,7 +65,7 @@
                     <tr><td colspan="2" style="padding:8px 0;"><hr style="border-top:1px solid #D4AF37;"></td></tr>
                     <tr>
                         <td style="font-size:16px;font-weight:700;color:#012b2a;">{% trans "Razem do zapłaty" %}</td>
-                        <td style="font-size:16px;font-weight:700;color:#012b2a;text-align:right;">{{ order.total_amount }} zł</td>
+                        <td style="font-size:16px;font-weight:700;color:#012b2a;text-align:right;">{{ order.total_amount|convert_price:curr }} {{ currency_symbol }}</td>
                     </tr>
                     <tr>
                         <td colspan="2" style="font-size:12px;color:#8a7a3a;text-align:right;">{% trans "płatność za pobraniem" %}</td>

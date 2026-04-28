@@ -276,7 +276,6 @@
         }
         .dropdown-menu a:hover,
         .dropdown-menu a.active { background: var(--forest-green); }
-        .dropdown:hover .dropdown-menu { display: block; }
         .dropdown-content {
             display: none;
             position: absolute;
@@ -929,7 +928,7 @@
         <div class="container">
             <nav>
                 <div class="logo">
-                    <a href="/"><img src="{% static 'images/projektbeznazwy.png' %}" alt="Przystanek Perfumy"></a>
+                    <a href="/"><img src="{% static 'images/logov5.svg' %}" alt="Przystanek Perfumy"></a>
                 </div>
 
                 <!-- DESKTOP NAV (widoczne tylko na dużych ekranach) -->
@@ -958,24 +957,42 @@
                         </li>
                     {% endif %}
                 </ul>
-
+                
                 <!-- PRAWY PANEL (zawsze widoczny, zawiera język, koszyk i hamburger) -->
                 <div class="nav-right">
+                    <!-- PO – dodaj dropdown waluty PRZED dropdownem języka -->
+                    <div class="dropdown dropdown-right">
+                        <a href="#" class="dropdown-toggle no-arrow">{{ CURRENCY_CODE }}</a>
+                        <div class="dropdown-menu" style="max-height:300px; overflow-y:auto;">
+                            {% for code, curr in ALL_CURRENCIES.items %}
+                            <form action="{% url 'set_currency' %}" method="post" style="display:block; margin:0;">
+                                {% csrf_token %}
+                                <input name="next" type="hidden" value="{{ request.get_full_path }}">
+                                <input name="currency" type="hidden" value="{{ code }}">
+                                <button type="submit" class="dropdown-item {% if code == CURRENCY_CODE %}active{% endif %}">
+                                    {{ curr.symbol }} {{ code }}
+                                </button>
+                            </form>
+                            {% endfor %}
+                        </div>
+                    </div>
                     <div class="dropdown dropdown-right">
                         <a href="#" class="dropdown-toggle no-arrow">{% trans "Język" %}</a>
                         <div class="dropdown-menu">
-                            <form action="{% url 'set_language' %}" method="post" style="display: block; margin: 0;">
+                            {% for lang_code, lang_name in LANGUAGES %}
+                            <form action="{% url 'set_language' %}" method="post" style="display:block; margin:0;">
                                 {% csrf_token %}
                                 <input name="next" type="hidden" value="{{ request.get_full_path }}">
-                                <input name="language" type="hidden" value="pl">
-                                <button type="submit" class="dropdown-item">🇵🇱 Polski</button>
+                                <input name="language" type="hidden" value="{{ lang_code }}">
+                                <button type="submit" class="dropdown-item {% if lang_code == request.LANGUAGE_CODE %}active{% endif %}">
+                                    <img src="https://flagcdn.com/24x18/{{ lang_code }}.png"
+                                        alt="{{ lang_code|upper }}"
+                                        style="width:20px;height:15px;border-radius:2px;vertical-align:middle;margin-right:6px;"
+                                        onerror="this.style.display='none';">
+                                    {{ lang_name }}
+                                </button>
                             </form>
-                            <form action="{% url 'set_language' %}" method="post" style="display: block; margin: 0;">
-                                {% csrf_token %}
-                                <input name="next" type="hidden" value="{{ request.get_full_path }}">
-                                <input name="language" type="hidden" value="es">
-                                <button type="submit" class="dropdown-item">🇪🇸 Español</button>
-                            </form>
+                            {% endfor %}
                         </div>
                     </div>
 
@@ -1018,6 +1035,32 @@
                 <button type="submit">{% trans "Wyloguj" %}</button>
             </form>
         {% endif %}
+        <span class="mobile-section-label">{% trans "Waluta" %}</span>
+        {% for code, curr in ALL_CURRENCIES.items %}
+        <form action="{% url 'set_currency' %}" method="post" style="width:100%;max-width:300px;">
+            {% csrf_token %}
+            <input name="next" type="hidden" value="{{ request.get_full_path }}">
+            <input name="currency" type="hidden" value="{{ code }}">
+            <button type="submit" class="{% if code == CURRENCY_CODE %}active{% endif %}">
+                {{ curr.symbol }} {{ code }}
+            </button>
+        </form>
+        {% endfor %}
+        <span class="mobile-section-label">{% trans "Język" %}</span>
+        {% for lang_code, lang_name in LANGUAGES %}
+        <form action="{% url 'set_language' %}" method="post" style="width:100%;max-width:300px;">
+            {% csrf_token %}
+            <input name="next" type="hidden" value="{{ request.get_full_path }}">
+            <input name="language" type="hidden" value="{{ lang_code }}">
+            <button type="submit" class="{% if lang_code == request.LANGUAGE_CODE %}active{% endif %}">
+                <img src="https://flagcdn.com/24x18/{{ lang_code }}.png"
+                    alt="{{ lang_code|upper }}"
+                    style="width:20px;height:15px;border-radius:2px;vertical-align:middle;margin-right:6px;"
+                    onerror="this.style.display='none';">
+                {{ lang_name }}
+            </button>
+        </form>
+        {% endfor %}
     </div>
 
 
@@ -1043,7 +1086,7 @@
             </div>
             <div style="opacity: 0.7; font-size:13px;">
                 &copy; 2026 przystanekperfumy.pl<br>
-                Wszystkie prawa zastrzeżone.
+                {% trans "Wszystkie prawa zastrzeżone." %}
             </div>
         </div>
     </footer>

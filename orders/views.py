@@ -1,3 +1,4 @@
+from core.context_processors import CURRENCIES
 from django.shortcuts import render, redirect
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
@@ -170,11 +171,16 @@ def checkout(request):
             shipping_display = "GRATIS" if shipping_cost == 0 else f"{shipping_cost:.2f} zł"
             shipping_color = "#2a6a2a" if shipping_cost == 0 else "#012b2a"
 
+            currency_code = request.session.get('currency', 'PLN')
+            curr = CURRENCIES.get(currency_code, CURRENCIES['PLN'])
+
             context = {
                 'order': order,
                 'items': order_items,
                 'discount': discount,
                 'has_discount': bool(discount),
+                'curr': curr,
+                'currency_symbol': curr['symbol'],
             }
 
             contact_emails = [e.strip() for e in settings.CONTACT_EMAIL.split(',')] if getattr(settings, 'CONTACT_EMAIL', None) else []

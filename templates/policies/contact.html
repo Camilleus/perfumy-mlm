@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load static %}
 
-{% block title %}Kontakt – Przystanek Perfumy{% endblock %}
+{% block title %}{% trans "Kontakt – Przystanek Perfumy" %}{% endblock %}
 
 {% block content %}
 <section class="section-pad">
@@ -14,12 +14,13 @@
             <div class="card-border">
                 <h2 style="font-size: 20px; margin-bottom: 16px;">{% trans "📞 Skontaktuj się z nami" %}</h2>
                 <ul style="list-style: none; padding: 0;">
-                    <li style="margin-bottom: 12px;">{% trans "📧" %} <strong>{% trans "E-mail:" %}</strong> <a href="mailto:przystanekperfumy@gmail.com">{% trans "przystanekperfumy@gmail.com" %}</a> {% trans "(odpowiadamy w ciągu 24h)" %}</li>
-                    <li style="margin-bottom: 12px;">{% trans "📞" %} <strong>{% trans "Telefon:" %}</strong> <a href="tel:+48534293389">{% trans "+48 534 293 389" %}</a> {% trans "(pon.–pt. 10:00–16:00)" %}</li>
-                    <li style="margin-bottom: 12px;">{% trans "📍" %} <strong>{% trans "Adres do zwrotów i reklamacji:" %}</strong><br>
+                    <li style="margin-bottom: 12px;">"📧"<strong>{% trans "E-mail:" %}</strong> <a href="mailto:przystanekperfumy.techniczny@gmail.com">"przystanekperfumy.techniczny@gmail.com"</a> {% trans "(odpowiadamy w ciągu dwóch dni roboczych)" %}</li>
+                    <li style="margin-bottom: 12px;">"📞"<strong>{% trans "Telefon / WhatsApp:" %}</strong> <a href="tel:+48534293389">+48 534 293 389</a> {% trans "(pon.–pt. 10:00–16:00)" %}</li>
+                    <li style="margin-bottom: 12px;">"📍"<strong>{% trans "Adres do zwrotów i reklamacji:" %}</strong><br>
                         Marcel Krzeja<br>
                         ul. Kwiatowa 5<br>
-                        00-001 Warszawa
+                        00-001 {% trans "Warszawa" %}<br>
+                        {% trans "(działalność nierejestrowana)" %}
                     </li>
                 </ul>
             </div>

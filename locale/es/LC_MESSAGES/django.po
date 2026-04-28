@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-27 19:57+0200\n"
+"POT-Creation-Date: 2026-04-28 12:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,61 +18,62 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: templates/base.html:915 templates/base.html:989
+#: templates/base.html:937 templates/base.html:1000
 msgid "Kolekcja"
 msgstr "Colección"
 
-#: templates/base.html:917 templates/base.html:990
+#: templates/base.html:939 templates/base.html:1001
 #: templates/includes/faq.html:13 templates/includes/filters_form.html:76
 #: templates/includes/filters_form.html:98
 #: templates/includes/filters_form.html:120
-#: templates/includes/filters_form.html:142 templates/products/quiz.html:53
+#: templates/includes/filters_form.html:142
+#: templates/products/brand_page.html:59 templates/products/quiz.html:53
 msgid "Wszystkie"
 msgstr "Todos"
 
-#: templates/base.html:918 templates/base.html:991
+#: templates/base.html:940 templates/base.html:1002
 msgid "Dla Niego"
 msgstr "Para Él"
 
-#: templates/base.html:919 templates/base.html:992
+#: templates/base.html:941 templates/base.html:1003
 msgid "Dla Niej"
 msgstr "Para Ella"
 
-#: templates/base.html:920 templates/base.html:993
+#: templates/base.html:942 templates/base.html:1004
 msgid "Dla Każdego"
 msgstr "Para Todos"
 
-#: templates/base.html:923
+#: templates/base.html:945
 msgid "Znajdź swój Zapach"
 msgstr "Encuentra tu Fragancia"
 
-#: templates/base.html:924 templates/orders/my_orders.html:9
-#: templates/policies/contact.html:57
+#: templates/base.html:946 templates/orders/my_orders.html:9
+#: templates/policies/contact.html:58
 msgid "Moje zamówienia"
 msgstr "Mis pedidos"
 
-#: templates/base.html:926 templates/base.html:1002
+#: templates/base.html:948 templates/base.html:1013
 msgid "Dołącz"
 msgstr "Únete"
 
-#: templates/base.html:927 templates/base.html:1003
-#: templates/registration/login.html:20
+#: templates/base.html:949 templates/base.html:1014
+#: templates/registration/login.html:22
 msgid "Zaloguj"
 msgstr "Iniciar sesión"
 
-#: templates/base.html:929 templates/base.html:1005
+#: templates/base.html:951 templates/base.html:1016
 msgid "Moje Konto"
 msgstr "Mi cuenta"
 
-#: templates/base.html:933 templates/base.html:1008
+#: templates/base.html:955 templates/base.html:1019
 msgid "Wyloguj"
 msgstr "Cerrar sesión"
 
-#: templates/base.html:940
+#: templates/base.html:964 templates/base.html:1023
 msgid "Język"
 msgstr "Idioma"
 
-#: templates/base.html:984
+#: templates/base.html:995
 msgid ""
 "Darmowa dostawa od 3 produktów &bull; Ceny prosto z hurtowni – bez narzutów "
 "wielkich drogerii"
@@ -80,65 +81,70 @@ msgstr ""
 "Envío gratis a partir de 3 productos &bull; Precios directos de mayorista – "
 "sin recargos de grandes perfumerías"
 
-#: templates/base.html:995
+#: templates/base.html:1006
 msgid "Nawigacja"
 msgstr "Navegación"
 
-#: templates/base.html:996
+#: templates/base.html:1007
 msgid "🧪 Znajdź swój Zapach"
 msgstr "🧪 Encuentra tu Fragancia"
 
-#: templates/base.html:997
+#: templates/base.html:1008
 msgid "📦 Moje zamówienia"
 msgstr "📦 Mis pedidos"
 
-#: templates/base.html:998
+#: templates/base.html:1009
 msgid "🛒 Koszyk"
 msgstr "🛒 Carrito"
 
-#: templates/base.html:1000
+#: templates/base.html:1011
 msgid "Konto"
 msgstr "Cuenta"
 
-#: templates/base.html:1019 templates/products/list.html:13
+#: templates/base.html:1046 templates/blog/detail.html:4
+#: templates/products/list.html:13
 msgid "Przystanek Perfumy"
 msgstr "Parada de Perfumes"
 
-#: templates/base.html:1020
+#: templates/base.html:1047
 msgid "Najlepszy przystanek na Twojej drodze do idealnego zapachu."
 msgstr "La mejor parada en tu camino hacia la fragancia ideal."
 
-#: templates/base.html:1024 templates/policies/regulamin.html:16
+#: templates/base.html:1051 templates/policies/regulamin.html:16
 msgid "Regulamin"
 msgstr "Reglamento"
 
-#: templates/base.html:1025
+#: templates/base.html:1052
 msgid "Polityka prywatności"
 msgstr "Política de privacidad"
 
-#: templates/base.html:1026 templates/policies/returns_policy.html:11
+#: templates/base.html:1053 templates/policies/returns_policy.html:11
 msgid "Zwroty i reklamacje"
 msgstr "Devoluciones y reclamaciones"
 
-#: templates/base.html:1027 templates/policies/odr.html:11
+#: templates/base.html:1054 templates/policies/odr.html:11
 msgid "Pozasądowe rozwiązywanie sporów (ODR)"
 msgstr "Resolución de litigios en línea (ODR)"
 
-#: templates/base.html:1028
+#: templates/base.html:1055
 msgid "Dyrektywa Omnibus"
 msgstr "Directiva Omnibus"
 
-#: templates/base.html:1029 templates/policies/contact.html:10
+#: templates/base.html:1056 templates/policies/contact.html:10
 msgid "Kontakt"
 msgstr "Contacto"
 
-#: templates/base.html:1030
+#: templates/base.html:1057
 msgid "O nas"
 msgstr "Sobre nosotros"
 
-#: templates/base.html:1031
+#: templates/base.html:1058
 msgid "Blog"
 msgstr "Blog"
+
+#: templates/base.html:1063
+msgid "Wszystkie prawa zastrzeżone."
+msgstr "Todos los derechos reservados."
 
 #: templates/blog/detail.html:43
 msgid "← Wróć do bloga"
@@ -163,13 +169,17 @@ msgstr ""
 msgid "Znajdź swój idealny zapach"
 msgstr "Encuentra tu fragancia ideal"
 
-#: templates/blog/detail.html:93 templates/policies/about.html:102
+#: templates/blog/detail.html:93 templates/policies/about.html:101
 msgid "Zobacz kolekcję"
 msgstr "Ver colección"
 
-#: templates/blog/detail.html:94 templates/policies/about.html:103
+#: templates/blog/detail.html:94 templates/policies/about.html:102
 msgid "Zrób quiz zapachowy"
 msgstr "Haz el cuestionario de fragancias"
+
+#: templates/blog/generate.html:4
+msgid "Generuj artykuł – Blog"
+msgstr "Generar artículo – Blog"
 
 #: templates/blog/generate.html:10
 msgid "✍️ Generator artykułów AI"
@@ -184,10 +194,22 @@ msgstr ""
 msgid "Temat artykułu"
 msgstr "Tema del artículo"
 
+#: templates/blog/generate.html:30
+msgid ""
+"np. Top 5 perfum na lato, Jak wybrać pierwsze perfumy, Czym różni się EDP od "
+"EDT..."
+msgstr ""
+"ej. Top 5 perfumes de verano, Cómo elegir tu primer perfume, Cuál es la "
+"diferencia entre EDP y EDT..."
+
 #: templates/blog/generate.html:32
 msgid "Podaj konkretny temat – im bardziej szczegółowy, tym lepszy artykuł."
 msgstr ""
 "Indica un tema concreto – cuanto más detallado, mejor será el artículo."
+
+#: templates/blog/generate.html:34
+msgid "Generuj artykuł"
+msgstr "Generar artículo"
 
 #: templates/blog/generate.html:41
 msgid "💡 Pomysły na tematy:"
@@ -200,6 +222,18 @@ msgstr "Últimos artículos"
 #: templates/blog/generate.html:65
 msgid "Zobacz"
 msgstr "Ver"
+
+#: templates/blog/list.html:4
+msgid "Blog o perfumach – Przystanek Perfumy"
+msgstr "Blog sobre perfumes – Parada de Perfumes"
+
+#: templates/blog/list.html:7
+msgid ""
+"Artykuły o perfumach, zapachach i świecie perfumerii. Ekspert Marcel Krzeja "
+"– Przystanek Perfumy."
+msgstr ""
+"Artículos sobre perfumes, fragancias y el mundo de la perfumería. El experto "
+"Marcel Krzeja – Parada de Perfumes."
 
 #: templates/blog/list.html:15
 msgid "Wiedza o zapachach"
@@ -245,7 +279,7 @@ msgid "Dziękujemy"
 msgstr "Gracias"
 
 #: templates/emails/order_confirmation.html:21
-#: templates/orders/checkout.html:79
+#: templates/orders/checkout.html:81
 msgid "Twoje zamówienie"
 msgstr "Tu pedido"
 
@@ -262,36 +296,37 @@ msgid "100 ml"
 msgstr "100 ml"
 
 #: templates/emails/order_confirmation.html:31
+#: templates/orders/checkout.html:95
 msgid "szt."
 msgstr "uds."
 
 #: templates/emails/order_confirmation.html:44
 #: templates/emails/order_confirmation.html:79
-#: templates/orders/checkout.html:139 templates/orders/confirmation.html:27
+#: templates/orders/checkout.html:141 templates/orders/confirmation.html:28
 msgid "Dostawa"
 msgstr "Envío"
 
 #: templates/emails/order_confirmation.html:45
 #: templates/emails/order_confirmation.html:90
-#: templates/orders/checkout.html:169 templates/orders/confirmation.html:28
+#: templates/orders/checkout.html:171 templates/orders/confirmation.html:29
 #: templates/orders/confirmation.html:62
 msgid "Wysyłka zagraniczna"
 msgstr "Envío internacional"
 
 #: templates/emails/order_confirmation.html:46
 #: templates/emails/order_confirmation.html:91
-#: templates/orders/confirmation.html:29 templates/orders/confirmation.html:64
+#: templates/orders/confirmation.html:30 templates/orders/confirmation.html:64
 #: templates/orders/confirmation.html:73
 msgid "darmowa"
 msgstr "gratis"
 
 #: templates/emails/order_confirmation.html:53
-#: templates/orders/confirmation.html:36
+#: templates/orders/confirmation.html:37
 msgid "do 250 zł (uzgodniona indywidualnie)"
 msgstr "hasta 250 PLN (acordado individualmente)"
 
 #: templates/emails/order_confirmation.html:55
-#: templates/orders/confirmation.html:38
+#: templates/orders/confirmation.html:39
 msgid "GRATIS"
 msgstr "GRATIS"
 
@@ -935,32 +970,36 @@ msgstr "Intensidad"
 msgid "Zastosuj filtry"
 msgstr "Aplicar filtros"
 
-#: templates/orders/cart.html:7
+#: templates/orders/cart.html:4
+msgid "Koszyk – Przystanek Perfumy"
+msgstr "Carrito – Parada de Perfumes"
+
+#: templates/orders/cart.html:9
 msgid "Twój koszyk"
 msgstr "Tu carrito"
 
-#: templates/orders/cart.html:10
+#: templates/orders/cart.html:12
 msgid "Koszyk jest pusty."
 msgstr "El carrito está vacío."
 
-#: templates/orders/cart.html:10 templates/orders/confirmation.html:82
+#: templates/orders/cart.html:12 templates/orders/confirmation.html:82
 #: templates/sellers/no_access.html:9 templates/sellers/pending.html:9
 msgid "Wróć do sklepu"
 msgstr "Volver a la tienda"
 
-#: templates/orders/cart.html:36
+#: templates/orders/cart.html:38
 msgid "Usuń"
 msgstr "Eliminar"
 
-#: templates/orders/cart.html:47
+#: templates/orders/cart.html:49
 msgid "Razem:"
 msgstr "Total:"
 
-#: templates/orders/cart.html:51
+#: templates/orders/cart.html:53
 msgid "⚠️ Ważna informacja:"
 msgstr "⚠️ Información importante:"
 
-#: templates/orders/cart.html:52
+#: templates/orders/cart.html:54
 msgid ""
 "Jeśli któregoś z zamówionych perfum zabraknie w magazynie, skontaktujemy się "
 "z Tobą niezwłocznie – przez"
@@ -968,132 +1007,146 @@ msgstr ""
 "Si alguna de las perfumes pedidas se agota en el almacén, nos pondremos en "
 "contacto contigo inmediatamente – a través de"
 
-#: templates/orders/cart.html:53 templates/policies/contact.html:18
-#: templates/policies/regulamin.html:33
-#: templates/policies/returns_policy.html:55
-msgid "+48 534 293 389"
-msgstr "+48 534 293 389"
-
-#: templates/orders/cart.html:54
+#: templates/orders/cart.html:56
 msgid ""
 "lub mailowo na adres podany przy zamówieniu. Dziękujemy za wyrozumiałość! 🌿"
 msgstr ""
 "o por correo electrónico a la dirección proporcionada en el pedido. ¡Gracias "
 "por tu comprensión! 🌿"
 
-#: templates/orders/cart.html:56
+#: templates/orders/cart.html:58
 msgid "Przejdź do zamówienia →"
 msgstr "Ir al pedido →"
 
-#: templates/orders/checkout.html:7
+#: templates/orders/checkout.html:4
+msgid "Dane do zamówienia – Przystanek Perfumy"
+msgstr "Datos del pedido – Parada de Perfumes"
+
+#: templates/orders/checkout.html:9
 msgid "Dane do zamówienia"
 msgstr "Datos del pedido"
 
-#: templates/orders/checkout.html:17
+#: templates/orders/checkout.html:18
 msgid "Imię"
 msgstr "Nombre"
 
-#: templates/orders/checkout.html:21
+#: templates/orders/checkout.html:22
 msgid "Nazwisko"
 msgstr "Apellido"
 
-#: templates/orders/checkout.html:28
+#: templates/orders/checkout.html:29
 msgid "Email"
 msgstr "Correo electrónico"
 
-#: templates/orders/checkout.html:32
+#: templates/orders/checkout.html:33
 msgid "Telefon *"
 msgstr "Teléfono *"
 
-#: templates/orders/checkout.html:38
+#: templates/orders/checkout.html:39
 msgid "Ulica i numer *"
 msgstr "Calle y número *"
 
-#: templates/orders/checkout.html:44
+#: templates/orders/checkout.html:45
 msgid "Kod pocztowy *"
 msgstr "Código postal *"
 
-#: templates/orders/checkout.html:48
+#: templates/orders/checkout.html:49
 msgid "Miasto *"
 msgstr "Ciudad *"
 
-#: templates/orders/checkout.html:54
+#: templates/orders/checkout.html:56
 msgid "Kraj"
 msgstr "País"
 
-#: templates/orders/checkout.html:56
+#: templates/orders/checkout.html:57
+msgid "np. Polska, España..."
+msgstr "ej. Polonia, España..."
+
+#: templates/orders/checkout.html:58
 msgid "W przypadku wysyłki zagranicznej wpisz kraj docelowy."
 msgstr "En caso de envío internacional, introduce el país de destino."
 
-#: templates/orders/checkout.html:60
+#: templates/orders/checkout.html:62
 msgid "Uwagi do zamówienia"
 msgstr "Notas sobre el pedido"
 
-#: templates/orders/checkout.html:66
+#: templates/orders/checkout.html:68
 msgid "🎁 Masz kod polecenia?"
 msgstr "🎁 ¿Tienes un código de recomendación?"
 
-#: templates/orders/checkout.html:67
+#: templates/orders/checkout.html:69
 msgid "Wpisz kod znajomego i otrzymaj"
 msgstr "Introduce el código de un amigo y recibe"
 
-#: templates/orders/checkout.html:67 templates/orders/checkout.html:136
+#: templates/orders/checkout.html:69 templates/orders/checkout.html:138
 msgid "-20 zł"
 msgstr "-20 PLN"
 
-#: templates/orders/checkout.html:67
+#: templates/orders/checkout.html:69
 msgid "na to zamówienie!"
 msgstr "en este pedido!"
 
-#: templates/orders/checkout.html:75
+#: templates/orders/checkout.html:72
+msgid "Sprawdź"
+msgstr "Comprobar"
+
+#: templates/orders/checkout.html:77
 msgid "* pola obowiązkowe"
 msgstr "* campos obligatorios"
 
-#: templates/orders/checkout.html:89
+#: templates/orders/checkout.html:91
 msgid "✈️ Wybierz dostawę"
 msgstr "✈️ Elige el envío"
 
-#: templates/orders/checkout.html:94
+#: templates/orders/checkout.html:95
+msgid "W koszyku:"
+msgstr "En el carrito:"
+
+#: templates/orders/checkout.html:96
 msgid "🎉 Darmowa dostawa InPost!"
 msgstr "🎉 Envío gratuito InPost!"
 
-#: templates/orders/checkout.html:101
+#: templates/orders/checkout.html:103
 msgid "GLS ekspres (dostawa do 48h) –"
 msgstr "GLS exprés (entrega en 48h) –"
 
-#: templates/orders/checkout.html:101
+#: templates/orders/checkout.html:103
 msgid "(niedostępne)"
 msgstr "(no disponible)"
 
-#: templates/orders/checkout.html:109
-msgid "InPost Kurier (wysyłka do 48) –"
-msgstr "InPost Kurier (envío en 48h) –"
-
 #: templates/orders/checkout.html:111
+msgid "InPost Kurier (wysyłka do 48h) –"
+msgstr "InPost Mensajería (envío en 48h) –"
+
+#: templates/orders/checkout.html:113 templates/orders/checkout.html:192
 msgid "zł (darmowa!)"
 msgstr "PLN (¡gratis!)"
 
-#: templates/orders/checkout.html:120
+#: templates/orders/checkout.html:113 templates/products/list.html:29
+msgid "zł"
+msgstr "PLN"
+
+#: templates/orders/checkout.html:122
 msgid "Wysyłka zagraniczna –"
 msgstr "Envío internacional –"
 
-#: templates/orders/checkout.html:121
+#: templates/orders/checkout.html:123
 msgid "do 250 zł"
 msgstr "hasta 250 PLN"
 
-#: templates/orders/checkout.html:122
+#: templates/orders/checkout.html:124
 msgid "cena ustalana indywidualnie, płatność przelewem lub kartą"
 msgstr "precio acordado individualmente, pago por transferencia o tarjeta"
 
-#: templates/orders/checkout.html:131
+#: templates/orders/checkout.html:133
 msgid "Suma produktów"
 msgstr "Total productos"
 
-#: templates/orders/checkout.html:135
+#: templates/orders/checkout.html:137
 msgid "Zniżka (kod polecenia)"
 msgstr "Descuento (código de recomendación)"
 
-#: templates/orders/checkout.html:147
+#: templates/orders/checkout.html:149
 msgid ""
 "W przypadku wysyłki zagranicznej – skontaktujemy się z Tobą e-mailowo lub "
 "przez WhatsApp, aby ustalić ostateczny koszt i formę płatności."
@@ -1101,19 +1154,28 @@ msgstr ""
 "En caso de envío internacional – nos pondremos en contacto contigo por "
 "correo electrónico o WhatsApp para acordar el costo final y la forma de pago."
 
-#: templates/orders/checkout.html:150 templates/orders/confirmation.html:45
+#: templates/orders/checkout.html:152 templates/orders/confirmation.html:45
 msgid "Razem"
 msgstr "Total"
 
-#: templates/orders/checkout.html:161 templates/orders/checkout.html:210
+#: templates/orders/checkout.html:163 templates/orders/checkout.html:190
 msgid "Płatność: za pobraniem"
 msgstr "Pago: contra reembolso"
 
-#: templates/orders/checkout.html:166
+#: templates/orders/checkout.html:168
 msgid "Dlaczego tylko za pobraniem?"
 msgstr "¿Por qué solo contra reembolso?"
 
-#: templates/orders/checkout.html:170
+#: templates/orders/checkout.html:168
+msgid ""
+"Dzięki temu nie płacimy za drogie bramki płatnicze – oszczędności "
+"przekładamy na niższe ceny para Ciebie. Żadnych ukrytych kosztów, tylko "
+"zapłacisz przy odbiorze."
+msgstr ""
+"Así no pagamos costosas pasarelas de pago – los ahorros se traducen en "
+"precios más bajos para ti. Sin costes ocultos, solo pagas al recibir."
+
+#: templates/orders/checkout.html:172
 msgid ""
 "Koszt wysyłki: maksymalnie 250 zł (ostateczna kwota może być niższa – "
 "prześlemy ofertę). Płatność: przelew lub karta – skontaktujemy się z Tobą."
@@ -1122,23 +1184,71 @@ msgstr ""
 "enviaremos una oferta). Pago: transferencia o tarjeta – nos pondremos en "
 "contacto contigo."
 
-#: templates/orders/checkout.html:174
+#: templates/orders/checkout.html:178
 msgid "Złóż zamówienie →"
 msgstr "Realizar pedido →"
 
-#: templates/orders/checkout.html:204
+#: templates/orders/checkout.html:191
 msgid "Płatność: przelew / karta (ustalana indywidualnie)"
 msgstr "Pago: transferencia / tarjeta (a acordar individualmente)"
 
-#: templates/orders/confirmation.html:10
+#: templates/orders/checkout.html:193
+msgid "⚠ Wpisz kod polecenia."
+msgstr "⚠ Introduce el código de recomendación."
+
+#: templates/orders/checkout.html:194
+msgid "✅ Kod zastosowany! Oszczędzasz 20 zł."
+msgstr "✅ Código aplicado! Ahorras 20 PLN."
+
+#: templates/orders/checkout.html:195
+msgid "⚠ Nieprawidłowy kod polecenia."
+msgstr "⚠ Código de recomendación inválido."
+
+#: templates/orders/checkout.html:287
+msgid "Wpisz imię."
+msgstr "Escribe el nombre."
+
+#: templates/orders/checkout.html:288
+msgid "Wpisz nazwisko."
+msgstr "Escribe el apellido."
+
+#: templates/orders/checkout.html:289
+msgid "Wpisz adres email."
+msgstr "Escribe la dirección de correo electrónico."
+
+#: templates/orders/checkout.html:290
+msgid "Wpisz numer telefonu."
+msgstr "Escribe el número de teléfono."
+
+#: templates/orders/checkout.html:291
+msgid "Wpisz ulicę i numer."
+msgstr "Escribe la calle y el número."
+
+#: templates/orders/checkout.html:292
+msgid "Wpisz kod pocztowy."
+msgstr "Escribe el código postal."
+
+#: templates/orders/checkout.html:293
+msgid "Wpisz miasto."
+msgstr "Escribe la ciudad."
+
+#: templates/orders/checkout.html:307
+msgid "Wybierz metodę dostawy."
+msgstr "Elige el método de envío."
+
+#: templates/orders/confirmation.html:4
+msgid "Potwierdzenie zamówienia – Przystanek Perfumy"
+msgstr "Confirmación del pedido – Parada de Perfumes"
+
+#: templates/orders/confirmation.html:12
 msgid "Dziękujemy za zamówienie!"
 msgstr "¡Gracias por tu pedido!"
 
-#: templates/orders/confirmation.html:12
+#: templates/orders/confirmation.html:14
 msgid "Numer zamówienia:"
 msgstr "Número de pedido:"
 
-#: templates/orders/confirmation.html:16
+#: templates/orders/confirmation.html:18
 msgid "Szczegóły zamówienia"
 msgstr "Detalles del pedido"
 
@@ -1172,17 +1282,34 @@ msgstr ""
 msgid "Potwierdzenie zamówienia zostało wysłane na"
 msgstr "La confirmación del pedido ha sido enviada a"
 
+#: templates/orders/my_orders.html:4
+msgid "Moje zamówienia – Przystanek Perfumy"
+msgstr "Mis pedidos – Parada de Perfumes"
+
+#: templates/orders/my_orders.html:15
+msgid "Wpisz email użyty przy zamówieniu – pokażemy Ci historię zakupów."
+msgstr "Introduce el email usado en el pedido – te mostraremos el historial de compras."
+
 #: templates/orders/my_orders.html:19
 msgid "Twój email *"
 msgstr "Tu correo electrónico *"
+
+#: templates/orders/my_orders.html:20
+msgid "np. jan@kowalski.pl"
+msgstr "ej. juan@perez.es"
 
 #: templates/orders/my_orders.html:22
 msgid "Sprawdź zamówienia"
 msgstr "Consultar pedidos"
 
-#: templates/orders/my_orders.html:28
-msgid "📭"
-msgstr "📭"
+#: templates/orders/my_orders.html:31
+#, python-format
+msgid "Nie znaleźliśmy zamówień dla <strong>%(email)s</strong>."
+msgstr "No encontramos pedidos para <strong>%(email)s</strong>."
+
+#: templates/orders/my_orders.html:33
+msgid "Nie masz jeszcze żadnych zamówień."
+msgstr "Todavía no tienes ningún pedido."
 
 #: templates/orders/my_orders.html:36
 msgid "Przejdź do sklepu"
@@ -1192,9 +1319,24 @@ msgstr "Ir a la tienda"
 msgid "← Spróbuj inny email"
 msgstr "← Prueba con otro correo"
 
+#: templates/orders/my_orders.html:47
+#, python-format
+msgid "Zamówienia dla: <strong>%(email)s</strong>"
+msgstr "Pedidos para: <strong>%(email)s</strong>"
+
 #: templates/orders/my_orders.html:48
 msgid "← Szukaj innego"
 msgstr "← Buscar otro"
+
+#: templates/orders/my_orders.html:57
+#, python-format
+msgid "Zamówienie #%(pk)s"
+msgstr "Pedido #%(pk)s"
+
+#: templates/orders/my_orders.html:63
+#, python-format
+msgid "Zniżka: -%(discount)s zł"
+msgstr "Descuento: -%(discount)s PLN"
 
 #: templates/orders/my_orders.html:71
 msgid "🕐 Nowe"
@@ -1220,9 +1362,48 @@ msgstr "❌ Cancelados"
 msgid "Nasza historia"
 msgstr "Nuestra historia"
 
+#: templates/policies/about.html:32
+msgid "Perfumy w cenie,"
+msgstr "Perfumes al precio,"
+
+#: templates/policies/about.html:32
+msgid "w której są warte."
+msgstr "que realmente valen."
+
+#: templates/policies/about.html:35
+#, python-format
+msgid "Bez przepłacania. Bez marży 300%%. Bez kompromisów w jakości."
+msgstr "Sin sobreprecios. Sin márgenes del 300%%. Sin compromisos en la calidad."
+
 #: templates/policies/about.html:41
 msgid "Skąd się wzięliśmy?"
 msgstr "¿De dónde venimos?"
+
+#: templates/policies/about.html:43
+msgid ""
+"Przystanek Perfumy powstał z prostej obserwacji: te same perfumy, które w "
+"drogerii kosztują 400–600 zł, można mieć za ułamek tej ceny – jeśli kupuje "
+"się je bezpośrednio od hurtownika."
+msgstr ""
+"Parada de Perfumes nació de una simple observación: los mismos perfumes que "
+"cuestan 400–600 PLN en las perfumerías, se pueden tener por una fracción de "
+"ese precio – si se compran directamente al mayorista."
+
+#: templates/policies/about.html:46
+#, python-format
+msgid ""
+"Wielkie sieci drogerii nakładają marże rzędu 100–300%%. My tego nie robimy. "
+"Kupujemy perfumy hurtowo i sprzedajemy je z minimalnym narzutem – "
+"wystarczającym, żeby sklep działał, nie żeby finansować reklamy w telewizji."
+msgstr ""
+"Las grandes cadenas de perfumerías aplican márgenes del 100–300%%. Nosotros "
+"no. Compramos perfumes al por mayor y los vendemos con un margen mínimo – "
+"suficiente para que la tienda funcione, no para financiar anuncios en "
+"televisión."
+
+#: templates/policies/about.html:49
+msgid "Misja jest prosta:"
+msgstr "La misión es simple:"
 
 #: templates/policies/about.html:49
 msgid "dostarczyć Ci perfumy w cenie, której są warte."
@@ -1241,148 +1422,169 @@ msgstr "Marcel Krzeja"
 msgid "Założyciel & pasjonat zapachów"
 msgstr "Fundador & apasionado de las fragancias"
 
-#: templates/policies/about.html:73
+#: templates/policies/about.html:62
+msgid ""
+"Perfumy to dla mnie nie produkt – to emocja. Ten moment gdy otwierasz flakon "
+"i coś w środku mówi 'to ja'. Fascynują mnie zapachy drzewne i piżmowe: "
+"wetyweria, drzewo sandałowe, ciepłe bazy które zostają na skórze długo po "
+"tym jak już zapomnisz że je nałożyłeś."
+msgstr ""
+"Los perfumes para mí no son un producto – son una emoción. Ese momento en "
+"que abres un frasco y algo dentro dice 'soy yo'. Me fascinan las fragancias "
+"amaderadas y almizcladas: vetiver, sándalo, bases cálidas que permanecen en "
+"la piel mucho después de que olvidaste que las aplicaste."
+
+#: templates/policies/about.html:65
+#, python-format
+msgid ""
+"Przystanek Perfumy to mój projekt – sklep bez ściemy. Bez marż 300%%, bez "
+"reklam w telewizji, bez opakowania za 50 zł wliczonego w cenę. Tylko dobry "
+"zapach, w uczciwej cenie, wysłany do Ciebie następnego dnia."
+msgstr ""
+"Parada de Perfumes es mi proyecto – una tienda sin engaños. Sin márgenes del "
+"300%%, sin anuncios en televisión, sin envases de 50 PLN incluidos en el "
+"precio. Solo una buena fragancia, a un precio justo, enviada al día siguiente."
+
+#: templates/policies/about.html:72
 msgid "Dlaczego Przystanek Perfumy?"
 msgstr "¿Por qué Parada de Perfumes?"
 
-#: templates/policies/about.html:76
+#: templates/policies/about.html:75
 msgid "💰"
 msgstr "💰"
 
-#: templates/policies/about.html:77
+#: templates/policies/about.html:76
 msgid "Ceny hurtowe"
 msgstr "Precios de mayorista"
 
-#: templates/policies/about.html:78
+#: templates/policies/about.html:77
 msgid ""
 "Kupujemy bezpośrednio od hurtownika. Marża minimalna, jakość maksymalna."
 msgstr "Compramos directamente al mayorista. Margen mínimo, calidad máxima."
 
-#: templates/policies/about.html:81
+#: templates/policies/about.html:80
 msgid "🏆"
 msgstr "🏆"
 
-#: templates/policies/about.html:82
+#: templates/policies/about.html:81
 msgid "Znane marki"
 msgstr "Marcas reconocidas"
 
-#: templates/policies/about.html:83
+#: templates/policies/about.html:82
 msgid "Dior, Chanel, Xerjoff, Amouage – 468 zapachów od sprawdzonych marek."
 msgstr "Dior, Chanel, Xerjoff, Amouage – 468 fragancias de marcas probadas."
 
-#: templates/policies/about.html:86
+#: templates/policies/about.html:85
 msgid "🚚"
 msgstr "🚚"
 
-#: templates/policies/about.html:87
+#: templates/policies/about.html:86
 msgid "Szybka wysyłka"
 msgstr "Envío rápido"
 
-#: templates/policies/about.html:88
+#: templates/policies/about.html:87
 msgid "Wysyłka w 24h. Darmowa przy zamówieniu 3 i więcej perfum."
 msgstr "Envío en 24h. Gratis al pedir 3 o más perfumes."
 
-#: templates/policies/about.html:91
+#: templates/policies/about.html:90
 msgid "🧪"
 msgstr "🧪"
 
-#: templates/policies/about.html:92
+#: templates/policies/about.html:91
 msgid "Quiz zapachowy"
 msgstr "Cuestionario de fragancias"
 
-#: templates/policies/about.html:93
+#: templates/policies/about.html:92
 msgid "Nie wiesz co wybrać? Nasz quiz dopasuje zapach do Twojego stylu."
 msgstr ""
 "¿No sabes qué elegir? Nuestro cuestionario adapta la fragancia a tu estilo."
 
-#: templates/policies/about.html:100
+#: templates/policies/about.html:99
 msgid "Gotowy znaleźć swój zapach?"
 msgstr "¿Listo para encontrar tu fragancia?"
+
+#: templates/policies/contact.html:5
+msgid "Kontakt – Przystanek Perfumy"
+msgstr "Contacto – Parada de Perfumes"
 
 #: templates/policies/contact.html:15
 msgid "📞 Skontaktuj się z nami"
 msgstr "📞 Contacta con nosotros"
 
-#: templates/policies/contact.html:17
-msgid "📧"
-msgstr "📧"
-
 #: templates/policies/contact.html:17 templates/policies/odr.html:46
-#: templates/policies/regulamin.html:32
+#: templates/policies/regulamin.html:30
 msgid "E-mail:"
 msgstr "Correo electrónico:"
 
-#: templates/policies/contact.html:17 templates/policies/regulamin.html:32
-#: templates/policies/regulamin.html:71
-#: templates/policies/returns_policy.html:38
-#: templates/policies/returns_policy.html:55
-msgid "przystanekperfumy@gmail.com"
-msgstr "przystanekperfumy@gmail.com"
-
 #: templates/policies/contact.html:17
-msgid "(odpowiadamy w ciągu 24h)"
-msgstr "(respondemos en 24h)"
+msgid "(odpowiadamy w ciągu dwóch dni roboczych)"
+msgstr "(respondemos en dos días laborables)"
 
 #: templates/policies/contact.html:18
-msgid "📞"
-msgstr "📞"
-
-#: templates/policies/contact.html:18 templates/policies/regulamin.html:33
-msgid "Telefon:"
-msgstr "Teléfono:"
+msgid "Telefon / WhatsApp:"
+msgstr "Teléfono / WhatsApp:"
 
 #: templates/policies/contact.html:18
 msgid "(pon.–pt. 10:00–16:00)"
 msgstr "(lun.–vie. 10:00–16:00)"
 
 #: templates/policies/contact.html:19
-msgid "📍"
-msgstr "📍"
-
-#: templates/policies/contact.html:19
 msgid "Adres do zwrotów i reklamacji:"
 msgstr "Dirección para devoluciones y reclamaciones:"
 
-#: templates/policies/contact.html:29
+#: templates/policies/contact.html:22 templates/policies/odr.html:45
+#: templates/policies/regulamin.html:29
+msgid "Warszawa"
+msgstr "Varsovia"
+
+#: templates/policies/contact.html:23
+msgid "(działalność nierejestrowana)"
+msgstr "(actividad no registrada)"
+
+#: templates/policies/contact.html:30
 msgid "✉️ Napisz do nas"
 msgstr "✉️ Escríbenos"
 
-#: templates/policies/contact.html:33
+#: templates/policies/contact.html:34
 msgid "Imię i nazwisko"
 msgstr "Nombre y apellidos"
 
-#: templates/policies/contact.html:37
+#: templates/policies/contact.html:38
 #: templates/policies/withdrawal_form.html:27
 msgid "Adres e-mail"
 msgstr "Dirección de correo electrónico"
 
-#: templates/policies/contact.html:41
+#: templates/policies/contact.html:42
 msgid "Numer zamówienia (opcjonalnie)"
 msgstr "Número de pedido (opcional)"
 
-#: templates/policies/contact.html:45
+#: templates/policies/contact.html:46
 msgid "Wiadomość"
 msgstr "Mensaje"
 
-#: templates/policies/contact.html:49
+#: templates/policies/contact.html:50
 msgid "Wyślij wiadomość"
 msgstr "Enviar mensaje"
 
-#: templates/policies/contact.html:52
+#: templates/policies/contact.html:53
 msgid "Odpowiemy najszybciej jak to możliwe, zwykle w ciągu 1 dnia roboczego."
 msgstr "Responderemos lo antes posible, normalmente en 1 día laborable."
 
-#: templates/policies/contact.html:57
+#: templates/policies/contact.html:58
 msgid "💡 Masz pytanie o status zamówienia? Sprawdź"
 msgstr "💡 ¿Tienes duda sobre el estado de tu pedido? Consulta"
 
-#: templates/policies/contact.html:58
+#: templates/policies/contact.html:59
 msgid "💡 Potrzebujesz wzoru odstąpienia od umowy?"
 msgstr "💡 ¿Necesitas el formulario de desistimiento?"
 
-#: templates/policies/contact.html:58
+#: templates/policies/contact.html:59
 msgid "Kliknij tutaj"
 msgstr "Haz clic aquí"
+
+#: templates/policies/odr.html:5
+msgid "Pozasądowe rozwiązywanie sporów (ODR) – Przystanek Perfumy"
+msgstr "Resolución de litigios en línea (ODR) – Parada de Perfumes"
 
 #: templates/policies/odr.html:13
 msgid "Platforma internetowa ODR"
@@ -1404,7 +1606,7 @@ msgstr ""
 msgid "Platforma ODR jest dostępna pod adresem:"
 msgstr "La plataforma ODR está disponible en:"
 
-#: templates/policies/odr.html:17 templates/policies/regulamin.html:87
+#: templates/policies/odr.html:17 templates/policies/regulamin.html:85
 msgid "https://ec.europa.eu/consumers/odr/"
 msgstr "https://ec.europa.eu/consumers/odr/"
 
@@ -1500,23 +1702,16 @@ msgid "Dane sprzedawcy do kontaktu w sprawie sporów"
 msgstr "Datos del vendedor para contacto en caso de disputas"
 
 #: templates/policies/odr.html:44
-msgid "Marcel Krzeja (Przystanek Perfumy)"
-msgstr "Marcel Krzeja (Parada de Perfumes)"
+msgid "(Przystanek Perfumy)"
+msgstr "(Parada de Perfumes)"
 
-#: templates/policies/odr.html:45 templates/policies/regulamin.html:31
-msgid "Adres: ul. Kwiatowa 5, 00-001 Warszawa"
-msgstr "Dirección: ul. Kwiatowa 5, 00-001 Varsovia"
-
-#: templates/policies/odr.html:46 templates/policies/omnibus.html:50
-#: templates/policies/privacy_policy.html:14
-#: templates/policies/privacy_policy.html:71
-#: templates/policies/privacy_policy.html:82
-msgid "sklep@przystanekperfumy.pl"
-msgstr "sklep@przystanekperfumy.pl"
+#: templates/policies/odr.html:45 templates/policies/regulamin.html:29
+msgid "Adres:"
+msgstr "Dirección:"
 
 #: templates/policies/odr.html:47
-msgid "Telefon: +48 453 305 509"
-msgstr "Teléfono: +48 453 305 509"
+msgid "Telefon: +48 534 293 389"
+msgstr "Teléfono: +48 534 293 389"
 
 #: templates/policies/odr.html:51
 msgid "📌 Informacja obowiązkowa:"
@@ -1542,6 +1737,10 @@ msgstr "Enlace a la plataforma ODR:"
 #: templates/policies/odr.html:54
 msgid "ec.europa.eu/consumers/odr/"
 msgstr "ec.europa.eu/consumers/odr/"
+
+#: templates/policies/omnibus.html:5
+msgid "Dyrektywa Omnibus – Przystanek Perfumy"
+msgstr "Directiva Omnibus – Parada de Perfumes"
 
 #: templates/policies/omnibus.html:11
 msgid "Dyrektywa Omnibus – Twoje prawa jako konsumenta"
@@ -1723,8 +1922,16 @@ msgid "📢 Masz pytania dotyczące cen lub opinii?"
 msgstr "📢 ¿Tienes preguntas sobre precios u opiniones?"
 
 #: templates/policies/omnibus.html:50
-msgid "lub +48 453 305 509. Jesteśmy do Twojej dyspozycji."
-msgstr "o +48 453 305 509. Estamos a tu disposición."
+msgid "Skontaktuj się z nami:"
+msgstr "Contacta con nosotros:"
+
+#: templates/policies/omnibus.html:50
+msgid "lub whatsapp"
+msgstr "o whatsapp"
+
+#: templates/policies/omnibus.html:50
+msgid "Jesteśmy do Twojej dyspozycji."
+msgstr "Estamos a tu disposición."
 
 #: templates/policies/omnibus.html:53
 msgid ""
@@ -1734,8 +1941,12 @@ msgstr ""
 "Esta página ha sido elaborada de acuerdo con los requisitos de la Directiva "
 "Omnibus (2019/2161) y la ley de derechos del consumidor."
 
+#: templates/policies/privacy_policy.html:5
+msgid "Polityka prywatności i plików cookies – Przystanek Perfumy"
+msgstr "Política de privacidad y cookies – Parada de Perfumes"
+
 #: templates/policies/privacy_policy.html:11
-#: templates/policies/regulamin.html:126
+#: templates/policies/regulamin.html:124
 msgid "Polityka prywatności i plików cookies"
 msgstr "Política de privacidad y cookies"
 
@@ -1749,17 +1960,19 @@ msgstr "El responsable de tus datos personales es"
 
 #: templates/policies/privacy_policy.html:14
 msgid ""
-"prowadzący działalność gospodarczą pod firmą „Przystanek Perfumy”, NIP: "
-"123-456-78-90, REGON: 123456789, adres: ul. Kwiatowa 5, 00-001 Warszawa. "
-"Kontakt:"
+"prowadzący działalność nierejestrowaną pod nazwą „Przystanek Perfumy\", "
+"adres:"
 msgstr ""
-"que ejerce su actividad comercial bajo el nombre „Parada de Perfumes”, NIF: "
-"123-456-78-90, REGON: 123456789, dirección: ul. Kwiatowa 5, 00-001 Varsovia. "
-"Contacto:"
+"que ejerce una actividad no registrada bajo el nombre \"Parada de Perfumes\", "
+"dirección:"
 
 #: templates/policies/privacy_policy.html:14
-msgid ", tel. +48 453 305 509."
-msgstr ", tel. +48 453 305 509."
+msgid "Warszawa. Kontakt:"
+msgstr "Varsovia. Contacto:"
+
+#: templates/policies/privacy_policy.html:14
+msgid ", tel. +48 534 293 389."
+msgstr ", tel. +48 534 293 389."
 
 #: templates/policies/privacy_policy.html:16
 msgid "II. Zakres i cele przetwarzania danych"
@@ -1863,7 +2076,7 @@ msgstr ""
 "de la tienda),"
 
 #: templates/policies/privacy_policy.html:36
-#: templates/policies/regulamin.html:115
+#: templates/policies/regulamin.html:113
 msgid "zapamiętywania preferencji (np. wybór metody dostawy),"
 msgstr "recordar preferencias (por ejemplo, elección del método de envío),"
 
@@ -1991,6 +2204,11 @@ msgid "W celu realizacji praw prosimy o kontakt e-mailowy:"
 msgstr "Para ejercer tus derechos, por favor contacta por correo electrónico:"
 
 #: templates/policies/privacy_policy.html:71
+#: templates/policies/regulamin.html:30 templates/policies/regulamin.html:69
+msgid "przystanekperfumy.techniczny@gmail.com"
+msgstr "przystanekperfumy.techniczny@gmail.com"
+
+#: templates/policies/privacy_policy.html:71
 msgid ""
 ". Masz również prawo wniesienia skargi do Prezesa Urzędu Ochrony Danych "
 "Osobowych (PUODO)."
@@ -2084,14 +2302,12 @@ msgid "Sprzedawca"
 msgstr "Vendedor"
 
 #: templates/policies/regulamin.html:18
-msgid ""
-"– Marcel Krzeja, prowadzący działalność gospodarczą pod firmą „Przystanek "
-"Perfumy”, NIP: 123-456-78-90, REGON: 123456789, adres siedziby: ul. Kwiatowa "
-"5, 00-001 Warszawa (dane przykładowe –"
-msgstr ""
-"– Marcel Krzeja, que ejerce su actividad comercial bajo el nombre „Parada de "
-"Perfumes”, NIF: 123-456-78-90, REGON: 123456789, domicilio social: ul. "
-"Kwiatowa 5, 00-001 Varsovia (datos de ejemplo –"
+msgid "prowadzący działalność nierejestrowaną pod nazwą „Przystanek Perfumy"
+msgstr "que ejerce actividad no registrada bajo el nombre \"Parada de Perfumes\""
+
+#: templates/policies/regulamin.html:18
+msgid "Warszawa."
+msgstr "Varsovia."
 
 #: templates/policies/regulamin.html:18
 msgid "uzupełnij własnymi"
@@ -2135,23 +2351,19 @@ msgstr "– Reglamento (UE) 2016/679 del Parlamento Europeo y del Consejo."
 msgid "II. Dane Sprzedawcy i kontakt"
 msgstr "II. Datos del Vendedor y contacto"
 
-#: templates/policies/regulamin.html:29
-msgid "NIP: 123-456-78-90"
-msgstr "NIF: 123-456-78-90"
+#: templates/policies/regulamin.html:31
+msgid "Telefon:"
+msgstr "Teléfono:"
 
-#: templates/policies/regulamin.html:30
-msgid "REGON: 123456789"
-msgstr "REGON: 123456789"
-
-#: templates/policies/regulamin.html:33
+#: templates/policies/regulamin.html:31
 msgid "(czynny pon.–pt. 10:00–16:00)"
 msgstr "(activo lun.–vie. 10:00–16:00)"
 
-#: templates/policies/regulamin.html:37
+#: templates/policies/regulamin.html:35
 msgid "III. Zawarcie umowy sprzedaży"
 msgstr "III. Celebración del contrato de compraventa"
 
-#: templates/policies/regulamin.html:39
+#: templates/policies/regulamin.html:37
 msgid ""
 "Umowa sprzedaży zostaje zawarta w momencie kliknięcia przez Klienta "
 "przycisku „Zamawiam i płacę” (lub „Złóż zamówienie”) po uprzednim dodaniu "
@@ -2162,7 +2374,7 @@ msgstr ""
 "haber añadido productos al carrito y proporcionado los datos necesarios para "
 "su realización."
 
-#: templates/policies/regulamin.html:40
+#: templates/policies/regulamin.html:38
 msgid ""
 "Po złożeniu zamówienia Klient otrzymuje na podany adres e-mail potwierdzenie "
 "przyjęcia zamówienia do realizacji."
@@ -2171,7 +2383,7 @@ msgstr ""
 "electrónico proporcionada una confirmación de aceptación del pedido para su "
 "ejecución."
 
-#: templates/policies/regulamin.html:41
+#: templates/policies/regulamin.html:39
 msgid ""
 "Warunkiem realizacji zamówienia jest akceptacja Regulaminu i Polityki "
 "Prywatności."
@@ -2179,18 +2391,18 @@ msgstr ""
 "La condición para la realización del pedido es la aceptación del Reglamento "
 "y de la Política de Privacidad."
 
-#: templates/policies/regulamin.html:45
+#: templates/policies/regulamin.html:43
 msgid "IV. Ceny i płatności"
 msgstr "IV. Precios y pagos"
 
-#: templates/policies/regulamin.html:47
+#: templates/policies/regulamin.html:45
 msgid ""
 "Wszystkie ceny podane w Sklepie są cenami brutto (zawierają podatek VAT)."
 msgstr ""
 "Todos los precios indicados en la Tienda son precios brutos (incluyen el "
 "IVA)."
 
-#: templates/policies/regulamin.html:48
+#: templates/policies/regulamin.html:46
 msgid ""
 "Sklep informuje o najniższej cenie produktu z ostatnich 30 dni przed obniżką "
 "(zgodnie z dyrektywą Omnibus) – dotyczy wszystkich produktów objętych "
@@ -2200,19 +2412,19 @@ msgstr ""
 "anteriores a la reducción (de acuerdo con la Directiva Omnibus) – aplicable "
 "a todos los productos sujetos a promoción de precio."
 
-#: templates/policies/regulamin.html:49
+#: templates/policies/regulamin.html:47
 msgid "Dostępne metody płatności:"
 msgstr "Métodos de pago disponibles:"
 
-#: templates/policies/regulamin.html:49
+#: templates/policies/regulamin.html:47
 msgid "za pobraniem"
 msgstr "contra reembolso"
 
-#: templates/policies/regulamin.html:49
+#: templates/policies/regulamin.html:47
 msgid "(gotówka przy odbiorze przesyłki)."
 msgstr "(pago en efectivo al recibir el paquete)."
 
-#: templates/policies/regulamin.html:50
+#: templates/policies/regulamin.html:48
 msgid ""
 "Koszt dostawy jest podany przy wyborze metody wysyłki i doliczany do "
 "wartości zamówienia."
@@ -2220,11 +2432,11 @@ msgstr ""
 "El costo de envío se indica al elegir el método de envío y se suma al valor "
 "del pedido."
 
-#: templates/policies/regulamin.html:54
+#: templates/policies/regulamin.html:52
 msgid "V. Dostawa"
 msgstr "V. Envío"
 
-#: templates/policies/regulamin.html:56
+#: templates/policies/regulamin.html:54
 msgid ""
 "Realizacja zamówień odbywa się za pośrednictwem kuriera (InPost, GLS – "
 "obecnie tylko InPost)."
@@ -2232,29 +2444,33 @@ msgstr ""
 "La ejecución de los pedidos se realiza a través de mensajería (InPost, GLS – "
 "actualmente solo InPost)."
 
-#: templates/policies/regulamin.html:57
+#: templates/policies/regulamin.html:55
 msgid "Termin dostawy: do 1 dnia roboczego od nadania przesyłki."
 msgstr "Plazo de entrega: hasta 1 día laborable desde el envío del paquete."
 
-#: templates/policies/regulamin.html:60
+#: templates/policies/regulamin.html:58
 msgid ""
 "InPost Kurier: 30 zł (przy zamówieniu 3 lub więcej sztuk – dostawa gratis)."
 msgstr ""
 "InPost Mensajería: 30 PLN (al pedir 3 o más unidades – envío gratuito)."
 
-#: templates/policies/regulamin.html:61
+#: templates/policies/regulamin.html:59
 msgid "GLS – obecnie niedostępny."
 msgstr "GLS – actualmente no disponible."
 
-#: templates/policies/regulamin.html:64
-msgid "Dostawa wyłącznie na terenie Polski."
-msgstr "Envío únicamente dentro de Polonia."
+#: templates/policies/regulamin.html:62
+msgid ""
+"Dostawa krajowa i zagraniczna (koszt wysyłki zagranicznej ustalany "
+"indywidualnie)."
+msgstr ""
+"Envío nacional e internacional (el costo del envío internacional se acuerda "
+"individualmente)."
 
-#: templates/policies/regulamin.html:68
+#: templates/policies/regulamin.html:66
 msgid "VI. Reklamacje (rękojmia)"
 msgstr "VI. Reclamaciones (garantía legal)"
 
-#: templates/policies/regulamin.html:70
+#: templates/policies/regulamin.html:68
 msgid ""
 "Sklep odpowiada za wady fizyczne i prawne towaru na zasadach określonych w "
 "Kodeksie cywilnym (rękojmia)."
@@ -2262,17 +2478,17 @@ msgstr ""
 "La Tienda responde por los defectos físicos y jurídicos de la mercancía "
 "según lo establecido en el Código Civil (garantía legal)."
 
-#: templates/policies/regulamin.html:71
+#: templates/policies/regulamin.html:69
 msgid "Reklamację należy zgłosić pisemnie na adres e-mail"
 msgstr ""
 "La reclamación debe presentarse por escrito a la dirección de correo "
 "electrónico"
 
-#: templates/policies/regulamin.html:71
+#: templates/policies/regulamin.html:69
 msgid "lub listownie na adres siedziby."
 msgstr "o por correo postal a la dirección del domicilio social."
 
-#: templates/policies/regulamin.html:72
+#: templates/policies/regulamin.html:70
 msgid ""
 "W zgłoszeniu należy podać: numer zamówienia, opis wady oraz żądanie "
 "(wymiana, naprawa, obniżenie ceny lub odstąpienie od umowy)."
@@ -2281,17 +2497,17 @@ msgstr ""
 "defecto y la solicitud (sustitución, reparación, reducción del precio o "
 "desistimiento del contrato)."
 
-#: templates/policies/regulamin.html:73
+#: templates/policies/regulamin.html:71
 msgid "Sklep ustosunkuje się do reklamacji w ciągu 14 dni od jej otrzymania."
 msgstr ""
 "La Tienda responderá a la reclamación en un plazo de 14 días desde su "
 "recepción."
 
-#: templates/policies/regulamin.html:77
+#: templates/policies/regulamin.html:75
 msgid "VII. Odstąpienie od umowy (zwroty)"
 msgstr "VII. Desistimiento del contrato (devoluciones)"
 
-#: templates/policies/regulamin.html:79
+#: templates/policies/regulamin.html:77
 msgid ""
 "Konsument ma prawo odstąpić od umowy zawartej na odległość w terminie 14 dni "
 "bez podawania przyczyny (zgodnie z ustawą o prawach konsumenta)."
@@ -2300,11 +2516,11 @@ msgstr ""
 "un plazo de 14 días sin indicar el motivo (de acuerdo con la ley de derechos "
 "del consumidor)."
 
-#: templates/policies/regulamin.html:80
+#: templates/policies/regulamin.html:78
 msgid "Ważne:"
 msgstr "Importante:"
 
-#: templates/policies/regulamin.html:80
+#: templates/policies/regulamin.html:78
 msgid ""
 "Prawo odstąpienia nie przysługuje w przypadku perfum, po otwarciu "
 "oryginalnego opakowania, ze względów higienicznych i zdrowotnych (art. 38 "
@@ -2316,23 +2532,23 @@ msgstr ""
 "de la ley de derechos del consumidor). La devolución solo es posible si el "
 "envase está intacto y el producto no ha sido usado."
 
-#: templates/policies/regulamin.html:81
+#: templates/policies/regulamin.html:79
 msgid "Wzór formularza odstąpienia od umowy dostępny jest"
 msgstr "El formulario de desistimiento está disponible"
 
-#: templates/policies/regulamin.html:81
+#: templates/policies/regulamin.html:79
 msgid "tutaj"
 msgstr "aquí"
 
-#: templates/policies/regulamin.html:81
+#: templates/policies/regulamin.html:79
 msgid "(do pobrania jako PDF)."
 msgstr "(para descargar como PDF)."
 
-#: templates/policies/regulamin.html:85
+#: templates/policies/regulamin.html:83
 msgid "VIII. Pozasądowe rozwiązywanie sporów (ODR)"
 msgstr "VIII. Resolución extrajudicial de litigios (ODR)"
 
-#: templates/policies/regulamin.html:87
+#: templates/policies/regulamin.html:85
 msgid ""
 "Konsument ma możliwość skorzystania z unijnej platformy internetowej ODR pod "
 "adresem:"
@@ -2340,7 +2556,7 @@ msgstr ""
 "El consumidor tiene la posibilidad de utilizar la plataforma europea de "
 "resolución de litigios en línea (ODR) en la dirección:"
 
-#: templates/policies/regulamin.html:88
+#: templates/policies/regulamin.html:86
 msgid ""
 "Platforma służy do rozstrzygania sporów pomiędzy konsumentami a sprzedawcami "
 "w drodze mediacji."
@@ -2348,11 +2564,11 @@ msgstr ""
 "La plataforma sirve para resolver disputas entre consumidores y vendedores a "
 "través de la mediación."
 
-#: templates/policies/regulamin.html:92
+#: templates/policies/regulamin.html:90
 msgid "IX. Opinie o produktach (Omnibus)"
 msgstr "IX. Opiniones sobre productos (Omnibus)"
 
-#: templates/policies/regulamin.html:94
+#: templates/policies/regulamin.html:92
 msgid ""
 "Wszystkie opinie zamieszczone na stronie pochodzą od Klientów, którzy "
 "dokonali zakupu danego produktu w Sklepie. Każda opinia jest weryfikowana "
@@ -2362,15 +2578,15 @@ msgstr ""
 "comprado el producto en la Tienda. Cada opinión se verifica para garantizar "
 "su autenticidad."
 
-#: templates/policies/regulamin.html:95
+#: templates/policies/regulamin.html:93
 msgid "Sklep nie zamieszcza opinii sponsorowanych ani nieprawdziwych."
 msgstr "La Tienda no publica opiniones patrocinadas ni falsas."
 
-#: templates/policies/regulamin.html:99
+#: templates/policies/regulamin.html:97
 msgid "X. Dane osobowe i pliki cookies (RODO)"
 msgstr "X. Datos personales y cookies (RGPD)"
 
-#: templates/policies/regulamin.html:100
+#: templates/policies/regulamin.html:98
 msgid ""
 "Administratorem danych osobowych jest Sprzedawca (Marcel Krzeja). Dane są "
 "przetwarzane w celu:"
@@ -2378,28 +2594,28 @@ msgstr ""
 "El responsable del tratamiento de datos personales es el Vendedor (Marcel "
 "Krzeja). Los datos se tratan con el fin de:"
 
-#: templates/policies/regulamin.html:102
+#: templates/policies/regulamin.html:100
 msgid "realizacji zamówień (podstawa prawna: art. 6 ust. 1 lit. b RODO),"
 msgstr "realización de pedidos (base legal: art. 6.1.b RGPD),"
 
-#: templates/policies/regulamin.html:103
+#: templates/policies/regulamin.html:101
 msgid ""
 "marketingu własnego i newslettera (na podstawie zgody – art. 6 ust. 1 lit. a "
 "RODO),"
 msgstr ""
 "marketing propio y boletín (basado en el consentimiento – art. 6.1.a RGPD),"
 
-#: templates/policies/regulamin.html:104
+#: templates/policies/regulamin.html:102
 msgid ""
 "analityki i statystyk (art. 6 ust. 1 lit. f RODO – prawnie uzasadniony "
 "interes)."
 msgstr "analítica y estadísticas (art. 6.1.f RGPD – interés legítimo)."
 
-#: templates/policies/regulamin.html:106
+#: templates/policies/regulamin.html:104
 msgid "Sklep zbiera i przechowuje następujące dane Klientów:"
 msgstr "La Tienda recoge y almacena los siguientes datos de los Clientes:"
 
-#: templates/policies/regulamin.html:108
+#: templates/policies/regulamin.html:106
 msgid ""
 "dane podane podczas rejestracji (nazwa użytkownika, imię, nazwisko, adres e-"
 "mail, numer telefonu, adres dostawy),"
@@ -2408,7 +2624,7 @@ msgstr ""
 "apellido, dirección de correo electrónico, número de teléfono, dirección de "
 "envío),"
 
-#: templates/policies/regulamin.html:109
+#: templates/policies/regulamin.html:107
 msgid ""
 "dane automatycznie gromadzone: adres IP, typ przeglądarki, rozdzielczość "
 "ekranu, przybliżona lokalizacja, czas spędzony na stronach, źródło wejścia, "
@@ -2422,7 +2638,7 @@ msgstr ""
 "Internet, así como datos demográficos anónimos (sexo, edad, intereses) a "
 "través de Google Analytics,"
 
-#: templates/policies/regulamin.html:110
+#: templates/policies/regulamin.html:108
 msgid ""
 "dane dotyczące zachowań zakupowych (historia zamówień, ulubione produkty, "
 "użyte kody rabatowe)."
@@ -2430,27 +2646,27 @@ msgstr ""
 "datos sobre el comportamiento de compra (historial de pedidos, productos "
 "favoritos, códigos de descuento utilizados)."
 
-#: templates/policies/regulamin.html:112
+#: templates/policies/regulamin.html:110
 msgid "Pliki cookies („ciasteczka”) są wykorzystywane do:"
 msgstr "Las cookies se utilizan para:"
 
-#: templates/policies/regulamin.html:114
+#: templates/policies/regulamin.html:112
 msgid "utrzymania sesji i koszyka zakupowego,"
 msgstr "mantener la sesión y el carrito de compra,"
 
-#: templates/policies/regulamin.html:116
+#: templates/policies/regulamin.html:114
 msgid "celów analitycznych (Google Analytics),"
 msgstr "fines analíticos (Google Analytics),"
 
-#: templates/policies/regulamin.html:117
+#: templates/policies/regulamin.html:115
 msgid "remarketingu (wyświetlanie spersonalizowanych reklam)."
 msgstr "remarketing (mostrar anuncios personalizados)."
 
-#: templates/policies/regulamin.html:119
+#: templates/policies/regulamin.html:117
 msgid "Klient ma prawo w każdej chwili:"
 msgstr "El Cliente tiene derecho en todo momento a:"
 
-#: templates/policies/regulamin.html:121
+#: templates/policies/regulamin.html:119
 msgid ""
 "żądać dostępu do swoich danych, ich sprostowania, usunięcia („prawo do bycia "
 "zapomnianym”) lub ograniczenia przetwarzania,"
@@ -2458,15 +2674,15 @@ msgstr ""
 "solicitar el acceso a sus datos, su rectificación, supresión („derecho al "
 "olvido”) o la limitación del tratamiento,"
 
-#: templates/policies/regulamin.html:122
+#: templates/policies/regulamin.html:120
 msgid "wnieść sprzeciw wobec przetwarzania,"
 msgstr "oponerse al tratamiento,"
 
-#: templates/policies/regulamin.html:123
+#: templates/policies/regulamin.html:121
 msgid "przenieść dane,"
 msgstr "portar los datos,"
 
-#: templates/policies/regulamin.html:124
+#: templates/policies/regulamin.html:122
 msgid ""
 "cofnąć zgodę na przetwarzanie w celach marketingowych (wypisać się z "
 "newslettera)."
@@ -2474,15 +2690,15 @@ msgstr ""
 "revocar el consentimiento para el tratamiento con fines de marketing (darse "
 "de baja del boletín)."
 
-#: templates/policies/regulamin.html:126
+#: templates/policies/regulamin.html:124
 msgid "Szczegółowa polityka prywatności dostępna jest pod adresem:"
 msgstr "La política de privacidad detallada está disponible en:"
 
-#: templates/policies/regulamin.html:129
+#: templates/policies/regulamin.html:127
 msgid "XI. Prawa autorskie"
 msgstr "XI. Derechos de autor"
 
-#: templates/policies/regulamin.html:131
+#: templates/policies/regulamin.html:129
 msgid ""
 "Właścicielem Sklepu oraz praw autorskich do jego zawartości (opisy "
 "produktów, zdjęcia, logotypy, układ graficzny) jest Sprzedawca."
@@ -2491,7 +2707,7 @@ msgstr ""
 "(descripciones de productos, imágenes, logotipos, diseño gráfico) es el "
 "Vendedor."
 
-#: templates/policies/regulamin.html:132
+#: templates/policies/regulamin.html:130
 msgid ""
 "Kopiowanie, powielanie lub rozpowszechnianie treści bez pisemnej zgody "
 "Sprzedawcy jest zabronione."
@@ -2499,11 +2715,11 @@ msgstr ""
 "Queda prohibida la copia, reproducción o difusión de los contenidos sin el "
 "consentimiento por escrito del Vendedor."
 
-#: templates/policies/regulamin.html:136
+#: templates/policies/regulamin.html:134
 msgid "XII. Zmiany Regulaminu"
 msgstr "XII. Cambios en el Reglamento"
 
-#: templates/policies/regulamin.html:138
+#: templates/policies/regulamin.html:136
 msgid ""
 "Sklep zastrzega sobie prawo do zmiany Regulaminu. Zmiany wchodzą w życie po "
 "upływie 7 dni od ich opublikowania na stronie."
@@ -2511,7 +2727,7 @@ msgstr ""
 "La Tienda se reserva el derecho a modificar el Reglamento. Los cambios "
 "entran en vigor después de 7 días desde su publicación en el sitio web."
 
-#: templates/policies/regulamin.html:139
+#: templates/policies/regulamin.html:137
 msgid ""
 "Klienci posiadający konto w Sklepie zostaną poinformowani o zmianach drogą e-"
 "mail."
@@ -2519,7 +2735,7 @@ msgstr ""
 "Los Clientes que tengan cuenta en la Tienda serán informados de los cambios "
 "por correo electrónico."
 
-#: templates/policies/regulamin.html:140
+#: templates/policies/regulamin.html:138
 msgid ""
 "Zamówienia złożone przed zmianą Regulaminu realizowane są na podstawie jego "
 "poprzedniej wersji."
@@ -2527,11 +2743,11 @@ msgstr ""
 "Los pedidos realizados antes del cambio del Reglamento se ejecutarán según "
 "su versión anterior."
 
-#: templates/policies/regulamin.html:144
+#: templates/policies/regulamin.html:142
 msgid "XIII. Postanowienia końcowe"
 msgstr "XIII. Disposiciones finales"
 
-#: templates/policies/regulamin.html:146
+#: templates/policies/regulamin.html:144
 msgid ""
 "W sprawach nieuregulowanych Regulaminem stosuje się przepisy prawa "
 "polskiego, w szczególności Kodeksu cywilnego oraz ustawy o prawach "
@@ -2541,7 +2757,7 @@ msgstr ""
 "del derecho polaco, en particular el Código Civil y la ley de derechos del "
 "consumidor."
 
-#: templates/policies/regulamin.html:147
+#: templates/policies/regulamin.html:145
 msgid ""
 "Wszelkie spory między Sprzedawcą a Klientem będą rozstrzygane przez właściwy "
 "sąd powszechny według przepisów Kodeksu postępowania cywilnego."
@@ -2550,11 +2766,11 @@ msgstr ""
 "tribunal ordinario competente según las disposiciones del Código de "
 "Procedimiento Civil."
 
-#: templates/policies/regulamin.html:148
+#: templates/policies/regulamin.html:146
 msgid "Regulamin wchodzi w życie z dniem 14 kwietnia 2026 r."
 msgstr "El Reglamento entra en vigor el 14 de abril de 2026."
 
-#: templates/policies/regulamin.html:149
+#: templates/policies/regulamin.html:147
 msgid ""
 "Treść Regulaminu jest dostępna bezpłatnie na stronie Sklepu w formie "
 "umożliwiającej jej pobranie i wydrukowanie."
@@ -2562,9 +2778,13 @@ msgstr ""
 "El contenido del Reglamento está disponible gratuitamente en el sitio web de "
 "la Tienda en un formato que permite su descarga e impresión."
 
-#: templates/policies/regulamin.html:152
+#: templates/policies/regulamin.html:150
 msgid "Regulamin dostępny jest także w formacie PDF do pobrania."
 msgstr "El Reglamento también está disponible en formato PDF para descargar."
+
+#: templates/policies/returns_policy.html:5
+msgid "Zwroty i reklamacje – Przystanek Perfumy"
+msgstr "Devoluciones y reclamaciones – Parada de Perfumes"
 
 #: templates/policies/returns_policy.html:13
 msgid "1. Prawo odstąpienia od umowy (zwrot towaru)"
@@ -2711,6 +2931,11 @@ msgstr ""
 "Puedes presentar la reclamación por escrito a la dirección: Marcel Krzeja, "
 "ul. Kwiatowa 5, 00-001 Varsovia, o electrónicamente al correo electrónico:"
 
+#: templates/policies/returns_policy.html:38
+#: templates/policies/returns_policy.html:55
+msgid "przystanekperfumy@gmail.com"
+msgstr "przystanekperfumy@gmail.com"
+
 #: templates/policies/returns_policy.html:39
 msgid ""
 "W zgłoszeniu podaj: numer zamówienia, opis wady oraz swoje żądanie (wymiana, "
@@ -2779,6 +3004,10 @@ msgstr "Si tienes preguntas o dudas – contáctanos:"
 msgid "lub"
 msgstr "o"
 
+#: templates/policies/returns_policy.html:55
+msgid "+48 534 293 389"
+msgstr "+48 534 293 389"
+
 #: templates/policies/returns_policy.html:61
 msgid "Pobierz formularz odstąpienia"
 msgstr "Descargar formulario de desistimiento"
@@ -2786,6 +3015,10 @@ msgstr "Descargar formulario de desistimiento"
 #: templates/policies/returns_policy.html:62
 msgid "Regulamin sklepu"
 msgstr "Reglamento de la tienda"
+
+#: templates/policies/withdrawal_form.html:5
+msgid "Formularz odstąpienia od umowy – Przystanek Perfumy"
+msgstr "Formulario de desistimiento del contrato – Parada de Perfumes"
 
 #: templates/policies/withdrawal_form.html:11
 msgid "Formularz odstąpienia od umowy"
@@ -2817,6 +3050,10 @@ msgstr "Fecha de recepción de la mercancía (si procede)"
 #: templates/policies/withdrawal_form.html:42
 msgid "Nazwa produktu / produktów, od których odstępuję"
 msgstr "Nombre del producto / productos del que desisto"
+
+#: templates/policies/withdrawal_form.html:43
+msgid "np. 1x Dior Sauvage 100ml, 2x Chanel No.5 50ml"
+msgstr "ej. 1x Dior Sauvage 100ml, 2x Chanel No.5 50ml"
 
 #: templates/policies/withdrawal_form.html:47
 msgid "Podpis (lub imię i nazwisko w przypadku wysyłki elektronicznej)"
@@ -2856,10 +3093,35 @@ msgstr ""
 msgid "Strona główna"
 msgstr "Página principal"
 
-#: templates/products/brand_page.html:39 templates/products/brand_page.html:42
-#: templates/products/detail.html:73 templates/products/detail.html:75
-msgid "›"
-msgstr "›"
+#: templates/products/brand_page.html:50
+#, python-format
+msgid ""
+"Perfumy <em style=\"font-style:italic; color:var(--gold);\">%(brand)s</em>"
+msgstr ""
+"Perfumes <em style=\"font-style:italic; color:var(--gold);\">%(brand)s</em>"
+
+#: templates/products/brand_page.html:63 templates/products/quiz.html:47
+msgid "Dla niej"
+msgstr "Para ella"
+
+#: templates/products/brand_page.html:67 templates/products/quiz.html:50
+msgid "Dla niego"
+msgstr "Para él"
+
+#: templates/products/brand_page.html:71 templates/products/detail.html:98
+#: templates/products/list.html:4 templates/products/list.html:151
+#: templates/products/quiz.html:86
+msgid "Unisex"
+msgstr "Unisex"
+
+#: templates/products/brand_page.html:79
+#, python-format
+msgid ""
+"Znaleziono: <strong style=\"color:var(--forest-green);\">%(count)s</strong> "
+"perfum"
+msgstr ""
+"Encontrados: <strong style=\"color:var(--forest-green);\">%(count)s</strong> "
+"perfumes"
 
 #: templates/products/brand_page.html:82 templates/products/list.html:76
 msgid "Sortuj:"
@@ -2881,54 +3143,104 @@ msgstr "Precio ascendente"
 msgid "Cena malejąco"
 msgstr "Precio descendente"
 
-#: templates/products/brand_page.html:101 templates/products/list.html:144
-msgid "🧴"
-msgstr "🧴"
+#: templates/products/brand_page.html:99
+#, python-format
+msgid "Perfumy %(name)s %(brand)s – Przystanek Perfumy"
+msgstr "Perfumes %(name)s %(brand)s – Parada de Perfumes"
 
 #: templates/products/brand_page.html:107 templates/products/list.html:154
-#: templates/products/quiz.html:87
+#: templates/products/quiz.html:89
 msgid "📦 100 ml"
 msgstr "📦 100 ml"
 
 #: templates/products/brand_page.html:108 templates/products/list.html:155
-#: templates/products/quiz.html:88
+#: templates/products/quiz.html:90
 msgid "Zobacz więcej"
 msgstr "Ver más"
 
-#: templates/products/brand_page.html:120 templates/products/list.html:167
-#: templates/products/quiz.html:100
-msgid "&laquo; pierwsza"
-msgstr "&laquo; primera"
+#: templates/products/brand_page.html:113
+#, python-format
+msgid "Brak produktów %(brand)s"
+msgstr "No hay productos de %(brand)s"
 
-#: templates/products/brand_page.html:121 templates/products/list.html:168
-#: templates/products/quiz.html:101
+#: templates/products/brand_page.html:123
+msgid "« pierwsza"
+msgstr "« primera"
+
+#: templates/products/brand_page.html:124 templates/products/list.html:168
+#: templates/products/quiz.html:103
 msgid "poprzednia"
 msgstr "anterior"
 
-#: templates/products/brand_page.html:131 templates/products/list.html:178
-#: templates/products/quiz.html:113
+#: templates/products/brand_page.html:134 templates/products/list.html:178
+#: templates/products/quiz.html:115
 msgid "następna"
 msgstr "siguiente"
 
-#: templates/products/brand_page.html:132 templates/products/list.html:179
-#: templates/products/quiz.html:114
-msgid "ostatnia &raquo;"
-msgstr "última &raquo;"
+#: templates/products/brand_page.html:135
+msgid "ostatnia »"
+msgstr "última »"
+
+#: templates/products/brand_page.html:143
+#, python-format
+msgid "Perfumy %(brand)s w Przystanku Perfumy"
+msgstr "Perfumes %(brand)s en Parada de Perfumes"
+
+#: templates/products/brand_page.html:146
+#, python-format
+msgid ""
+"Oferujemy pełną kolekcję perfum %(brand)s w cenach hurtowych – bez marży "
+"wielkich drogerii."
+msgstr ""
+"Ofrecemos la colección completa de perfumes %(brand)s a precios de mayorista "
+"– sin el margen de las grandes perfumerías."
+
+#: templates/products/brand_page.html:148
+#, python-format
+msgid ""
+"Nasze perfumy %(brand)s dla kobiet to starannie wyselekcjonowane zapachy – "
+"od delikatnych i kwiatowych po zmysłowe i orientalne."
+msgstr ""
+"Nuestros perfumes %(brand)s para mujeres son fragancias cuidadosamente "
+"seleccionadas – desde suaves y florales hasta sensuales y orientales."
+
+#: templates/products/brand_page.html:151
+#, python-format
+msgid ""
+"Perfumy %(brand)s dla mężczyzn w naszym sklepie to bogaty wybór zapachów – "
+"od świeżych i sportowych po drzewne i eleganckie."
+msgstr ""
+"Los perfumes %(brand)s para hombres en nuestra tienda son una rica selección "
+"de fragancias – desde frescas y deportivas hasta amaderadas y elegantes."
+
+#: templates/products/brand_page.html:154
+#, python-format
+msgid ""
+"W naszej ofercie znajdziesz perfumy %(brand)s dla kobiet, mężczyzn i unisex "
+"– każdy zapach w pojemności 100 ml, z szybką wysyłką."
+msgstr ""
+"En nuestra oferta encontrarás perfumes %(brand)s para mujeres, hombres y "
+"unisex – cada fragancia en formato de 100 ml, con envío rápido."
+
+#: templates/products/brand_page.html:156
+msgid ""
+"Darmowa dostawa przy zamówieniu 3 lub więcej perfum. Płatność za pobraniem."
+msgstr ""
+"Envío gratuito al pedir 3 o más perfumes. Pago contra reembolso."
+
+#: templates/products/detail.html:73 templates/products/detail.html:75
+msgid "›"
+msgstr "›"
 
 #: templates/products/detail.html:96 templates/products/list.html:4
-#: templates/products/list.html:149 templates/products/quiz.html:82
+#: templates/products/list.html:149 templates/products/quiz.html:84
 msgid "Damskie"
 msgstr "Femenino"
 
 #: templates/products/detail.html:97 templates/products/list.html:4
-#: templates/products/list.html:150 templates/products/quiz.html:83
+#: templates/products/list.html:150 templates/products/quiz.html:85
 msgid "Męskie"
 msgstr "Masculino"
-
-#: templates/products/detail.html:98 templates/products/list.html:4
-#: templates/products/list.html:151 templates/products/quiz.html:84
-msgid "Unisex"
-msgstr "Unisex"
 
 #: templates/products/detail.html:106
 msgid "opinii"
@@ -3081,9 +3393,17 @@ msgstr "Añadir opinión"
 msgid "Imię *"
 msgstr "Nombre *"
 
+#: templates/products/detail.html:224
+msgid "np. Anna"
+msgstr "ej. Ana"
+
 #: templates/products/detail.html:227
 msgid "Email z zamówienia *"
 msgstr "Correo electrónico del pedido *"
+
+#: templates/products/detail.html:228
+msgid "twoj@email.com"
+msgstr "tu@email.com"
 
 #: templates/products/detail.html:232
 msgid "Ocena *"
@@ -3092,6 +3412,10 @@ msgstr "Valoración *"
 #: templates/products/detail.html:243
 msgid "Twoja opinia *"
 msgstr "Tu opinión *"
+
+#: templates/products/detail.html:244
+msgid "Jak oceniasz ten zapach?"
+msgstr "¿Cómo valoras esta fragancia?"
 
 #: templates/products/detail.html:246
 msgid ""
@@ -3149,6 +3473,10 @@ msgstr "Buscar en la colección"
 msgid "🔍"
 msgstr "🔍"
 
+#: templates/products/list.html:50
+msgid "Szukaj marki, np. Dior..."
+msgstr "Busca marca, ej. Dior..."
+
 #: templates/products/list.html:52
 msgid "Szukaj"
 msgstr "Buscar"
@@ -3173,12 +3501,24 @@ msgstr "Más recientes"
 msgid "✕"
 msgstr "✕"
 
+#: templates/products/list.html:144
+msgid "🧴"
+msgstr "🧴"
+
 #: templates/products/list.html:159
 msgid "Brak produktów spełniających kryteria. Spróbuj zmienić filtry."
 msgstr ""
 "No hay productos que cumplan los criterios. Intenta cambiar los filtros."
 
-#: templates/products/list.html:189 templates/products/quiz.html:120
+#: templates/products/list.html:167 templates/products/quiz.html:102
+msgid "&laquo; pierwsza"
+msgstr "&laquo; primera"
+
+#: templates/products/list.html:179 templates/products/quiz.html:116
+msgid "ostatnia &raquo;"
+msgstr "última &raquo;"
+
+#: templates/products/list.html:189 templates/products/quiz.html:122
 msgid "↑ Do góry"
 msgstr "↑ Arriba"
 
@@ -3206,39 +3546,51 @@ msgstr "¿Para qué ocasión?"
 msgid "Dla kogo?"
 msgstr "¿Para quién?"
 
-#: templates/products/quiz.html:47
-msgid "Dla niej"
-msgstr "Para ella"
-
-#: templates/products/quiz.html:50
-msgid "Dla niego"
-msgstr "Para él"
-
-#: templates/products/quiz.html:57
+#: templates/products/quiz.html:58
 msgid "Znajdź perfumy"
 msgstr "Encontrar perfumes"
 
-#: templates/products/quiz.html:65
+#: templates/products/quiz.html:67
 msgid "🗑️ Wyczyść i zacznij od nowa"
 msgstr "🗑️ Limpiar y empezar de nuevo"
 
-#: templates/products/quiz.html:69
+#: templates/products/quiz.html:71
 msgid "Twoje dopasowania:"
 msgstr "Tus coincidencias:"
 
-#: templates/products/quiz.html:92
+#: templates/products/quiz.html:94
 msgid "Brak produktów spełniających kryteria."
 msgstr "No hay productos que cumplan los criterios."
 
-#: templates/products/quiz.html:123
+#: templates/products/quiz.html:125
 msgid "Nie znaleziono produktów. Spróbuj zmienić kryteria."
 msgstr "No se encontraron productos. Intenta cambiar los criterios."
 
-#: templates/registration/login.html:7 templates/sellers/register.html:34
+#: templates/products/quiz.html:135
+msgid "Wybierz intensywność zapachu."
+msgstr "Elige la intensidad de la fragancia."
+
+#: templates/products/quiz.html:136
+msgid "Wybierz nuty zapachowe."
+msgstr "Elige las notas olfativas."
+
+#: templates/products/quiz.html:137
+msgid "Wybierz okazję."
+msgstr "Elige la ocasión."
+
+#: templates/registration/login.html:4
+msgid "Zaloguj się – Przystanek Perfumy"
+msgstr "Iniciar sesión – Parada de Perfumes"
+
+#: templates/registration/login.html:9 templates/sellers/register.html:34
 msgid "Zaloguj się"
 msgstr "Iniciar sesión"
 
-#: templates/registration/login.html:24
+#: templates/registration/login.html:26
+msgid "Nie masz konta?"
+msgstr "¿No tienes cuenta?"
+
+#: templates/registration/login.html:26
 msgid "Dołącz teraz"
 msgstr "Únete ahora"
 
@@ -3249,6 +3601,10 @@ msgstr "Acceso denegado"
 #: templates/sellers/no_access.html:8
 msgid "Twoje konto nie jest kontem sprzedawcy."
 msgstr "Tu cuenta no es una cuenta de vendedor."
+
+#: templates/sellers/panel.html:8
+msgid "Cześć"
+msgstr "Hola"
 
 #: templates/sellers/panel.html:9
 msgid "Twój panel polecającego"
@@ -3275,6 +3631,10 @@ msgstr "Crédito en cuenta"
 msgid "Postęp do:"
 msgstr "Progreso hacia:"
 
+#: templates/sellers/panel.html:43
+msgid "Osiągnąłeś najwyższy poziom VIP!"
+msgstr "¡Has alcanzado el nivel máximo VIP!"
+
 #: templates/sellers/panel.html:53
 msgid "Znajomi którzy kupili"
 msgstr "Amigos que han comprado"
@@ -3298,6 +3658,10 @@ msgstr "Copiar"
 #: templates/sellers/panel.html:75
 msgid "✅ Link skopiowany!"
 msgstr "✅ Enlace copiado"
+
+#: templates/sellers/panel.html:77
+msgid "Twój kod"
+msgstr "Tu código"
 
 #: templates/sellers/panel.html:94
 msgid "🏆 Struktura nagród"
@@ -3356,15 +3720,15 @@ msgstr "Cuenta en espera de verificación"
 msgid "Skontaktujemy się z Tobą wkrótce."
 msgstr "Nos pondremos en contacto contigo pronto."
 
-#: templates/sellers/register.html:8
-msgid "✨"
-msgstr "✨"
+#: templates/sellers/register.html:4
+msgid "Dołącz do nas – Przystanek Perfumy"
+msgstr "Únete a nosotros – Parada de Perfumes"
 
-#: templates/sellers/register.html:9
+#: templates/sellers/register.html:11
 msgid "Dołącz do Nas ❤️"
 msgstr "Únete a Nosotros ❤️"
 
-#: templates/sellers/register.html:10
+#: templates/sellers/register.html:12
 msgid "i zarabiaj na polecaniu zapachów"
 msgstr "y gana recomendando fragancias"
 
@@ -3372,5 +3736,10 @@ msgstr "y gana recomendando fragancias"
 msgid "Zarejestruj się"
 msgstr "Regístrate"
 
-#~ msgid "Produkty"
-#~ msgstr "Productos"
+#: templates/sellers/register.html:34
+msgid "Masz już konto?"
+msgstr "¿Ya tienes cuenta?"
+
+#: templates/sellers/register.html:39
+msgid "Po rejestracji otrzymasz swój unikalny kod polecenia."
+msgstr "Después del registro recibirás tu código de recomendación único."
