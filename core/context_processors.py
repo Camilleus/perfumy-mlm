@@ -23,7 +23,19 @@ CURRENCIES = {
 
 LANG_TO_CURRENCY = {
     'pl': 'PLN',
+    'en': 'GBP',   # lub 'USD', ale 'GBP' dla UK
     'es': 'EUR',
+    'de': 'EUR',
+    'fr': 'EUR',
+    'it': 'EUR',
+    'nl': 'EUR',
+    'pt': 'EUR',
+    'cs': 'CZK',
+    'hu': 'HUF',
+    'ro': 'RON',
+    'ru': 'RUB',
+    'ua': 'UAH',
+    'sk': 'EUR',   # Słowacja (euro)
 }
 
 def currency(request):
