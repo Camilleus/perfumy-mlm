@@ -92,3 +92,24 @@ def cart_total_currency(cart, curr):
             return str(int(round(total)))
     except Exception:
         return "0"
+    
+LANG_TO_FLAG = {
+    'pl': 'pl',
+    'cs': 'cz',  # czeski → flaga Czech
+    'de': 'de',
+    'es': 'es',
+    'en': 'gb',  # angielski → flaga UK (lub 'us')
+    'fr': 'fr',
+    'hu': 'hu',
+    'it': 'it',
+    'nl': 'nl',
+    'pt': 'pt',
+    'ro': 'ro',
+    'ru': 'ru',
+    'sk': 'sk',
+    'ua': 'ua',
+}
+
+@register.filter
+def lang_flag(lang_code):
+    return LANG_TO_FLAG.get(lang_code, lang_code)

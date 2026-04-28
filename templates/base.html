@@ -1,5 +1,6 @@
 {% load static %}
 {% load i18n %}
+{% load currency_tags %}
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -985,7 +986,7 @@
                                 <input name="next" type="hidden" value="{{ request.get_full_path }}">
                                 <input name="language" type="hidden" value="{{ lang_code }}">
                                 <button type="submit" class="dropdown-item {% if lang_code == request.LANGUAGE_CODE %}active{% endif %}">
-                                    <img src="https://flagcdn.com/24x18/{{ lang_code }}.png"
+                                    <img src="https://flagcdn.com/24x18/{{ lang_code|lang_flag }}.png"
                                         alt="{{ lang_code|upper }}"
                                         style="width:20px;height:15px;border-radius:2px;vertical-align:middle;margin-right:6px;"
                                         onerror="this.style.display='none';">

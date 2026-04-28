@@ -161,7 +161,19 @@ LANGUAGE_CODE = 'pl'
 
 LANGUAGES = [
     ('pl', 'Polski'),
+    ('cs', 'Čeština'),
+    ('de', 'Deutsch'),
     ('es', 'Español'),
+    ('en', 'English'),
+    ('fr', 'Français'),
+    ('hu', 'Magyar'),
+    ('it', 'Italiano'),
+    ('nl', 'Nederlands'),
+    ('pt', 'Português'),
+    ('ro', 'Română'),
+    ('ru', 'Русский'),
+    ('sk', 'Slovenčina'),
+    ('ua', 'Українська'),
 ]
 
 USE_I18N = True
