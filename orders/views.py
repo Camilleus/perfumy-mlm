@@ -92,9 +92,11 @@ def cart_detail(request):
     curr = CURRENCIES.get(currency_code, CURRENCIES['PLN']).copy()
     total_currency = _calc_total_currency(cart, curr)
     total_currency_str = _fmt(total_currency, curr)
+    total_quantity = cart.get_total_quantity()
     return render(request, 'orders/cart.html', {
         'cart': cart,
         'cart_total_currency': total_currency_str,
+        'total_quantity': total_quantity,                # <-- dodane
         'currency_symbol': curr['symbol'],
     })
 

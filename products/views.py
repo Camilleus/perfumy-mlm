@@ -3,6 +3,7 @@ from django.shortcuts import get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.shortcuts import render, redirect
 from django.db.models import Q, Min, Max
+from orders.cart import Cart
 
 
 def product_list(request):
@@ -154,8 +155,12 @@ def product_detail(request, slug):
 #         t.daemon = True
 #         t.start()
 
+    cart = Cart(request)                # <-- dodaj
+    total_quantity = cart.get_total_quantity()  # <-- dodaj
     return render(request, 'products/detail.html', {
         'product': product,
+        'cart': cart,                  # <-- dodaj
+        'total_quantity': total_quantity,
         'reviews': reviews,
         'avg_rating': avg_rating,
         # 'faq_items': faq_items,
