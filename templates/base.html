@@ -1057,8 +1057,13 @@
     <!-- MOBILE MENU -->
     <div class="mobile-menu" id="mobile-menu">
         <!-- PRZYCISK ZAMKNIĘCIA -->
-        <button onclick="document.getElementById('mobile-menu').classList.remove('open'); document.getElementById('hamburger').classList.remove('open'); document.body.style.overflow = '';"
+        {% comment %} <button onclick="document.getElementById('mobile-menu').classList.remove('open'); document.getElementById('hamburger').classList.remove('open'); document.body.style.overflow = '';"
                 style="position: absolute; top: 16px; right: 16px; background: transparent; border: 2px solid rgba(212,175,55,0.4); color: var(--gold); width: 42px; height: 42px; border-radius: 50%; font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 1300; transition: all 0.2s;">
+            ✕
+        </button> {% endcomment %}
+        <!-- PRZYCISK ZAMKNIĘCIA (sam X, bez obramowania) -->
+        <button onclick="document.getElementById('mobile-menu').classList.remove('open'); document.getElementById('hamburger').classList.remove('open'); document.body.style.overflow = '';"
+                style="position: absolute; top: 16px; right: 16px; background: transparent; border: none; color: var(--gold); width: 42px; height: 42px; font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 1300;">
             ✕
         </button>
 
