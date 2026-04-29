@@ -48,15 +48,30 @@
     {% endblock %}
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-main: #FFFAE2;
-            --accent-dark: #012b2a;
-            --forest-green: #024442;
-            --gold: #D4AF37;
-            --gold-gradient: linear-gradient(90deg, #b8860b 0%, #D4AF37 50%, #f7e08a 100%);
-            --nav-gradient: linear-gradient(180deg, #012b2a 0%, #023836 100%);
-            --text-dark: #1A1A1A;
-        }
+    :root {
+        --bg-main: #FFFAE2;
+        --accent-dark: #012b2a;
+        --forest-green: #024442;
+        --gold: #D4AF37;
+        --gold-gradient: linear-gradient(90deg, #b8860b 0%, #D4AF37 50%, #f7e08a 100%);
+        --nav-gradient: linear-gradient(180deg, #012b2a 0%, #023836 100%);
+        --text-dark: #1A1A1A;
+    }
+
+    [data-theme='dark'] {
+        --bg-main: #011615;
+        --accent-dark: #024442;
+        --forest-green: #056360;
+        --gold: #F7E08A;
+        --text-dark: #F5F5F5;
+    }
+
+    [data-theme='dark'] body { background: var(--bg-main); color: var(--text-dark); }
+    [data-theme='dark'] .product-card { background: #022a28; color: var(--text-dark); }
+    [data-theme='dark'] .card-border, [data-theme='dark'] .card-white { background: #022a28; border-color: #056360; }
+    [data-theme='dark'] footer { background: #011615; }
+    [data-theme='dark'] .filters-sidebar { background: #022a28; border-color: #056360; }
+    [data-theme='dark'] .form-input { background: #022a28; color: var(--text-dark); border-color: #056360; }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -961,6 +976,28 @@
                 
                 <!-- PRAWY PANEL (zawsze widoczny, zawiera język, koszyk i hamburger) -->
                 <div class="nav-right">
+                    <div>
+                        <button onclick="toggleDarkMode()" id="theme-toggle-nav" 
+                            style="background:none; border:none; cursor:pointer; font-size:18px; color:var(--gold); display:flex; align-items:center;" 
+                            title="{% trans 'Przełącz tryb ciemny' %}">
+                            <!-- Księżyc (dark mode) -->
+                            <svg id="icon-moon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                            </svg>
+                            <!-- Słońce (light mode) -->
+                            <svg id="icon-sun" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none;">
+                                <circle cx="12" cy="12" r="5"></circle>
+                                <line x1="12" y1="1" x2="12" y2="3"></line>
+                                <line x1="12" y1="21" x2="12" y2="23"></line>
+                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                                <line x1="1" y1="12" x2="3" y2="12"></line>
+                                <line x1="21" y1="12" x2="23" y2="12"></line>
+                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                            </svg>
+                        </button>
+                    </div>
                     <!-- PO – dodaj dropdown waluty PRZED dropdownem języka -->
                     <div class="dropdown dropdown-right">
                         <a href="#" class="dropdown-toggle no-arrow">{{ CURRENCY_CODE }}</a>
@@ -1087,6 +1124,17 @@
             </button>
         </form>
         {% endfor %}
+        <span class="mobile-section-label">{% trans "Wygląd" %}</span>
+        <button onclick="toggleDarkMode()" id="theme-toggle-mobile"
+            style="background:transparent; border:none; cursor:pointer; font-size:15px; color:var(--gold); display:flex; align-items:center; gap:8px; width:100%; max-width:300px; padding:14px 32px; border-radius:30px; border:2px solid rgba(212,175,55,0.3); text-transform:uppercase; letter-spacing:1px; font-weight:700; justify-content:center;">
+            <span id="icon-moon-mobile">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            </span>
+            <span id="icon-sun-mobile" style="display:none;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            </span>
+            {% trans "Tryb ciemny" %}
+        </button>
     </div>
 
 
@@ -1179,6 +1227,75 @@ if (langBtn) {
     });
 }
 </script> {% endcomment %}
+<div id="dark-mode-prompt" style="display:none; position:fixed; bottom:20px; left:20px; right:20px; max-width:320px; background:#024442; color:white; padding:16px; border-radius:12px; box-shadow:0 8px 32px rgba(0,0,0,0.4); z-index:9999; border:1px solid var(--gold); transform:translateY(100px); transition:transform 0.5s ease;">
+    <p style="font-size:14px; font-weight:700; margin-bottom:4px;">{% trans "🌙 Nocny Marku, jest już ciemno!" %}</p>
+    <p style="font-size:12px; margin-bottom:12px; opacity:0.8;">{% trans "Przełączyć Przystanek Perfumy na Dark Mode?" %}</p>
+    <div style="display:flex; gap:8px;">
+        <button onclick="enableDarkMode()" class="btn" style="padding:6px 16px; font-size:11px;">{% trans "Odpalaj! 🔥" %}</button>
+        <button onclick="closeDarkModePrompt()" style="background:transparent; border:1px solid rgba(255,255,255,0.4); color:white; padding:6px 16px; border-radius:20px; font-size:11px; cursor:pointer;">{% trans "Nie, dzięki" %}</button>
+    </div>
+</div>
+
+<script>
+function enableDarkMode() {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    localStorage.setItem('theme', 'dark');
+    updateThemeIcons();
+    closeDarkModePrompt();
+}
+function disableDarkMode() {
+    document.documentElement.removeAttribute('data-theme');
+    localStorage.setItem('theme', 'light');
+    updateThemeIcons();
+}
+function toggleDarkMode() {
+    if (document.documentElement.getAttribute('data-theme') === 'dark') {
+        disableDarkMode();
+    } else {
+        enableDarkMode();
+    }
+}
+function closeDarkModePrompt() {
+    const p = document.getElementById('dark-mode-prompt');
+    if (p) {
+        p.style.transform = 'translateY(100px)';
+        setTimeout(() => p.style.display = 'none', 500);
+    }
+}
+function updateThemeIcons() {
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    // Nawigacja
+    const moonNav = document.getElementById('icon-moon');
+    const sunNav = document.getElementById('icon-sun');
+    if (moonNav && sunNav) {
+        moonNav.style.display = isDark ? 'none' : 'block';
+        sunNav.style.display = isDark ? 'block' : 'none';
+    }
+    // Mobilne menu
+    const moonMobile = document.getElementById('icon-moon-mobile');
+    const sunMobile = document.getElementById('icon-sun-mobile');
+    if (moonMobile && sunMobile) {
+        moonMobile.style.display = isDark ? 'none' : 'inline';
+        sunMobile.style.display = isDark ? 'inline' : 'none';
+    }
+}
+document.addEventListener('DOMContentLoaded', () => {
+    const hour = new Date().getHours();
+    const savedTheme = localStorage.getItem('theme');
+    const prompt = document.getElementById('dark-mode-prompt');
+    const promptDismissed = sessionStorage.getItem('dark-prompt-dismissed');
+
+    if (savedTheme === 'dark') {
+        enableDarkMode();
+    } else if ((hour >= 20 || hour < 7) && !promptDismissed && prompt) {
+        prompt.style.display = 'block';
+        setTimeout(() => prompt.style.transform = 'translateY(0)', 500);
+        sessionStorage.setItem('dark-prompt-dismissed', 'true');
+    }
+
+    updateThemeIcons(); // synchronizacja ikon po załadowaniu
+});
+</script>
 </body>    
 
 <script>

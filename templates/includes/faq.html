@@ -1,5 +1,5 @@
 {% load i18n %}
-<section style="padding: 60px 0; background: white; margin-top: 40px;" id="faq">
+<section style="padding: 60px 0; background: var(--bg-light); margin-top: 40px; border-top: 3px solid var(--gold); border-radius: 16px 16px 0 0;" id="faq">
     <div class="container" style="max-width: 860px;">
 
         <div style="text-align:center; margin-bottom:48px;">
@@ -196,6 +196,8 @@
 .faq-item.open .faq-arrow { transform:rotate(180deg); }
 .faq-item.open .faq-answer { display:block; }
 .faq-category.hidden { display:none; }
+[data-theme='dark'] .faq-answer { color: #ccc; }
+[data-theme='dark'] .faq-item { border-color: #056360; }
 </style>
 
 <script>
