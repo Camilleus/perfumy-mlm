@@ -1056,7 +1056,12 @@
 
     <!-- MOBILE MENU -->
     <div class="mobile-menu" id="mobile-menu">
-        <a href="/">{% trans "Strona główna" %}</a>
+        <!-- PRZYCISK ZAMKNIĘCIA -->
+        <button onclick="document.getElementById('mobile-menu').classList.remove('open'); document.getElementById('hamburger').classList.remove('open'); document.body.style.overflow = '';"
+                style="position: absolute; top: 16px; right: 16px; background: transparent; border: 2px solid rgba(212,175,55,0.4); color: var(--gold); width: 42px; height: 42px; border-radius: 50%; font-size: 22px; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 1300; transition: all 0.2s;">
+            ✕
+        </button>
+
         <span class="mobile-section-label">{% trans "Kolekcja" %}</span>
         <a href="/?gender=">{% trans "Wszystkie" %}</a>
         <a href="/?gender=M">{% trans "Dla Niego" %}</a>
