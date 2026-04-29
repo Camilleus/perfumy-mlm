@@ -1098,43 +1098,6 @@
                 <button type="submit">{% trans "Wyloguj" %}</button>
             </form>
         {% endif %}
-        <span class="mobile-section-label">{% trans "Waluta" %}</span>
-        {% for code, curr in ALL_CURRENCIES.items %}
-        <form action="{% url 'set_currency' %}" method="post" style="width:100%;max-width:300px;">
-            {% csrf_token %}
-            <input name="next" type="hidden" value="{{ request.get_full_path }}">
-            <input name="currency" type="hidden" value="{{ code }}">
-            <button type="submit" class="{% if code == CURRENCY_CODE %}active{% endif %}">
-                {{ curr.symbol }} {{ code }}
-            </button>
-        </form>
-        {% endfor %}
-        <span class="mobile-section-label">{% trans "Język" %}</span>
-        {% for lang_code, lang_name in LANGUAGES %}
-        <form action="{% url 'set_language' %}" method="post" style="width:100%;max-width:300px;">
-            {% csrf_token %}
-            <input name="next" type="hidden" value="{{ request.get_full_path }}">
-            <input name="language" type="hidden" value="{{ lang_code }}">
-            <button type="submit" class="{% if lang_code == request.LANGUAGE_CODE %}active{% endif %}">
-                <img src="https://flagcdn.com/24x18/{{ lang_code|lang_flag }}.png"
-                    alt="{{ lang_code|upper }}"
-                    style="width:20px;height:15px;border-radius:2px;vertical-align:middle;margin-right:6px;"
-                    onerror="this.style.display='none';">
-                {{ lang_name }}
-            </button>
-        </form>
-        {% endfor %}
-        <span class="mobile-section-label">{% trans "Wygląd" %}</span>
-        <button onclick="toggleDarkMode()" id="theme-toggle-mobile"
-            style="background:transparent; border:none; cursor:pointer; font-size:15px; color:var(--gold); display:flex; align-items:center; gap:8px; width:100%; max-width:300px; padding:14px 32px; border-radius:30px; border:2px solid rgba(212,175,55,0.3); text-transform:uppercase; letter-spacing:1px; font-weight:700; justify-content:center;">
-            <span id="icon-moon-mobile">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-            </span>
-            <span id="icon-sun-mobile" style="display:none;">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-            </span>
-            {% trans "Tryb ciemny" %}
-        </button>
     </div>
 
 
