@@ -1,3 +1,4 @@
+# reviews/views.py
 from django.shortcuts import redirect, get_object_or_404
 from django.http import JsonResponse
 from products.models import Product
@@ -28,6 +29,12 @@ def add_review(request, product_slug):
         rating=int(rating),
         comment=comment,
         verified_purchase=verified,
+        image=request.FILES.get('image'),         
     )
+    image_file = request.FILES.get('image')
+    if image_file:
+        if not image_file.content_type.startswith('image/'):
+            # Tutaj możesz zwrócić błąd, na razie pomijamy
+            pass
 
     return redirect('product_detail', slug=product_slug)

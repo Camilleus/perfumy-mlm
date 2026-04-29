@@ -1,6 +1,6 @@
+# reviews/models.py
 from django.db import models
 from products.models import Product
-
 
 class Review(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
@@ -10,6 +10,7 @@ class Review(models.Model):
     comment = models.TextField(verbose_name='Opinia')
     verified_purchase = models.BooleanField(default=False, verbose_name='Zweryfikowany zakup')
     created_at = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(upload_to='review_photos/', blank=True, null=True, verbose_name="Zdjęcie opinii")
 
     def __str__(self):
         return f"{self.name} – {self.product.name} ({self.rating}★)"
