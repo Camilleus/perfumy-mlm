@@ -10,6 +10,7 @@ import sys
 import django
 import logging
 from decimal import Decimal
+import signal
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "core.settings")
@@ -735,12 +736,28 @@ def main():
         allow_reentry=True,
         per_message=False,
     )
+    def shutdown(sig, frame):
+        logger.info("🛑 Otrzymano sygnał zatrzymania, zamykam bota...")
+        app.stop_running()
 
+    signal.signal(signal.SIGTERM, shutdown)
+    signal.signal(signal.SIGINT, shutdown)
+
+    logger.info("🤖 Bot PsikPsik uruchomiony! Tryb: polling")
+    app.run_polling(
+        allowed_updates=Update.ALL_TYPES,
+        drop_pending_updates=True,
+        close_loop=False,
+    )
     app.add_handler(conv)
 
     # NA RAILWAY UŻYWAJ POLLING – NIE POTRZEBUJESZ WEBHOOKA
     logger.info("🤖 Bot PsikPsik uruchomiony! Tryb: polling")
-    app.run_polling(allowed_updates=Update.ALL_TYPES)
+    app.run_polling(
+        allowed_updates=Update.ALL_TYPES,
+        drop_pending_updates=True,
+        close_loop=False,
+    )
 
 
 if __name__ == "__main__":
