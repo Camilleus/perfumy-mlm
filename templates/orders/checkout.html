@@ -66,9 +66,14 @@
             </div>
 
             <!-- KOD POLECENIA -->
-            <div style="background:#fffdf0; border:1px solid var(--gold); padding:20px; margin-bottom:24px;">
-                <label style="display:block; font-size:14px; font-weight:600; margin-bottom:6px;">{% trans "🎁 Masz kod polecenia?" %}</label>
-                <p style="font-size:13px; color:#888; margin-bottom:12px;">{% trans "Wpisz kod znajomego i otrzymaj" %} <strong>-{{ CURR.discount }} {{ CURRENCY_SYMBOL }}</strong> {% trans "na to zamówienie!" %}</p>
+            <div class="checkout-referral" style="border:1px solid var(--gold); padding:20px; margin-bottom:24px;">
+                <label style="display:block; font-size:14px; font-weight:600; margin-bottom:6px;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:4px;">
+                        <polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><path d="M12 22V7M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
+                    </svg>
+                    {% trans "Masz kod polecenia?" %}
+                </label>
+                <p style="font-size:13px; margin-bottom:12px;">{% trans "Wpisz kod znajomego i otrzymaj" %} <strong>-{{ CURR.discount }} {{ CURRENCY_SYMBOL }}</strong> {% trans "na to zamówienie!" %}</p>
                 <div style="display:flex; gap:10px; flex-wrap:wrap;">
                     <input type="text" id="referral_code_input" placeholder="np. KAMIL-X7K2" style="flex:1; min-width:160px; padding:12px; border:1px solid #ddd; font-size:15px; text-transform:uppercase;">
                     <button type="button" onclick="checkReferral()" class="btn" style="padding:12px 20px;">{% trans "Sprawdź" %}</button>
@@ -79,7 +84,7 @@
             <p style="font-size:12px; color:#aaa; margin-bottom:20px;">{% trans "* pola obowiązkowe" %}</p>
 
             <!-- PODSUMOWANIE ZAMÓWIENIA -->
-            <div style="background:#f9f9f9; padding:20px; margin-bottom:20px;">
+            <div class="checkout-summary" style="padding:20px; margin-bottom:20px;">
                 <h3 style="font-weight:400; margin-bottom:14px; font-size:16px;">{% trans "Twoje zamówienie" %}</h3>
                 {% for item in cart.get_items %}
                 <div style="display:flex; justify-content:space-between; margin-bottom:8px; font-size:14px;">
@@ -90,12 +95,12 @@
 
                 <!-- WYBÓR DOSTAWY (generowany z SHIPPING_METHODS) -->
                  {% if total_quantity < 3 %}
-                    <div style="background:#e5e7eb; border-radius:9999px; height:20px; margin-top:16px; overflow:hidden;">
-                        <div style="background:var(--gold-gradient); height:20px; border-radius:9999px; text-align:center; line-height:20px; font-size:12px; color:#000; font-weight:bold; width:{% widthratio total_quantity 3 100 %}%; min-width:2rem; transition:width 0.3s ease;">
+                    <div class="checkout-progress-bg" style="background:#e5e7eb; border-radius:9999px; height:20px; margin-top:16px; overflow:hidden;">
+                        <div style="background:var(--gold-gradient); height:20px; border-radius:9999px; text-align:center; line-height:20px; font-size:12px; color:#000; font-weight:bold; width:{% widthratio total_quantity 3 100 %}%; min-width:2rem;">
                             {{ total_quantity }}/3
                         </div>
                     </div>
-                    <p style="font-size:14px; color:#555; margin-top:8px;">
+                    <p class="checkout-progress-text" style="font-size:14px; color:#555; margin-top:8px;">
                         {% if total_quantity == 1 %}{% trans "Brakuje Ci 2 szt. do" %}
                         {% elif total_quantity == 2 %}{% trans "Brakuje Ci 1 szt. do" %}
                         {% endif %}
@@ -110,9 +115,17 @@
                     </p>
                 {% endif %}
                 <div style="margin:16px 0; padding:14px 0; border-top:1px solid #eee; border-bottom:1px solid #eee;">
-                    <h4 style="font-weight:400; margin-bottom:10px; font-size:14px;">{% trans "✈️ Wybierz dostawę" %}</h4>
+                    <h4 style="font-weight:400; margin-bottom:10px; font-size:14px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:4px;">
+                            <path d="M21 16v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                        {% trans "Wybierz dostawę" %}
+                    </h4>
                     <p style="font-size:13px; margin-bottom:10px; color:#555;">
-                        📦 {% trans "W koszyku:" %} <strong>{{ total_quantity }} {% trans "szt." %}</strong>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:4px;">
+                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                        </svg>
+                        {% trans "W koszyku:" %} <strong>{{ total_quantity }} {% trans "szt." %}</strong>
                     </p>
                     <div id="shipping-options-container">
                         <!-- Opcje dla Polski (wypełnione przez Django) -->
@@ -181,8 +194,11 @@
                         </div>
                         {% endfor %}
                     </div>
-                    <div id="international-note" style="font-size:12px; color:#888; margin-top:8px; display:none;">
-                        🌍 Po złożeniu zamówienia skontaktujemy się z Tobą, aby ustalić koszt wysyłki i formę płatności.
+                    <div id="international-note" style="font-size:12px; margin-top:8px; display:none;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:4px;">
+                            <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                        </svg>
+                        {% trans "Po złożeniu zamówienia skontaktujemy się z Tobą, aby ustalić koszt wysyłki i formę płatności." %}
                     </div>
                 </div>
 
@@ -208,17 +224,26 @@
                         <span id="total-final" style="color:var(--forest-green);">0 {{ CURRENCY_SYMBOL }}</span>
                     </div>
                 </div>
-                <div style="margin-top:12px;">
-                    <span id="payment-info">💳 {% trans "Płatność: za pobraniem" %}</span>
-                </div>
+                <span id="payment-info">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:4px;">
+                        <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/>
+                    </svg>
+                    {% trans "Płatność: za pobraniem" %}
+                </span>
             </div>
 
-            <div id="cash-on-delivery-note" style="background: #f0f7f0; padding:12px; margin:16px 0; border-left:4px solid var(--forest-green); font-size:13px;">
-                💡 <strong>{% trans "Dlaczego tylko za pobraniem?" %}</strong> {% trans "Brak kosztów bramek płatniczych = niższe ceny. Zapłacisz przy odbiorze." %}
+            <div id="cash-on-delivery-note" class="checkout-cod-note" style="background:#f0f7f0; padding:12px; margin:16px 0; border-left:4px solid var(--forest-green); font-size:13px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:4px;">
+                    <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+                <strong>{% trans "Dlaczego tylko za pobraniem?" %}</strong> {% trans "Brak kosztów bramek płatniczych = niższe ceny. Zapłacisz przy odbiorze." %}
             </div>
             <div id="international-payment-warning" style="display:none; background:#fff0e0; padding:12px; margin:16px 0; border-left:4px solid var(--forest-green); font-size:13px;">
-                🌍 <strong>{% trans "Wysyłka zagraniczna" %}</strong><br>
-                {% trans "Koszt wysyłki ustalany indywidualnie (maksymalnie ok." %} {{ max_shipping_display }} {{ CURRENCY_SYMBOL }}{% trans ")" %}{% trans ")" %} ({% trans "ostateczna kwota może być niższa" %}). {% trans "Płatność: przelew lub karta – skontaktujemy się z Tobą." %}
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:4px;">
+                    <circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                </svg>
+                <strong>{% trans "Wysyłka zagraniczna" %}</strong><br>
+                {% trans "Koszt wysyłki ustalany indywidualnie. Płatność: przelew lub karta – skontaktujemy się z Tobą." %}
             </div>
 
             <button type="submit" class="btn" style="width:100%; padding:16px;" onclick="return validateForm()">

@@ -10,24 +10,28 @@
         <h1 style="font-size:28px; font-weight:300; margin-bottom:32px;">{% trans "Twój koszyk" %}</h1>
 
         {% if cart.count == 0 %}
-        <p style="color:#888;">{% trans "Koszyk jest pusty." %} <a href="/" style="color:var(--gold);">{% trans "Wróć do sklepu" %}</a></p>
+        <p style="var(--text-dark);">{% trans "Koszyk jest pusty." %} <a href="/" style="color:var(--gold);">{% trans "Wróć do sklepu" %}</a></p>
         {% else %}
 
         <!-- MOBILE: karty zamiast tabeli -->
         <div class="cart-mobile-list">
             {% for item in cart.get_items %}
-            <div style="background:white; padding:16px; margin-bottom:12px; border-bottom:1px solid #eee;">
+            <div style="background:var(--bg-main); padding:16px; margin-bottom:12px; border-bottom:1px solid var(--forest-green);">
                 <div style="display:flex; gap:14px; align-items:flex-start;">
                     <a href="{% url 'product_detail' item.slug %}">
                         {% if item.image %}
                         <img src="{{ item.image }}" style="width:64px; height:64px; object-fit:cover; flex-shrink:0;">
                         {% else %}
-                        <div style="width:64px; height:64px; background:#f0f0f0; display:flex; align-items:center; justify-content:center; font-size:24px; flex-shrink:0;">🧴</div>
+                        <div style="width:64px; height:64px; background:var(--accent-dark); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 2h6l1 4H8L9 2z"/><rect x="7" y="6" width="10" height="14" rx="2"/><path d="M10 10h4M10 14h4"/>
+                            </svg>
+                        </div>
                         {% endif %}
                     </a>
                     <div style="flex:1; min-width:0;">
                         <a href="{% url 'product_detail' item.slug %}" style="font-weight:600; font-size:14px; display:block; margin-bottom:2px;">{{ item.name }}</a>
-                        <div style="color:#888; font-size:12px; margin-bottom:10px;">{{ item.brand }}</div>
+                        <div style="color:var(--text-dark); font-size:12px; margin-bottom:10px;">{{ item.brand }}</div>
                         <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:8px;">
                             <div style="display:flex; align-items:center; gap:10px;">
                                 <a href="{% url 'cart_decrease' item.pk %}" style="display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; border-radius:50%; background:var(--gold-gradient); color:#000; font-weight:700; font-size:16px;">−</a>
@@ -36,7 +40,12 @@
                             </div>
                             <div style="display:flex; align-items:center; gap:16px;">
                                 <span style="color:var(--forest-green); font-weight:600;">{{ item.price|convert_price:CURR }} {{ CURRENCY_SYMBOL }}</span>
-                                <a href="{% url 'cart_remove' item.pk %}" style="color:#c0392b; font-size:12px;">{% trans "Usuń" %} 🗑️</a>
+                                <a href="{% url 'cart_remove' item.pk %}" style="color:#c0392b; font-size:12px; display:inline-flex; align-items:center; gap:4px;">
+                                    {% trans "Usuń" %}
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/>
+                                    </svg>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -45,11 +54,11 @@
             {% endfor %}
             {% if total_quantity < 3 %}
                 <div style="background:#e5e7eb; border-radius:9999px; height:20px; margin-top:16px; overflow:hidden;">
-                    <div style="background:var(--gold-gradient); height:20px; border-radius:9999px; text-align:center; line-height:20px; font-size:12px; color:#000; font-weight:bold; width:{% widthratio total_quantity 3 100 %}%; min-width:2rem; transition:width 0.3s ease;">
+                    <div id="cart-progress-bar-bg" style="background:#e5e7eb; height:20px; border-radius:9999px; text-align:center; line-height:20px; font-size:12px; color:#000; font-weight:bold; width:{% widthratio total_quantity 3 100 %}%; min-width:2rem; transition:width 0.3s ease;">
                         {{ total_quantity }}/3
                     </div>
                 </div>
-                <p style="font-size:14px; color:#555; margin-top:8px;">
+                <p style="font-size:14px; color:var(--text-dark); margin-top:8px;">
                     {% if total_quantity == 1 %}{% trans "Brakuje Ci 2 szt. do" %}
                     {% elif total_quantity == 2 %}{% trans "Brakuje Ci 1 szt. do" %}
                     {% endif %}
@@ -70,11 +79,16 @@
                 {% trans "Razem:" %} {{ cart_total_currency }} {{ currency_symbol }}
             </div>
             <!-- UWAGA O DOSTĘPNOŚCI -->
-            <div style="background:#fffdf0; border:1px solid var(--gold); border-left:4px solid var(--gold); padding:16px 20px; margin-bottom:20px; font-size:14px; line-height:1.7; color:#555;">
-                <strong style="color:var(--forest-green);">{% trans "⚠️ Ważna informacja:" %}</strong><br>
+            <div class="cart-warning-box" style="border:1px solid var(--gold); border-left:4px solid var(--gold); padding:16px 20px; margin-bottom:20px; font-size:14px; line-height:1.7;">
+                <strong style="color:var(--forest-green);">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:4px;">
+                        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>
+                    </svg>
+                    {% trans "Ważna informacja:" %}
+                </strong><br>
                 {% trans "Jeśli któregoś z zamówionych perfum zabraknie w magazynie, skontaktujemy się z Tobą niezwłocznie – przez" %}
                 <strong>WhatsApp <a href="https://wa.me/48534293389" style="color:var(--forest-green);">+48 534 293 389</a></strong>
-                {% trans "lub mailowo na adres podany przy zamówieniu. Dziękujemy za wyrozumiałość! 🌿" %}
+                {% trans "lub mailowo na adres podany przy zamówieniu. Dziękujemy za wyrozumiałość!" %}
             </div>
             <a href="{% url 'checkout' %}" class="btn" style="padding:14px 36px; font-size:15px;">{% trans "Przejdź do zamówienia →" %}</a>
         </div>

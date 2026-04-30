@@ -27,12 +27,14 @@
             <div class="stat-divider"></div>
             <div class="stat-item">
                 <div class="stat-label">{% trans "Już Od" %}</div>
-                <div class="stat-num">{{ CURR.p199 }} <span style="font-size:14px">{{ CURRENCY_SYMBOL }}</span></div>
+                <div class="stat-num">{{ CURR.p199 }}</div>
+                <div class="stat-label"><span style="font-size:14px">{{ CURRENCY_SYMBOL }}</span></div>
             </div>
             <div class="stat-divider"></div>
             <div class="stat-item">
                 <div class="stat-label">{% trans "Wysyłka W" %}</div>
-                <div class="stat-num">24<span style="font-size:14px">{% trans "h" %}</span></div>
+                <div class="stat-num">24</div>
+                <div class="stat-label">{% trans "godziny" %}</div>
             </div>
         </div>
     </div>
@@ -46,7 +48,11 @@
             <input type="hidden" name="gender" value="{{ current_gender }}">
             <p style="text-align:center; font-size:10px; letter-spacing:3px; text-transform:uppercase; color:#024442; opacity:0.6; margin-bottom:14px;">{% trans "Szukaj w kolekcji" %}</p>
             <div class="search-bar">
-                <span class="search-icon">{% trans "🔍" %}</span>
+                <span class="search-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                    </svg>
+                </span>
                 <input class="search-input" type="text" name="brand"
                     placeholder="{% trans "Szukaj marki, np. Dior..." %}"
                     value="{{ current_brand }}">
@@ -66,12 +72,17 @@
             <div class="products-main">
 
                 <!-- Przycisk otwierający filtry na mobile -->
-                <button class="mobile-filter-btn" id="mobileFilterBtn">{% trans "📋 Filtry" %}</button>
+                <button class="mobile-filter-btn" id="mobileFilterBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:6px;">
+                        <line x1="4" y1="6" x2="20" y2="6"/><line x1="8" y1="12" x2="16" y2="12"/><line x1="11" y1="18" x2="13" y2="18"/>
+                    </svg>
+                    {% trans "Filtry" %}
+                </button>
 
                 <!-- PASEK SORTOWANIA I LICZBA WYNIKÓW -->
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
                     <div style="font-size:13px; color:#888;">
-                        {% trans "Znaleziono:" %} <strong style="color:var(--forest-green);">{{ total_count }}</strong> {% trans "perfum" %}
+                        {% trans "Znaleziono: " %} <strong class="count-highlight">{{ total_count }}</strong>{% trans " perfum" %}
                     </div>
                     <div style="display:flex; align-items:center; gap:8px;">
                         <span style="font-size:13px; color:#888;">{% trans "Sortuj:" %}</span>
@@ -142,7 +153,12 @@
                             {% if product.image %}
                             <img src="{{ product.image }}" alt="Perfumy {{ product.name }} – {{ product.brand }}" loading="lazy">
                             {% else %}
-                            <div class="product-placeholder">{% trans "🧴" %}</div>
+                            <div class="product-placeholder">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M9 2h6l1 4H8L9 2z"/><rect x="7" y="6" width="10" height="14" rx="2"/>
+                                    <path d="M10 10h4M10 14h4"/>
+                                </svg>  
+                            </div>
                             {% endif %}
                             <div class="product-name">{{ product.name }}</div>
                             <div class="product-brand">{{ product.brand }}</div>
@@ -153,7 +169,12 @@
                             </div>
                             {% load currency_tags %}
                             <div class="product-price">{{ product.price|convert_price:CURR }} {{ CURRENCY_SYMBOL }}</div>
-                            <div class="product-volume">{% trans "📦 100 ml" %}</div>
+                            <div class="product-volume">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle; margin-right:3px;">
+                                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                                </svg>
+                                {% trans "100 ml" %}
+                            </div>
                             <button class="btn" style="width:100%; padding:9px;">{% trans "Zobacz więcej" %}</button>
                         </div>
                     </a>
