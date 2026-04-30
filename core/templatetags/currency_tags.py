@@ -16,26 +16,20 @@ def _round_to_95(value, uses_decimals):
 
 @register.filter
 def convert_price(pln_price, curr):
-    """
-    Dla cen 199.95 PLN i 249.95 PLN zwraca ładną wartość (np. 49.95 €).
-    Dla innych kwot (np. sumy koszyka) zwraca dokładne przeliczenie (bez zaokrąglania do .95).
-    """
     try:
         price = float(str(pln_price).replace(',', '.'))
         rate = curr.get('rate', 1.0)
-        # Ceny jednostkowe
         if abs(price - 199.95) < 0.01:
             return curr['p199']
         if abs(price - 249.95) < 0.01:
             return curr['p249']
-        # Wszystkie inne kwoty (sumy, iloczyny) – dokładne przeliczenie
+        if abs(price - 299.95) < 0.01:
+            return curr.get('p299', curr['p249'])
         converted = price * rate
-        # Sprawdzamy, czy waluta używa miejsc dziesiętnych
         uses_decimals = '.' in curr.get('p199', '')
         if uses_decimals:
             return f"{converted:.2f}"
         else:
-            # Dla walut bez groszy (ISK, HUF, CZK itp.) zwracamy liczbę całkowitą
             return str(int(round(converted)))
     except (ValueError, TypeError, KeyError):
         return pln_price
@@ -113,3 +107,26 @@ LANG_TO_FLAG = {
 @register.filter
 def lang_flag(lang_code):
     return LANG_TO_FLAG.get(lang_code, lang_code)
+
+@register.filter
+def price_range_display(pln_price, curr):
+    """Zamień granicę PLN na odpowiednik w aktualnej walucie."""
+    try:
+        price = float(str(pln_price).replace(',', '.'))
+        # Mapowanie znanych granic
+        known = {
+            0: curr.get('p_min', '0'),
+            199.95: curr.get('p199', '199.95'),
+            200: curr.get('p200', str(int(float(curr.get('p199', 200)) + 1))),
+            249.95: curr.get('p249', '249.95'),
+            999: curr.get('p_max', '999'),
+        }
+        for pln_val, display in known.items():
+            if abs(price - pln_val) < 1:
+                return display
+        # Nieznana wartość — przelicz proporcjonalnie
+        divisor = curr.get('divisor', 1)
+        raw = price / divisor
+        return f"{int(raw)}"
+    except:
+        return pln_price

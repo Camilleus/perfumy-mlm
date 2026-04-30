@@ -37,7 +37,7 @@
     <!-- CENA -->
     <div class="filter-group">
         <div class="filter-group-title" onclick="toggleFilter('price')">
-            {% trans "Cena (zł)" %} <span class="filter-arrow" id="arrow-price">▾</span>
+            {% trans "Cena" %} ({{ CURRENCY_SYMBOL }}) <span class="filter-arrow" id="arrow-price">▾</span>
         </div>
         <div class="filter-group-body" id="filter-price">
             <div style="display:flex; gap:8px; align-items:center; margin-bottom:8px;">
@@ -50,9 +50,15 @@
                     style="width:80px; padding:8px; border:1px solid #ddd; font-size:13px; box-sizing:border-box;">
             </div>
             <div style="display:flex; gap:6px; flex-wrap:wrap;">
-                <button type="button" class="price-chip" onclick="setPrice(0, 199.95)">{% trans "do 200 zł" %}</button>
-                <button type="button" class="price-chip" onclick="setPrice(200, 249.95)">{% trans "200–250 zł" %}</button>
-                <button type="button" class="price-chip" onclick="setPrice(249.95, 999)">{% trans "250+ zł" %}</button>
+                <button type="button" class="price-chip" onclick="setPrice(0, 199.95)">
+                    {% trans "do" %} {{ CURR.p199 }} {{ CURRENCY_SYMBOL }}
+                </button>
+                <button type="button" class="price-chip" onclick="setPrice(200, 249.95)">
+                    {{ CURR.p200 }} – {{ CURR.p249 }} {{ CURRENCY_SYMBOL }}
+                </button>
+                <button type="button" class="price-chip" onclick="setPrice(249.95, 999)">
+                    {{ CURR.p249 }}+ {{ CURRENCY_SYMBOL }}
+                </button>
             </div>
         </div>
     </div>

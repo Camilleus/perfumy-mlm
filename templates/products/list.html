@@ -141,7 +141,7 @@
                         </span>
                     {% endif %}
                     {% if current_price_min or current_price_max %}
-                        <span class="active-tag">{{ current_price_min|convert_price:CURR }}–{{ current_price_max|convert_price:CURR }} {{ CURRENCY_SYMBOL }} <a href="#" onclick="return removeParams('price_min','price_max')">✕</a></span>
+                        <span class="active-tag">{{ current_price_min|price_range_display:CURR }}–{{ current_price_max|price_range_display:CURR }} {{ CURRENCY_SYMBOL }} <a href="#" onclick="return removeParams('price_min','price_max')">✕</a></span>
                     {% endif %}
                 </div>
 
