@@ -56,6 +56,9 @@
         --gold-gradient: linear-gradient(90deg, #b8860b 0%, #D4AF37 50%, #f7e08a 100%);
         --nav-gradient: linear-gradient(180deg, #012b2a 0%, #023836 100%);
         --text-dark: #1A1A1A;
+        --navbar-height: 90px;
+        --trustbar-height: 36px;
+        --header-total: 126px;
     }
 
     [data-theme='dark'] {
@@ -296,6 +299,28 @@
     [data-theme='dark'] .btn-ghost {
         color: var(--gold) !important;
         border-color: rgba(212,175,55,0.5) !important;
+    }
+    [data-theme='dark'] .cart-progress-bg {
+        background: var(--forest-green) !important;
+    }
+    [data-theme='dark'] .hero-section {
+        background: linear-gradient(135deg, #023836 0%, #011615 100%);
+    }
+    [data-theme='dark'] .prose {
+        background: #022a28 !important;
+        color: var(--text-dark) !important;
+    }
+    [data-theme='dark'] .prose h1,
+    [data-theme='dark'] .prose h2,
+    [data-theme='dark'] .prose h3,
+    [data-theme='dark'] .prose p,
+    [data-theme='dark'] .prose li,
+    [data-theme='dark'] .prose strong {
+        color: var(--text-dark) !important;
+    }
+    [data-theme='dark'] .prose div[style*="background: #f0f7f0"],
+    [data-theme='dark'] .prose div[style*="background:#f0f7f0"] {
+        background: #033d3a !important;
     }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -1053,10 +1078,10 @@
             padding: 8px 12px;
             margin: 0 4px;
             border-radius: 25px;
-            background: #fff;
-            border: 1px solid #ddd;
+            background: var(--bg-main);
+            border: 1px solid var(--gold);
             text-decoration: none;
-            color: #024442;
+            color: var(--forest-green);
         }
         .pagination a:hover {
             background: var(--gold);

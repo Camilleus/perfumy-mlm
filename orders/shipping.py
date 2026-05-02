@@ -4,7 +4,7 @@ SHIPPING_METHODS = {
     'pl': [  # opcje dla Polski
         {
             'id': 'inpost',
-            'name': 'InPost Kurier (do 48h)',
+            'name': 'InPost Kurier (szybka wysyłka)',
             'cost_pln': 30,
             'free_above_qty': 3,
         },
@@ -20,7 +20,7 @@ SHIPPING_METHODS = {
         },
         {
             'id': 'gls',
-            'name': 'GLS Ekspres (do 48h)',
+            'name': 'GLS Ekspres (szybka wysyłka)',
             'cost_pln': 40,
         },
     ],

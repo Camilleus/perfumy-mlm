@@ -121,7 +121,7 @@
 
                 {% if product.description %}
                 <div>
-                    <p style="font-size:15px; color:#444; margin-bottom:8px; line-height:1.8;">{{ product.description }}</p>
+                    <p style="font-size:15px; color:var(--text-dark) margin-bottom:8px; line-height:1.8;">{{ product.description }}</p>
                     <p style="font-size:12px; color:#888; font-style:italic; margin-bottom:16px;">
                         {% trans "Tłumaczenie opisu produktu wkrótce. Dziękujemy za cierpliwość 😇" %}
                     </p>
@@ -163,7 +163,7 @@
                 <p style="color:#c0392b; font-size:13px;">{% trans "✗ Brak w magazynie" %}</p>
                 {% endif %}
                 {% if total_quantity < 3 %}
-                    <div style="background:#e5e7eb; border-radius:9999px; height:20px; margin-top:16px; overflow:hidden;">
+                    <div class="cart-progress-bg" style="background:rgba(2,68,66,0.15); border-radius:9999px; height:20px; margin-top:16px; overflow:hidden;">
                         <div style="background:var(--gold-gradient); height:20px; border-radius:9999px; text-align:center; line-height:20px; font-size:12px; color:#000; font-weight:bold; width:{% widthratio total_quantity 3 100 %}%; min-width:2rem; transition:width 0.3s ease;">
                             {{ total_quantity }}/3
                         </div>
@@ -207,7 +207,7 @@
                 {% if reviews %}<span style="font-size:16px; color:#888; font-weight:400;">({{ reviews.count }})</span>{% endif %}
             </h2>
 
-            <div style="display:grid; grid-template-columns:1fr; gap:40px;">
+            <div style="display:grid; class="review-form-grid"; gap:40px;">
                 <div>
                     {% if reviews %}
                     <div style="display:flex; flex-direction:column; gap:20px; margin-bottom:32px;">
@@ -244,7 +244,7 @@
                         <h3 style="font-size:18px; font-weight:400; margin-bottom:24px;">{% trans "Dodaj opinię" %}</h3>
                         <form method="post" action="{% url 'add_review' product.slug %}" enctype="multipart/form-data">
                             {% csrf_token %}
-                            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
+                            <div class="review-form-grid" style="margin-bottom:16px;">
                                 <div>
                                     <label class="form-label">{% trans "Imię *" %}</label>
                                     <input type="text" name="name" required class="form-input" placeholder="{% trans "np. Anna" %}">
@@ -315,6 +315,15 @@
 .star-label { color: #ddd; }
 .star-label:hover, .star-label:hover ~ .star-label { color: var(--gold); }
 input[type="radio"]:checked + .star-label, input[type="radio"]:checked ~ label { color: var(--gold); }
+
+.review-form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+@media (min-width: 640px) {
+    .review-form-grid { grid-template-columns: 1fr 1fr; }
+}
 </style>
 
 <script>

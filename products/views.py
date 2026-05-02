@@ -19,8 +19,11 @@ def product_list(request):
     price_min = request.GET.get('price_min', '')
     price_max = request.GET.get('price_max', '')
 
-    if gender:
-        products = products.filter(gender=gender)
+    if gender in ('M', 'K'):
+        products = products.filter(gender__in=[gender, 'U'])
+    elif gender == 'U':
+        products = products.filter(gender='U')
+    # gdy gender=='' nie filtrujemy wcale
     if brands_selected:
         products = products.filter(brand__in=brands_selected)
     if category:
