@@ -12,6 +12,11 @@ def product_list(request):
     # --- FILTRY ---
     gender = request.GET.get('gender', '')
     brands_selected = request.GET.getlist('brands')          # lista wybranych marek
+    brand_search = request.GET.get('brand', '')
+    if brand_search and not brands_selected:
+        products = products.filter(
+            Q(brand__icontains=brand_search) | Q(name__icontains=brand_search)
+        )
     category = request.GET.get('category', '')
     concentration = request.GET.get('concentration', '')
     occasion = request.GET.get('occasion', '')
@@ -53,6 +58,7 @@ def product_list(request):
         'name_asc': 'name',
         'name_desc': '-name',
         'newest': '-id',
+        'current_brand': brand_search,
     }
     products = products.order_by(sort_map.get(sort_by, 'name'))
 

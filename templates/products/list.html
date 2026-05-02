@@ -46,6 +46,12 @@
         <!-- PASEK WYSZUKIWANIA -->
         <form method="get" style="margin-bottom: 32px;">
             <input type="hidden" name="gender" value="{{ current_gender }}">
+            <input type="hidden" name="sort" value="{{ current_sort }}">
+            {% for brand in selected_brands %}<input type="hidden" name="brands" value="{{ brand }}">{% endfor %}
+            {% if current_category %}<input type="hidden" name="category" value="{{ current_category }}">{% endif %}
+            {% if current_concentration %}<input type="hidden" name="concentration" value="{{ current_concentration }}">{% endif %}
+            {% if current_occasion %}<input type="hidden" name="occasion" value="{{ current_occasion }}">{% endif %}
+            {% if current_intensity %}<input type="hidden" name="intensity" value="{{ current_intensity }}">{% endif %}
             <p style="text-align:center; font-size:10px; letter-spacing:3px; text-transform:uppercase; color:#024442; opacity:0.6; margin-bottom:14px;">{% trans "Szukaj w kolekcji" %}</p>
             <div class="search-bar">
                 <span class="search-icon">
@@ -386,6 +392,21 @@
     .product-grid {
         grid-template-columns: repeat(4, 1fr);
         gap: 24px;
+    }
+}
+@media (max-width: 480px) {
+    .hero-actions {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+    .hero-actions .btn,
+    .hero-actions .btn-ghost {
+        width: 100%;
+        max-width: 260px;
+        text-align: center;
+        padding: 12px 16px;
+        font-size: 12px;
     }
 }
 </style>

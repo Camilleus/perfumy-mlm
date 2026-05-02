@@ -156,7 +156,7 @@
                 <p style="font-size:14px; color:#888; margin-bottom:16px;">{% trans "📦 Pojemność: 100 ml" %}</p>
 
                 {% if product.stock_quantity > 0 %}
-                <p style="color:green; font-size:13px; margin-bottom:16px;">✓ {% trans "Dostępny" %} ({{ product.stock_quantity }} szt.)</p>
+                <p style="color:green; font-size:13px; margin-bottom:16px;">✓ {% trans "Dostępny" %} ({{ product.stock_quantity }} {% trans "szt." %})</p>
                 <a href="{% url 'cart_add' product.pk %}" class="btn" style="width:100%; padding:14px; font-size:15px; text-align:center; display:block; box-sizing:border-box; margin-bottom:10px;">{% trans "Dodaj do koszyka" %}</a>
                 <a href="{% url 'cart_detail' %}" class="btn" style="width:100%; padding:14px; font-size:15px; text-align:center; display:block; box-sizing:border-box;">{% trans "Przejdź do koszyka" %}</a>
                 {% else %}
