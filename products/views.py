@@ -7,6 +7,18 @@ from orders.cart import Cart
 
 
 def product_list(request):
+    # Blokada botów które tworzą absurdalne URL z wieloma parametrami
+    user_agent = request.META.get('HTTP_USER_AGENT', '')
+    blocked_bots = ['meta-externalagent', 'facebookexternalhit', 'Twitterbot', 'LinkedInBot']
+    if any(bot.lower() in user_agent.lower() for bot in blocked_bots):
+        from django.http import HttpResponse
+        return HttpResponse(status=403)
+    
+    # Blokada URL z wieloma parametrami 'page' (crawler trick)
+    if len(request.GET.getlist('page')) > 1:
+        from django.http import HttpResponse
+        return HttpResponse(status=400)
+
     products = Product.objects.filter(is_available=True)
 
     # --- FILTRY ---
