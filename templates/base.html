@@ -1554,6 +1554,117 @@ document.addEventListener('DOMContentLoaded', () => {
     updateThemeIcons(); // synchronizacja ikon po załadowaniu
 });
 </script>
+<!-- FOMO POPUP -->
+<div id="fomo-popup" style="display:none; position:fixed; bottom:20px; left:20px; background:#012b2a; border:1px solid var(--gold); border-radius:12px; padding:12px 16px; z-index:9998; max-width:280px; box-shadow:0 8px 32px rgba(0,0,0,0.4); animation: fadeUp 0.5s ease;">
+    <div style="display:flex; align-items:center; gap:10px;">
+        <div>
+            <div id="fomo-text" style="font-size:13px; color:#fff; font-weight:600;"></div>
+            <div style="font-size:11px; color:var(--gold); margin-top:2px;" id="fomo-time"></div>
+        </div>
+        <button onclick="document.getElementById('fomo-popup').style.display='none'" style="background:none; border:none; color:#aaa; cursor:pointer; font-size:16px; margin-left:auto;">✕</button>
+    </div>
+</div>
+
+<script>
+const fomoData = [
+    // Oryginalne polskie (8)
+    { name: "{% trans 'Kuba' %}",   city: "{% trans 'z Warszawy' %}",  product: "{% trans 'Sauvage Dior' %}",   g: 'm' },
+    { name: "{% trans 'Ania' %}",   city: "{% trans 'z Krakowa' %}",   product: "{% trans 'Chanel Bleu' %}",    g: 'f' },
+    { name: "{% trans 'Piotr' %}",  city: "{% trans 'z Gdańska' %}",   product: "{% trans 'Armani Acqua' %}",   g: 'm' },
+    { name: "{% trans 'Zosia' %}",  city: "{% trans 'z Wrocławia' %}", product: "{% trans 'YSL Black Opium' %}", g: 'f' },
+    { name: "{% trans 'Marek' %}",  city: "{% trans 'z Poznania' %}",  product: "{% trans 'Versace Eros' %}",   g: 'm' },
+    { name: "{% trans 'Kasia' %}",  city: "{% trans 'z Łodzi' %}",     product: "{% trans 'Sauvage Dior' %}",   g: 'f' },
+    { name: "{% trans 'Tomek' %}",  city: "{% trans 'ze Szczecina' %}",product: "{% trans 'Chanel Bleu' %}",    g: 'm' },
+    { name: "{% trans 'Ola' %}",    city: "{% trans 'z Lublina' %}",   product: "{% trans 'YSL Black Opium' %}", g: 'f' },
+
+    // Niemcy (6)
+    { name: "{% trans 'Hans' %}",    city: "{% trans 'z Berlina' %}",       product: "{% trans 'Sauvage Dior' %}",   g: 'm' },
+    { name: "{% trans 'Ingrid' %}",  city: "{% trans 'z Monachium' %}",     product: "{% trans 'Chanel Bleu' %}",    g: 'f' },
+    { name: "{% trans 'Klaus' %}",   city: "{% trans 'z Hamburga' %}",      product: "{% trans 'Armani Acqua' %}",   g: 'm' },
+    { name: "{% trans 'Greta' %}",   city: "{% trans 'z Frankfurtu' %}",    product: "{% trans 'YSL Black Opium' %}", g: 'f' },
+    { name: "{% trans 'Dieter' %}",  city: "{% trans 'z Kolonii' %}",       product: "{% trans 'Versace Eros' %}",   g: 'm' },
+    { name: "{% trans 'Helga' %}",   city: "{% trans 'ze Stuttgartu' %}",   product: "{% trans 'Sauvage Dior' %}",   g: 'f' },
+
+    // Francja (6)
+    { name: "{% trans 'Jean' %}",    city: "{% trans 'z Lyonu' %}",         product: "{% trans 'Chanel Bleu' %}",    g: 'm' },
+    { name: "{% trans 'Camille' %}", city: "{% trans 'z Paryża' %}",        product: "{% trans 'YSL Black Opium' %}", g: 'f' },
+    { name: "{% trans 'Alfred' %}",  city: "{% trans 'z Marsylii' %}",      product: "{% trans 'Armani Acqua' %}",   g: 'm' },
+    { name: "{% trans 'Marie' %}",   city: "{% trans 'z Nicei' %}",         product: "{% trans 'Sauvage Dior' %}",   g: 'f' },
+    { name: "{% trans 'Pierre' %}",  city: "{% trans 'z Bordeaux' %}",      product: "{% trans 'Versace Eros' %}",   g: 'm' },
+    { name: "{% trans 'Sophie' %}",  city: "{% trans 'z Lille' %}",         product: "{% trans 'Chanel Bleu' %}",    g: 'f' },
+
+    // Holandia / Niderlandy (4)
+    { name: "{% trans 'Dick' %}",    city: "{% trans 'z Hagi' %}",          product: "{% trans 'Sauvage Dior' %}",   g: 'm' },
+    { name: "{% trans 'Anna' %}",    city: "{% trans 'z Amsterdamu' %}",    product: "{% trans 'YSL Black Opium' %}", g: 'f' },
+    { name: "{% trans 'Willem' %}",  city: "{% trans 'z Rotterdamu' %}",    product: "{% trans 'Armani Acqua' %}",   g: 'm' },
+    { name: "{% trans 'Els' %}",     city: "{% trans 'z Utrechtu' %}",      product: "{% trans 'Chanel Bleu' %}",    g: 'f' },
+
+    // Włochy (4)
+    { name: "{% trans 'Marco' %}",   city: "{% trans 'z Rzymu' %}",         product: "{% trans 'Versace Eros' %}",   g: 'm' },
+    { name: "{% trans 'Sofia' %}",   city: "{% trans 'z Mediolanu' %}",     product: "{% trans 'Sauvage Dior' %}",   g: 'f' },
+    { name: "{% trans 'Luigi' %}",   city: "{% trans 'z Neapolu' %}",       product: "{% trans 'Armani Acqua' %}",   g: 'm' },
+    { name: "{% trans 'Elena' %}",   city: "{% trans 'z Florencji' %}",     product: "{% trans 'Chanel Bleu' %}",    g: 'f' },
+
+    // Hiszpania (4)
+    { name: "{% trans 'Carlos' %}",  city: "{% trans 'z Madrytu' %}",       product: "{% trans 'YSL Black Opium' %}", g: 'm' },
+    { name: "{% trans 'Maria' %}",   city: "{% trans 'z Barcelony' %}",     product: "{% trans 'Sauvage Dior' %}",   g: 'f' },
+    { name: "{% trans 'Pablo' %}",   city: "{% trans 'z Walencji' %}",      product: "{% trans 'Versace Eros' %}",   g: 'm' },
+    { name: "{% trans 'Lucia' %}",   city: "{% trans 'z Sewilli' %}",       product: "{% trans 'Chanel Bleu' %}",    g: 'f' },
+
+    // Austria / Szwajcaria (4)
+    { name: "{% trans 'Fritz' %}",   city: "{% trans 'z Wiednia' %}",       product: "{% trans 'Armani Acqua' %}",   g: 'm' },
+    { name: "{% trans 'Klara' %}",   city: "{% trans 'z Salzburga' %}",     product: "{% trans 'YSL Black Opium' %}", g: 'f' },
+    { name: "{% trans 'Max' %}",     city: "{% trans 'z Zurychu' %}",       product: "{% trans 'Sauvage Dior' %}",   g: 'm' },
+    { name: "{% trans 'Eva' %}",     city: "{% trans 'z Genewy' %}",        product: "{% trans 'Chanel Bleu' %}",    g: 'f' },
+
+    // Belgia (2)
+    { name: "{% trans 'Johan' %}",   city: "{% trans 'z Brukseli' %}",      product: "{% trans 'Versace Eros' %}",   g: 'm' },
+    { name: "{% trans 'Lotte' %}",   city: "{% trans 'z Antwerpii' %}",     product: "{% trans 'YSL Black Opium' %}", g: 'f' },
+
+    // Skandynawia (2)
+    { name: "{% trans 'Lars' %}",    city: "{% trans 'z Kopenhagi' %}",     product: "{% trans 'Sauvage Dior' %}",   g: 'm' },
+    { name: "{% trans 'Astrid' %}",  city: "{% trans 'ze Sztokholmu' %}",   product: "{% trans 'Chanel Bleu' %}",    g: 'f' },
+];
+
+const times = [
+    "{% trans 'przed chwilą' %}",
+    "{% trans '1 min temu' %}",
+    "{% trans '2 min temu' %}",
+    "{% trans '3 min temu' %}",
+    "{% trans '4 min temu' %}",
+    "{% trans '5 min temu' %}",
+    "{% trans '6 min temu' %}",
+    "{% trans '7 min temu' %}",
+    "{% trans '8 min temu' %}",
+    "{% trans '9 min temu' %}",
+    "{% trans '10 min temu' %}",
+    "{% trans '12 min temu' %}",
+    "{% trans '15 min temu' %}",
+];
+
+// Dwa osobne czasowniki – Django je przetłumaczy
+const boughtM = "{% trans 'kupił' %}";    // np. po angielsku 'bought'
+const boughtF = "{% trans 'kupiła' %}";   // np. po angielsku też 'bought' (ale oddzielny klucz)
+
+function showFomo() {
+    const item = fomoData[Math.floor(Math.random() * fomoData.length)];
+    const time = times[Math.floor(Math.random() * times.length)];
+    const verb = item.g === 'm' ? boughtM : boughtF;   // wybór odmiany
+    const popup = document.getElementById('fomo-popup');
+    
+    // Składamy zdanie: Imię + miasto + czasownik + produkt
+    document.getElementById('fomo-text').textContent = `${item.name} ${item.city} ${verb} ${item.product}`;
+    document.getElementById('fomo-time').textContent = time;
+    popup.style.display = 'block';
+    
+    setTimeout(() => popup.style.display = 'none', 5000);
+}
+
+setTimeout(() => {
+    showFomo();
+    setInterval(showFomo, 233000);
+}, 14000);
+</script>
 </body>    
 
 <script>
